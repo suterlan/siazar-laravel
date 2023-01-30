@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('') }}css/feather.css">
     <link rel="stylesheet" href="{{ asset('') }}css/select2.css">
     <link rel="stylesheet" href="{{ asset('') }}css/dropzone.css">
+    <link rel="stylesheet" href="{{ asset('') }}css/uppy.min.css">
     <link rel="stylesheet" href="{{ asset('') }}css/jquery.steps.css">
     <link rel="stylesheet" href="{{ asset('') }}css/jquery.timepicker.css">
     <link rel="stylesheet" href="{{ asset('') }}css/quill.snow.css">
@@ -29,19 +30,19 @@
             color: blue !important;
         }
     </style>
-    		<style type="text/css">
-			.page-surat {
-				margin: 0;
-				padding: 20mm;
-                padding-top: 10mm;
-				font: 12pt "arial";
-			}
-			.border-kop {
-				border-bottom: 5px solid black;
-				margin-bottom: 0.2cm;
-			}
-            .table-surat td{
-                padding: 1mm;
-            }
-		</style>
-  </head>
+    <style type="text/css">
+        .page-surat {
+            margin: 0;
+            padding: 20mm;
+            padding-top: 10mm;
+            font: 12pt "arial";
+        }
+        .border-kop {
+            border-bottom: 5px solid black;
+            margin-bottom: 0.2cm;
+        }
+        .table-surat td{
+            padding: 1mm;
+        }
+    </style>
+</head>

@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'username' => 'admin',
             'email' => 'admin@example.com',
+            'role'  => 1,
             'password'  => bcrypt('password')
         ]);
 
@@ -39,6 +40,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // seed Surat Masuk
-        SuratMasuk::factory(7)->create();
+        SuratMasuk::factory(5)->create();
     }
 }

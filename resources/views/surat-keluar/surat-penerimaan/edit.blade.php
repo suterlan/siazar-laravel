@@ -6,7 +6,7 @@
             <div class="card shadow col-lg-12">
                 <div class="card-body">
                     <h4><strong>Edit Surat Penerimaan </strong></h3>
-                    <form class="needs-validation @foreach ($errors->all() as $error) was-validated @endforeach" action="/dashboard/surat/penerimaan/{{ $surat->id }}" method="post" novalidate>
+                    <form class="needs-validation @foreach ($errors->all() as $error) was-validated @endforeach" action="/dashboard/suratkeluar/penerimaan/{{ $surat->id }}" method="post" novalidate>
                         @method('put')
                         @csrf
                         <div class="form-row">

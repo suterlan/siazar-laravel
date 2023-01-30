@@ -18,7 +18,7 @@ class PenerimaanController extends Controller
     public function index()
     {
         return view('surat-keluar.surat-penerimaan.index',[
-            'title'     => 'Surat Keluar | ',
+            'title'     => 'Surat Keluar | SIAZAR',
             'surats'    => SuratPenerimaan::with('suratkeluar')->latest()->get()
         ]);
     }
@@ -31,7 +31,7 @@ class PenerimaanController extends Controller
     public function create()
     {
          return view('surat-keluar.surat-penerimaan.create', [
-                'title'         => 'Surat Penerimaan Baru | ',
+                'title'         => 'Surat Penerimaan Baru | SIAZAR',
                 'klasifikasi'   => Klasifikasi::all()
             ]);
     }
@@ -58,7 +58,7 @@ class PenerimaanController extends Controller
 
         SuratKeluar::create($validated);
         SuratPenerimaan::create($validated);
-        return redirect('/dashboard/surat/penerimaan')->with('success', 'Surat penerimaan baru berhasil dibuat!');
+        return redirect('/dashboard/suratkeluar/penerimaan')->with('success', 'Surat penerimaan baru berhasil dibuat!');
     }
 
     /**
@@ -70,7 +70,7 @@ class PenerimaanController extends Controller
     public function show(SuratPenerimaan $penerimaan)
     {
         return view('surat-keluar.surat-penerimaan.detail',[
-            'title'     => 'Detail Surat |',
+            'title'     => 'Detail Surat | SIAZAR',
             'surat'     => $penerimaan
         ]);
     }
@@ -84,7 +84,7 @@ class PenerimaanController extends Controller
     public function edit(SuratPenerimaan $penerimaan)
     {
         return view('surat-keluar.surat-penerimaan.edit', [
-            'title'     => 'Edit Surat |',
+            'title'     => 'Edit Surat | SIAZAR',
             'surat'     => $penerimaan,
             'klasifikasi'   => Klasifikasi::all()
         ]);
@@ -140,7 +140,7 @@ class PenerimaanController extends Controller
 
         SuratPenerimaan::where('id',$penerimaan->id)
                         ->update($dataPenerimaan);
-        return redirect('/dashboard/surat/penerimaan')->with('success', 'Surat penerimaan dengan nomor surat : ' . $penerimaan->no_surat . ' berhasil diubah!');
+        return redirect('/dashboard/suratkeluar/penerimaan')->with('success', 'Surat penerimaan dengan nomor surat : ' . $penerimaan->no_surat . ' berhasil diubah!');
     }
 
     /**
@@ -154,13 +154,13 @@ class PenerimaanController extends Controller
         SuratPenerimaan::where('no_surat', $penerimaan->no_surat)->delete();
         SuratKeluar::where('no_surat', $penerimaan->no_surat)->delete();
 
-        return redirect('/dashboard/surat/penerimaan')->with('success', 'Surat keluar dengan no surat : ' . $penerimaan->no_surat . ' berhasil dihapus');
+        return redirect('/dashboard/suratkeluar/penerimaan')->with('success', 'Surat keluar dengan no surat : ' . $penerimaan->no_surat . ' berhasil dihapus');
 
     }
 
     public function cetak(SuratPenerimaan $penerimaan){
         $pdf = FacadePdf::loadView('surat-keluar.surat-penerimaan.cetak', [
-            'title'     => 'Cetak Surat',
+            'title'     => 'Cetak Surat | SIAZAR',
             'surat'     => $penerimaan
         ]);
         return $pdf->stream('surat-penerimaan-siswa');
@@ -169,7 +169,7 @@ class PenerimaanController extends Controller
 
     public function download(SuratPenerimaan $penerimaan){
         $pdf = FacadePdf::loadView('surat-keluar.surat-penerimaan.cetak', [
-            'title'     => 'Cetak Surat',
+            'title'     => 'Cetak Surat | SIAZAR',
             'surat'     => $penerimaan
         ]);
         return $pdf->download('surat-penerimaan-siswa.pdf');

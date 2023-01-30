@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('no_surat', 50)->unique();
             $table->string('nama_siswa');
             $table->string('ttl', 64);
-            $table->string('jk', 10);
+            $table->string('nisn', 10);
+            $table->string('jk', 16);
             $table->string('tahun_pelajaran', 10);
             $table->string('kelas', 10);
             $table->string('nama_ayah');

@@ -6,7 +6,7 @@
             <div class="card shadow col-lg-12">
                 <div class="card-body">
                     <h4><strong>Edit Surat Panggilan </strong></h3>
-                    <form class="needs-validation @foreach ($errors->all() as $error) was-validated @endforeach" action="/dashboard/surat/panggilan/{{ $surat->id }}" method="post" novalidate>
+                    <form class="needs-validation @if ($errors->any()) was-validated @endif" action="/dashboard/suratkeluar/panggilan/{{ $surat->id }}" method="post" novalidate>
                         @method('put')
                         @csrf
                         <div class="form-row">
@@ -99,7 +99,6 @@
     </div>
 </div>
 <script>
-
     function changeKlasifikasi(){
         const klasifikasi = document.querySelector('#klasifikasi');
         const noSurat = document.querySelector('#no_surat');

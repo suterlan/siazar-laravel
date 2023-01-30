@@ -15,7 +15,7 @@ class KlasifikasiController extends Controller
     public function index()
     {
         return view('klasifikasi.klasifikasi',[
-            'title' => 'Klasifikasi Surat | ',
+            'title' => 'Klasifikasi Surat | SIAZAR',
             'klasifikasis'   => Klasifikasi::all()
         ]);
     }
@@ -68,7 +68,7 @@ class KlasifikasiController extends Controller
     public function edit(Klasifikasi $klasifikasi)
     {
         return view('klasifikasi.edit',[
-            'title' => 'Edit Klasifikasi Surat | ',
+            'title' => 'Edit Klasifikasi Surat | SIAZAR',
             'klasifikasi'   => $klasifikasi
         ]);
     }

@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h4><strong>Buat Surat Penerimaan </strong></h3>
                     <p>Silahkan isi form dibawah untuk membuat surat penerimaan baru</p>
-                    <form class="needs-validation @foreach ($errors->all() as $error) was-validated @endforeach" action="/dashboard/surat/penerimaan" method="post" novalidate>
+                    <form class="needs-validation @foreach ($errors->all() as $error) was-validated @endforeach" action="/dashboard/suratkeluar/penerimaan" method="post" novalidate>
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-lg-6">
@@ -99,10 +99,9 @@
     </div>
 </div>
 <script>
-    const kode = document.querySelector('#klasifikasi');
-    const noSurat = document.querySelector('#no_surat');
-
     function nomorSurat(){
+        const kode = document.querySelector('#klasifikasi');
+        const noSurat = document.querySelector('#no_surat');
         // console.log(kode.value);
         fetch('/getCodeKlasifikasi?kode=' + kode.value)
         .then(response => response.json())

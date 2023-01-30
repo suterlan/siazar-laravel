@@ -29,8 +29,8 @@
                       <div class="row align-items-center">
                         <div class="col">
                           <small class="text-muted mb-1">Surat Keluar</small>
-                          <h3 class="card-title mb-0">1168</h3>
-                          <p class="small text-muted mb-0"><span class="fe fe-arrow-down fe-12 text-danger"></span><span>-18.9% Last week</span></p>
+                          <h3 class="card-title mb-0">{{ $jmlSuratkeluar }}</h3>
+                          <p class="small text-muted mb-0"><span class="fe fe-arrow-up fe-12 text-success"></span><span>Jumlah surat keluar</span></p>
                         </div>
                         <div class="col-4 text-right">
                           <span class="fe fe-mail fe-32"></span>
@@ -45,8 +45,8 @@
                       <div class="row align-items-center">
                         <div class="col">
                           <small class="text-muted mb-1">Surat Masuk</small>
-                          <h3 class="card-title mb-0">1168</h3>
-                          <p class="small text-muted mb-0"><span class="fe fe-arrow-down fe-12 text-danger"></span><span>-18.9% Last week</span></p>
+                          <h3 class="card-title mb-0">{{ $jmlSuratmasuk }}</h3>
+                          <p class="small text-muted mb-0"><span class="fe fe-arrow-down fe-12 text-danger"></span><span>Jumlah surat masuk</span></p>
                         </div>
                         <div class="col-4 text-right">
                           <span class="fe fe-mail fe-32"></span>
@@ -55,7 +55,11 @@
                     </div> <!-- /. card-body -->
                   </div> <!-- /. card -->
                 </div> <!-- /. col -->
-              </div>
+              </div> <!-- .row my-4 -->
+              {{-- Chart --}}
+              {!! $chart->container() !!}
+                <script src="{{ $chart->cdn() }}"></script>
+              {!! $chart->script() !!}
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->

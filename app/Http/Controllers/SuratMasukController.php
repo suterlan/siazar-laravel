@@ -17,7 +17,7 @@ class SuratMasukController extends Controller
     public function index()
     {
         return view('surat-masuk.index', [
-            'title' => 'Surat Masuk | ',
+            'title' => 'Surat Masuk | SIAZAR',
             'surats' => SuratMasuk::with('klasifikasi')->latest()->get()
         ]);
     }
@@ -30,7 +30,7 @@ class SuratMasukController extends Controller
     public function create()
     {
         return view('surat-masuk.create', [
-            'title' => 'Tambah Surat Masuk | ',
+            'title' => 'Tambah Surat Masuk | SIAZAR',
             'klasifikasi'   => Klasifikasi::all()
         ]);
     }
@@ -73,7 +73,7 @@ class SuratMasukController extends Controller
     public function show(SuratMasuk $suratmasuk)
     {
         return view('surat-masuk.detail', [
-            'title'     => 'Detail Surat Masuk',
+            'title'     => 'Detail Surat Masuk | SIAZAR',
             'surat'     => $suratmasuk
         ]);
     }
@@ -87,7 +87,7 @@ class SuratMasukController extends Controller
     public function edit(SuratMasuk $suratmasuk)
     {
         return view('surat-masuk.edit', [
-            'title' => 'Edit Surat Masuk | ',
+            'title' => 'Edit Surat Masuk | SIAZAR',
             'surat' => $suratmasuk,
             'klasifikasi'   => Klasifikasi::all()
         ]);

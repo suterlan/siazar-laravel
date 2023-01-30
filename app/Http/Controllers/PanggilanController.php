@@ -18,7 +18,7 @@ class PanggilanController extends Controller
     public function index()
     {
         return view('surat-keluar.surat-panggilan.index',[
-            'title'     => 'Surat Panggilan',
+            'title'     => 'Surat Panggilan | SIAZAR',
             'surats'    => SuratPanggilan::with('suratkeluar')->latest()->get(),
         ]);
     }
@@ -31,7 +31,7 @@ class PanggilanController extends Controller
     public function create()
     {
         return view('surat-keluar.surat-panggilan.create',[
-            'title'         => 'Surat Panggilan Baru | ',
+            'title'         => 'Surat Panggilan Baru | SIAZAR',
             'klasifikasi'   => Klasifikasi::all()
         ]);
     }
@@ -59,7 +59,7 @@ class PanggilanController extends Controller
         SuratKeluar::create($validated);
         SuratPanggilan::create($validated);
 
-        return redirect('/dashboard/surat/panggilan')->with('success', 'Surat panggilan baru berhasil dibuat');
+        return redirect('/dashboard/suratkeluar/panggilan')->with('success', 'Surat panggilan baru berhasil dibuat');
     }
 
     /**
@@ -71,7 +71,7 @@ class PanggilanController extends Controller
     public function show(SuratPanggilan $panggilan)
     {
         return view('surat-keluar.surat-panggilan.detail', [
-            'title'     => 'Detail Surat Pemanggilan | ',
+            'title'     => 'Detail Surat Pemanggilan | SIAZAR',
             'surat'     => $panggilan
         ]);
     }
@@ -85,7 +85,7 @@ class PanggilanController extends Controller
     public function edit(SuratPanggilan $panggilan)
     {
         return view('surat-keluar.surat-panggilan.edit',[
-            'title'     => 'Edit Surat Panggilan |',
+            'title'     => 'Edit Surat Panggilan | SIAZAR',
             'surat'     => $panggilan,
             'klasifikasi'   => Klasifikasi::all()
         ]);
@@ -141,7 +141,7 @@ class PanggilanController extends Controller
         SuratPanggilan::where('id',$panggilan->id)
                         ->update($dataPanggilan);
 
-        return redirect('/dashboard/surat/panggilan')->with('success', 'Surat Panggilan dengan nomor surat : ' . $panggilan->no_surat . ' berhasil diubah!');
+        return redirect('/dashboard/suratkeluar/panggilan')->with('success', 'Surat Panggilan dengan nomor surat : ' . $panggilan->no_surat . ' berhasil diubah!');
 
     }
 
@@ -156,12 +156,12 @@ class PanggilanController extends Controller
         SuratPanggilan::where('no_surat', $panggilan->no_surat)->delete();
         SuratKeluar::where('no_surat', $panggilan->no_surat)->delete();
 
-        return redirect('/dashboard/surat/panggilan')->with('success', 'Surat Panggilan dengan no surat : ' . $panggilan->no_surat . ' berhasil dihapus');
+        return redirect('/dashboard/suratkeluar/panggilan')->with('success', 'Surat Panggilan dengan no surat : ' . $panggilan->no_surat . ' berhasil dihapus');
     }
 
     public function cetak(SuratPanggilan $panggilan){
         $pdf = FacadePdf::loadView('surat-keluar.surat-panggilan.cetak', [
-            'title'     => 'Cetak Surat',
+            'title'     => 'Cetak Surat | SIAZAR',
             'surat'     => $panggilan
         ]);
         return $pdf->stream('surat-pemanggilan-siswa');
@@ -170,7 +170,7 @@ class PanggilanController extends Controller
 
     public function download(SuratPanggilan $panggilan){
         $pdf = FacadePdf::loadView('surat-keluar.surat-panggilan.cetak', [
-            'title'     => 'Cetak Surat',
+            'title'     => 'Cetak Surat | SIAZAR',
             'surat'     => $panggilan
         ]);
         return $pdf->download('surat-pemanggilan-siswa.pdf');

@@ -37,7 +37,7 @@
                                     <td>{{ $surat->no_surat }}</td>
                                     <td>{{ $surat->asal_surat }}</td>
                                     <td>{{ $surat->deskripsi }}</td>
-                                    <td class="text-nowrap">{{ $surat->tanggal_surat }}</td>
+                                    <td class="text-nowrap">{{ \Carbon\Carbon::parse($surat->tanggal_surat)->translatedFormat('d F Y') }}</td>
                                     <td>{{ $surat->keterangan }}</td>
                                     <td>
                                         <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

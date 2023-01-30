@@ -61,6 +61,14 @@
                 text-align: left;
                 margin-right: 10mm;
             }
+            .footer-page {
+                position: fixed;
+                bottom: 0cm;
+                left: 0.5cm;
+                right: 0cm;
+                height: 0.7cm;
+                font-size: 11px;
+            }
 		</style>
 	</head>
 	<body>
@@ -143,7 +151,7 @@
                     <td>Kantor SMK AZ-ZARKASYIH</td>
                 </tr>
             </table>
-            <div style="padding-bottom: 5mm">Mengingat pentingnya hal tersebut maka kami mengharapkan Bapak/Ibu Wali untuk datang tepat pada waktu yang telah di tentukan.</div>
+            <div style="padding-bottom: 5mm">Mengingat pentingnya hal tersebut maka kami mengharapkan Bapak/Ibu Wali murid untuk datang tepat pada waktu yang telah di tentukan.</div>
             <div>Demikian Surat panggilan ini kami sampaikan, atas perhatiannya kami ucapkan terima kasih.</div>
             <table class="table-ttd">
                 <tr>
@@ -157,5 +165,6 @@
                 </tr>
             </table>
         </div>
+        <div class="footer-page">Dicetak dari <b>SIAZAR (Sistem Informasi Akademik SMK AZ-ZARKASYIH)</b></div>
 	</body>
 </html>

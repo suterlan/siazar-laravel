@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -16,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         return view('user.index',[
-            'title'     => 'User Settings',
+            'title'     => 'User Settings | SIAZAR',
             'users'     => User::orderby('role', 'desc')->get()
         ]);
     }
@@ -73,7 +74,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return view('user.edit',[
-            'title'     => 'User Edit ',
+            'title'     => 'User Edit | SIAZAR',
             'user'      => $user
         ]);
     }
@@ -124,5 +125,22 @@ class UserController extends Controller
     {
         User::destroy($user->id);
         return redirect('dashboard/user')->with('success', 'Akun user berhasil dihapus!');
+    }
+
+    public function changeRole(Request $request){
+        $userLogin = Auth::user()->id;
+        if($request->id != $userLogin){
+            if ($request->role == 0){
+                $data = ['role' => 1];
+                User::where('id', $request->id)
+                    ->update($data);
+            }elseif($request->role == 1){
+                $data = ['role' => 0];
+                User::where('id', $request->id)
+                    ->update($data);
+            }
+        }else{
+            return redirect('/dashboard/user')->with('error', 'Perubahan data gagal, akun user sedang login!');
+        }
     }
 }

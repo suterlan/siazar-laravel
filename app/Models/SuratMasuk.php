@@ -19,16 +19,16 @@ class SuratMasuk extends Model
     }
 
 
-    // Rubah tampilan format tanggal surat secara global
-    public function getTanggalSuratAttribute()
-    {
-        return Carbon::parse($this->attributes['tanggal_surat'])
-            ->translatedFormat('d/m/Y');
-    }
-    // Rubah tampilan format tanggal diterima secara global
-    public function getTanggalDiterimaAttribute()
-    {
-        return Carbon::parse($this->attributes['tanggal_diterima'])
-            ->translatedFormat('d/m/Y');
-    }
+        // Rubah tampilan format tanggal surat secara global
+    // public function getTanggalSuratAttribute()
+    // {
+    //     return Carbon::parse($this->attributes['tanggal_surat'])
+    //         ->translatedFormat('d/m/Y');
+    // }
+        // Rubah tampilan format tanggal diterima secara global
+    // public function getTanggalDiterimaAttribute()
+    // {
+    //     return Carbon::parse($this->attributes['tanggal_diterima'])
+    //         ->translatedFormat('d/m/Y');
+    // }
 }

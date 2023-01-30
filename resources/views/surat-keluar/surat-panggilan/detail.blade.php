@@ -7,8 +7,8 @@
                 <div class="col-sm-12">
                     <div class="card shadow">
                         <div class="card-header">
-                            <a href="/dashboard/surat/panggilan" class="btn btn-danger btn-sm"><span class="fe fe-arrow-left"></span> Kembali</a>
-                            <a href="/dashboard/surat/panggilan/cetak/{{ $surat->id }}" class="btn btn-primary btn-sm float-right"><span class="fe fe-printer"></span> Cetak</a>
+                            <a href="/dashboard/suratkeluar/panggilan" class="btn btn-danger btn-sm"><span class="fe fe-arrow-left"></span> Kembali</a>
+                            <a href="/dashboard/suratkeluar/panggilan/cetak/{{ $surat->id }}" class="btn btn-primary btn-sm float-right"><span class="fe fe-printer"></span> Cetak</a>
                             <h5 class="mt-3">Preview surat pemanggilan siswa</h5>
                         </div>
                         <div class="card-body">

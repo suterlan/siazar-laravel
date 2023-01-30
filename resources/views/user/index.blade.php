@@ -16,6 +16,11 @@
                             <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
                         </div>
                         @endif
+                        @if (session()->has('error'))
+                        <div class="alert alert-danger col-12" role="alert">
+                            <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('error') }}
+                        </div>
+                        @endif
                         <table id="tbUser" class="table table-stripped table-hover">
                             <thead class="thead-dark">
                                 <th>#</th>
@@ -42,7 +47,7 @@
                                     </td>
                                     <td>
                                         <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" id="customSwitch{{ $loop->iteration }}" required @if($user->role==1) checked @endif>
+                                            <input type="checkbox" class="custom-control-input ubahRole" id="customSwitch{{ $loop->iteration }}" required @if($user->role==1) checked @endif data-id="{{ $user->id }}" data-role="{{ $user->role }}">
                                             <label class="custom-control-label" for="customSwitch{{ $loop->iteration }}"></label>
                                         </div>
                                     </td>
@@ -127,4 +132,18 @@
             </div>
         </div>
     </div>
+
+    <script>
+        let ubahRoles = document.querySelectorAll('.ubahRole');
+        ubahRoles.forEach((item) => {
+            item.addEventListener('click', () => {
+                // console.log('ok');
+                // console.log(item.dataset.id + ' ' + item.dataset.role);
+                fetch('/dashboard/user/ubahrole?id=' + item.dataset.id + '&role=' + item.dataset.role);
+                // .then(response => response.json())
+                // .then(data => console.log(data.id + data.role));
+                location.reload();
+            });
+        });
+    </script>
 @endsection

@@ -61,7 +61,7 @@
                             <option value="">&nbsp;</option>
                             <option value="Penerimaan">Surat Penerimaan Siswa</option>
                             <option value="panggilan">Surat Pemanggilan Siswa</option>
-                            <option value="pemberitahuan">Surat Pemberitahuan</option>
+                            <option value="mutasi">Surat Mutasi Siswa</option>
                         </select>
                     </div>
                 </div>
@@ -73,11 +73,10 @@
         </div>
     </div>
     <script>
-        let jenis_surat = document.querySelector('#jenis_surat');
-        const btnJenisSurat = document.querySelector('#btnJenisSurat');
-
         function SelectJenis(){
-            btnJenisSurat.setAttribute('href', '/dashboard/suratkeluar/' + jenis_surat.value);
+            let jenis_surat = document.querySelector('#jenis_surat');
+            const btnJenisSurat = document.querySelector('#btnJenisSurat');
+            btnJenisSurat.setAttribute('href', '/dashboard/surat/' + jenis_surat.value);
         }
     </script>
 @endsection

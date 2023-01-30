@@ -14,18 +14,18 @@ class SuratKeluarController extends Controller
     public function index()
     {
         return view('surat-keluar.index',[
-            'title'     => 'Surat Keluar | ',
+            'title'     => 'Surat Keluar | SIAZAR',
             'surats'    => SuratKeluar::with(['klasifikasi', 'penerimaan'])->latest()->get()
         ]);
     }
 
     public function create($jenis){
         if ($jenis == "Penerimaan") {
-            return redirect('/dashboard/surat/penerimaan/create');
+            return redirect('/dashboard/suratkeluar/penerimaan/create');
         }elseif ($jenis == "Panggilan") {
-            return redirect('/dashboard/surat/panggilan/create');
-        }elseif ($jenis == "Pemberitahuan") {
-            dd($jenis);
+            return redirect('/dashboard/suratkeluar/panggilan/create');
+        }elseif ($jenis == "mutasi") {
+            return redirect('/dashboard/suratkeluar/mutasi/create');
         }
     }
 

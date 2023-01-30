@@ -7,7 +7,7 @@
                 <div class="card shadow">
                     <div class="card-header">
                         <strong class="card-title">Surat Penerimaan</strong>
-                            <a href="/dashboard/surat/penerimaan/create" class="btn btn-primary btn-sm float-right" type="button"><span class="fe fe-file-plus"></span> Surat Baru </a>
+                            <a href="/dashboard/suratkeluar/penerimaan/create" class="btn btn-primary btn-sm float-right" type="button"><span class="fe fe-file-plus"></span> Surat Baru </a>
                         <p class="card-text">Tabel Surat Penerimaan</p>
                     </div>
                     <div class="card-body">
@@ -16,7 +16,7 @@
                             <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
                         </div>
                         @endif
-                        <table id="tbSuratPenerimaan" class="table table-stripped table-hover">
+                        <table id="tbSuratPenerimaan" class="table table-stripped table-hover table-responsive">
                             <thead class="thead-dark">
                                 <th>#</th>
                                 <th>Klasifikasi</th>
@@ -36,19 +36,19 @@
                                     <td>{{ $surat->nama_siswa }}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <a href="/dashboard/surat/penerimaan/cetak/{{ $surat->id }}" id="cetak" class="btn btn-sm btn-primary mr-1">
+                                            <a href="/dashboard/suratkeluar/penerimaan/cetak/{{ $surat->id }}" id="cetak" class="btn btn-sm btn-primary mr-1">
                                                 <span class="fe fe-printer fe-16"></span>
                                             </a>
-                                            <a href="/dashboard/surat/penerimaan/download/{{ $surat->id }}" id="download" class="btn btn-sm btn-secondary">
+                                            <a href="/dashboard/suratkeluar/penerimaan/download/{{ $surat->id }}" id="download" class="btn btn-sm btn-secondary">
                                                 <span class="fe fe-download fe-16"></span>
                                             </a>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="d-flex">
-                                            <a class="btn btn-outline-info btn-sm" href="/dashboard/surat/penerimaan/{{ $surat->id }}"><span class="fe fe-eye"></span> Detail</a>
-                                            <a class="btn btn-outline-warning btn-sm ml-1" href="/dashboard/surat/penerimaan/{{ $surat->id }}/edit"><span class="fe fe-edit"></span> Edit</a>
-                                            <form action="/dashboard/surat/penerimaan/{{ $surat->id }}" method="post">
+                                            <a class="btn btn-outline-info btn-sm" href="/dashboard/suratkeluar/penerimaan/{{ $surat->id }}"><span class="fe fe-eye"></span> Detail</a>
+                                            <a class="btn btn-outline-warning btn-sm ml-1" href="/dashboard/suratkeluar/penerimaan/{{ $surat->id }}/edit"><span class="fe fe-edit"></span> Edit</a>
+                                            <form action="/dashboard/suratkeluar/penerimaan/{{ $surat->id }}" method="post">
                                                 @method('delete')
                                                 @csrf
                                                 <button class="btn btn-outline-danger btn-sm ml-1" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete"></span> Remove</button>
@@ -64,12 +64,4 @@
             </div>
         </div>
     </div>
-    <script>
-        let jenis_surat = document.querySelector('#jenis_surat');
-        const btnJenisSurat = document.querySelector('#btnJenisSurat');
-
-        function SelectJenis(){
-            btnJenisSurat.setAttribute('href', '/dashboard/suratkeluar/' + jenis_surat.value);
-        }
-    </script>
 @endsection
