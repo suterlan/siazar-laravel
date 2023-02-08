@@ -6,70 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>{{ $title; }}</title>
             <!-- App CSS -->
-		<style type="text/css">
-			.page {
-				margin: 0;
-				padding: 20mm;
-                padding-top: 10mm;
-				font: 12pt "arial";
-			}
-			* {
-				box-sizing: border-box;
-				-moz-box-sizing: border-box;
-			}
-
-			@page {
-				size: A4;
-				margin: 0;
-			}
-			@media print {
-				html,
-				body {
-					width: 210mm;
-					height: 297mm;
-				}
-				.page {
-					margin: 0;
-					border: initial;
-					border-radius: initial;
-					width: initial;
-					min-height: initial;
-					box-shadow: initial;
-					background: initial;
-					page-break-after: always;
-				}
-			}
-			.kop {
-				width: 100%;
-				border-bottom: 5px solid black;
-				margin-bottom: 0.2cm;
-			}
-			.text-kop {
-				text-align: center;
-				/* line-height: 0.1cm; */
-				padding: 0;
-			}
-            .text-center{
-               text-align: center;
-            }
-            .pl-5{
-                padding-left: 8mm;
-            }
-            .table-ttd{
-                float: right;
-                margin-top: 10mm;
-                text-align: left;
-                margin-right: 10mm;
-            }
-            .footer-page {
-                position: fixed;
-                bottom: 0cm;
-                left: 0.5cm;
-                right: 0cm;
-                height: 0.7cm;
-                font-size: 11px;
-            }
-		</style>
+        <link rel="stylesheet"  href="{{public_path('css/surat.css')}}">
 	</head>
 	<body>
         <div class="page">
@@ -189,7 +126,10 @@
                 </tr>
             </table>
         </div>
-        <div class="footer-page">Dicetak dari <b>SIAZAR (Sistem Informasi Akademik SMK AZ-ZARKASYIH)</b></div>
+        <div class="footer-page">
+            <div id="foot-note"> Dicetak dari <b>SIAZAR (Sistem Informasi Akademik SMK AZ-ZARKASYIH)</b></div>
+            <div id="versi">{{config('app.version')}}</div>
+        </div>
         <script>
             setTimeout(() => {
                 window.print();

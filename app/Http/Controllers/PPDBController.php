@@ -166,4 +166,16 @@ class PPDBController extends Controller
         DB::table('p_p_d_b_s')->whereIn('id', $data)->delete();
         return redirect('/dashboard/ppdb')->with('success', 'Data calon siswa berhasil dihapus!');
     }
+
+    public function generate(){
+        $ppdb = PPDB::get();
+        $year = date('Y');
+        $month = date('m');
+        $day = date('d');
+        $nis = $year . $month . $day;
+
+        foreach ($ppdb as $index => $value) {
+            echo '0'.$index + 1 .'.'. $value->nama_siswa;    
+        }
+    }
 }

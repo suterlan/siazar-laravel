@@ -26,7 +26,7 @@
                         <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
                         <div class="mb-3">
                             <label for="nama_siswa" class="form-label">Nama Lengkap <small class="text-danger">(*)</small></label>
-                            <input type="text" class="form-control {{$errors->first('nama_siswa') ? "is-invalid" : "" }}" id="nama_siswa" name="nama_siswa" value="{{ old('nama_siswa', $registrasi->nama_siswa ?? '') }}">
+                            <input type="text" class="form-control {{$errors->first('nama_siswa') ? "is-invalid" : "" }}" id="nama_siswa" name="nama_siswa" value="{{ old('nama_siswa', $registrasi->nama_siswa ?? '') }}" required>
                             @error('nama_siswa')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -54,7 +54,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="tempat_lahir" class="form-label">Tempat Lahir <small class="text-danger">(*)</small></label>
-                            <input type="text" class="form-control {{$errors->first('tempat_lahir') ? "is-invalid" : "" }}" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir', $registrasi->tempat_lahir ?? '' ) }}">
+                            <input type="text" class="form-control {{$errors->first('tempat_lahir') ? "is-invalid" : "" }}" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir', $registrasi->tempat_lahir ?? '' ) }}" required>
                             @error('tempat_lahir')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -63,7 +63,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="tgl_lahir" class="form-label">Tanggal Lahir <small class="text-danger">(*)</small></label>
-                            <input type="date" class="form-control {{$errors->first('tgl_lahir') ? "is-invalid" : "" }}" id="tgl_lahir" name="tgl_lahir" value="{{ old('tgl_lahir', $registrasi->tgl_lahir ?? '' ) }}">
+                            <input type="date" class="form-control {{$errors->first('tgl_lahir') ? "is-invalid" : "" }}" id="tgl_lahir" name="tgl_lahir" value="{{ old('tgl_lahir', $registrasi->tgl_lahir ?? '' ) }}" required>
                             @error('tgl_lahir')
                             <div class="invalid-feedback">
                                 {{ $message }}

@@ -1,0 +1,68 @@
+.page {
+    margin: 0;
+    padding: 20mm;
+    padding-top: 10mm;
+    font: 12pt "arial";
+    min-height: 250mm;
+}
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+@page {
+    size: A4;
+    margin: 0;
+}
+@media print {
+    html,
+    body {
+        width: 210mm;
+        height: 297mm;
+    }
+    .page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        page-break-after: always;
+    }
+}
+.kop {
+    width: 100%;
+    border-bottom: 5px solid black;
+    margin-bottom: 0.2cm;
+}
+.text-kop {
+    text-align: center;
+    /* line-height: 0.1cm; */
+    padding: 0;
+}
+.text-center{
+   text-align: center;
+}
+.pl-5{
+    padding-left: 8mm;
+}
+.table-ttd{
+    float: right;
+    margin-top: 10mm;
+    text-align: left;
+    margin-right: 10mm;
+}
+.footer-page {
+    position: relative;
+    padding: 1cm 1cm 0cm 1cm;
+    bottom: 0.3cm;
+    height: 0.5cm;
+    font-size: 10px;
+}
+#foot-note{
+    float: left;
+}
+#versi{
+    float: right;
+}

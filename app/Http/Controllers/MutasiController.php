@@ -66,7 +66,7 @@ class MutasiController extends Controller
         SuratKeluar::create($validated);
         SuratMutasi::create($validated);
 
-        return redirect('/dashboard/surat/mutasi')->with('success', 'Surat mutasi baru berhasil dibuat!');
+        return redirect('/dashboard/suratkeluar/mutasi')->with('success', 'Surat mutasi baru berhasil dibuat!');
     }
 
     /**
@@ -163,7 +163,7 @@ class MutasiController extends Controller
         SuratMutasi::where('id', $mutasi->id)
                     ->update($dataMutasi);
 
-        return redirect('/dashboard/surat/mutasi')->with('success', 'Surat mutasi dengan nomor surat : ' .$mutasi->no_surat. ' berhasil diubah!');
+        return redirect('/dashboard/suratkeluar/mutasi')->with('success', 'Surat mutasi dengan nomor surat : ' .$mutasi->no_surat. ' berhasil diubah!');
     }
 
     /**
@@ -177,7 +177,7 @@ class MutasiController extends Controller
         SuratMutasi::where('id', $mutasi->id)->delete();
         SuratKeluar::where('id', $mutasi->id)->delete();
 
-        return redirect('/dashboard/surat/mutasi')->with('success', 'Surat Mutasi dengan no surat : ' . $mutasi->no_surat . ' berhasil dihapus!');
+        return redirect('/dashboard/suratkeluar/mutasi')->with('success', 'Surat Mutasi dengan no surat : ' . $mutasi->no_surat . ' berhasil dihapus!');
     }
 
     public function cetak(SuratMutasi $mutasi){

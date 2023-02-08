@@ -18,6 +18,7 @@
                             @method('delete')
                             @csrf
                         <button class="btn btn-success mb-3 d-none" type="submit" id="delAll">Delete All</button>
+                        <a href="/dashboard/ppdb/generate" class="btn btn-warning mb-3 float-right" type="button">Generate</a>
                         <table id="tbPpdb" class="table table-hover table-striped">
                             <thead>
                                 <td>

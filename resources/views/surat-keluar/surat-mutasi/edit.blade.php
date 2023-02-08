@@ -90,7 +90,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="tahun_pelajaran">Tahun Pelajaran</label>
-                            <input id="tahun_pelajaran" type="text" name="tahun_pelajaran" class="form-control" value="{{ $surat->tahun_pelajaran }}" required readonly>
+                            <input id="tahun_pelajaran" type="text" name="tahun_pelajaran" class="form-control" value="{{ $surat->tahun_pelajaran }}" placeholder="20xx/20xx" maxlength="9" required>
                             @error('tahun_pelajaran')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

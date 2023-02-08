@@ -23,7 +23,7 @@
         </p>
         <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
-                <a href="/dashboard/ppdb" aria-expanded="false" class="nav-link {{ Request::is('ppdb') ? 'link-active' : '' }}">
+                <a href="/dashboard/ppdb" aria-expanded="false" class="nav-link {{ Request::is('dashboard/ppdb') ? 'link-active' : '' }}">
                 <i class="fe fe-flag fe-16"></i>
                 <span class="ml-3 item-text">PPDB</span><span class="sr-only">(current)</span>
                 </a>
@@ -37,8 +37,7 @@
                 </a>
                 <ul class="list-unstyled pl-4 w-100 collapse {{ Request::is('dashboard/siswa*') ? 'show' : '' }}" id="siswa" style="">
                     <li class="nav-item dropdown">
-                        <a class="nav-link pl-3 {{ Request::is('dashboard/siswa/real*') ? 'link-active' : '' }}" href="/dashboard/siswa/real"><span class="ml-1">Siswa Real</span></a>
-                        <a class="nav-link pl-3 {{ Request::is('dashboard/siswa/fiktif*') ? 'link-active' : '' }}" href="/dashboard/siswa/fiktif"><span class="ml-1">Siswa Fiktif</span></a>
+                        <a class="nav-link pl-3 {{ Request::is('dashboard/siswa/all*') ? 'link-active' : '' }}" href="/dashboard/siswa/all"><span class="ml-1">Semua Siswa</span></a>
                     </li>
                 </ul>
             </li>
