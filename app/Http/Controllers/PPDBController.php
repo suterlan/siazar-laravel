@@ -50,7 +50,7 @@ class PPDBController extends Controller
             'kelurahan'     => 'max:64',
             'jml_saudara_kandung'   => 'max:1'
         ]);
-        
+
         if (empty($request->session()->get('registrasi'))) {
             $registrasi = new PPDB();
             $registrasi->fill($validatedData);
@@ -154,6 +154,62 @@ class PPDBController extends Controller
         return response()->json($kelurahan);
     }
 
+    // detail
+    public function show($id){
+        return view('ppdb.detail',[
+            'title'     => 'Detail Siswa Baru | SIAZAR',
+            'ppdb'      => PPDB::whereId($id)->first()
+        ]);
+    }
+
+    public function edit($id){
+        $provinces= Province::pluck('name', 'code');
+        return view('ppdb.edit',[
+            'title'     => 'Edit Siswa Baru | SIAZAR',
+            'provinces'     => $provinces,
+            'ppdb'      => PPDB::whereId($id)->first(),
+        ]);
+    }
+
+     public function update(Request $request){
+        $validatedData = $request->validate([
+            'nama_siswa'        => 'required',
+            'jk'                => 'required',
+            'nik'               => 'min:16|required|numeric',
+            'tempat_lahir'      => 'required',
+            'tgl_lahir'         => 'required',
+            'alamat'            => 'max:255',
+            'provinsi'          => 'max:64',
+            'kabupaten'         => 'max:64',
+            'kecamatan'         => 'max:64',
+            'kelurahan'         => 'max:64',
+            'jml_saudara_kandung'   => 'max:1',
+            'asal_sekolah'      => 'required',
+            'nisn'              => 'min:10|numeric|nullable',
+            'no_ijazah'         => 'min:16|nullable',
+            'no_skhun'          => 'min:7|nullable',
+            'no_kip'            => 'min:7|nullable',
+            'nama_kip'          => 'max:255',
+            'nama_ayah'         => 'nullable',
+            'nik_ayah'          => 'min:16|numeric|nullable',
+            'tgl_lahir_ayah'    => 'date|nullable',
+            'pendidikan_ayah'   => 'max:32',
+            'pekerjaan_ayah'    => 'max:64',
+            'penghasilan_ayah'  => 'numeric|nullable',
+            'nama_ibu'          => 'required',
+            'nik_ibu'           => 'min:16|numeric|nullable',
+            'tgl_lahir_ibu'     => 'date|nullable',
+            'pendidikan_ibu'    => 'max:32',
+            'pekerjaan_ibu'     => 'max:64',
+            'penghasilan_ibu'   => 'numeric|nullable',
+        ]);
+
+        PPDB::where('id', $request->id)
+            ->update($validatedData);
+
+        return redirect('/dashboard/ppdb')->with('success', 'Data ' . $request->nama_siswa . ' berhasil diubah!');
+    }
+
     public function delete($id){
         $data = PPDB::find($id);
         $data->delete();
@@ -175,7 +231,7 @@ class PPDBController extends Controller
         $nis = $year . $month . $day;
 
         foreach ($ppdb as $index => $value) {
-            echo '0'.$index + 1 .'.'. $value->nama_siswa;    
+            echo '0'.$index + 1 .'.'. $value->nama_siswa;
         }
     }
 }
