@@ -11,6 +11,9 @@
               <i class="fe fe-sun fe-16"></i>
             </a>
           </li>
+          <li class="nav-item">
+            <div class="nav-link text-primary"><b>{{config('app.version')}}</b></div>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{ auth()->user()->email }}

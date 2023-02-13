@@ -16,7 +16,7 @@
                             <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
                         </div>
                         @endif
-                        <table id="tbSuratPenerimaan" class="table table-stripped table-hover table-responsive">
+                        <table id="tbSuratPenerimaan" class="table table-stripped table-hover table-responsive table-surat-keluar">
                             <thead class="thead-dark">
                                 <th>#</th>
                                 <th>Klasifikasi</th>

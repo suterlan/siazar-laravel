@@ -16,7 +16,7 @@
                             <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
                         </div>
                         @endif
-                        <table id="tbSuratKeluar" class="table table-stripped table-hover">
+                        <table id="tbSuratKeluar" class="table table-stripped table-hover table-responsive">
                             <thead class="thead-dark">
                                 <th>#</th>
                                 <th>Kode Klasifikasi</th>

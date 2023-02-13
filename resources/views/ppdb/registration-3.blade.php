@@ -26,7 +26,7 @@
                     <h3>DATA AYAH</h3>
                     <div class="mb-3">
                         <label for="nama_ayah" class="form-label">Nama Ayah</label>
-                        <input id="nama_ayah" name="nama_ayah" type="text" class="form-control {{$errors->first('nama_ayah') ? "is-invalid" : "" }}" value="{{old('nama_ayah', $registrasi->nama_ayah ?? '')}}" autofocus>
+                        <input id="nama_ayah" name="nama_ayah" type="text" class="form-control {{$errors->first('nama_ayah') ? "is-invalid" : "" }}" value="{{old('nama_ayah', $registrasi->nama_ayah ?? '')}}">
                         @error('nama_ayah')
                         <div class="invalid-feedback">
                             {{ $message }}
