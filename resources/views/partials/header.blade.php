@@ -19,7 +19,9 @@
     <link rel="stylesheet" href="{{ asset('') }}css/jquery.steps.css">
     <link rel="stylesheet" href="{{ asset('') }}css/jquery.timepicker.css">
     <link rel="stylesheet" href="{{ asset('') }}css/quill.snow.css">
-    <link rel="stylesheet" href="{{ asset('') }}css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="{{ asset('package/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('package/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('package/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="{{ asset('') }}css/daterangepicker.css">
     <!-- App CSS -->

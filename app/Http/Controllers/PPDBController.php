@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jurusan;
+use App\Models\Kelas;
 use App\Models\PPDB;
+use App\Models\Siswa;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravolt\Indonesia\Models\City;
@@ -14,12 +18,37 @@ class PPDBController extends Controller
 {
     public function  index(){
         if (auth()->user()->role != 1) {
-            $data = PPDB::latest()->where('id', auth()->user()->id)->get();
+            $data = PPDB::latest()
+                        ->where('id', auth()->user()->id)
+                        ->where('confirmed', 0)
+                        ->get();
         }else{
-            $data = PPDB::latest()->get();
+            $data = PPDB::latest()->where('confirmed', 0)->get();
         }
+
+        $query = PPDB::select('confirmed')->get();
+        //jadikan hasil query menjadi collection dan cek data apakah ada yang memiliki nilai 0 pada kolom confirmed  
+        $cekConfirm = collect($query)->contains('confirmed', 0);
+        // jika benar ada nilai 0 dan sesuai(true) buat variabel disabled dengan nilai kosong
+        // jika salah atau tidak ada nilai 0, buat variabel dengan nilai 'disabled' (digunakan untuk disable class button approve)
+        if($cekConfirm == true){
+            $disabled = '';
+        }else{
+            $disabled = 'disabled';
+        }
+
+        $asalSekolah = PPDB::select('asal_sekolah', DB::raw('count(*) as total'))
+                        ->groupBy('asal_sekolah')
+                        ->where('confirmed', 0)
+                        ->pluck('total', 'asal_sekolah');
+                        
         return view('ppdb.index',[
             'title'     => 'PPDB | SIAZAR',
+            'jmlCalonSiswa' => PPDB::where('confirmed', 0)->count(),
+            'jmlPerempuan'  => PPDB::where('confirmed', 0)->where('jk', 'Perempuan')->count(),
+            'jmlLakiLaki'   => PPDB::where('confirmed', 0)->where('jk', 'Laki-Laki')->count(),
+            'asalSekolah'   => $asalSekolah,
+            'btnClass'  => $disabled,
             'ppdbs'     => $data,
         ]);
     }
@@ -127,12 +156,22 @@ class PPDBController extends Controller
         return view('ppdb.registration-4', [
             'title'     => 'Pendaftaran Siswa Baru | SIAZAR',
             'step'      => 4,
+            'jurusan'   => Jurusan::all(),
+            'kelas'     => Kelas::all(),
             'registrasi'    => $registrasi
         ]);
     }
 
-    public function finishRegistration(){
-        $registrasi = session()->get('registrasi');
+    public function finishRegistration(Request $request){
+        $validatedData = $request->validate([
+            'jurusan'   => 'required',
+            'kelas'     => 'required',
+        ]);
+
+        $registrasi = $request->session()->get('registrasi');
+        $registrasi->fill($validatedData);
+        $request->session()->put('registrasi', $registrasi);
+        
         $registrasi->save();
 
         session()->forget('registrasi');
@@ -162,20 +201,89 @@ class PPDBController extends Controller
     }
 
     public function deleteAll(Request $request){
-        $data = $request->sub_check;
-        DB::table('p_p_d_b_s')->whereIn('id', $data)->delete();
-        return redirect('/dashboard/ppdb')->with('success', 'Data calon siswa berhasil dihapus!');
+        if($request->sub_check != ''){
+            $data = $request->sub_check;
+            DB::table('p_p_d_b_s')->whereIn('id', $data)->delete();
+            return redirect('/dashboard/ppdb')->with('success', 'Data calon siswa berhasil dihapus!');
+        }else{
+            return redirect('/dashboard/ppdb')->with('error', 'Tidak ada data yang dipilih!');
+        }
     }
 
-    public function generate(){
-        $ppdb = PPDB::get();
-        $year = date('Y');
-        $month = date('m');
-        $day = date('d');
-        $nis = $year . $month . $day;
+    public function approve(){
+        $year = Carbon::now()->format('Y');
+        $month = Carbon::now()->format('m');
+        $day = Carbon::now()->format('d');
+        
+        
+        // query ke tabel ppdb berdasarkan status confirm nya masih 0
+        $ppdb = PPDB::where('confirmed', 0)->get();
 
-        foreach ($ppdb as $index => $value) {
-            echo '0'.$index + 1 .'.'. $value->nama_siswa;    
+        // lakukan perulangan untuk setiap row  
+        foreach ($ppdb as $value) {   
+            // query ke tabel siswa untuk ambil kode nis terakhir berdasarkan tahun dibuat
+            $cekNis = DB::table('siswas')
+            ->select(DB::raw('MAX(RIGHT(nis, 3)) as lastNis'))
+            ->where(DB::raw('YEAR(created_at)'), $year);
+            // cek hasil query
+            if($cekNis->count() > 0){
+                // jika ditemukan lebih dari 0, karena bentuknya  array maka lakukan perulangan 
+                foreach($cekNis->get() as $row){
+                    // buat variabel untuk menampung nis terakhir
+                    $new_nis = $row->lastNis;
+                }
+            }else{
+                // jika hasil query null/kurang dari 0,
+                // buat nilai kode nis default dengan '001'
+                $new_nis = '001';
+            }
+            // karena variabel new_nis berbentuk string buat variabel temp(sementara) dan ubah nilai new_nis ke integer dengan penambahan 1
+            $temp = ((int)$new_nis) + 1;
+            // masukan temp yang telah ditambah 1 ke variabel code dengan menambahkan 3 digit 0 di depan angka sehingga menjadi string lagi
+            $code = sprintf('%03s', $temp);
+            // gabungkan tahun bulan dan hari dengan kode yang telah dibuat kedalam variabel nis
+            $nis = $year . $month . $day . $code;
+
+            // kemudian insert ke tabel siswa 
+            Siswa::create([
+                'nis'                   => $nis,     
+                'nisn'                  => $value->nisn,      
+                'nama_siswa'            => $value->nama_siswa,
+                'nik'                   => $value->nik,
+                'jk'                    => $value->jk,
+                'tempat_lahir'          => $value->tempat_lahir,
+                'tgl_lahir'             => $value->tgl_lahir,
+                'tahun_ajaran'          => date('Y') . '/' . date('Y')+1,
+                'alamat'                => $value->alamat,
+                'provinsi'              => $value->provinsi,
+                'kabupaten'             => $value->kabupaten,
+                'kecamatan'             => $value->kecamatan,
+                'kelurahan'             => $value->keluarahan,
+                'asal_sekolah'          => $value->asal_sekolah,
+                'no_ijazah'             => $value->no_ijazah,
+                'no_skhun'              => $value->no_skhun,
+                'no_kip'                => $value->no_kip,
+                'nama_kip'              => $value->nama_kip,
+                'nama_ayah'             => $value->nama_ayah,
+                'nik_ayah'              => $value->nik_ayah,
+                'tgl_lahir_ayah'        => $value->tgl_lahir_ayah,
+                'pendidikan_ayah'       => $value->pendidikan_ayah,
+                'pekerjaan_ayah'        => $value->pekerjaan_ayah,
+                'penghasilan_ayah'      => $value->penghasilan_ayah,
+                'nama_ibu'              => $value->nama_ibu,
+                'nik_ibu'               => $value->nik_ibu,
+                'tgl_lahir_ibu'         => $value-> tgl_lahir_ibu,
+                'pendidikan_ibu'        => $value->pendidikan_ibu,
+                'pekerjaan_ibu'         => $value->pekerjaan_ibu,
+                'penghasilan_ibu'       => $value->penghasilan_ibu,
+                'jml_saudara_kandung'   => $value->jml_saudara_kandung,
+                'status_siswa'          => 1
+            ]);
+            PPDB::where('id', $value->id)
+                ->update([
+                    'confirmed' => true
+                ]);
         }
+        return redirect('/dashboard/ppdb')->with('success', 'Data PPDB berhasil di approve!');
     }
 }

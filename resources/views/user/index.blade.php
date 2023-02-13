@@ -18,7 +18,7 @@
                         @endif
                         @if (session()->has('error'))
                         <div class="alert alert-danger col-12" role="alert">
-                            <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('error') }}
+                            <span class="fe fe-info fe-16 mr-2"></span> {{ session('error') }}
                         </div>
                         @endif
                         <table id="tbUser" class="table table-stripped table-hover">

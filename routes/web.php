@@ -46,8 +46,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/ppdb/registrasi-step3', [PPDBController::class, 'registration3']);
     Route::post('/dashboard/ppdb/registrasi-step3', [PPDBController::class, 'postRegistration3']);
     Route::get('/dashboard/ppdb/registrasi-step4', [PPDBController::class, 'registration4']);
-    Route::get('/dashboard/ppdb/registrasi-finish', [PPDBController::class, 'finishRegistration']);
-    Route::get('/dashboard/ppdb/generate', [PPDBController::class, 'generate']);
+    Route::post('/dashboard/ppdb/registrasi-finish', [PPDBController::class, 'finishRegistration']);
+    Route::get('/dashboard/ppdb/approve', [PPDBController::class, 'approve']);
     Route::get('/dashboard/ppdb/delete/{id}', [PPDBController::class, 'delete']);
     Route::delete('/dashboard/ppdb/delete-all', [PPDBController::class, 'deleteAll']);
     // Route untuk mengambil data kabupaten dengan javascript (plugin laravolt)

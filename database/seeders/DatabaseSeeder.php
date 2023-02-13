@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Jurusan;
+use App\Models\Kelas;
 use App\Models\Klasifikasi;
 use App\Models\SuratMasuk;
 use Illuminate\Database\Seeder;
@@ -17,8 +19,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(5)->create();
-
         \App\Models\User::factory()->create([
             'name' => 'admin',
             'username' => 'admin',
@@ -41,5 +41,31 @@ class DatabaseSeeder extends Seeder
 
         // seed Surat Masuk
         SuratMasuk::factory(5)->create();
+
+        Jurusan::create([
+            'kode'  => 'TML',
+            'nama'  => 'Teknik Multimedia',
+            'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, quidem.'
+        ]);
+        Jurusan::create([
+            'kode'  => 'TSM',
+            'nama'  => 'Teknik Sepeda Motor',
+            'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, quidem.'
+        ]);
+        Jurusan::create([
+            'kode'  => 'MP',
+            'nama'  => 'Manajemen Perkantoran',
+            'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, quidem.'
+        ]);
+
+        Kelas::create([
+            'nama'  => 'X'
+        ]);
+        Kelas::create([
+            'nama'  => 'XI'
+        ]);
+        Kelas::create([
+            'nama'  => 'XII'
+        ]);
     }
 }
