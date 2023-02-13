@@ -103,13 +103,13 @@
                     <button class="btn btn-danger mb-3 d-none" type="submit" id="delAll">Delete All</button>
                     <table id="tbPpdb" class="table table-hover table-striped">
                         <thead>
-                            <td>
+                            <td scope="col">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="checkAll">
                                     <label class="custom-control-label" for="checkAll"></label>
                                 </div>
                             </td>
-                            <th>No</th>
+                            <th scope="col">No</th>
                             <th>Nama</th>
                             <th>Tempat, Tgl lahir</th>
                             <th>NISN</th>
@@ -145,7 +145,8 @@
                                         <span class="text-muted sr-only">Action</span>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="/dashboard/ppdb/{{ $ppdb->id }}/edit"><span class="fe fe-edit text-warning"></span> Edit</a>
+                                        <a class="dropdown-item" href="/dashboard/ppdb/detail/{{ $ppdb->id }}"><span class="fe fe-eye text-primary"></span> Details</a>
+                                        <a class="dropdown-item" href="/dashboard/ppdb/edit/{{ $ppdb->id }}"><span class="fe fe-edit text-warning"></span> Edit</a>
                                             <a href="/dashboard/ppdb/delete/{{ $ppdb->id }}" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete text-danger"></span> Remove</a>
                                     </div>
                                 </td>
