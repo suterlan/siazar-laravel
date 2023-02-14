@@ -10,4 +10,9 @@ class PPDB extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class);
+    }
 }
