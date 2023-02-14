@@ -101,7 +101,7 @@
                         @method('delete')
                         @csrf
                     <button class="btn btn-danger mb-3 d-none" type="submit" id="delAll">Delete All</button>
-                    <table id="tbPpdb" class="table table-hover table-striped">
+                    <table id="tbPpdb" class="table table-hover table-striped table-responsive">
                         <thead>
                             <td scope="col">
                                 <div class="custom-control custom-checkbox">
@@ -119,6 +119,7 @@
                             <th>Nama Ibu</th>
                             <th>NIK Ibu</th>
                             <th>Asal Sekolah</th>
+                            <th>Jurusan Dipilih</th>
                             <th class="text-end" scope="col"></th>
                         </thead>
                         <tbody>
@@ -140,14 +141,12 @@
                                 <td>{{ $ppdb->nama_ibu }}</td>
                                 <td>{{ $ppdb->nik_ibu }}</td>
                                 <td>{{ $ppdb->asal_sekolah }}</td>
+                                <td>{{ $ppdb->jurusan->nama }}</td>
                                 <td>
-                                    <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="text-muted sr-only">Action</span>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="/dashboard/ppdb/detail/{{ $ppdb->id }}"><span class="fe fe-eye text-primary"></span> Details</a>
-                                        <a class="dropdown-item" href="/dashboard/ppdb/edit/{{ $ppdb->id }}"><span class="fe fe-edit text-warning"></span> Edit</a>
-                                            <a href="/dashboard/ppdb/delete/{{ $ppdb->id }}" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete text-danger"></span> Remove</a>
+                                    <div class="d-flex">
+                                        <a class="btn btn-sm btn-info ml-1" href="/dashboard/ppdb/detail/{{ $ppdb->id }}" title="Detail"><span class="fe fe-eye"></span></a>
+                                        <a class="btn btn-sm btn-primary ml-1" href="/dashboard/ppdb/edit/{{ $ppdb->id }}" title="Edit"><span class="fe fe-edit"></span></a>
+                                        <a class="btn btn-sm btn-danger ml-1" href="/dashboard/ppdb/delete/{{ $ppdb->id }}" title="Remove" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete"></span></a>
                                     </div>
                                 </td>
                             </tr>

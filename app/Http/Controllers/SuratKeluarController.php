@@ -15,7 +15,7 @@ class SuratKeluarController extends Controller
     {
         return view('surat-keluar.index',[
             'title'     => 'Surat Keluar | SIAZAR',
-            'surats'    => SuratKeluar::with(['klasifikasi', 'penerimaan'])->latest()->get()
+            'surats'    => SuratKeluar::with(['klasifikasi', 'penerimaan', 'mutasi', 'panggilan'])->latest()->get()
         ]);
     }
 

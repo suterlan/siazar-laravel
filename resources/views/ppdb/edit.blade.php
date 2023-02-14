@@ -10,6 +10,38 @@
                     <form class="needs-validation @if ($errors->any()) was-validated @endif" action="/dashboard/ppdb/update" method="POST">
                     @csrf
                     <div class="card-body pb-0">
+                        <h6><span class="fe fe-list text-primary"></span> JURUSAN YANG DIMINATI</h6>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="jurusan_id">Jurusan</label>
+                                <select class="custom-select {{$errors->first('jurusan_id') ? "is-invalid" : "" }}" id="jurusan_id" name="jurusan_id" required>
+                                    <option value="">==Pilih jurusan==</option>
+                                    @foreach ($jurusan as $value)
+                                        @if (old('jurusan_id', $ppdb->jurusan_id) == $value->id)
+                                            <option value="{{ $value->id }}" selected>{{ $value->kode . ' - ' . $value->nama }}</option>
+                                        @endif
+                                        <option value="{{ $value->id }}">{{ $value->kode . ' - ' . $value->nama }}</option>
+                                    @endforeach
+                                </select>
+                                @error('jurusan_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="kelas_id">Kelas</label>
+                                <select class="custom-select {{$errors->first('kelas_id') ? "is-invalid" : "" }}" id="kelas_id" name="kelas_id" required>
+                                    @foreach ($kelas as $value)
+                                        @if (old('kelas_id', $ppdb->kelas_id) == $value->id)
+                                            <option value="{{ $value->id }}" selected>{{ $value->nama }}</option>
+                                        @endif
+                                        <option value="{{ $value->id }}">{{ $value->nama }}</option>
+                                    @endforeach
+                                </select>
+                                @error('kelas_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <div class="col-lg-6">
                                 <h5><span class="fe fe-user text-primary"></span> PROFIL CALON SISWA</h5>

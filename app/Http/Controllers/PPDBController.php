@@ -23,7 +23,7 @@ class PPDBController extends Controller
                         ->where('confirmed', 0)
                         ->get();
         }else{
-            $data = PPDB::latest()->where('confirmed', 0)->get();
+            $data = PPDB::with('jurusan')->latest()->where('confirmed', 0)->get();
         }
 
         $query = PPDB::select('confirmed')->get();
@@ -164,8 +164,8 @@ class PPDBController extends Controller
 
     public function finishRegistration(Request $request){
         $validatedData = $request->validate([
-            'jurusan'   => 'required',
-            'kelas'     => 'required',
+            'jurusan_id'   => 'required',
+            'kelas_id'     => 'required',
         ]);
 
         $registrasi = $request->session()->get('registrasi');
@@ -205,6 +205,8 @@ class PPDBController extends Controller
         $provinces= Province::pluck('name', 'code');
         return view('ppdb.edit',[
             'title'     => 'Edit Siswa Baru | SIAZAR',
+            'jurusan'   => Jurusan::all(),
+            'kelas'     => Kelas::all(),
             'provinces'     => $provinces,
             'ppdb'      => PPDB::whereId($id)->first(),
         ]);
@@ -241,6 +243,8 @@ class PPDBController extends Controller
             'pendidikan_ibu'    => 'max:32',
             'pekerjaan_ibu'     => 'max:64',
             'penghasilan_ibu'   => 'numeric|nullable',
+            'jurusan_id'        => 'required',
+            'kelas_id'          => 'required',
         ]);
 
         PPDB::where('id', $request->id)
@@ -304,12 +308,14 @@ class PPDBController extends Controller
             Siswa::create([
                 'nis'                   => $nis,     
                 'nisn'                  => $value->nisn,      
+                'jurusan_id'            => $value->jurusan_id,      
+                'kelas_id'              => $value->kelas_id,      
                 'nama_siswa'            => $value->nama_siswa,
-                'nik'                   => $value->nik,
                 'jk'                    => $value->jk,
                 'tempat_lahir'          => $value->tempat_lahir,
                 'tgl_lahir'             => $value->tgl_lahir,
                 'tahun_ajaran'          => date('Y') . '/' . date('Y')+1,
+                'nik'                   => $value->nik,
                 'alamat'                => $value->alamat,
                 'provinsi'              => $value->provinsi,
                 'kabupaten'             => $value->kabupaten,
@@ -333,7 +339,6 @@ class PPDBController extends Controller
                 'pekerjaan_ibu'         => $value->pekerjaan_ibu,
                 'penghasilan_ibu'       => $value->penghasilan_ibu,
                 'jml_saudara_kandung'   => $value->jml_saudara_kandung,
-                'status_siswa'          => 1
             ]);
             PPDB::where('id', $value->id)
                 ->update([
