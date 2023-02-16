@@ -2,8 +2,8 @@
 @section('content')
 <div class="container-fluid">
     <div class="col-12">
-        <div class="row">
-            <div class="col-md-6 col-xl-2 mb-4">
+       <div class="row">
+            <div class="col-md-6 col-xl-4 mb-4">
               <div class="card shadow text-white border-0">
                 <div class="card-body">
                   <div class="row align-items-center">
@@ -20,7 +20,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-xl-2 mb-4">
+            <div class="col-md-6 col-xl-4 mb-4">
               <div class="card shadow border-0">
                 <div class="card-body">
                   <div class="row align-items-center">
@@ -37,7 +37,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-xl-2 mb-4">
+            <div class="col-md-6 col-xl-4 mb-4">
               <div class="card shadow border-0">
                 <div class="card-body">
                   <div class="row align-items-center">
@@ -54,13 +54,15 @@
                 </div>
               </div>
             </div>
+        </div>
+        <div class="row">
             @foreach ($jurusan as $value)
-            <div class="col-md-6 col-xl-2 mb-4">
+            <div class="col-md-6 col-xl-4 mb-4">
               <div class="card shadow border-0">
                 <div class="card-body">
                   <div class="row align-items-center">
                     <div class="col-3 text-center">
-                      <img src="{{asset('img/'. $value->kode .'.png')}}" class="img-fluid" alt="">
+                      <img src="{{ asset('img/'.$value->kode.'.png')}}" class="img-fluid" alt="">
                     </div>
                     <div class="col pr-0">
                       <p class="small text-muted mb-0">{{$value->nama}}</p>
