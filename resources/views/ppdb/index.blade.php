@@ -3,24 +3,24 @@
 <div class="container-fluid">
     <div class="col-12">
         <div class="row">
-            <div class="col-md-6 col-xl-3 mb-4">
+            <div class="col-md-6 col-xl-2 mb-4">
               <div class="card shadow text-white border-0">
                 <div class="card-body">
                   <div class="row align-items-center">
                     <div class="col-3 text-center">
                       <span class="circle circle-sm bg-primary-light">
-                        <i class="fe fe-16 fe-user text-white mb-0"></i>
+                          <i class="fe fe-16 fe-user text-white mb-0"></i>
                       </span>
                     </div>
                     <div class="col pr-0">
-                      <p class="small text-muted mb-0">Calon Siswa Tahun Ini</p>
-                      <span class="h3 mb-0">{{$jmlCalonSiswa}}</span>
+                        <p class="small text-muted mb-0">Calon Siswa Tahun Ini</p>
+                        <span class="h3 mb-0">{{$jmlCalonSiswa}}</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-xl-3 mb-4">
+            <div class="col-md-6 col-xl-2 mb-4">
               <div class="card shadow border-0">
                 <div class="card-body">
                   <div class="row align-items-center">
@@ -37,7 +37,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-xl-3 mb-4">
+            <div class="col-md-6 col-xl-2 mb-4">
               <div class="card shadow border-0">
                 <div class="card-body">
                   <div class="row align-items-center">
@@ -54,25 +54,23 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-xl-3 mb-4">
+            @foreach ($jurusan as $value)
+            <div class="col-md-6 col-xl-2 mb-4">
               <div class="card shadow border-0">
                 <div class="card-body">
                   <div class="row align-items-center">
                     <div class="col-3 text-center">
-                      <span class="circle circle-sm bg-primary">
-                        <i class="fe fe-16 fe-activity text-white mb-0"></i>
-                      </span>
+                      <img src="{{asset('img/'. $value->kode .'.png')}}" class="img-fluid" alt="">
                     </div>
-                    <div class="col">
-                      <p class="small text-muted mb-0">Asal Sekolah</p>
-                      @foreach ($asalSekolah as $key => $value)
-                      <span class="mb-0 mr-2">{{$key}} : <span class="h3">{{$value}}</span></span>
-                      @endforeach
+                    <div class="col pr-0">
+                      <p class="small text-muted mb-0">{{$value->nama}}</p>
+                      <span class="h3 mb-0">{{$value->countJurusan}}</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            @endforeach
         </div>
         <div class="row">
             <div class="card shadow">
@@ -100,7 +98,7 @@
                     <form action="/dashboard/ppdb/delete-all" method="post">
                         @method('delete')
                         @csrf
-                    <button class="btn btn-danger mb-3 d-none" type="submit" id="delAll">Delete All</button>
+                    <button class="btn btn-danger mb-3 d-none" type="submit" id="delAll" onclick="return confirm('Yakin mau hapus data?')">Delete All</button>
                     <table id="tbPpdb" class="table table-hover table-striped table-responsive">
                         <thead>
                             <td scope="col">

@@ -37,6 +37,7 @@
 
 <script src='{{ asset('') }}js/surat.js'></script>
 <script src='{{ asset('') }}js/ppdb.js'></script>
+<script src='{{ asset('') }}js/suterlan.js'></script>
 <script>
   $('.select2').select2(
   {

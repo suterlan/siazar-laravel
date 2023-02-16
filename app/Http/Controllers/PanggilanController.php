@@ -32,7 +32,7 @@ class PanggilanController extends Controller
     {
         return view('surat-keluar.surat-panggilan.create',[
             'title'         => 'Surat Panggilan Baru | SIAZAR',
-            'klasifikasi'   => Klasifikasi::all()
+            'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')
         ]);
     }
 
@@ -87,7 +87,7 @@ class PanggilanController extends Controller
         return view('surat-keluar.surat-panggilan.edit',[
             'title'     => 'Edit Surat Panggilan | SIAZAR',
             'surat'     => $panggilan,
-            'klasifikasi'   => Klasifikasi::all()
+            'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')
         ]);
     }
 
