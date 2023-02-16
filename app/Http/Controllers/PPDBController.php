@@ -106,7 +106,7 @@ class PPDBController extends Controller
     public function postRegistration2(Request $request){
         $validatedData = $request->validate([
             'asal_sekolah'  => 'required',
-            'nisn'          => 'min:10|numeric|nullable',
+            'nisn'          => 'min:10|numeric|required',
             'no_ijazah'     => 'min:16|nullable',
             'no_skhun'      => 'min:7|nullable',
             'no_kip'        => 'min:7|nullable',
@@ -227,7 +227,7 @@ class PPDBController extends Controller
             'kelurahan'         => 'max:64',
             'jml_saudara_kandung'   => 'max:1',
             'asal_sekolah'      => 'required',
-            'nisn'              => 'min:10|numeric|nullable',
+            'nisn'              => 'min:10|numeric|required',
             'no_ijazah'         => 'min:16|nullable',
             'no_skhun'          => 'min:7|nullable',
             'no_kip'            => 'min:7|nullable',
