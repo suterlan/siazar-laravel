@@ -32,7 +32,7 @@ class MutasiController extends Controller
     {
         return view('surat-keluar.surat-mutasi.create',[
             'title'     => 'Surat Mutasi Baru | SIAZAR',
-            'klasifikasi'    => Klasifikasi::all()
+            'klasifikasi'    => Klasifikasi::select('id', 'kode', 'nama')
         ]);
     }
 
@@ -94,7 +94,7 @@ class MutasiController extends Controller
         return view('surat-keluar.surat-mutasi.edit', [
             'title'         => 'Edit Surat Mutasi | SIAZAR',
             'surat'         => $mutasi,
-            'klasifikasi'   => Klasifikasi::all()
+            'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')
         ]);
     }
 

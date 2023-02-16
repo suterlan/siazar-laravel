@@ -45,8 +45,8 @@ return new class extends Migration
             $table->string('pekerjaan_ibu', 64)->nullable();
             $table->integer('penghasilan_ibu')->nullable();
             $table->string('jml_saudara_kandung', 1)->nullable();
-            $table->integer('jurusan_id')->unique();
-            $table->integer('kelas_id')->unique();
+            $table->integer('jurusan_id');
+            $table->integer('kelas_id');
             $table->boolean('confirmed')->default(0);
             $table->timestamps();
         });

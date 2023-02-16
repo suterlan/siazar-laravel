@@ -37,17 +37,18 @@ class PPDBController extends Controller
             $disabled = 'disabled';
         }
 
-        $asalSekolah = PPDB::select('asal_sekolah', DB::raw('count(*) as total'))
-                        ->groupBy('asal_sekolah')
-                        ->where('confirmed', 0)
-                        ->pluck('total', 'asal_sekolah');
+        $jurusan = PPDB::select('p_p_d_b_s.jurusan_id', 'jurusans.kode as kode', 'jurusans.nama as nama', DB::raw('count(jurusans.id) as countJurusan'))
+                        ->join('jurusans', 'p_p_d_b_s.jurusan_id', 'jurusans.id')
+                        ->groupBy('p_p_d_b_s.jurusan_id', 'kode', 'nama')
+                        ->where('p_p_d_b_s.confirmed', 0)
+                        ->get();
                         
         return view('ppdb.index',[
             'title'     => 'PPDB | SIAZAR',
             'jmlCalonSiswa' => PPDB::where('confirmed', 0)->count(),
             'jmlPerempuan'  => PPDB::where('confirmed', 0)->where('jk', 'Perempuan')->count(),
             'jmlLakiLaki'   => PPDB::where('confirmed', 0)->where('jk', 'Laki-Laki')->count(),
-            'asalSekolah'   => $asalSekolah,
+            'jurusan'       => $jurusan,
             'btnClass'  => $disabled,
             'ppdbs'     => $data,
         ]);
@@ -156,8 +157,8 @@ class PPDBController extends Controller
         return view('ppdb.registration-4', [
             'title'     => 'Pendaftaran Siswa Baru | SIAZAR',
             'step'      => 4,
-            'jurusan'   => Jurusan::all(),
-            'kelas'     => Kelas::all(),
+            'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
+            'kelas'     => Kelas::select('id', 'nama')->get(),
             'registrasi'    => $registrasi
         ]);
     }
@@ -205,8 +206,8 @@ class PPDBController extends Controller
         $provinces= Province::pluck('name', 'code');
         return view('ppdb.edit',[
             'title'     => 'Edit Siswa Baru | SIAZAR',
-            'jurusan'   => Jurusan::all(),
-            'kelas'     => Kelas::all(),
+            'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
+            'kelas'     => Kelas::select('id', 'nama')->get(),
             'provinces'     => $provinces,
             'ppdb'      => PPDB::whereId($id)->first(),
         ]);

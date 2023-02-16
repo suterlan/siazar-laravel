@@ -31,7 +31,7 @@ class SuratMasukController extends Controller
     {
         return view('surat-masuk.create', [
             'title' => 'Tambah Surat Masuk | SIAZAR',
-            'klasifikasi'   => Klasifikasi::all()
+            'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')
         ]);
     }
 
@@ -89,7 +89,7 @@ class SuratMasukController extends Controller
         return view('surat-masuk.edit', [
             'title' => 'Edit Surat Masuk | SIAZAR',
             'surat' => $suratmasuk,
-            'klasifikasi'   => Klasifikasi::all()
+            'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')
         ]);
     }
 
