@@ -113,9 +113,7 @@
                             <th>NISN</th>
                             <th>NIK</th>
                             <th>Nama Ayah</th>
-                            <th>NIK Ayah</th>
                             <th>Nama Ibu</th>
-                            <th>NIK Ibu</th>
                             <th>Asal Sekolah</th>
                             <th>Jurusan Dipilih</th>
                             <th class="text-end" scope="col"></th>
@@ -135,9 +133,7 @@
                                 <td>{{ $ppdb->nisn }}</td>
                                 <td>{{ $ppdb->nik }}</td>
                                 <td>{{ $ppdb->nama_ayah }}</td>
-                                <td>{{ $ppdb->nik_ayah }}</td>
                                 <td>{{ $ppdb->nama_ibu }}</td>
-                                <td>{{ $ppdb->nik_ibu }}</td>
                                 <td>{{ $ppdb->asal_sekolah }}</td>
                                 <td>{{ $ppdb->jurusan->nama }}</td>
                                 <td>
