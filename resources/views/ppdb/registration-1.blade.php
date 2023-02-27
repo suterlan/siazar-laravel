@@ -52,22 +52,31 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="tempat_lahir" class="form-label">Tempat Lahir <small class="text-danger">(*)</small></label>
-                            <input type="text" class="form-control {{$errors->first('tempat_lahir') ? "is-invalid" : "" }}" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir', $registrasi->tempat_lahir ?? '' ) }}" required>
-                            @error('tempat_lahir')
-                            <div class="invalid-feedback">
-                                {{ $message }}
+                        <div class="form-row">
+                            <div class="mb-3 col-md-6">
+                                <label for="tempat_lahir" class="form-label">Tempat Lahir <small class="text-danger">(*)</small></label>
+                                <input type="text" class="form-control {{$errors->first('tempat_lahir') ? "is-invalid" : "" }}" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir', $registrasi->tempat_lahir ?? '' ) }}" required>
+                                @error('tempat_lahir')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @enderror
+                            <div class="mb-3 col-md-6">
+                                <label for="tgl_lahir" class="form-label">Tanggal Lahir <small class="text-danger">(*)</small></label>
+                                <input type="date" class="form-control {{$errors->first('tgl_lahir') ? "is-invalid" : "" }}" id="tgl_lahir" name="tgl_lahir" value="{{ old('tgl_lahir', $registrasi->tgl_lahir ?? '' ) }}" required>
+                                @error('tgl_lahir')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <label for="tgl_lahir" class="form-label">Tanggal Lahir <small class="text-danger">(*)</small></label>
-                            <input type="date" class="form-control {{$errors->first('tgl_lahir') ? "is-invalid" : "" }}" id="tgl_lahir" name="tgl_lahir" value="{{ old('tgl_lahir', $registrasi->tgl_lahir ?? '' ) }}" required>
-                            @error('tgl_lahir')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                            <label for="no_hp">Nomor Hanphone</label>
+                            <input id="no_hp" type="tel" name="no_hp" class="form-control {{$errors->first('no_hp') ? "is-invalid" : "" }}" value="{{ old('no_hp', $registrasi->no_hp ?? '' ) }}" onKeyDown="if(this.value.length==13 && event.keyCode!=8) return false;" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            @error('no_hp')
+                                <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group mb-3">
@@ -78,8 +87,8 @@
                             @enderror
                         </div>
                         <div class="form-group mb-3">
-                            <label for="provinsi">Provinsi</label>
-                            <select class="custom-select {{$errors->first('provinsi') ? "is-invalid" : "" }}" id="provinsi" name="provinsi">
+                            <label for="provinsi">Provinsi<small class="text-danger">(*)</small></label>
+                            <select class="custom-select {{$errors->first('provinsi') ? "is-invalid" : "" }}" id="provinsi" name="provinsi" required>
                                 <option value="">==Pilih Provinsi==</option>
                                 @foreach ($provinces as $code => $name)
                                     @if (old('provinsi', $registrasi->provinsi ?? '') == $name)
@@ -93,8 +102,8 @@
                             @enderror
                         </div>
                         <div class="form-group mb-3">
-                            <label for="kabupaten">Kabupaten / Kota</label>
-                            <select class="custom-select {{$errors->first('kabupaten') ? "is-invalid" : "" }}" id="kabupaten" name="kabupaten">
+                            <label for="kabupaten">Kabupaten / Kota<small class="text-danger">(*)</small></label>
+                            <select class="custom-select {{$errors->first('kabupaten') ? "is-invalid" : "" }}" id="kabupaten" name="kabupaten" required>
                                 @if (isset($registrasi->kabupaten))
                                     <option value="{{ old('kabupaten', $registrasi->kabupaten)}}" selected>{{ old('kabupaten', $registrasi->kabupaten)}}</option>
                                 @endif
@@ -105,8 +114,8 @@
                             @enderror
                         </div>
                         <div class="form-group mb-3">
-                            <label for="kecamatan">Kecamatan</label>
-                            <select class="custom-select {{$errors->first('kecamatan') ? "is-invalid" : "" }}" id="kecamatan" name="kecamatan">
+                            <label for="kecamatan">Kecamatan<small class="text-danger">(*)</small></label>
+                            <select class="custom-select {{$errors->first('kecamatan') ? "is-invalid" : "" }}" id="kecamatan" name="kecamatan" required>
                                 @if (isset($registrasi->kecamatan))
                                     <option value="{{ old('kecamatan', $registrasi->kecamatan)}}" selected>{{old('kecamatan', $registrasi->kecamatan)}}</option>
                                 @endif
@@ -117,8 +126,8 @@
                             @enderror
                         </div>
                         <div class="form-group mb-3">
-                            <label for="kelurahan">Desa</label>
-                            <select class="custom-select {{$errors->first('kelurahan') ? "is-invalid" : "" }}" id="kelurahan" name="kelurahan">
+                            <label for="kelurahan">Desa<small class="text-danger">(*)</small></label>
+                            <select class="custom-select {{$errors->first('kelurahan') ? "is-invalid" : "" }}" id="kelurahan" name="kelurahan" required>
                                 @if (isset($registrasi->kelurahan))
                                     <option value="{{ old('kelurahan', $registrasi->kelurahan)}}" selected>{{old('kelurahan', $registrasi->kelurahan)}}</option>
                                 @endif

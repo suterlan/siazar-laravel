@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dokumen;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\PPDB;
@@ -19,7 +20,7 @@ class PPDBController extends Controller
     public function  index(){
         if (auth()->user()->role != 1) {
             $data = PPDB::latest()
-                        ->where('id', auth()->user()->id)
+                        ->where('user_id', auth()->user()->id)
                         ->where('confirmed', 0)
                         ->get();
         }else{
@@ -37,9 +38,9 @@ class PPDBController extends Controller
             $disabled = 'disabled';
         }
 
-        $jurusan = PPDB::select('p_p_d_b_s.jurusan_id', 'jurusans.kode as kode', 'jurusans.nama as nama', DB::raw('count(jurusans.id) as countJurusan'))
+        $jurusan = PPDB::select('p_p_d_b_s.jurusan_id', 'jurusans.logo as logo', 'jurusans.nama as nama', DB::raw('count(jurusans.id) as countJurusan'))
                         ->join('jurusans', 'p_p_d_b_s.jurusan_id', 'jurusans.id')
-                        ->groupBy('p_p_d_b_s.jurusan_id', 'kode', 'nama')
+                        ->groupBy('p_p_d_b_s.jurusan_id', 'logo', 'nama')
                         ->where('p_p_d_b_s.confirmed', 0)
                         ->get();
                         
@@ -73,6 +74,7 @@ class PPDBController extends Controller
             'nik'           => 'min:16|required|numeric',
             'tempat_lahir'  => 'required',
             'tgl_lahir'     => 'required',
+            'no_hp'         => 'max:13',
             'alamat'        => 'max:255',
             'provinsi'      => 'max:64',
             'kabupaten'     => 'max:64',
@@ -179,26 +181,11 @@ class PPDBController extends Controller
         return redirect('/dashboard/ppdb')->with('success', 'Data berhasil disimpan!');
     }
 
-    public function getKabupaten(Request $request){
-        $kabupaten = City::select('code', 'name')->where('province_code', $request->code)->get();
-        return response()->json($kabupaten);
-    }
-
-    public function getKecamatan(Request $request){
-        $kecamatan = District::select('code', 'name')->where('city_code', $request->code)->get();
-        return response()->json($kecamatan);
-    }
-
-    public function getKelurahan(Request $request){
-        $kelurahan = Village::select('code', 'name')->where('district_code', $request->code)->get();
-        return response()->json($kelurahan);
-    }
-
     // detail
     public function show($id){
         return view('ppdb.detail',[
             'title'     => 'Detail Siswa Baru | SIAZAR',
-            'ppdb'      => PPDB::whereId($id)->first()
+            'ppdb'      => PPDB::with('jurusan')->whereId($id)->first()
         ]);
     }
 
@@ -220,6 +207,7 @@ class PPDBController extends Controller
             'nik'               => 'min:16|required|numeric',
             'tempat_lahir'      => 'required',
             'tgl_lahir'         => 'required',
+            'no_hp'             => 'max:13',
             'alamat'            => 'max:255',
             'provinsi'          => 'max:64',
             'kabupaten'         => 'max:64',
@@ -283,13 +271,13 @@ class PPDBController extends Controller
         // lakukan perulangan untuk setiap row  
         foreach ($ppdb as $value) {   
             // query ke tabel siswa untuk ambil kode nis terakhir berdasarkan tahun dibuat
-            $cekNis = DB::table('siswas')
+            $cekSiswa = DB::table('siswas')
             ->select(DB::raw('MAX(RIGHT(nis, 3)) as lastNis'))
             ->where(DB::raw('YEAR(created_at)'), $year);
             // cek hasil query
-            if($cekNis->count() > 0){
+            if($cekSiswa->count() > 0){
                 // jika ditemukan lebih dari 0, karena bentuknya  array maka lakukan perulangan 
-                foreach($cekNis->get() as $row){
+                foreach($cekSiswa->get() as $row){
                     // buat variabel untuk menampung nis terakhir
                     $new_nis = $row->lastNis;
                 }
@@ -305,6 +293,10 @@ class PPDBController extends Controller
             // gabungkan tahun bulan dan hari dengan kode yang telah dibuat kedalam variabel nis
             $nis = $year . $month . $day . $code;
             
+            $nisn_siswa = Siswa::select('nisn')->where('nisn', $value->nisn)->get();
+            if($nisn_siswa->count() > 0){
+                return redirect('/dashboard/ppdb')->with('error', 'Proses approve berhenti! ada duplikasi NISN, silahkan periksa lagi data PPDB');
+            }
             // kemudian insert ke tabel siswa 
             Siswa::create([
                 'nis'                   => $nis,     
@@ -315,6 +307,7 @@ class PPDBController extends Controller
                 'jk'                    => $value->jk,
                 'tempat_lahir'          => $value->tempat_lahir,
                 'tgl_lahir'             => $value->tgl_lahir,
+                'no_hp'                 => $value->no_hp,
                 'tahun_ajaran'          => date('Y') . '/' . date('Y')+1,
                 'nik'                   => $value->nik,
                 'alamat'                => $value->alamat,
@@ -341,6 +334,11 @@ class PPDBController extends Controller
                 'penghasilan_ibu'       => $value->penghasilan_ibu,
                 'jml_saudara_kandung'   => $value->jml_saudara_kandung,
             ]);
+            
+            Dokumen::create([
+                'nis'   => $nis
+            ]);
+
             PPDB::where('id', $value->id)
                 ->update([
                     'confirmed' => true

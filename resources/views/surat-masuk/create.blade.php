@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h4><strong>Tambah Surat masuk</strong></h4>
                     <p>Silahkan input data surat yang masuk sesuai form di bawah</p>
-                    <form class="needs-validation @foreach ($errors->all() as $error) was-validated @endforeach" action="/dashboard/suratmasuk" method="post" enctype="multipart/form-data" novalidate>
+                    <form class="needs-validation @if ($errors->any()) was-validated @endif" action="/dashboard/suratmasuk" method="post" enctype="multipart/form-data" novalidate>
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-lg-6">

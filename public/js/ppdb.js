@@ -19,11 +19,9 @@ $(document).ready(function(){
 
     //PPDB DATATABLE 
     $("#tbPpdb").DataTable({
+        autoWidth: true,
         responsive:true,
-        lengthMenu: [
-            [10, 20, 50, 100, -1],
-            [10, 20, 50, 100, "All"],
-        ],
+        lengthChange: true,
         buttons: ['copy', 'csv', 'excel', 'pdf', 'print', 'colvis']
     }).buttons().container().appendTo('#tbPpdb_wrapper .col-md-6:eq(0)');
 });

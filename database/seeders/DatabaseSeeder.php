@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Klasifikasi;
+use App\Models\PPDB;
 use App\Models\SuratMasuk;
 use Illuminate\Database\Seeder;
 
@@ -59,13 +60,28 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Kelas::create([
+            'wali_kelas_id' => 1,
             'nama'  => 'X'
         ]);
         Kelas::create([
+            'wali_kelas_id' => 2,
             'nama'  => 'XI'
         ]);
         Kelas::create([
+            'wali_kelas_id' => 3,
             'nama'  => 'XII'
+        ]);
+
+        PPDB::create([
+            'nama_siswa'    => 'John',
+            'jk'            => 'Laki-laki',
+            'nik'           => '6856576575475800',
+            'tempat_lahir'  => 'Cianjur',
+            'tgl_lahir'     => now(),
+            'asal_sekolah'  => 'SMPN 1',
+            'jurusan_id'    => 1,
+            'kelas_id'    => 1,
+            'nama_ibu'     => 'Siti'
         ]);
     }
 }

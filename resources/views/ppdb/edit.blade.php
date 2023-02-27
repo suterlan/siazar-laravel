@@ -19,8 +19,9 @@
                                     @foreach ($jurusan as $value)
                                         @if (old('jurusan_id', $ppdb->jurusan_id) == $value->id)
                                             <option value="{{ $value->id }}" selected>{{ $value->kode . ' - ' . $value->nama }}</option>
-                                        @endif
+                                        @else
                                         <option value="{{ $value->id }}">{{ $value->kode . ' - ' . $value->nama }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                                 @error('jurusan_id')
@@ -33,8 +34,9 @@
                                     @foreach ($kelas as $value)
                                         @if (old('kelas_id', $ppdb->kelas_id) == $value->id)
                                             <option value="{{ $value->id }}" selected>{{ $value->nama }}</option>
+                                        @else
+                                            <option value="{{ $value->id }}">{{ $value->nama }}</option>
                                         @endif
-                                        <option value="{{ $value->id }}">{{ $value->nama }}</option>
                                     @endforeach
                                 </select>
                                 @error('kelas_id')
@@ -94,6 +96,13 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="no_hp">Nomor Hanphone</label>
+                                    <input id="no_hp" type="tel" name="no_hp" class="form-control {{$errors->first('no_hp') ? "is-invalid" : "" }}" value="{{ old('no_hp', $ppdb->no_hp ) }}" onKeyDown="if(this.value.length==13 && event.keyCode!=8) return false;" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                    @error('no_hp')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                 <div class="form-group mb-3">
                                     <label for="alamat">Alamat</label>
                                     <textarea class="form-control {{$errors->first('alamat') ? "is-invalid" : "" }}" id="alamat" name="alamat" rows="2">{{old('alamat', $ppdb->alamat) }}</textarea>
@@ -108,8 +117,9 @@
                                         @foreach ($provinces as $code => $name)
                                             @if (old('provinsi', $ppdb->provinsi) == $name)
                                             <option value="{{ $name }}" data-code="{{ $code }}" selected>{{ $name }}</option>
-                                            @endif
+                                            @else
                                             <option value="{{ $name }}" data-code="{{ $code }}">{{ $name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     @error('provinsi')

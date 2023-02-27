@@ -102,6 +102,9 @@ class KlasifikasiController extends Controller
      */
     public function destroy(Klasifikasi $klasifikasi)
     {
+        if(response(500)){
+            return redirect('/dashboard/klasifikasi')->with('error', 'Klasifikasi tidak dapat dihapus! karena telah digunakan di surat. Jika ingin menghapusnya silahkan ubah atau hapus terlebih dahulu surat yang menggunakan klasifikasi ini');
+        }
         Klasifikasi::destroy($klasifikasi->id);
         return redirect('/dashboard/klasifikasi')->with('success', 'Klasifikasi dengan kode ' . $klasifikasi->kode . ' berhasil dihapus');
     }

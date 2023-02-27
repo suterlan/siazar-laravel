@@ -7,14 +7,12 @@ $(document).ready(function(){
 
     // SURAT KELUAR
     $("#tbSuratKeluar").DataTable({
-        responsive: true, 
         lengthChange: true, 
         autoWidth: true,
         buttons: ['copy', 'csv', 'excel', 'pdf', 'print', 'colvis']
       }).buttons().container().appendTo('#tbSuratKeluar_wrapper .col-md-6:eq(0)');
 
-    $(".table-surat-keluar").DataTable({
-        responsive: true, 
+    $(".table-surat-keluar").DataTable({ 
         lengthChange: true, 
         autoWidth: true,
       });
