@@ -100,11 +100,12 @@
                     <td>{{ $surat->asal_sekolah }}</td>
                 </tr>
                 <tr>
-                    <td height="15"></td>
+                    <td height="14"></td>
                 </tr>
             </table>
             <div>Bahwa selaku lembaga pendidikan penerima, kami bersedia menerima calon peserta didik pindahan tersebut di atas untuk menjadi peserta didik di lembaga kami, dengan catatan membawa: </div>
             <ol>
+                <li>Surat Mutasi <b>DAPODIK (Wajib)</b>; </li>
                 <li>Surat Pindah dari sekolah asal; </li>
                 <li>Bukti hasil belajar semester Ganjil;  </li>
                 <li>SKKB dari sekolah asal;   </li>

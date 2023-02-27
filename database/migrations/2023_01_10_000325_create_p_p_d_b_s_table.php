@@ -15,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('p_p_d_b_s', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('nama_siswa');
             $table->string('jk', 16);
             $table->string('nik', 16);
             $table->string('tempat_lahir', 64)->nullable();
             $table->timestamp('tgl_lahir')->nullable();
             $table->string('alamat')->nullable();
+            $table->string('no_hp', 13)->nullable();
             $table->string('provinsi', 64)->nullable();
             $table->string('kabupaten', 64)->nullable();
             $table->string('kecamatan', 64)->nullable();
@@ -45,7 +46,14 @@ return new class extends Migration
             $table->string('pekerjaan_ibu', 64)->nullable();
             $table->integer('penghasilan_ibu')->nullable();
             $table->string('jml_saudara_kandung', 1)->nullable();
+            $table->unsignedBigInteger('jurusan_id')->nullable();
+            $table->unsignedBigInteger('kelas_id')->nullable();
+            $table->boolean('confirmed')->default(0);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('CASCADE');
+            $table->foreign('jurusan_id')->references('id')->on('jurusans')->onUpdate('CASCADE');
+            $table->foreign('kelas_id')->references('id')->on('kelas')->onUpdate('CASCADE');
         });
     }
 

@@ -70,7 +70,7 @@
             <div style="padding-bottom: 5mm">Di Tempat</div>
             <div style="padding-bottom: 2mm"><i>Assalamu'alaikum Wr. Wb.</i></div>
             <div>Dengan hormat,</div>
-            <div>Sehubungan dengan adanya <b>Permasalah {{ $surat->masalah }}</b> yang harus diselesaikan bersama, maka dengan ini kami mengharapkan kehadiran Bapak/Ibu Wali murid pada :</div>
+            <div>Sehubungan dengan adanya permasalahan yang harus diselesaikan bersama, maka dengan ini kami mengharapkan kehadiran Bapak/Ibu Wali murid pada :</div>
             <table cellspacing="5">
                 <tr>
                     <td width="80" class="pl-5">Hari, Tanggal</td>

@@ -32,7 +32,7 @@ class PenerimaanController extends Controller
     {
          return view('surat-keluar.surat-penerimaan.create', [
                 'title'         => 'Surat Penerimaan Baru | SIAZAR',
-                'klasifikasi'   => Klasifikasi::all()
+                'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get()
             ]);
     }
 
@@ -86,7 +86,7 @@ class PenerimaanController extends Controller
         return view('surat-keluar.surat-penerimaan.edit', [
             'title'     => 'Edit Surat | SIAZAR',
             'surat'     => $penerimaan,
-            'klasifikasi'   => Klasifikasi::all()
+            'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get()
         ]);
     }
 

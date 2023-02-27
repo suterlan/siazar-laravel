@@ -15,14 +15,17 @@ return new class extends Migration
     {
         Schema::create('siswas', function (Blueprint $table) {
             $table->id();
-            $table->string('nis', 9)->unique();
-            $table->string('nisn', 10)->nullable();
+            $table->string('nis', 11)->unique();
+            $table->string('nisn', 10)->unique()->nullable();
+            $table->unsignedBigInteger('jurusan_id')->nullable();
+            $table->unsignedBigInteger('kelas_id')->nullable();
             $table->string('nama_siswa');
-            $table->string('nik', 16);
             $table->string('jk', 16);
             $table->string('tempat_lahir', 64)->nullable();
             $table->timestamp('tgl_lahir')->nullable();
+            $table->string('no_hp', 13)->nullable();
             $table->string('tahun_ajaran', 9)->nullable();
+            $table->string('nik', 16);
             $table->string('alamat')->nullable();
             $table->string('provinsi', 64)->nullable();
             $table->string('kabupaten', 64)->nullable();
@@ -46,8 +49,12 @@ return new class extends Migration
             $table->string('pekerjaan_ibu', 64)->nullable();
             $table->integer('penghasilan_ibu')->nullable();
             $table->string('jml_saudara_kandung', 1)->nullable();
-            $table->string('status_siswa', 1)->nullable();
+            $table->boolean('status_siswa')->default(true);
+            $table->boolean('lulus')->default(false);
             $table->timestamps();
+
+            $table->foreign('jurusan_id')->references('id')->on('jurusans')->onUpdate('CASCADE');
+            $table->foreign('kelas_id')->references('id')->on('kelas')->onUpdate('CASCADE');
         });
     }
 

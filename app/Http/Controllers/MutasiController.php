@@ -32,7 +32,7 @@ class MutasiController extends Controller
     {
         return view('surat-keluar.surat-mutasi.create',[
             'title'     => 'Surat Mutasi Baru | SIAZAR',
-            'klasifikasi'    => Klasifikasi::all()
+            'klasifikasi'    => Klasifikasi::select('id', 'kode', 'nama')->get()
         ]);
     }
 
@@ -94,7 +94,7 @@ class MutasiController extends Controller
         return view('surat-keluar.surat-mutasi.edit', [
             'title'         => 'Edit Surat Mutasi | SIAZAR',
             'surat'         => $mutasi,
-            'klasifikasi'   => Klasifikasi::all()
+            'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get()
         ]);
     }
 
@@ -174,8 +174,8 @@ class MutasiController extends Controller
      */
     public function destroy(SuratMutasi $mutasi)
     {
-        SuratMutasi::where('id', $mutasi->id)->delete();
-        SuratKeluar::where('id', $mutasi->id)->delete();
+        SuratMutasi::where('no_surat', $mutasi->no_surat)->delete();
+        SuratKeluar::where('no_surat', $mutasi->no_surat)->delete();
 
         return redirect('/dashboard/suratkeluar/mutasi')->with('success', 'Surat Mutasi dengan no surat : ' . $mutasi->no_surat . ' berhasil dihapus!');
     }

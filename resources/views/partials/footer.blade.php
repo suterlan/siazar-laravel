@@ -10,8 +10,19 @@
 <script src="{{ asset('') }}js/d3.min.js"></script>
 <script src="{{ asset('') }}js/topojson.min.js"></script>
 <script src="{{ asset('') }}js/Chart.min.js"></script>
-<script src="{{ asset('') }}js/jquery.dataTables.min.js"></script>
-<script src="{{ asset('') }}js/dataTables.bootstrap4.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="{{ asset('package/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('package/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('package/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('package/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('package/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('package/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('package/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('package/datatables-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('package/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<script src="{{ asset('package/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('package/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('package/pdfmake/vfs_fonts.js') }}"></script>
 <script>
   /* defind global options */
   Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
@@ -28,7 +39,14 @@
 <script src='{{ asset('') }}js/quill.min.js'></script>
 
 <script src='{{ asset('') }}js/surat.js'></script>
+<script src='{{ asset('') }}js/ppdb.js'></script>
+<script src='{{ asset('') }}js/suterlan.js'></script>
 <script>
+  $('.custom-file-input').on('change', function(){
+    let fileName = $(this).val().split('\\').pop();
+    $(this).next('.custom-file-label').addClass('selected').html(fileName);
+  });
+
   $('.select2').select2(
   {
     theme: 'bootstrap4',
@@ -80,24 +98,4 @@
   }
   gtag('js', new Date());
   gtag('config', 'UA-56159088-1');
-</script>
-<script>
-  $(document).ready(function(){
-    $('#checkAll').on('click', function(e){
-      if($(this).is(':checked', true)){
-        $('.sub-check').prop('checked', true);
-        $('#delAll').removeClass('d-none');
-      }else{
-        $('.sub-check').prop('checked', false);
-        $('#delAll').addClass('d-none');
-      }
-    });
-    
-    let subCheck = $('.sub-check');
-    subCheck.each(function(e){
-      $(this).on('click', function(){
-        $('#delAll').removeClass('d-none');
-      });
-    });
-  });
 </script>

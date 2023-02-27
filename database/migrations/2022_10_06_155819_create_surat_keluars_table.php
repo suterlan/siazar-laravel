@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('surat_keluars', function (Blueprint $table) {
             $table->id();
-            $table->string('klasifikasi_id', 10);
+            $table->unsignedBigInteger('klasifikasi_id')->nullable();
             $table->string('no_surat', 50)->unique();
             $table->timestamp('tanggal_surat')->nullable();
             $table->timestamps();
+
+            $table->foreign('klasifikasi_id')->references('id')->on('klasifikasis')->onUpdate('CASCADE');
         });
     }
 

@@ -34,8 +34,8 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="nisn">NISN</label>
-                            <input id="nisn" type="tel" name="nisn" class="form-control {{$errors->first('nisn') ? "is-invalid" : "" }}" value="{{ old('nisn', $registrasi->nisn ?? '') }}" onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;" onkeypress='return event.charCode >= 48 && event.charCode <= 57' minlength="10">
+                            <label for="nisn">NISN <small class="text-danger">(*)</small></label>
+                            <input id="nisn" type="tel" name="nisn" class="form-control {{$errors->first('nisn') ? "is-invalid" : "" }}" value="{{ old('nisn', $registrasi->nisn ?? '') }}" onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;" onkeypress='return event.charCode >= 48 && event.charCode <= 57' minlength="10" required>
                             @error('nisn')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
