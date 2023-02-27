@@ -71,7 +71,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade @foreach ($errors->all() as $error) show @endforeach" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalLabel" aria-hidden="true" style="display: @foreach ($errors->all() as $error) block; @endforeach">
+    <div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

@@ -2,12 +2,17 @@
 @section('content')
 <div class="container-fluid">
     <div class="col-12">
+        <div class="row">
             <div class="col-lg-12">
-                <div class="row">
                 @if (session()->has('success'))
                     <div class="alert alert-success col-12" role="alert">
                         <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
                     </div>
+                @endif
+                @if (session()->has('error'))
+                <div class="alert alert-info col-12" role="alert">
+                    <span class="fe fe-info fe-16 mr-2"></span> {{ session('error') }}
+                </div>
                 @endif
                 <div class="card shadow">
                     <div class="card-body">

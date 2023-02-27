@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KlasifikasiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -8,10 +9,12 @@ use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\PanggilanController;
 use App\Http\Controllers\PenerimaanController;
 use App\Http\Controllers\PPDBController;
+use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\SuratBaruController;
 use App\Http\Controllers\SuratKeluarController;
 use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WilayahIndonesiaController;
 use App\Models\SuratKeluar;
 use App\Models\SuratMasuk;
 
@@ -53,11 +56,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/dashboard/ppdb/update', [PPDBController::class, 'update']);
     Route::get('/dashboard/ppdb/delete/{id}', [PPDBController::class, 'delete']);
     Route::delete('/dashboard/ppdb/delete-all', [PPDBController::class, 'deleteAll']);
-    // Route untuk mengambil data kabupaten dengan javascript (plugin laravolt)
-    Route::get('/getKabupaten', [PPDBController::class, 'getKabupaten'])->name('kabupaten');
-    Route::get('/getKecamatan', [PPDBController::class, 'getKecamatan'])->name('kecamatan');
-    Route::get('/getKelurahan', [PPDBController::class, 'getKelurahan'])->name('kelurahan');
+    // Route untuk mengambil data wilayah dengan javascript (plugin laravolt)
+    Route::get('/getKabupaten', [WilayahIndonesiaController::class, 'getKabupaten'])->name('kabupaten');
+    Route::get('/getKecamatan', [WilayahIndonesiaController::class, 'getKecamatan'])->name('kecamatan');
+    Route::get('/getKelurahan', [WilayahIndonesiaController::class, 'getKelurahan'])->name('kelurahan');
 
+    // Route Siswa
+    Route::resource('/dashboard/siswa', SiswaController::class)->except(['store', 'create'])->middleware('admin');
+
+    // Route Jurusan
+    Route::resource('/dashboard/jurusan', JurusanController::class)->except(['create', 'show'])->middleware('admin');
     // route manipulasi akun user
     Route::resource('/dashboard/user', UserController::class)->except(['create', 'show'])->middleware('admin');
     Route::get('/dashboard/user/ubahrole', [UserController::class, 'changeRole']);

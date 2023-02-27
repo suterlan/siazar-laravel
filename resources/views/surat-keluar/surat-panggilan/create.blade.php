@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h4><strong>Buat Surat Panggilan </strong></h3>
                     <p>Silahkan isi form dibawah untuk membuat surat panggilan baru</p>
-                    <form class="needs-validation @foreach ($errors->all() as $error) was-validated @endforeach" action="/dashboard/suratkeluar/panggilan" method="post" novalidate>
+                    <form class="needs-validation  @if ($errors->any()) was-validated @endif" action="/dashboard/suratkeluar/panggilan" method="post" novalidate>
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-lg-6">

@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h4><strong>Buat Surat Penerimaan </strong></h3>
                     <p>Silahkan isi form dibawah untuk membuat surat penerimaan baru</p>
-                    <form class="needs-validation @foreach ($errors->all() as $error) was-validated @endforeach" action="/dashboard/suratkeluar/penerimaan" method="post" novalidate>
+                    <form class="needs-validation @if ($errors->any()) was-validated @endif" action="/dashboard/suratkeluar/penerimaan" method="post" novalidate>
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-lg-6">

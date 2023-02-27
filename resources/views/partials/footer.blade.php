@@ -20,6 +20,9 @@
 <script src="{{ asset('package/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('package/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('package/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<script src="{{ asset('package/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('package/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('package/pdfmake/vfs_fonts.js') }}"></script>
 <script>
   /* defind global options */
   Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
@@ -39,6 +42,11 @@
 <script src='{{ asset('') }}js/ppdb.js'></script>
 <script src='{{ asset('') }}js/suterlan.js'></script>
 <script>
+  $('.custom-file-input').on('change', function(){
+    let fileName = $(this).val().split('\\').pop();
+    $(this).next('.custom-file-label').addClass('selected').html(fileName);
+  });
+
   $('.select2').select2(
   {
     theme: 'bootstrap4',

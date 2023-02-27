@@ -13,14 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('surat_keluars', function (Blueprint $table) {
+        Schema::create('dokumens', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('klasifikasi_id')->nullable();
-            $table->string('no_surat', 50)->unique();
-            $table->timestamp('tanggal_surat')->nullable();
+            $table->string('nis', 11)->nullable();
+            $table->string('kartu_keluarga')->nullable();
+            $table->string('ijazah')->nullable();
+            $table->string('akte')->nullable();
+            $table->string('ktp_ortu')->nullable();
+            $table->string('berkas')->nullable();
+            $table->string('foto')->nullable();
+
             $table->timestamps();
 
-            $table->foreign('klasifikasi_id')->references('id')->on('klasifikasis')->onUpdate('CASCADE');
         });
     }
 
@@ -31,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('surat_keluars');
+        Schema::dropIfExists('dokumens');
     }
 };

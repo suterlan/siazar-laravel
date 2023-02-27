@@ -7,4 +7,7 @@ $(document).ready(function(){
             [10, 20, 50, 100, "All"],
         ],
     });
+
+    $("#tbJurusan").DataTable();
+    $("#tbSiswa").DataTable();
 });

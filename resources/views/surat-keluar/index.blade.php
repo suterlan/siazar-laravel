@@ -4,40 +4,42 @@
     <div class="container-fluid">
         <div class="col-12">
             <div class="row">
-                <div class="card shadow">
-                    <div class="card-header">
-                        <strong class="card-title">Surat Keluar</strong>
-                            <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#newSuratModal" type="button"><span class="fe fe-file-plus"></span> Surat Baru </button>
-                        <p class="card-text">Tabel Surat Keluar</p>
-                    </div>
-                    <div class="card-body">
-                        @if (session()->has('success'))
-                        <div class="alert alert-success col-12" role="alert">
-                            <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
+                <div class="col-md-12">
+                    <div class="card shadow">
+                        <div class="card-header">
+                            <strong class="card-title">Surat Keluar</strong>
+                                <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#newSuratModal" type="button"><span class="fe fe-file-plus"></span> Surat Baru </button>
+                            <p class="card-text">Tabel Surat Keluar</p>
                         </div>
-                        @endif
-                        <table id="tbSuratKeluar" class="table table-stripped table-hover table-responsive">
-                            <thead class="thead-dark">
-                                <th>#</th>
-                                <th>Kode Klasifikasi</th>
-                                <th>Klasifikasi</th>
-                                <th>No Surat</th>
-                                <th>Tanggal Surat</th>
-                                <th>Tanggal Dibuat</th>
-                            </thead>
-                            <tbody>
-                                @foreach ($surats as $surat)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td class="text-center">{{ $surat->klasifikasi->kode }}</td>
-                                    <td>{{ $surat->klasifikasi->nama }}</td>
-                                    <td class="text-nowrap">{{ $surat->no_surat }}</td>
-                                    <td class="text-nowrap">{{ \Carbon\Carbon::parse($surat->tanggal_surat)->translatedFormat('d F Y')  }}</td>
-                                    <td>{{ $surat->created_at }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="card-body">
+                            @if (session()->has('success'))
+                            <div class="alert alert-success col-12" role="alert">
+                                <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
+                            </div>
+                            @endif
+                            <table id="tbSuratKeluar" class="table table-stripped table-hover">
+                                <thead class="thead-dark">
+                                    <th>#</th>
+                                    <th>Kode Klasifikasi</th>
+                                    <th>Klasifikasi</th>
+                                    <th>No Surat</th>
+                                    <th>Tanggal Surat</th>
+                                    <th>Tanggal Dibuat</th>
+                                </thead>
+                                <tbody>
+                                    @foreach ($surats as $surat)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td class="text-center">{{ $surat->klasifikasi->kode }}</td>
+                                        <td>{{ $surat->klasifikasi->nama }}</td>
+                                        <td class="text-nowrap">{{ $surat->no_surat }}</td>
+                                        <td class="text-nowrap">{{ \Carbon\Carbon::parse($surat->tanggal_surat)->translatedFormat('d F Y')  }}</td>
+                                        <td>{{ $surat->created_at }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

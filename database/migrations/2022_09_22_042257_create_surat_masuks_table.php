@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('surat_masuks', function (Blueprint $table) {
             $table->id();
-            $table->string('klasifikasi_id', 10);
+            $table->unsignedBigInteger('klasifikasi_id')->nullable();
             $table->string('no_surat', 50)->unique();
             $table->string('asal_surat');
             $table->string('deskripsi');
@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('file')->nullable();
             $table->string('keterangan', 100)->nullable();
             $table->timestamps();
+
+            $table->foreign('klasifikasi_id')->references('id')->on('klasifikasis')->onUpdate('CASCADE');
         });
     }
 

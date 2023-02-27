@@ -62,7 +62,7 @@
                 <div class="card-body">
                   <div class="row align-items-center">
                     <div class="col-3 text-center">
-                      <img src="{{ asset('img/'.$value->kode.'.png')}}" class="img-fluid" alt="">
+                      <img src="{{ asset('storage/'.$value->logo)}}" class="img-fluid" alt="">
                     </div>
                     <div class="col pr-0">
                       <p class="small text-muted mb-0">{{$value->nama}}</p>
@@ -75,6 +75,7 @@
             @endforeach
         </div>
         <div class="row">
+          <div class="col-md-12">
             <div class="card shadow">
                 <div class="card-body">
                     <h5 class="card-title">DATA PPDB</h5><hr>
@@ -100,58 +101,57 @@
                     <form action="/dashboard/ppdb/delete-all" method="post">
                         @method('delete')
                         @csrf
-                    <button class="btn btn-danger mb-3 d-none" type="submit" id="delAll" onclick="return confirm('Yakin mau hapus data?')">Delete All</button>
-                    <table id="tbPpdb" class="table table-hover table-striped table-responsive">
-                        <thead>
-                            <td scope="col">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="checkAll">
-                                    <label class="custom-control-label" for="checkAll"></label>
-                                </div>
-                            </td>
-                            <th scope="col">No</th>
-                            <th>Nama</th>
-                            <th>Tempat, Tgl lahir</th>
-                            <th>NISN</th>
-                            <th>NIK</th>
-                            <th>Nama Ayah</th>
-                            <th>Nama Ibu</th>
-                            <th>Asal Sekolah</th>
-                            <th>Jurusan Dipilih</th>
-                            <th class="text-end" scope="col"></th>
-                        </thead>
-                        <tbody>
-                            @foreach ($ppdbs as $ppdb)
-                            <tr>
+                        <button class="btn btn-danger mb-3 d-none" type="submit" id="delAll" onclick="return confirm('Yakin mau hapus data?')">Delete All</button>
+                        <table id="tbPpdb" class="table table-hover table-striped">
+                            <thead>
                                 <td>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input sub-check" id="sub_check{{ $ppdb->id }}" name="sub_check[{{ $ppdb->id }}]" value="{{ $ppdb->id }}" data-id="{{ $ppdb->id }}">
-                                        <label class="custom-control-label" for="sub_check{{ $ppdb->id }}"></label>
+                                        <input type="checkbox" class="custom-control-input" id="checkAll">
+                                        <label class="custom-control-label" for="checkAll"></label>
                                     </div>
                                 </td>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $ppdb->nama_siswa }}</td>
-                                <td>{{ $ppdb->tempat_lahir . ', ' . \Carbon\Carbon::parse($ppdb->tgl_lahir)->format('d-m-Y') }}</td>
-                                <td>{{ $ppdb->nisn }}</td>
-                                <td>{{ $ppdb->nik }}</td>
-                                <td>{{ $ppdb->nama_ayah }}</td>
-                                <td>{{ $ppdb->nama_ibu }}</td>
-                                <td>{{ $ppdb->asal_sekolah }}</td>
-                                <td>{{ $ppdb->jurusan->nama }}</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <a class="btn btn-sm btn-info ml-1" href="/dashboard/ppdb/detail/{{ $ppdb->id }}" title="Detail"><span class="fe fe-eye"></span></a>
-                                        <a class="btn btn-sm btn-primary ml-1" href="/dashboard/ppdb/edit/{{ $ppdb->id }}" title="Edit"><span class="fe fe-edit"></span></a>
-                                        <a class="btn btn-sm btn-danger ml-1" href="/dashboard/ppdb/delete/{{ $ppdb->id }}" title="Remove" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete"></span></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Tempat, Tgl lahir</th>
+                                <th>NISN</th>
+                                <th>NIK</th>
+                                <th>Nama Ibu</th>
+                                <th>Asal Sekolah</th>
+                                <th>Jurusan Dipilih</th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                @foreach ($ppdbs as $ppdb)
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input sub-check" id="sub_check{{ $ppdb->id }}" name="sub_check[{{ $ppdb->id }}]" value="{{ $ppdb->id }}" data-id="{{ $ppdb->id }}">
+                                            <label class="custom-control-label" for="sub_check{{ $ppdb->id }}"></label>
+                                        </div>
+                                    </td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $ppdb->nama_siswa }}</td>
+                                    <td>{{ $ppdb->tempat_lahir . ', ' . \Carbon\Carbon::parse($ppdb->tgl_lahir)->format('d-m-Y') }}</td>
+                                    <td>{{ $ppdb->nisn }}</td>
+                                    <td>{{ $ppdb->nik }}</td>
+                                    <td>{{ $ppdb->nama_ibu }}</td>
+                                    <td>{{ $ppdb->asal_sekolah }}</td>
+                                    <td>{{ $ppdb->jurusan->kode }}</td>
+                                    <td>
+                                        <div class="d-block">
+                                            <a class="btn btn-sm btn-info ml-1" href="/dashboard/ppdb/detail/{{ $ppdb->id }}" title="Detail"><span class="fe fe-eye"></span></a>
+                                            <a class="btn btn-sm btn-primary ml-1" href="/dashboard/ppdb/edit/{{ $ppdb->id }}" title="Edit"><span class="fe fe-edit"></span></a>
+                                            <a class="btn btn-sm btn-danger ml-1" href="/dashboard/ppdb/delete/{{ $ppdb->id }}" title="Remove" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete"></span></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </form>
                 </div>
             </div>
+          </div>
         </div>
     </div>
 </div>

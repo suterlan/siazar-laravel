@@ -91,7 +91,7 @@
                           <div class="row align-items-center">
                             <div class="col-3 text-center">
                               <span class="circle circle-lg bg-light">
-                                <img src="{{asset('img/'. $ppdb->jurusan->kode. '.png')}}" alt="" class="img-fluid">
+                                <img src="{{asset('storage/'. $ppdb->jurusan->logo)}}" alt="" class="img-fluid">
                               </span>
                             </div> <!-- .col -->
                             <div class="col">
