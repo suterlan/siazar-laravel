@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KlasifikasiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -9,12 +8,12 @@ use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\PanggilanController;
 use App\Http\Controllers\PenerimaanController;
 use App\Http\Controllers\PPDBController;
-use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\SuratBaruController;
 use App\Http\Controllers\SuratKeluarController;
 use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\WilayahIndonesiaController;
+use App\Http\Controllers\website\PendaftaranController;
+use App\Http\Controllers\website\WebController;
 use App\Models\SuratKeluar;
 use App\Models\SuratMasuk;
 
@@ -28,7 +27,24 @@ use App\Models\SuratMasuk;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [DashboardController::class, 'index'])->middleware('auth');
+// Route front website
+Route::get('/', [WebController::class, 'index']);
+// Route Jurusan
+Route::get('/jurusan', [WebController::class, 'jurusan'])->name('jurusan');
+Route::get('/pendidik', [WebController::class, 'pendidik'])->name('pendidik');
+Route::get('/galeri', [WebController::class, 'galeri'])->name('galeri');
+Route::get('/blog', [WebController::class, 'blog'])->name('blog');
+Route::get('/tentang', [WebController::class, 'tentang'])->name('tentang');
+Route::get('/kontak', [WebController::class, 'kontak'])->name('kontak');
+
+Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran');
+Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran');
+// Route untuk mengambil data kabupaten dengan javascript (plugin laravolt)
+    Route::get('/pendaftaran/getKabupaten', [PendaftaranController::class, 'getKabupaten'])->name('kabupaten');
+    Route::get('/pendaftaran/getKecamatan', [PendaftaranController::class, 'getKecamatan'])->name('kecamatan');
+    Route::get('/pendaftaran/getKelurahan', [PendaftaranController::class, 'getKelurahan'])->name('kelurahan');
+// end front
+Route::get('/panel', [DashboardController::class, 'index'])->middleware('auth');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
