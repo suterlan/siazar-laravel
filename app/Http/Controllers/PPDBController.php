@@ -266,7 +266,7 @@ class PPDBController extends Controller
         
         
         // query ke tabel ppdb berdasarkan status confirm nya masih 0
-        $ppdb = PPDB::where('confirmed', 0)->get();
+        $ppdb = PPDB::where('confirmed', 0)->whereNotNull('nisn')->get();
 
         // lakukan perulangan untuk setiap row  
         foreach ($ppdb as $value) {   
