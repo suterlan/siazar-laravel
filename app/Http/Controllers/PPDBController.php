@@ -266,7 +266,7 @@ class PPDBController extends Controller
         
         
         // query ke tabel ppdb berdasarkan status confirm nya masih 0
-        $ppdb = PPDB::where('confirmed', 0)->whereNotNull('nisn')->get();
+        $ppdb = PPDB::where('confirmed', 0)->get();
 
         // lakukan perulangan untuk setiap row  
         foreach ($ppdb as $value) {   
@@ -293,7 +293,7 @@ class PPDBController extends Controller
             // gabungkan tahun bulan dan hari dengan kode yang telah dibuat kedalam variabel nis
             $nis = $year . $month . $day . $code;
             
-            $nisn_siswa = Siswa::select('nisn')->where('nisn', $value->nisn)->get();
+            $nisn_siswa = Siswa::select('nisn')->where('nisn', $value->nisn)->whereNotNull('nisn')->get();
             if($nisn_siswa->count() > 0){
                 return redirect('/dashboard/ppdb')->with('error', 'Proses approve berhenti! ada duplikasi NISN, silahkan periksa lagi data PPDB');
             }
