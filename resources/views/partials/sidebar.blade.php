@@ -101,6 +101,31 @@
                 </a>
             </li>
         </ul>
+
+        <p class="text-muted nav-heading mt-4 mb-1">
+            <span>Website</span>
+        </p>
+        <ul class="navbar-nav flex-fill w-100 mb-2">
+            <li class="nav-item dropdown">
+                <a href="#settings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link {{ Request::is('dashboard/settings*') ? 'link-active collapsed' : '' }} ">
+                    <i class="fe fe-settings fe-16"></i>
+                    <span class="ml-3 item-text">Settings</span><span class="sr-only">(current)</span>
+                </a>
+                <ul class="list-unstyled pl-4 w-100 collapse {{ Request::is('dashboard/settings*') ? 'show' : '' }}" id="settings" style="">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link pl-3 {{ Request::is('dashboard/settings-tentang') ? 'link-active' : '' }}" href="/dashboard/settings-tentang"><span class="ml-1">Tentang</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="navbar-nav flex-fill w-100 mb-2">
+            <li class="nav-item">
+                <a href="/dashboard/sekolah" aria-expanded="false" class="nav-link {{ Request::is('dashboard/sekolah') ? 'link-active' : '' }}">
+                    <i class="fe fe-grid fe-16"></i>
+                    <span class="ml-3 item-text">Profile Sekolah</span>
+                </a>
+            </li>
+        </ul>
         @endcan
 
     </nav>

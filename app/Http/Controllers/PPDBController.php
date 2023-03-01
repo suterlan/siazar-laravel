@@ -293,7 +293,7 @@ class PPDBController extends Controller
             // gabungkan tahun bulan dan hari dengan kode yang telah dibuat kedalam variabel nis
             $nis = $year . $month . $day . $code;
             
-            $nisn_siswa = Siswa::select('nisn')->where('nisn', $value->nisn)->get();
+            $nisn_siswa = Siswa::select('nisn')->where('nisn', $value->nisn)->whereNotNull('nisn')->get();
             if($nisn_siswa->count() > 0){
                 return redirect('/dashboard/ppdb')->with('error', 'Proses approve berhenti! ada duplikasi NISN, silahkan periksa lagi data PPDB');
             }

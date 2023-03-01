@@ -95,13 +95,14 @@
                         <span class="fe fe-info fe-16 mr-2"></span><b>Informasi!</b><p><b>Approve</b> berfungsi untuk menyimpan seluruh data <b>PPDB</b> menjadi data <b>Siswa.</b> Pada saat Approve dijalankan <b>NIS</b> akan di generate secara otomatis! dan data PPDB akan diarsipkan!
                         <b>NIS</b> akan otomatis di generate</p>
                     </div>
-                    <a href="/dashboard/ppdb/approve" class="btn btn-success mb-3 float-right {{$btnClass}}" type="button" onclick="return confirm('Yakin mau approve sekarang? Data PPDB akan diarsipkan!')">Approve</a>
+                    <a href="/dashboard/ppdb/approve" class="btn btn-success mb-3 float-right {{$btnClass}}" type="button" onclick="return confirm('Yakin mau approve sekarang? Data PPDB akan diarsipkan!')" id="approve">Approve</a>
+                    {{-- <a class="btn btn-success mb-3 float-right {{$btnClass}}" type="button" id="approve">Approve</a> --}}
                     @endcan
                     <a href="/dashboard/ppdb/registrasi-step1" class="btn btn-primary mb-3"><i class="fe fe-plus"></i> Tambah Siswa Baru</a>
                     <form action="/dashboard/ppdb/delete-all" method="post">
                         @method('delete')
                         @csrf
-                        <button class="btn btn-danger mb-3 d-none" type="submit" id="delAll" onclick="return confirm('Yakin mau hapus data?')">Delete All</button>
+                        <button class="btn btn-danger mb-3 d-none" type="submit" name="delAll" id="delAll" onclick="return confirm('Yakin mau hapus data?')">Delete All</button>
                         <table id="tbPpdb" class="table table-hover table-striped">
                             <thead>
                                 <td>
@@ -155,4 +156,18 @@
         </div>
     </div>
 </div>
+
+{{-- <script>
+  const btnApprove = document.getElementById('approve');
+  btnApprove.addEventListener('click', () =>{
+    let select = document.querySelectorAll('.sub-check');
+    let data = [];
+    select.forEach((e) => {
+      if(e.checked){
+        data.push(e.value);
+      }
+    });
+    console.log(data);
+  });
+</script> --}}
 @endsection
