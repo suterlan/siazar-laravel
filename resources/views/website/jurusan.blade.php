@@ -29,7 +29,7 @@
                 <div class="col-lg-4 mb-5">
                     <div class="card border-0 bg-light shadow-sm pb-2">
                         <div class="card-header text-center"><b>{{ strtoupper($jurusan->kode) }}</b></div>
-                        <img class="mb-2 mt-3 img-fluid mx-auto" src="{{asset('img/' .$jurusan->kode. '.png')}}" width="150"/>
+                        <img class="mb-2 mt-3 img-fluid mx-auto col-sm-6" src="{{ asset('storage/'. $jurusan->logo) }}" />
                         <div class="card-body text-center">
                             <h4 class="card-title">{{ $jurusan->nama }}</h4>
                             <p class="card-text">

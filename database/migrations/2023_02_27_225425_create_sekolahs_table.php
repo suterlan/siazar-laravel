@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('sekolahs', function (Blueprint $table) {
             $table->id();
-            $table->string('nama')->nullable();
+            $table->string('nama_sekolah')->nullable();
             $table->string('kepala_sekolah')->nullable();
             $table->string('alamat')->nullable();
             $table->string('email')->nullable();

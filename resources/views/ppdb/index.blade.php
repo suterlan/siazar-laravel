@@ -77,9 +77,11 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card shadow">
+                <div class="card-header">
+                  <strong class="card-title">DATA PPDB</strong>
+                  <a href="/dashboard/ppdb/registrasi-step1" class="btn btn-primary float-right"><i class="fe fe-plus"></i> Tambah Siswa Baru</a>
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">DATA PPDB</h5><hr>
-                    <p class="card-text"></p>
                     @if (session()->has('success'))
                         <div class="alert alert-success col-12" role="alert">
                             <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
@@ -90,19 +92,18 @@
                             <span class="fe fe-info fe-16 mr-2"></span> {{ session('error') }}
                         </div>
                     @endif
-                    @can('admin')
+                  @can('admin')
                     <div class="alert alert-info col-12" role="alert">
                         <span class="fe fe-info fe-16 mr-2"></span><b>Informasi!</b><p><b>Approve</b> berfungsi untuk menyimpan seluruh data <b>PPDB</b> menjadi data <b>Siswa.</b> Pada saat Approve dijalankan <b>NIS</b> akan di generate secara otomatis! dan data PPDB akan diarsipkan!
                         <b>NIS</b> akan otomatis di generate</p>
                     </div>
-                    <a href="/dashboard/ppdb/approve" class="btn btn-success mb-3 float-right {{$btnClass}}" type="button" onclick="return confirm('Yakin mau approve sekarang? Data PPDB akan diarsipkan!')" id="approve">Approve</a>
-                    {{-- <a class="btn btn-success mb-3 float-right {{$btnClass}}" type="button" id="approve">Approve</a> --}}
-                    @endcan
-                    <a href="/dashboard/ppdb/registrasi-step1" class="btn btn-primary mb-3"><i class="fe fe-plus"></i> Tambah Siswa Baru</a>
-                    <form action="/dashboard/ppdb/delete-all" method="post">
-                        @method('delete')
+                    {{-- <a href="/dashboard/ppdb/approve" class="btn btn-success mb-3 float-right {{$btnClass}}" type="button" onclick="return confirm('Yakin mau approve sekarang? Data PPDB akan diarsipkan!')" id="approve">Approve</a> --}}
+                    <form id="formSelect" method="post">
+                        <input type="hidden" name="_method">
                         @csrf
-                        <button class="btn btn-danger mb-3 d-none" type="submit" name="delAll" id="delAll" onclick="return confirm('Yakin mau hapus data?')">Delete All</button>
+                        <button id="approve" class="btn btn-success mb-3 d-none {{$btnClass}}" name="approve" onclick="return selectFunction('approve', '/dashboard/ppdb/approve')">Approve</button>
+                        <button id="delAll" class="btn btn-danger mb-3 d-none" name="delAll" onclick="return selectFunction('delete', '/dashboard/ppdb/delete-all')">Delete Selected</button>
+                  @endcan
                         <table id="tbPpdb" class="table table-hover table-striped">
                             <thead>
                                 <td>
@@ -118,7 +119,7 @@
                                 <th>NIK</th>
                                 <th>Nama Ibu</th>
                                 <th>Asal Sekolah</th>
-                                <th>Jurusan Dipilih</th>
+                                <th>Kelas / Jurusan</th>
                                 <th></th>
                             </thead>
                             <tbody>
@@ -137,7 +138,7 @@
                                     <td>{{ $ppdb->nik }}</td>
                                     <td>{{ $ppdb->nama_ibu }}</td>
                                     <td>{{ $ppdb->asal_sekolah }}</td>
-                                    <td>{{ $ppdb->jurusan->kode }}</td>
+                                    <td>{{ $ppdb->kelas->nama . ' ' .$ppdb->jurusan->kode }}</td>
                                     <td>
                                         <div class="d-block">
                                             <a class="btn btn-sm btn-info ml-1" href="/dashboard/ppdb/detail/{{ $ppdb->id }}" title="Detail"><span class="fe fe-eye"></span></a>
@@ -156,18 +157,4 @@
         </div>
     </div>
 </div>
-
-{{-- <script>
-  const btnApprove = document.getElementById('approve');
-  btnApprove.addEventListener('click', () =>{
-    let select = document.querySelectorAll('.sub-check');
-    let data = [];
-    select.forEach((e) => {
-      if(e.checked){
-        data.push(e.value);
-      }
-    });
-    console.log(data);
-  });
-</script> --}}
 @endsection

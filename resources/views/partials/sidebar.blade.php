@@ -113,6 +113,9 @@
                 </a>
                 <ul class="list-unstyled pl-4 w-100 collapse {{ Request::is('dashboard/settings*') ? 'show' : '' }}" id="settings" style="">
                     <li class="nav-item dropdown">
+                        <a class="nav-link pl-3 {{ Request::is('dashboard/settings-iklan') ? 'link-active' : '' }}" href="/dashboard/settings-iklan"><span class="ml-1">Iklan</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
                         <a class="nav-link pl-3 {{ Request::is('dashboard/settings-tentang') ? 'link-active' : '' }}" href="/dashboard/settings-tentang"><span class="ml-1">Tentang</span></a>
                     </li>
                 </ul>
@@ -120,7 +123,7 @@
         </ul>
         <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item">
-                <a href="/dashboard/sekolah" aria-expanded="false" class="nav-link {{ Request::is('dashboard/sekolah') ? 'link-active' : '' }}">
+                <a href="{{route('sekolah')}}" aria-expanded="false" class="nav-link {{ Request::is('dashboard/sekolah') ? 'link-active' : '' }}">
                     <i class="fe fe-grid fe-16"></i>
                     <span class="ml-3 item-text">Profile Sekolah</span>
                 </a>

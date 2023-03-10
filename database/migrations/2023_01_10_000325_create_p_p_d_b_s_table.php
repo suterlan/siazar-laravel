@@ -51,9 +51,9 @@ return new class extends Migration
             $table->boolean('confirmed')->default(0);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('CASCADE');
-            $table->foreign('jurusan_id')->references('id')->on('jurusans')->onUpdate('CASCADE');
-            $table->foreign('kelas_id')->references('id')->on('kelas')->onUpdate('CASCADE');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('jurusan_id')->references('id')->on('jurusans');
+            $table->foreign('kelas_id')->references('id')->on('kelas');
         });
     }
 

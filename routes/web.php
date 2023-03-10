@@ -9,16 +9,15 @@ use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\PanggilanController;
 use App\Http\Controllers\PenerimaanController;
 use App\Http\Controllers\PPDBController;
+use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\SiswaController;
-use App\Http\Controllers\SuratBaruController;
 use App\Http\Controllers\SuratKeluarController;
 use App\Http\Controllers\SuratMasukController;
+use App\Http\Controllers\TentangController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WilayahIndonesiaController;
 use App\Http\Controllers\website\PendaftaranController;
 use App\Http\Controllers\website\WebController;
-use App\Models\SuratKeluar;
-use App\Models\SuratMasuk;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,23 +29,28 @@ use App\Models\SuratMasuk;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route front website
-Route::get('/', [WebController::class, 'index']);
-// Route Jurusan
-Route::get('/jurusan', [WebController::class, 'jurusan'])->name('jurusan');
-Route::get('/pendidik', [WebController::class, 'pendidik'])->name('pendidik');
-Route::get('/galeri', [WebController::class, 'galeri'])->name('galeri');
-Route::get('/blog', [WebController::class, 'blog'])->name('blog');
-Route::get('/tentang', [WebController::class, 'tentang'])->name('tentang');
-Route::get('/kontak', [WebController::class, 'kontak'])->name('kontak');
 
-Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran');
-Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran');
-// Route untuk mengambil data kabupaten dengan javascript (plugin laravolt)
-    Route::get('/pendaftaran/getKabupaten', [PendaftaranController::class, 'getKabupaten'])->name('kabupaten');
-    Route::get('/pendaftaran/getKecamatan', [PendaftaranController::class, 'getKecamatan'])->name('kecamatan');
-    Route::get('/pendaftaran/getKelurahan', [PendaftaranController::class, 'getKelurahan'])->name('kelurahan');
-// end front
+// Route::group(['middleware' => ['guest']], function () {
+// Route front website
+    Route::get('/', [WebController::class, 'index']);
+    // Route Jurusan
+    Route::get('/jurusan', [WebController::class, 'jurusan'])->name('jurusan');
+    Route::get('/pendidik', [WebController::class, 'pendidik'])->name('pendidik');
+    Route::get('/galeri', [WebController::class, 'galeri'])->name('galeri');
+    Route::get('/blog', [WebController::class, 'blog'])->name('blog');
+    Route::get('/tentang', [WebController::class, 'tentang'])->name('tentang');
+    Route::get('/kontak', [WebController::class, 'kontak'])->name('kontak');
+
+    Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran');
+    Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran');
+    // Route untuk mengambil data kabupaten dengan javascript (plugin laravolt)
+        Route::get('/pendaftaran/getKabupaten', [PendaftaranController::class, 'getKabupaten'])->name('kabupaten');
+        Route::get('/pendaftaran/getKecamatan', [PendaftaranController::class, 'getKecamatan'])->name('kecamatan');
+        Route::get('/pendaftaran/getKelurahan', [PendaftaranController::class, 'getKelurahan'])->name('kelurahan');
+    // end front
+// });
+
+// ROUTE LOGIN TO DASHBOARD ADMIN PANEL
 Route::get('/panel', [DashboardController::class, 'index'])->middleware('auth');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
@@ -69,7 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/dashboard/ppdb/registrasi-step3', [PPDBController::class, 'postRegistration3']);
     Route::get('/dashboard/ppdb/registrasi-step4', [PPDBController::class, 'registration4']);
     Route::post('/dashboard/ppdb/registrasi-finish', [PPDBController::class, 'finishRegistration']);
-    Route::get('/dashboard/ppdb/approve', [PPDBController::class, 'approve']);
+    Route::post('/dashboard/ppdb/approve', [PPDBController::class, 'approve']);
     Route::get('/dashboard/ppdb/detail/{id}', [PPDBController::class, 'show']);
     Route::get('/dashboard/ppdb/edit/{id}', [PPDBController::class, 'edit']);
     Route::post('/dashboard/ppdb/update', [PPDBController::class, 'update']);
@@ -116,5 +120,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Route surat masuk
     Route::resource('/dashboard/suratmasuk', SuratMasukController::class);
+
+    // Route Setting Profile Sekolah
+    Route::get('/dashboard/sekolah', [SekolahController::class, 'index'])->name('sekolah');
+    Route::put('/dashboard/sekolah/{sekolah}', [SekolahController::class, 'update']);
+    // Route Setting Tentang
+    Route::get('/dashboard/settings-tentang', [TentangController::class, 'index']);
+    Route::put('/dashboard/settings-tentang/{tentang}', [TentangController::class, 'update']);
 
 });

@@ -2,12 +2,12 @@
 @section('content')
     <!-- Contact Start -->
     <div class="container-fluid pt-5">
-      <div class="container">
+      <div class="col-md-10 justify-content-center mx-auto">
         <div class="text-center pb-2">
           <p class="section-title px-5">
-            <span class="px-2">Get In Touch</span>
+            <span class="px-2">Informasi</span>
           </p>
-          <h1 class="mb-4">Contact Us For Any Query</h1>
+          <h1 class="mb-4">Hubungi Kami</h1>
         </div>
         <div class="row">
           <div class="col-lg-7 mb-5">
@@ -71,20 +71,15 @@
             </div>
           </div>
           <div class="col-lg-5 mb-5">
-            <p>
-              Labore sea amet kasd diam justo amet ut vero justo. Ipsum ut et
-              kasd duo sit, ipsum sea et erat est dolore, magna ipsum et magna
-              elitr. Accusam accusam lorem magna, eos et sed eirmod dolor est
-              eirmod eirmod amet.
-            </p>
+            <p>Mendidik dengan sepenuh hati untuk menciptakan lulusan yang berakhlakul karimah</p>
             <div class="d-flex">
               <i
                 class="fa fa-map-marker-alt d-inline-flex align-items-center justify-content-center bg-primary text-secondary rounded-circle"
                 style="width: 45px; height: 45px"
               ></i>
               <div class="pl-3">
-                <h5>Address</h5>
-                <p>123 Street, New York, USA</p>
+                <h5>Alamat</h5>
+                <p>{{$setting->alamat}}</p>
               </div>
             </div>
             <div class="d-flex">
@@ -94,7 +89,7 @@
               ></i>
               <div class="pl-3">
                 <h5>Email</h5>
-                <p>info@example.com</p>
+                <p>{{$setting->email}}</p>
               </div>
             </div>
             <div class="d-flex">
@@ -103,19 +98,8 @@
                 style="width: 45px; height: 45px"
               ></i>
               <div class="pl-3">
-                <h5>Phone</h5>
-                <p>+012 345 67890</p>
-              </div>
-            </div>
-            <div class="d-flex">
-              <i
-                class="far fa-clock d-inline-flex align-items-center justify-content-center bg-primary text-secondary rounded-circle"
-                style="width: 45px; height: 45px"
-              ></i>
-              <div class="pl-3">
-                <h5>Opening Hours</h5>
-                <strong>Sunday - Friday:</strong>
-                <p class="m-0">08:00 AM - 05:00 PM</p>
+                <h5>Telepon</h5>
+                <p>{{$setting->no_telepon}}</p>
               </div>
             </div>
           </div>

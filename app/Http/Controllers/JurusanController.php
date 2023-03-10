@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jurusan;
+use App\Models\PPDB;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,7 +18,7 @@ class JurusanController extends Controller
     public function index()
     {
         return view('jurusan.index',[
-            'title'     => 'Jurusan | SIAZAR',
+            'title'     => 'Jurusan | '. config('app.name'),
             'jurusans'  => Jurusan::all()
         ]);
     }
@@ -119,9 +121,16 @@ class JurusanController extends Controller
      */
     public function destroy(Jurusan $jurusan)
     {
-        if(response(500)){
-            return redirect('/dashboard/jurusan')->with('error', 'Jurusan ' .$jurusan->nama. ' tidak dapat dihapus! karena telah digunakan di data siswa. Jika ingin menghapusnya silahkan ubah atau hapus terlebih dahulu siswa yang memiliki jurusan ini (Hati-hati data siswa bisa hilang!)');
+        // if(response(500)){
+        //     return redirect('/dashboard/jurusan')->with('error', 'Jurusan ' .$jurusan->nama. ' tidak dapat dihapus! karena telah digunakan di data siswa. Jika ingin menghapusnya silahkan ubah atau hapus terlebih dahulu siswa yang memiliki jurusan ini (Hati-hati data siswa bisa hilang!)');
+        // }
+        $cekForeignPppdb = PPDB::where('jurusan_id', $jurusan->id)->get();
+        $cekForeignSiswa = Siswa::where('jurusan_id', $jurusan->id)->get();
+
+        if($cekForeignSiswa->count() > 0 || $cekForeignPppdb->count() > 0){
+            return redirect('/dashboard/jurusan')->with('error', 'Jurusan ' .$jurusan->nama. ' tidak dapat dihapus! karena sedang digunakan di data siswa atau ppdb.');
         }
+        
         if ($jurusan->logo) {
             Storage::delete($jurusan->logo);
         }
