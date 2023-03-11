@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <title>{{$setting->nama_sekolah}}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="Free HTML Templates" name="keywords" />
-    <meta content="Free HTML Templates" name="description" />
+    <meta content="SMK AZ-ZARKASYIH" name="keywords" />
+    <meta content="SMK Az-Zarkasyih" name="description" />
 
     <!-- Favicon -->
     <link href="{{ asset('storage/'. $setting->pavicon) }}" rel="icon" />

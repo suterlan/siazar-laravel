@@ -4,14 +4,14 @@
     <div class="container-fluid bg-primary px-0 px-md-5 mb-5">
       <div class="row align-items-center px-3">
         <div class="col-lg-6 text-center text-lg-left">
-          <h4 class="text-white mb-4 mt-5 mt-lg-0">SMK Az-Zarkasyih</h4>
+          <h4 class="text-white mb-4 mt-5 mt-lg-1">{{$setting->nama_sekolah}}</h4>
           <h2 class="display-3 font-weight-bold text-white">
             {{ $iklan->judul }}
           </h2>
           <p class="text-white mb-4">
             {{ $iklan->informasi }}
           </p>
-          <a href="{{ route('pendaftaran') }}" class="btn btn-secondary mt-1 py-3 px-5">Daftar Sekarang</a></a>
+          <a href="{{ route('pendaftaran') }}" class="btn btn-secondary mt-1 mb-2 py-3 px-5">Daftar Sekarang</a></a>
         </div>
         <div class="col-lg-6 text-center text-lg-right">
           <img class="img-fluid mt-5" src="{{ asset('storage/'. $iklan->gambar) }}" alt="" />
