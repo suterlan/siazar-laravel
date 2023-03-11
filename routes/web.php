@@ -1,15 +1,17 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KlasifikasiController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\PanggilanController;
 use App\Http\Controllers\PenerimaanController;
 use App\Http\Controllers\PPDBController;
 use App\Http\Controllers\SekolahController;
+use App\Http\Controllers\IklanController;
+use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\SuratKeluarController;
 use App\Http\Controllers\SuratMasukController;
@@ -121,6 +123,13 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Route surat masuk
     Route::resource('/dashboard/suratmasuk', SuratMasukController::class);
+
+    // Route Setting website
+    Route::get('/dashboard/settings-iklan', [IklanController::class, 'index']);
+    Route::put('/dashboard/settings-iklan/{iklan}', [IklanController::class, 'update']);
+
+    // Route Galeri
+    Route::resource('/dashboard/galeri', GaleriController::class);
 
     // Route Setting Profile Sekolah
     Route::get('/dashboard/sekolah', [SekolahController::class, 'index'])->name('sekolah');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\website;
 
 use App\Http\Controllers\Controller;
+use App\Models\Iklan;
 use App\Models\Jurusan;
 use App\Models\Sekolah;
 use App\Models\Tentang;
@@ -11,14 +12,15 @@ use Illuminate\Http\Request;
 class WebController extends Controller
 {
     protected $setting;
+    protected $iklan;
     public function __construct()
     {
         $this->setting = Sekolah::first();
+        $this->iklan = Iklan::first();
     }
-
-    // website controller index
     public function index(){
         return view('website.index',[
+            'iklan'     => $this->iklan,
             'setting'   => $this->setting,
             'jurusans'  => Jurusan::all(),
             'tentang'   => Tentang::first()
@@ -26,7 +28,7 @@ class WebController extends Controller
     }
 
     public function jurusan(){
-        return view('website.jurusan',[
+        return view('website.jurusan', [
             'setting'   => $this->setting,
             'jurusans'  => Jurusan::all()
         ]);
