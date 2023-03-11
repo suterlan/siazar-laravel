@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sekolah;
 use App\Models\User;
 use Illuminate\Http\Request;
 use illuminate\Support\Facades\Auth;
@@ -16,7 +17,8 @@ class LoginController extends Controller
     public function index()
     {
         return view('auth.login', [
-            'title' => 'Login | SIAZAR'
+            'title' => 'Login | '. config('app.name'),
+            'sekolah'   => Sekolah::first()
         ]);
     }
 

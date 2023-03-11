@@ -84,9 +84,5 @@ class DatabaseSeeder extends Seeder
         Tentang::create([
             'id'    => 1,
         ]);
-
-        Iklan::create([
-            'id'    => 1
-        ]);
     }
 }

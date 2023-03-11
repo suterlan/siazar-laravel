@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('keterangan', 100)->nullable();
             $table->timestamps();
 
-            $table->foreign('klasifikasi_id')->references('id')->on('klasifikasis')->onUpdate('CASCADE');
+            $table->foreign('klasifikasi_id')->references('id')->on('klasifikasis');
         });
     }
 

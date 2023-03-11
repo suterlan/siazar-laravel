@@ -8,51 +8,57 @@
           <div class="col-lg-5">
             <img
               class="img-fluid rounded mb-5 mb-lg-0"
-              src="img/about-1.jpg"
+              src="{{asset('storage/'. $tentang->gambar_1)}}"
               alt=""
             />
           </div>
           <div class="col-lg-7">
             <p class="section-title pr-5">
-              <span class="pr-2">Learn About Us</span>
+              <span class="pr-2">Tentang Kami</span>
             </p>
-            <h1 class="mb-4">Best School For Your Kids</h1>
+            <h2 class="mb-4">Sambutan Kepala Sekolah</h2>
             <p>
-              Invidunt lorem justo sanctus clita. Erat lorem labore ea, justo
-              dolor lorem ipsum ut sed eos, ipsum et dolor kasd sit ea justo.
-              Erat justo sed sed diam. Ea et erat ut sed diam sea ipsum est
-              dolor
+              {!! $tentang->sambutan !!}
             </p>
             <div class="row pt-2 pb-4">
               <div class="col-6 col-md-4">
-                <img class="img-fluid rounded" src="img/about-2.jpg" alt="" />
+                <img class="img-fluid rounded" src="{{asset('storage/'. $tentang->gambar_2)}}" alt="" />
               </div>
               <div class="col-6 col-md-8">
+                <h5 class="mb-2 text-primary">Visi</h5>
+                <ul class="list-inline mb-4">
+                  {{$tentang->visi}}
+                </ul>
+                
+                <h5 class="mb-4 text-primary">Misi</h5>
                 <ul class="list-inline m-0">
-                  <li class="py-2 border-top border-bottom">
-                    <i class="fa fa-check text-primary mr-3"></i>Labore eos amet
-                    dolor amet diam
-                  </li>
-                  <li class="py-2 border-bottom">
-                    <i class="fa fa-check text-primary mr-3"></i>Etsea et sit
-                    dolor amet ipsum
-                  </li>
-                  <li class="py-2 border-bottom">
-                    <i class="fa fa-check text-primary mr-3"></i>Diam dolor diam
-                    elitripsum vero.
-                  </li>
+                  {!! $tentang->misi !!}
                 </ul>
               </div>
             </div>
-            <a href="" class="btn btn-primary mt-2 py-2 px-4">Learn More</a>
           </div>
         </div>
       </div>
     </div>
     <!-- About End -->
 
-    <!-- Facilities Start -->
+    {{-- video kami --}}
     <div class="container-fluid pt-5">
+      <div class="container">
+        <div class="text-center pb-2">
+          <p class="section-title px-5">
+            <span class="px-2">Video Tentang Kami</span>
+          </p>
+        </div>
+        <div class="row text-center">
+          <video src="{{asset('storage/'. $tentang->video)}}" class="col-sm-6 mx-auto mt-4 " type="video/mp4" controls></video>
+        </div>
+      </div>
+    </div>
+    {{-- video end --}}
+
+    <!-- Facilities Start -->
+    {{-- <div class="container-fluid pt-5">
       <div class="container pb-3">
         <div class="row">
           <div class="col-lg-4 col-md-6 pb-1">
@@ -159,7 +165,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     <!-- Facilities Start -->
 
     <!-- Team Start -->

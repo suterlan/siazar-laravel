@@ -14,6 +14,7 @@ use Laravolt\Indonesia\Models\Village;
 
 class PendaftaranController extends Controller
 {
+    // pendaftaran front end controller
     public function index(){
         $provinces= Province::pluck('name', 'code');
         return view('website.pendaftaran',[

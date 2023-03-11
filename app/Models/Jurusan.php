@@ -19,4 +19,7 @@ class Jurusan extends Model
     public function siswa(){
         return $this->hasMany(Siswa::class);
     }
+    public function ppdb(){
+        return $this->hasMany(PPDB::class);
+    }
 }

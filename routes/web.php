@@ -130,6 +130,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Route Galeri
     Route::resource('/dashboard/galeri', GaleriController::class);
+
     // Route Setting Profile Sekolah
     Route::get('/dashboard/sekolah', [SekolahController::class, 'index'])->name('sekolah');
     Route::put('/dashboard/sekolah/{sekolah}', [SekolahController::class, 'update']);

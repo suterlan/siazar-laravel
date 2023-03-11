@@ -14,7 +14,7 @@
           <a href="{{ route('pendaftaran') }}" class="btn btn-secondary mt-1 py-3 px-5">Daftar Sekarang</a></a>
         </div>
         <div class="col-lg-6 text-center text-lg-right">
-          <img class="img-fluid mt-5" src="{{ asset('front') }}/img/ppdb.png" alt="" />
+          <img class="img-fluid mt-5" src="{{ asset('storage/'. $iklan->gambar) }}" alt="" />
         </div>
       </div>
     </div>
@@ -159,7 +159,7 @@
               <ul class="list-inline mb-4">
                 {{$tentang->visi}}
               </ul>
-
+              
               <h5 class="mb-4 text-primary">Misi</h5>
               <ul class="list-inline m-0">
                 {!! $tentang->misi !!}

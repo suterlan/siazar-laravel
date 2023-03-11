@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('tanggal_surat')->nullable();
             $table->timestamps();
 
-            $table->foreign('klasifikasi_id')->references('id')->on('klasifikasis')->onUpdate('CASCADE');
+            $table->foreign('klasifikasi_id')->references('id')->on('klasifikasis');
         });
     }
 

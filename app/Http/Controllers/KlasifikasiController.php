@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Klasifikasi;
+use App\Models\SuratKeluar;
+use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
 
 class KlasifikasiController extends Controller
@@ -15,7 +17,7 @@ class KlasifikasiController extends Controller
     public function index()
     {
         return view('klasifikasi.klasifikasi',[
-            'title' => 'Klasifikasi Surat | SIAZAR',
+            'title' => 'Klasifikasi Surat | '. config('app.name'),
             'klasifikasis'   => Klasifikasi::all()
         ]);
     }
@@ -68,7 +70,7 @@ class KlasifikasiController extends Controller
     public function edit(Klasifikasi $klasifikasi)
     {
         return view('klasifikasi.edit',[
-            'title' => 'Edit Klasifikasi Surat | SIAZAR',
+            'title' => 'Edit Klasifikasi Surat | '. config('app.name'),
             'klasifikasi'   => $klasifikasi
         ]);
     }
@@ -102,9 +104,12 @@ class KlasifikasiController extends Controller
      */
     public function destroy(Klasifikasi $klasifikasi)
     {
-        if(response(500)){
-            return redirect('/dashboard/klasifikasi')->with('error', 'Klasifikasi tidak dapat dihapus! karena telah digunakan di surat. Jika ingin menghapusnya silahkan ubah atau hapus terlebih dahulu surat yang menggunakan klasifikasi ini');
+        $cekForeignSuratMasuk = SuratMasuk::where('klasifikasi_id', $klasifikasi->id)->get();
+        $cekForeignSuratKeluar = SuratKeluar::where('klasifikasi_id', $klasifikasi->id)->get();
+        if($cekForeignSuratMasuk->count() > 0 || $cekForeignSuratKeluar->count() > 0){
+            return redirect('/dashboard/klasifikasi')->with('error', 'Klasifikasi dengan kode ' . $klasifikasi->kode . ' tidak dapat dihapus! karena sedang digunakan di data surat');
         }
+
         Klasifikasi::destroy($klasifikasi->id);
         return redirect('/dashboard/klasifikasi')->with('success', 'Klasifikasi dengan kode ' . $klasifikasi->kode . ' berhasil dihapus');
     }
