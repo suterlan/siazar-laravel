@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Iklan;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Klasifikasi;
@@ -82,6 +83,10 @@ class DatabaseSeeder extends Seeder
             'jurusan_id'    => 1,
             'kelas_id'    => 1,
             'nama_ibu'     => 'Siti'
+        ]);
+
+        Iklan::create([
+            'id'    => 1,
         ]);
     }
 }

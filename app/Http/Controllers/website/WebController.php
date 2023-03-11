@@ -3,13 +3,20 @@
 namespace App\Http\Controllers\website;
 
 use App\Http\Controllers\Controller;
+use App\Models\Iklan;
 use App\Models\Jurusan;
 use Illuminate\Http\Request;
 
 class WebController extends Controller
 {
+    protected $iklan;
+    public function __construct()
+    {
+        $this->iklan = Iklan::first();
+    }
     public function index(){
         return view('website.index',[
+            'iklan'     => $this->iklan,
             'jurusans'  => Jurusan::all()
         ]);
     }

@@ -1,21 +1,26 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KlasifikasiController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\MutasiController;
-use App\Http\Controllers\PanggilanController;
-use App\Http\Controllers\PenerimaanController;
-use App\Http\Controllers\PPDBController;
-use App\Http\Controllers\SuratBaruController;
-use App\Http\Controllers\SuratKeluarController;
-use App\Http\Controllers\SuratMasukController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\website\PendaftaranController;
-use App\Http\Controllers\website\WebController;
-use App\Models\SuratKeluar;
 use App\Models\SuratMasuk;
+use App\Models\SuratKeluar;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PPDBController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\IklanController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\MutasiController;
+use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\PanggilanController;
+use App\Http\Controllers\SuratBaruController;
+use App\Http\Controllers\PenerimaanController;
+use App\Http\Controllers\SuratMasukController;
+use App\Http\Controllers\KlasifikasiController;
+use App\Http\Controllers\SuratKeluarController;
+use App\Http\Controllers\website\WebController;
+use App\Http\Controllers\WilayahIndonesiaController;
+use App\Http\Controllers\website\PendaftaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +49,8 @@ Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pend
     Route::get('/pendaftaran/getKecamatan', [PendaftaranController::class, 'getKecamatan'])->name('kecamatan');
     Route::get('/pendaftaran/getKelurahan', [PendaftaranController::class, 'getKelurahan'])->name('kelurahan');
 // end front
+
+// ROUTE PANEL DASHBOARD ADMIN
 Route::get('/panel', [DashboardController::class, 'index'])->middleware('auth');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
@@ -113,5 +120,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Route surat masuk
     Route::resource('/dashboard/suratmasuk', SuratMasukController::class);
+
+    // Route Setting website
+    Route::get('/dashboard/settings-iklan', [IklanController::class, 'index']);
+    Route::put('/dashboard/settings-iklan/{iklan}', [IklanController::class, 'update']);
+
+    // Route Galeri
+    Route::resource('/dashboard/galeri', GaleriController::class);
 
 });
