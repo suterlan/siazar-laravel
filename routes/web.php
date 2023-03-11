@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/dashboard/ppdb/registrasi-step3', [PPDBController::class, 'postRegistration3']);
     Route::get('/dashboard/ppdb/registrasi-step4', [PPDBController::class, 'registration4']);
     Route::post('/dashboard/ppdb/registrasi-finish', [PPDBController::class, 'finishRegistration']);
+    // route approve ppdb
     Route::post('/dashboard/ppdb/approve', [PPDBController::class, 'approve']);
     Route::get('/dashboard/ppdb/detail/{id}', [PPDBController::class, 'show']);
     Route::get('/dashboard/ppdb/edit/{id}', [PPDBController::class, 'edit']);

@@ -16,6 +16,7 @@ class WebController extends Controller
         $this->setting = Sekolah::first();
     }
 
+    // website controller index
     public function index(){
         return view('website.index',[
             'setting'   => $this->setting,
