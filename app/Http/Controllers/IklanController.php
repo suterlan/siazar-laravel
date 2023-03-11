@@ -29,6 +29,7 @@ class IklanController extends Controller
             }
             $validated['gambar'] = $request->file('gambar')->store('img/settings-iklan');
         }
+
         Iklan::where('id', $iklan->id)
             ->update($validated);
         return redirect('/dashboard/settings-iklan')->with('success', 'Iklan berhasil diubah!');

@@ -20,7 +20,7 @@
                 @endif
                 <div class="row align-items-center my-3">
                     <div class="col">
-                        <h2 class="page-title">Galeri </h2>
+                        <h2 class="page-title">Galeri Foto</h2>
                     </div>
                     <div class="col-auto">
                         <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#addFotoModal"><span class="fe fe-plus fe-16 mr-3"></span>New</button>

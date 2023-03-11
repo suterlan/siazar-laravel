@@ -17,7 +17,7 @@ class GaleriController extends Controller
     {
         return view('galeri.index', [
             'title'     => 'Galeri | ',
-            'jurusan'   => Jurusan::select('id', 'nama')->get(),
+            'jurusan'   => Jurusan::select('id', 'nama')->get()
         ]);
     }
 

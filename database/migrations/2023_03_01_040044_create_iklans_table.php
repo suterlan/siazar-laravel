@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('iklans', function (Blueprint $table) {
             $table->id();
             $table->string('judul', 64)->nullable();
-            $table->string('informasi')->nullable();
+            $table->string('informasi', 255)->nullable();
             $table->string('gambar')->nullable();
             $table->timestamps();
         });

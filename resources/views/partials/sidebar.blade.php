@@ -130,7 +130,7 @@
         </ul>
         <ul class="navbar-nav flex-fill w-100 mb-1">
             <li class="nav-item">
-                <a href="/dashboard/sekolah" aria-expanded="false" class="nav-link {{ Request::is('dashboard/sekolah') ? 'link-active' : '' }}">
+                <a href="{{route('sekolah')}}" aria-expanded="false" class="nav-link {{ Request::is('dashboard/sekolah') ? 'link-active' : '' }}">
                     <i class="fe fe-grid fe-16"></i>
                     <span class="ml-3 item-text">Profile Sekolah</span>
                 </a>

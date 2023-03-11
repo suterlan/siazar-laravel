@@ -131,55 +131,46 @@
     </div>
     <!-- Facilities Start -->
 
-    <!-- About Start -->
-    <div class="container-fluid py-5">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-5">
-            <img
-              class="img-fluid rounded mb-5 mb-lg-0"
-              src="{{ asset('front') }}/img/about-1.jpg"
-              alt=""
-            />
-          </div>
-          <div class="col-lg-7">
-            <p class="section-title pr-5">
-              <span class="pr-2">Learn About Us</span>
-            </p>
-            <h1 class="mb-4">Best School For Your Kids</h1>
-            <p>
-              Invidunt lorem justo sanctus clita. Erat lorem labore ea, justo
-              dolor lorem ipsum ut sed eos, ipsum et dolor kasd sit ea justo.
-              Erat justo sed sed diam. Ea et erat ut sed diam sea ipsum est
-              dolor
-            </p>
-            <div class="row pt-2 pb-4">
-              <div class="col-6 col-md-4">
-                <img class="img-fluid rounded" src="{{ asset('front') }}/img/about-2.jpg" alt="" />
-              </div>
-              <div class="col-6 col-md-8">
-                <ul class="list-inline m-0">
-                  <li class="py-2 border-top border-bottom">
-                    <i class="fa fa-check text-primary mr-3"></i>Labore eos amet
-                    dolor amet diam
-                  </li>
-                  <li class="py-2 border-bottom">
-                    <i class="fa fa-check text-primary mr-3"></i>Etsea et sit
-                    dolor amet ipsum
-                  </li>
-                  <li class="py-2 border-bottom">
-                    <i class="fa fa-check text-primary mr-3"></i>Diam dolor diam
-                    elitripsum vero.
-                  </li>
-                </ul>
-              </div>
+   <!-- About Start -->
+   <div class="container-fluid py-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-5">
+          <img
+            class="img-fluid rounded mb-5 mb-lg-0"
+            src="{{asset('storage/'. $tentang->gambar_1)}}"
+            alt=""
+          />
+        </div>
+        <div class="col-lg-7">
+          <p class="section-title pr-5">
+            <span class="pr-2">Tentang Kami</span>
+          </p>
+          <h2 class="mb-4">Sambutan Kepala Sekolah</h2>
+          <p>
+            {!! $tentang->sambutan !!}
+          </p>
+          <div class="row pt-2 pb-4">
+            <div class="col-6 col-md-4">
+              <img class="img-fluid rounded" src="{{asset('storage/'. $tentang->gambar_2)}}" alt="" />
             </div>
-            <a href="" class="btn btn-primary mt-2 py-2 px-4">Learn More</a>
+            <div class="col-6 col-md-8">
+              <h5 class="mb-2 text-primary">Visi</h5>
+              <ul class="list-inline mb-4">
+                {{$tentang->visi}}
+              </ul>
+
+              <h5 class="mb-4 text-primary">Misi</h5>
+              <ul class="list-inline m-0">
+                {!! $tentang->misi !!}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- About End -->
+  </div>
+  <!-- About End -->
 
     <!-- Jurusan Start -->
     <div class="container-fluid pt-5">
@@ -195,7 +186,7 @@
                 <div class="col-lg-4 mb-5">
                     <div class="card border-0 bg-light shadow-sm pb-2">
                         <div class="card-header text-center"><b>{{ strtoupper($jurusan->kode) }}</b></div>
-                        <img class="mb-2 mt-3 img-fluid mx-auto" src="{{asset('img/' .$jurusan->kode. '.png')}}" width="150"/>
+                        <img class="mb-2 mt-3 img-fluid mx-auto" src="{{ asset('storage/'. $jurusan->logo) }}" width="150"/>
                         <div class="card-body text-center">
                             <h4 class="card-title">{{ $jurusan->nama }}</h4>
                             <p class="card-text">

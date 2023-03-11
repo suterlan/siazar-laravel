@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('gambar');
             $table->timestamps();
 
+
             $table->foreign('jurusan_id')->references('id')->on('jurusans')->onDelete('SET NULL')->onUpdate('CASCADE');
         });
     }

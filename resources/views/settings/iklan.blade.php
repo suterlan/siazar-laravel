@@ -12,7 +12,7 @@
                     @endif
                     <div class="card shadow">
                         <div class="card-header">
-                            <strong class="card-title">Iklan</strong>
+                            <strong class="card-title">Iklan </strong>
                         </div>
                         <div class="card-body">
                             <form action="/dashboard/settings-iklan/{{ $iklan->id }}" method="post" enctype="multipart/form-data">
