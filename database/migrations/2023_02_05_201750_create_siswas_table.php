@@ -53,8 +53,8 @@ return new class extends Migration
             $table->boolean('lulus')->default(false);
             $table->timestamps();
 
-            $table->foreign('jurusan_id')->references('id')->on('jurusans')->onUpdate('CASCADE');
-            $table->foreign('kelas_id')->references('id')->on('kelas')->onUpdate('CASCADE');
+            $table->foreign('jurusan_id')->references('id')->on('jurusans');
+            $table->foreign('kelas_id')->references('id')->on('kelas');
         });
     }
 

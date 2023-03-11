@@ -8,7 +8,9 @@ use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Klasifikasi;
 use App\Models\PPDB;
+use App\Models\Sekolah;
 use App\Models\SuratMasuk;
+use App\Models\Tentang;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,7 +25,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'admin',
             'username' => 'admin',
-            'email' => 'admin@example.com',
+            'email' => 'admin@admin.com',
             'role'  => 1,
             'password'  => bcrypt('password')
         ]);
@@ -49,13 +51,13 @@ class DatabaseSeeder extends Seeder
             'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, quidem.'
         ]);
         Jurusan::create([
-            'kode'  => 'TSM',
-            'nama'  => 'Teknik Sepeda Motor',
+            'kode'  => 'MP',
+            'nama'  => 'Manajemen Perkantoran',
             'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, quidem.'
         ]);
         Jurusan::create([
-            'kode'  => 'MP',
-            'nama'  => 'Manajemen Perkantoran',
+            'kode'  => 'TSM',
+            'nama'  => 'Teknik Sepeda Motor',
             'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, quidem.'
         ]);
 
@@ -72,16 +74,14 @@ class DatabaseSeeder extends Seeder
             'nama'  => 'XII'
         ]);
 
-        PPDB::create([
-            'nama_siswa'    => 'John',
-            'jk'            => 'Laki-laki',
-            'nik'           => '6856576575475800',
-            'tempat_lahir'  => 'Cianjur',
-            'tgl_lahir'     => now(),
-            'asal_sekolah'  => 'SMPN 1',
-            'jurusan_id'    => 1,
-            'kelas_id'    => 1,
-            'nama_ibu'     => 'Siti'
+        PPDB::factory(15)->create();
+
+        Sekolah::create([
+            'id'    => 1,
+            'nama_sekolah'  => 'SMK Az-Zarkasyih'
+        ]);
+        Tentang::create([
+            'id'    => 1,
         ]);
     }
 }
