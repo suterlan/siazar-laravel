@@ -79,7 +79,6 @@ class DatabaseSeeder extends Seeder
 
         Sekolah::create([
             'id'    => 1,
-            'nama_sekolah'  => 'SMK Az-Zarkasyih'
         ]);
         Tentang::create([
             'id'    => 1,

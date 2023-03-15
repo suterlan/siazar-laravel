@@ -31,35 +31,36 @@
                         <hr class="my-4">
                         <h6 class="mb-3">Foto</h6>
                         <div class="row my-4 pb-4">
+                            @foreach ($galeris as $galeri )
                             <div class="col-md-3">
-                                <div class="card shadow text-center mb-4">
-                                <div class="card-body file">
-                                    <div class="file-action">
-                                    <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="text-muted sr-only">Action</span>
-                                    </button>
-                                    <div class="dropdown-menu m-2">
-                                        <a class="dropdown-item" href="#"><i class="fe fe-chevrons-right fe-12 mr-4"></i>Move</a>
-                                        <a class="dropdown-item" href="#"><i class="fe fe-copy fe-12 mr-4"></i>Copy</a>
-                                        <a class="dropdown-item" href="#"><i class="fe fe-edit-3 fe-12 mr-4"></i>Rename</a>
-                                        <a class="dropdown-item" href="#"><i class="fe fe-delete fe-12 mr-4"></i>Delete</a>
-                                        <a class="dropdown-item" href="#"><i class="fe fe-share fe-12 mr-4"></i>Share</a>
-                                        <a class="dropdown-item" href="#"><i class="fe fe-download fe-12 mr-4"></i>Download</a>
-                                    </div>
-                                    </div>
-                                    <div class="circle circle-lg bg-light my-4">
-                                        <img src="{{ asset('logo_smk.jpg') }}" alt="..." class="img-fluid rounded">
-                                    </div>
-                                    <div class="file-info">
-                                    <span class="badge badge-light text-muted mr-2">288K</span>
-                                    <span class="badge badge-pill badge-light text-muted">PNG</span>
-                                    </div>
-                                </div> <!-- .card-body -->
-                                <div class="card-footer bg-transparent border-0 fname">
-                                    <strong>Creative Logo</strong>
-                                </div> <!-- .card-footer -->
-                                </div> <!-- .card -->
+                                <div class="show-detail">
+                                    <div class="card shadow text-center mb-4">
+                                        <div class="card-body file">
+                                            <div class="file-action">
+                                                <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <span class="text-muted sr-only">Action</span>
+                                                </button>
+                                                <div class="dropdown-menu m-2">
+                                                    <a class="dropdown-item" href="#"><i class="fe fe-edit-3 fe-12 mr-4"></i>Edit</a>
+                                                    <a class="dropdown-item" href="#"><i class="fe fe-delete fe-12 mr-4"></i>Delete</a>
+                                                    <a class="dropdown-item" href="#"><i class="fe fe-download fe-12 mr-4"></i>Download</a>
+                                                </div>
+                                            </div>
+                                            <div class="circle circle-lg bg-light my-4">
+                                                <img src="{{ asset('storage/'. $galeri->gambar) }}" class="img-fluid">
+                                            </div>
+                                            <div class="file-info">
+                                                <span class="badge badge-light text-muted mr-2">{{ number_format($galeri->gambar_size / 1048576,2); }} MB</span>
+                                                <span class="badge badge-pill badge-light text-muted">{{ $galeri->gambar_type }}</span>
+                                            </div>
+                                        </div> <!-- .card-body -->
+                                        <div class="card-footer bg-transparent border-0 fname">
+                                            <strong>{{ $galeri->caption }}</strong>
+                                        </div> <!-- .card-footer -->
+                                    </div> <!-- .card -->
+                                </div>
                             </div> <!-- .col -->
+                            @endforeach
                         </div> <!-- .row -->
                     </div> <!-- .file-panel -->
                     <div class="info-panel">
@@ -156,6 +157,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    let showDetail = document.querySelectorAll('.show-detail');
+    showDetail.forEach((e) => {
+        e.addEventListener('click', () =>{
+            console.log('ok');
+        });
+    });
+</script>
 @endsection
 
 

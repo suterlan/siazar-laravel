@@ -22,7 +22,7 @@ class Siswa extends Model
     }
 
     public function dokumen(){
-        return $this->hasOne(Dokumen::class, 'nis', 'nis');
+        return $this->hasOne(Dokumen::class, 'nisn', 'nisn');
     }
 
     protected $with = ['dokumen'];

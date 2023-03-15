@@ -17,7 +17,8 @@ class GaleriController extends Controller
     {
         return view('galeri.index', [
             'title'     => 'Galeri | ',
-            'jurusan'   => Jurusan::select('id', 'nama')->get()
+            'jurusan'   => Jurusan::select('id', 'nama')->get(),
+            'galeris'   => Galeri::latest()->get()
         ]);
     }
 
@@ -41,11 +42,19 @@ class GaleriController extends Controller
     {
         $validated = $request->validate([
             'jurusan_id'    => 'required',
-            'gambar'        => 'image|file|mimes:png,jpg',
+            'gambar'        => 'image|file|max:5120|mimes:png,jpg',
             'caption'       => 'max:32|required'
         ]);
 
-        return $request;
+        if($request->file('gambar')){
+            $validated['gambar'] = $request->file('gambar')->store('img/galeri');
+            $validated['gambar_type'] = $request->file('gambar')->getMimeType();
+            $validated['gambar_size'] = $request->file('gambar')->getSize();
+        }
+
+        Galeri::create($validated);
+
+        return redirect('/dashboard/galeri')->with('success', 'Gambar galeri berhasil ditambah');
     }
 
     /**

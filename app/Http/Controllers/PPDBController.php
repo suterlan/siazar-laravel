@@ -10,6 +10,7 @@ use App\Models\Siswa;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Laravolt\Indonesia\Models\City;
 use Laravolt\Indonesia\Models\District;
 use Laravolt\Indonesia\Models\Province;
@@ -29,7 +30,7 @@ class PPDBController extends Controller
         }
 
         $query = PPDB::select('confirmed')->get();
-        //jadikan hasil query menjadi collection dan cek data apakah ada yang memiliki nilai 0 pada kolom confirmed  
+        //jadikan hasil query menjadi collection dan cek data apakah ada yang memiliki nilai 0 pada kolom confirmed
         $cekConfirm = collect($query)->contains('confirmed', 0);
         // jika benar ada nilai 0 dan sesuai(true) buat variabel disabled dengan nilai kosong
         // jika salah atau tidak ada nilai 0, buat variabel dengan nilai 'disabled' (digunakan untuk disable class button approve)
@@ -44,7 +45,7 @@ class PPDBController extends Controller
                         ->groupBy('p_p_d_b_s.jurusan_id', 'logo', 'nama')
                         ->where('p_p_d_b_s.confirmed', 0)
                         ->get();
-                        
+
         return view('ppdb.index',[
             'title'     => 'PPDB | '. config('app.name'),
             'jmlCalonSiswa' => PPDB::where('confirmed', 0)->count(),
@@ -175,7 +176,7 @@ class PPDBController extends Controller
         $registrasi = $request->session()->get('registrasi');
         $registrasi->fill($validatedData);
         $request->session()->put('registrasi', $registrasi);
-        
+
         $registrasi->save();
 
         session()->forget('registrasi');
@@ -197,7 +198,7 @@ class PPDBController extends Controller
             'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
             'kelas'     => Kelas::select('id', 'nama')->get(),
             'provinces'     => $provinces,
-            'ppdb'      => PPDB::whereId($id)->first(),
+            'ppdb'      => PPDB::with('dokumen')->whereId($id)->first(),
         ]);
     }
 
@@ -237,6 +238,53 @@ class PPDBController extends Controller
             'kelas_id'          => 'required',
         ]);
 
+        $ruleDocument = [
+            'kartu_keluarga'        => 'file|mimes:pdf|max:2048',
+            'ijazah'                => 'file|mimes:pdf|max:2048',
+            'akte'                  => 'file|mimes:pdf|max:2048',
+            'ktp_ortu'              => 'file|mimes:pdf|max:2048',
+            'berkas'                => 'file|mimes:pdf|max:2048',
+        ];
+
+        $documents = $request->validate($ruleDocument);
+
+        if ($request->file('kartu_keluarga')) {
+            if($request->old_kartu_keluarga){
+                Storage::delete($request->old_kartu_keluarga);
+            }
+            $documents['kartu_keluarga'] = $request->file('kartu_keluarga')->store('dokumen/' . $validatedData['nisn'] . '_' . $validatedData['nama_siswa']);
+        }
+        if ($request->file('ijazah')) {
+            if($request->old_ijazah){
+                Storage::delete($request->old_ijazah);
+            }
+            $documents['ijazah'] = $request->file('ijazah')->store('dokumen/' . $validatedData['nisn'] . '_' . $validatedData['nama_siswa']);
+        }
+        if ($request->file('akte')) {
+            if($request->old_akte){
+                Storage::delete($request->old_akte);
+            }
+            $documents['akte'] = $request->file('akte')->store('dokumen/' . $validatedData['nisn'] . '_' . $validatedData['nama_siswa']);
+        }
+        if ($request->file('ktp_ortu')) {
+            if($request->old_ktp_ortu){
+                Storage::delete($request->old_ktp_ortu);
+            }
+            $documents['ktp_ortu'] = $request->file('ktp_ortu')->store('dokumen/' . $validatedData['nisn'] . '_' . $validatedData['nama_siswa']);
+        }
+        if ($request->file('berkas')) {
+            if($request->old_berkas){
+                Storage::delete($request->old_berkas);
+            }
+            $documents['berkas'] = $request->file('berkas')->store('dokumen/' . $validatedData['nisn'] . '_' . $validatedData['nama_siswa']);
+        }
+
+        // update tabel dokumen
+        Dokumen::updateOrCreate(
+            ['nisn'     => $validatedData['nisn']],
+            $documents
+        );
+
         PPDB::where('id', $request->id)
             ->update($validatedData);
 
@@ -265,20 +313,20 @@ class PPDBController extends Controller
             $year = Carbon::now()->format('Y');
             $month = Carbon::now()->format('m');
             $day = Carbon::now()->format('d');
-            
+
             // query ke tabel ppdb berdasarkan status confirm nya masih 0
             $data = $request->sub_check;
             $ppdb = PPDB::where('confirmed', 0)->whereIn('id', $data)->get();
 
-            // lakukan perulangan untuk setiap row  
-            foreach ($ppdb as $value) {   
+            // lakukan perulangan untuk setiap row
+            foreach ($ppdb as $value) {
                 // query ke tabel siswa untuk ambil kode nis terakhir berdasarkan tahun dibuat
                 $cekSiswa = DB::table('siswas')
                 ->select(DB::raw('MAX(RIGHT(nis, 3)) as lastNis'))
                 ->where(DB::raw('YEAR(created_at)'), $year);
                 // cek hasil query
                 if($cekSiswa->count() > 0){
-                    // jika ditemukan lebih dari 0, karena bentuknya  array maka lakukan perulangan 
+                    // jika ditemukan lebih dari 0, karena bentuknya  array maka lakukan perulangan
                     foreach($cekSiswa->get() as $row){
                         // buat variabel untuk menampung nis terakhir
                         $new_nis = $row->lastNis;
@@ -294,22 +342,22 @@ class PPDBController extends Controller
                 $code = sprintf('%03s', $temp);
                 // gabungkan tahun bulan dan hari dengan kode yang telah dibuat kedalam variabel nis
                 $nis = $year . $month . $day . $code;
-                
+
 
                 $nisn_siswa = Siswa::select('nisn')
                                 ->where('nisn', $value->nisn)
                                 ->whereNotNull('nisn')
                                 ->get();
-                                
+
                 if($nisn_siswa->count() > 0){
                     return redirect('/dashboard/ppdb')->with('error', 'Proses approve berhenti! ada duplikasi NISN, silahkan periksa lagi data PPDB');
                 }
-                // kemudian insert ke tabel siswa 
+                // kemudian insert ke tabel siswa
                 Siswa::create([
-                    'nis'                   => $nis,     
-                    'nisn'                  => $value->nisn,      
-                    'jurusan_id'            => $value->jurusan_id,      
-                    'kelas_id'              => $value->kelas_id,      
+                    'nis'                   => $nis,
+                    'nisn'                  => $value->nisn,
+                    'jurusan_id'            => $value->jurusan_id,
+                    'kelas_id'              => $value->kelas_id,
                     'nama_siswa'            => $value->nama_siswa,
                     'jk'                    => $value->jk,
                     'tempat_lahir'          => $value->tempat_lahir,
@@ -340,10 +388,6 @@ class PPDBController extends Controller
                     'pekerjaan_ibu'         => $value->pekerjaan_ibu,
                     'penghasilan_ibu'       => $value->penghasilan_ibu,
                     'jml_saudara_kandung'   => $value->jml_saudara_kandung,
-                ]);
-                
-                Dokumen::create([
-                    'nis'   => $nis
                 ]);
 
                 PPDB::where('id', $value->id)

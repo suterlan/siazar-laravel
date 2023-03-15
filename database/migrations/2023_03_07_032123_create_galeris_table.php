@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('jurusan_id')->nullable();
             $table->string('caption', 32);
             $table->string('gambar');
+            $table->string('gambar_type');
+            $table->integer('gambar_size');
             $table->timestamps();
 
 

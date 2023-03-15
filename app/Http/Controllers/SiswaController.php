@@ -93,9 +93,9 @@ class SiswaController extends Controller
     public function update(Request $request, Siswa $siswa)
     {
         // RULE VALIDASI SISWA
-        $validate = [    
-                'jurusan_id'            => 'required',       
-                'kelas_id'              => 'required',      
+        $validate = [
+                'jurusan_id'            => 'required',
+                'kelas_id'              => 'required',
                 'nama_siswa'            => 'required',
                 'jk'                    => 'required',
                 'tempat_lahir'          => 'required',
@@ -105,7 +105,7 @@ class SiswaController extends Controller
                 'nik'                   => 'min:16|required|numeric',
                 'alamat'                => 'max:255',
                 'provinsi'              => 'max:64',
-                'kabupaten'             => 'max:64', 
+                'kabupaten'             => 'max:64',
                 'kecamatan'             => 'max:64',
                 'kelurahan'             => 'max:64',
                 'asal_sekolah'          => 'required',
@@ -145,52 +145,52 @@ class SiswaController extends Controller
         ];
 
         $documents = $request->validate($ruleDocument);
-        
+
         if ($request->file('foto')) {
             if($request->old_foto){
                 Storage::delete($request->old_foto);
             }
-            $documents['foto'] = $request->file('foto')->store('dokumen/' . $siswa->nis . '_' . $siswa->nama_siswa);
+            $documents['foto'] = $request->file('foto')->store('dokumen/' . $siswa->nisn . '_' . $siswa->nama_siswa);
         }
         if ($request->file('kartu_keluarga')) {
             if($request->old_kartu_keluarga){
                 Storage::delete($request->old_kartu_keluarga);
             }
-            $documents['kartu_keluarga'] = $request->file('kartu_keluarga')->store('dokumen/' . $siswa->nis . '_' . $siswa->nama_siswa);
+            $documents['kartu_keluarga'] = $request->file('kartu_keluarga')->store('dokumen/' . $siswa->nisn . '_' . $siswa->nama_siswa);
         }
         if ($request->file('ijazah')) {
             if($request->old_ijazah){
                 Storage::delete($request->old_ijazah);
             }
-            $documents['ijazah'] = $request->file('ijazah')->store('dokumen/' . $siswa->nis . '_' . $siswa->nama_siswa);
+            $documents['ijazah'] = $request->file('ijazah')->store('dokumen/' . $siswa->nisn . '_' . $siswa->nama_siswa);
         }
         if ($request->file('akte')) {
             if($request->old_akte){
                 Storage::delete($request->old_akte);
             }
-            $documents['akte'] = $request->file('akte')->store('dokumen/' . $siswa->nis . '_' . $siswa->nama_siswa);
+            $documents['akte'] = $request->file('akte')->store('dokumen/' . $siswa->nisn . '_' . $siswa->nama_siswa);
         }
         if ($request->file('ktp_ortu')) {
             if($request->old_ktp_ortu){
                 Storage::delete($request->old_ktp_ortu);
             }
-            $documents['ktp_ortu'] = $request->file('ktp_ortu')->store('dokumen/' . $siswa->nis . '_' . $siswa->nama_siswa);
+            $documents['ktp_ortu'] = $request->file('ktp_ortu')->store('dokumen/' . $siswa->nisn . '_' . $siswa->nama_siswa);
         }
         if ($request->file('berkas')) {
             if($request->old_berkas){
                 Storage::delete($request->old_berkas);
             }
-            $documents['berkas'] = $request->file('berkas')->store('dokumen/' . $siswa->nis . '_' . $siswa->nama_siswa);
+            $documents['berkas'] = $request->file('berkas')->store('dokumen/' . $siswa->nisn . '_' . $siswa->nama_siswa);
         }
 
         // update tabel dokumen
-        Dokumen::where('nis', $siswa->nis)
+        Dokumen::where('nisn', $siswa->nisn)
             ->update($documents);
 
         // update tabel siswa
         Siswa::where('id', $siswa->id)
             ->update($validated);
-        
+
         return redirect('/dashboard/siswa')->with('success', 'Data siswa ' . $siswa->nama_siswa . ' berhasil diubah!');
     }
 
