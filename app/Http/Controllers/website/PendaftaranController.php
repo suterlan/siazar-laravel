@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\PPDB;
+use App\Models\Sekolah;
 use Illuminate\Http\Request;
 use Laravolt\Indonesia\Models\City;
 use Laravolt\Indonesia\Models\District;
@@ -14,10 +15,16 @@ use Laravolt\Indonesia\Models\Village;
 
 class PendaftaranController extends Controller
 {
-    // pendaftaran front end controller
+    protected $setting;
+    public function __construct()
+    {
+        $this->setting = Sekolah::first();
+    }
+
     public function index(){
         $provinces= Province::pluck('name', 'code');
         return view('website.pendaftaran',[
+            'setting'   => $this->setting,
             'provinces' => $provinces,
             'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
             'kelas'     => Kelas::select('id', 'nama')->get(),

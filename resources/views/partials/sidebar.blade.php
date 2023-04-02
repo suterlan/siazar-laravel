@@ -113,6 +113,14 @@
             <span>Website</span>
         </p>
         <ul class="navbar-nav flex-fill w-100 mb-1">
+            <li class="nav-item">
+                <a href="/dashboard/posts" aria-expanded="false" class="nav-link {{ Request::is('dashboard/posts*') ? 'link-active' : '' }}">
+                    <i class="fe fe-file-text fe-16"></i>
+                    <span class="ml-3 item-text">Blog Post</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav flex-fill w-100 mb-1">
             <li class="nav-item dropdown">
                 <a href="#settings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link {{ Request::is('dashboard/settings*') ? 'link-active collapsed' : '' }} ">
                     <i class="fe fe-settings fe-16"></i>

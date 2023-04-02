@@ -79,7 +79,7 @@
             <div class="card shadow">
                 <div class="card-header">
                   <strong class="card-title">DATA PPDB</strong>
-                  <a href="/dashboard/ppdb/registrasi-step1" class="btn btn-primary float-right"><i class="fe fe-plus"></i> Tambah Siswa Baru</a>
+                  <a href="/dashboard/ppdb/registrasi-step1" class="btn btn-primary float-right"><i class="fe fe-plus"></i> Siswa Baru</a>
                 </div>
                 <div class="card-body">
                     @if (session()->has('success'))
@@ -104,14 +104,14 @@
                         <button id="approve" class="btn btn-success mb-3 d-none {{$btnClass}}" name="approve" onclick="return selectFunction('approve', '/dashboard/ppdb/approve')">Approve</button>
                         <button id="delAll" class="btn btn-danger mb-3 d-none" name="delAll" onclick="return selectFunction('delete', '/dashboard/ppdb/delete-all')">Delete Selected</button>
                   @endcan
-                        <table id="tbPpdb" class="table table-hover table-striped">
+                        <table id="tbPpdb" class="table table-hover table-striped" style="font-size: 10px">
                             <thead>
-                                <td>
+                                <th>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="checkAll">
                                         <label class="custom-control-label" for="checkAll"></label>
                                     </div>
-                                </td>
+                                </th>
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Tempat, Tgl lahir</th>
@@ -133,7 +133,7 @@
                                     </td>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $ppdb->nama_siswa }}</td>
-                                    <td>{{ $ppdb->tempat_lahir . ', ' . \Carbon\Carbon::parse($ppdb->tgl_lahir)->format('d-m-Y') }}</td>
+                                    <td class="text-nowrap">{{ $ppdb->tempat_lahir . ', ' . \Carbon\Carbon::parse($ppdb->tgl_lahir)->format('d-m-Y') }}</td>
                                     <td>{{ $ppdb->nisn }}</td>
                                     <td>{{ $ppdb->nik }}</td>
                                     <td>{{ $ppdb->nama_ibu }}</td>
