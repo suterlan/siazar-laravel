@@ -172,7 +172,7 @@
 
         btnEditJurusan.forEach((e) => {
             e.addEventListener('click', () => {
-                //  console.log(e.dataset.id); 
+                //  console.log(e.dataset.id);
                 fetch('/dashboard/jurusan/'+ e.dataset.id +'/edit')
                 .then(response => response.json())
                 .then(data => {
@@ -188,6 +188,6 @@
             });
         });
 
-        
+
     </script>
 @endsection

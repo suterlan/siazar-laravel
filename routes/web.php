@@ -13,6 +13,7 @@ use App\Http\Controllers\PPDBController;
 use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\IklanController;
 use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\KelasController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\SuratKeluarController;
@@ -98,6 +99,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/dashboard/jurusan', JurusanController::class)->except(['create', 'show'])->middleware('admin');
     // route manipulasi akun user
     Route::resource('/dashboard/user', UserController::class)->except(['create', 'show'])->middleware('admin');
+
+    // Route Kelas
+    Route::resource('/dashboard/kelas', KelasController::class);
+
     Route::get('/dashboard/user/ubahrole', [UserController::class, 'changeRole']);
 
     // Route klasifikasi
@@ -133,6 +138,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/dashboard/settings-iklan/{iklan}', [IklanController::class, 'update']);
 
     // Route Galeri
+    Route::get('dashboard/galeri/download/{galeri}', [GaleriController::class, 'download']);
     Route::resource('/dashboard/galeri', GaleriController::class);
 
     // Route Setting Profile Sekolah

@@ -109,7 +109,7 @@ class JurusanController extends Controller
 
         Jurusan::where('id', $jurusan->id)
                 ->update($data);
-                
+
         return redirect('/dashboard/jurusan')->with('success', 'Jurusan ' . $jurusan->nama . ' berhasil diubah!');
     }
 
@@ -130,7 +130,7 @@ class JurusanController extends Controller
         if($cekForeignSiswa->count() > 0 || $cekForeignPppdb->count() > 0){
             return redirect('/dashboard/jurusan')->with('error', 'Jurusan ' .$jurusan->nama. ' tidak dapat dihapus! karena sedang digunakan di data siswa atau ppdb.');
         }
-        
+
         if ($jurusan->logo) {
             Storage::delete($jurusan->logo);
         }

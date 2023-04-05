@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Guru;
 use App\Models\Category;
 use App\Models\Iklan;
 use App\Models\Jurusan;
@@ -14,6 +15,7 @@ use App\Models\PPDB;
 use App\Models\Sekolah;
 use App\Models\SuratMasuk;
 use App\Models\Tentang;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,13 +27,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory()->create([
+        User::create([
             'name' => 'admin',
             'username' => 'admin',
             'email' => 'admin@admin.com',
             'role'  => 1,
             'password'  => bcrypt('password')
         ]);
+
+        User::factory(10)->create();
 
         // seed Klasifikasi
         Klasifikasi::create([
@@ -65,15 +69,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Kelas::create([
-            'wali_kelas_id' => 1,
+            'guru_id' => 1,
             'nama'  => 'X'
         ]);
         Kelas::create([
-            'wali_kelas_id' => 2,
+            'guru_id' => 2,
             'nama'  => 'XI'
         ]);
         Kelas::create([
-            'wali_kelas_id' => 3,
+            'guru_id' => 3,
             'nama'  => 'XII'
         ]);
 
@@ -88,6 +92,8 @@ class DatabaseSeeder extends Seeder
         Iklan::create([
             'id'    => 1,
         ]);
+
+        Guru::factory(10)->create();
 
         Category::create([
             'name'      => 'Penerimaan Peserta Didik Baru',
