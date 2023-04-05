@@ -26,7 +26,7 @@ class PPDBController extends Controller
                         ->where('confirmed', 0)
                         ->get();
         }else{
-            $data = PPDB::with(['jurusan', 'kelas'])->latest()->where('confirmed', 0)->get();
+            $data = PPDB::with(['jurusan', 'kelas', 'user'])->latest()->where('confirmed', 0)->get();
         }
 
         $query = PPDB::select('confirmed')->get();

@@ -24,4 +24,8 @@ class PPDB extends Model
     public function dokumen(){
         return $this->hasOne(Dokumen::class, 'nisn', 'nisn');
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

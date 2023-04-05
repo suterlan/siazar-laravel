@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="col-12">
-       <div class="row">
+        <div class="row">
             <div class="col-md-6 col-xl-4 mb-4">
               <div class="card shadow text-white border-0">
                 <div class="card-body">
@@ -58,19 +58,19 @@
         <div class="row">
             @foreach ($jurusan as $value)
             <div class="col-md-6 col-xl-4 mb-4">
-              <div class="card shadow border-0">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col-3 text-center">
-                      <img src="{{ asset('storage/'.$value->logo)}}" class="img-fluid" alt="">
+                <div class="card shadow border-0">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-3 text-center">
+                                <img src="{{ asset('storage/'.$value->logo)}}" class="img-fluid" alt="">
+                            </div>
+                            <div class="col pr-0">
+                                <p class="small text-muted mb-0">{{$value->nama}}</p>
+                                <span class="h3 mb-0">{{$value->countJurusan}}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col pr-0">
-                      <p class="small text-muted mb-0">{{$value->nama}}</p>
-                      <span class="h3 mb-0">{{$value->countJurusan}}</span>
-                    </div>
-                  </div>
                 </div>
-              </div>
             </div>
             @endforeach
         </div>
@@ -104,14 +104,14 @@
                         <button id="approve" class="btn btn-success mb-3 d-none {{$btnClass}}" name="approve" onclick="return selectFunction('approve', '/dashboard/ppdb/approve')">Approve</button>
                         <button id="delAll" class="btn btn-danger mb-3 d-none" name="delAll" onclick="return selectFunction('delete', '/dashboard/ppdb/delete-all')">Delete Selected</button>
                   @endcan
-                        <table id="tbPpdb" class="table table-hover table-striped">
+                        <table id="tbPpdb" class="table table-hover table-striped" style="font-size: 10px">
                             <thead>
-                                <td>
+                                <th>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="checkAll">
                                         <label class="custom-control-label" for="checkAll"></label>
                                     </div>
-                                </td>
+                                </th>
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Tempat, Tgl lahir</th>
@@ -119,7 +119,8 @@
                                 <th>NIK</th>
                                 <th>Nama Ibu</th>
                                 <th>Asal Sekolah</th>
-                                <th>Kelas / Jurusan</th>
+                                <th>Jurusan</th>
+                                <th>Diinput Oleh</th>
                                 <th></th>
                             </thead>
                             <tbody>
@@ -138,9 +139,10 @@
                                     <td>{{ $ppdb->nik }}</td>
                                     <td>{{ $ppdb->nama_ibu }}</td>
                                     <td>{{ $ppdb->asal_sekolah }}</td>
-                                    <td>{{ $ppdb->kelas->nama . ' ' .$ppdb->jurusan->kode }}</td>
+                                    <td>{{ $ppdb->jurusan->kode ?? '' }}</td>
+                                    <td>{{ $ppdb->user->name ?? ''}}</td>
                                     <td>
-                                        <div class="d-block">
+                                        <div class="d-flex">
                                             <a class="btn btn-sm btn-info ml-1" href="/dashboard/ppdb/detail/{{ $ppdb->id }}" title="Detail"><span class="fe fe-eye"></span></a>
                                             <a class="btn btn-sm btn-primary ml-1" href="/dashboard/ppdb/edit/{{ $ppdb->id }}" title="Edit"><span class="fe fe-edit"></span></a>
                                             <a class="btn btn-sm btn-danger ml-1" href="/dashboard/ppdb/delete/{{ $ppdb->id }}" title="Remove" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete"></span></a>

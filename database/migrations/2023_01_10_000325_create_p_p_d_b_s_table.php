@@ -53,7 +53,7 @@ return new class extends Migration
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('jurusan_id')->references('id')->on('jurusans');
-            $table->foreign('kelas_id')->references('id')->on('kelas');
+            $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('SET NULL');
         });
     }
 

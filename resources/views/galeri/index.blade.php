@@ -30,74 +30,69 @@
                     <div class="file-panel mt-4">
                         <hr class="my-4">
                         <h6 class="mb-3">Foto</h6>
-                        <div class="row my-4 pb-4">
+                        <div class="row my-4 pb-4 show-detail">
                             @foreach ($galeris as $galeri )
                             <div class="col-md-3">
-                                <div class="show-detail">
-                                    <div class="card shadow text-center mb-4">
-                                        <div class="card-body file">
-                                            <div class="file-action">
-                                                <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <span class="text-muted sr-only">Action</span>
-                                                </button>
-                                                <div class="dropdown-menu m-2">
-                                                    <a class="dropdown-item" href="#"><i class="fe fe-edit-3 fe-12 mr-4"></i>Edit</a>
-                                                    <a class="dropdown-item" href="#"><i class="fe fe-delete fe-12 mr-4"></i>Delete</a>
-                                                    <a class="dropdown-item" href="#"><i class="fe fe-download fe-12 mr-4"></i>Download</a>
-                                                </div>
+                                <div class="card shadow text-center mb-4">
+                                    <div class="card-body file galeri">
+                                        <div class="file-action">
+                                            <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="text-muted sr-only">Action</span>
+                                            </button>
+                                            <div class="dropdown-menu m-2">
+                                                <a class="dropdown-item" href="/dashboard/galeri/download/{{ $galeri->id }}"><i class="fe fe-download fe-12 mr-4"></i>Download</a>
+                                                <form action="/dashboard/galeri/{{ $galeri->id }}" method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button class="dropdown-item" type="submit" onclick="return confirm('Yakin ingin menghapus data?')"><i class="fe fe-delete fe-12 mr-4"></i>Delete</button>
+                                                </form>
                                             </div>
-                                            <div class="circle circle-lg bg-light my-4">
-                                                <img src="{{ asset('storage/'. $galeri->gambar) }}" class="img-fluid">
-                                            </div>
-                                            <div class="file-info">
-                                                <span class="badge badge-light text-muted mr-2">{{ number_format($galeri->gambar_size / 1048576,2); }} MB</span>
-                                                <span class="badge badge-pill badge-light text-muted">{{ $galeri->gambar_type }}</span>
-                                            </div>
-                                        </div> <!-- .card-body -->
-                                        <div class="card-footer bg-transparent border-0 fname">
-                                            <strong>{{ $galeri->caption }}</strong>
-                                        </div> <!-- .card-footer -->
-                                    </div> <!-- .card -->
-                                </div>
+                                        </div>
+                                        <div class="circle circle-lg bg-light my-4">
+                                            <img src="{{ asset('storage/'. $galeri->gambar) }}" class="img-fluid gambar" data-size="{{ number_format($galeri->gambar_size / 1048576,2); }}" data-type="{{ $galeri->gambar_type }}" data-caption="{{ $galeri->caption }}" data-created="{{ $galeri->created_at }}" data-updated="{{ $galeri->updated_at }}">
+                                        </div>
+                                        <div class="file-info">
+                                            <span class="badge badge-light text-muted mr-2">{{ number_format($galeri->gambar_size / 1048576,2); }} MB</span>
+                                            <span class="badge badge-pill badge-light text-muted">{{ $galeri->gambar_type }}</span>
+                                        </div>
+                                    </div> <!-- .card-body -->
+                                    <div class="card-footer bg-transparent border-0 fname">
+                                        <strong>{{ $galeri->caption }}</strong>
+                                    </div> <!-- .card-footer -->
+                                </div> <!-- .card -->
                             </div> <!-- .col -->
                             @endforeach
                         </div> <!-- .row -->
                     </div> <!-- .file-panel -->
                     <div class="info-panel">
-                        <div class="info-content p-3 border-left hasStickOnScroll" style="">
+                        <div class="info-content p-3 border-left hasStickOnScroll">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="flex-fill">
-                                <span class="circle circle-sm bg-white mr-2">
-                                    <span class="fe fe-image fe-12 text-success"></span>
-                                </span>
-                                <span class="h6">Creative Logo.PNG</span>
+                                    <span class="circle circle-sm bg-white mr-2">
+                                        <span class="fe fe-image fe-12 text-success"></span>
+                                    </span>
+                                    {{-- <span class="h6">Creative Logo.PNG</span> --}}
                                 </div>
                                 <span class="btn close-info">
-                                <i class="fe fe-x"></i>
+                                    <i class="fe fe-x"></i>
                                 </span>
                             </div>
-                            <ul class="nav nav-tabs nav-fill mb-3" id="file-detail" role="tablist">
-                                <li class="nav-item">
-                                <a class="nav-link active" id="tab-detail" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="true">Details</a>
-                                </li>
-                            </ul>
                             <div class="tab-content" id="file-tabs">
                                 <div class="tab-pane fade show active" id="detail" role="tabpanel" aria-labelledby="tab-detail">
-                                <img src="{{ asset('logo_smk.jpg') }}" alt="..." class="img-fluid rounded">
-                                <dl class="row my-4 small">
-                                    <dt class="col-6 text-muted">Owner</dt>
-                                    <dd class="col-6">Whilemina Pate</dd>
-                                    <dt class="col-6 text-muted">Type</dt>
-                                    <dd class="col-6">Image</dd>
-                                    <dt class="col-6 text-muted">Size</dt>
-                                    <dd class="col-6">32M</dd>
-                                    <dt class="col-6 text-muted">Location</dt>
-                                    <dd class="col-6"><a href="#" class="text-muted">Design File</a></dd>
-                                    <dt class="col-6 text-muted">Created at</dt>
-                                    <dd class="col-6">Aug 20, 2020</dd>
-                                    <dt class="col-6 text-muted">Last update</dt>
-                                    <dd class="col-6">Aug 21, 2020</dd>
-                                </dl>
+                                    <img src="" alt="..." class="img-fluid rounded gambar-detail">
+                                    <dl class="row my-4 small">
+                                        <dt class="col-6 text-muted">Caption</dt>
+                                        <dd class="col-6 gambar-caption"></dd>
+                                        <dt class="col-6 text-muted">Type</dt>
+                                        <dd class="col-6 gambar-type"></dd>
+                                        <dt class="col-6 text-muted">Size</dt>
+                                        <dd class="col-6 gambar-size"></dd>
+                                        <dt class="col-6 text-muted">Created at</dt>
+                                        <dd class="col-6 gambar-created"></dd>
+                                        <dt class="col-6 text-muted">Last update</dt>
+                                        <dd class="col-6 gambar-updated"></dd>
+                                    </dl>
+                                </div>
                             </div> <!-- .tab-content -->
                         </div>
                     </div>
@@ -159,13 +154,24 @@
 </div>
 
 <script>
-    let showDetail = document.querySelectorAll('.show-detail');
-    showDetail.forEach((e) => {
-        e.addEventListener('click', () =>{
-            console.log('ok');
+    let showDetail = document.querySelector('.show-detail');
+
+    const imgDetail = document.querySelector('.gambar-detail');
+    const imgCaption = document.querySelector('.gambar-caption');
+    const imgType = document.querySelector('.gambar-type');
+    const imgSize = document.querySelector('.gambar-size');
+    const imgCreated = document.querySelector('.gambar-created');
+    const imgUpdated = document.querySelector('.gambar-updated');
+
+        showDetail.addEventListener('click', (e) =>{
+            if(e.target.classList.contains('galeri') || e.target.classList.contains('gambar')){
+                imgDetail.src = e.target.src;
+                imgCaption.innerHTML = e.target.dataset.caption;
+                imgType.innerHTML = e.target.dataset.type;
+                imgSize.innerHTML = e.target.dataset.size + ' MB';
+                imgCreated.innerHTML = e.target.dataset.created;
+                imgUpdated.innerHTML = e.target.dataset.updated;
+            }
         });
-    });
 </script>
 @endsection
-
-

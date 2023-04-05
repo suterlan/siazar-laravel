@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Galeri;
 use App\Models\Jurusan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GaleriController extends Controller
 {
@@ -99,6 +100,15 @@ class GaleriController extends Controller
      */
     public function destroy(Galeri $galeri)
     {
-        //
+        if ($galeri->gambar){
+            Storage::delete($galeri->gambar);
+        }
+
+        Galeri::destroy($galeri->id);
+        return redirect('/dashboard/galeri')->with('success', 'Gambar berhasil dihapus');
+    }
+
+    public function download(Galeri $galeri){
+        return Storage::download($galeri->gambar);
     }
 }
