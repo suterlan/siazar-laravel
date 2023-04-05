@@ -79,7 +79,7 @@
             <div class="card shadow">
                 <div class="card-header">
                   <strong class="card-title">DATA PPDB</strong>
-                  <a href="/dashboard/ppdb/registrasi-step1" class="btn btn-primary float-right"><i class="fe fe-plus"></i> Tambah Siswa Baru</a>
+                  <a href="/dashboard/ppdb/registrasi-step1" class="btn btn-primary float-right"><i class="fe fe-plus"></i> Siswa Baru</a>
                 </div>
                 <div class="card-body">
                     @if (session()->has('success'))
@@ -134,7 +134,7 @@
                                     </td>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $ppdb->nama_siswa }}</td>
-                                    <td>{{ $ppdb->tempat_lahir . ', ' . \Carbon\Carbon::parse($ppdb->tgl_lahir)->format('d-m-Y') }}</td>
+                                    <td class="text-nowrap">{{ $ppdb->tempat_lahir . ', ' . \Carbon\Carbon::parse($ppdb->tgl_lahir)->format('d-m-Y') }}</td>
                                     <td>{{ $ppdb->nisn }}</td>
                                     <td>{{ $ppdb->nik }}</td>
                                     <td>{{ $ppdb->nama_ibu }}</td>

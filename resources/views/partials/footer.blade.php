@@ -38,6 +38,8 @@
 <script src='{{ asset('') }}js/uppy.min.js'></script>
 <script src='{{ asset('') }}js/quill.min.js'></script>
 
+<script src="{{ asset('') }}js/apps.js"></script>
+
 <script src='{{ asset('') }}js/surat.js'></script>
 <script src='{{ asset('') }}js/ppdb.js'></script>
 <script src='{{ asset('') }}js/suterlan.js'></script>
@@ -86,16 +88,16 @@
   }, cb);
   cb(start, end);
 </script>
-<script src="{{ asset('') }}js/apps.js"></script>
+<script>
+  $(document).ready(function(){
+    $('a[data-toggle="tab"]').on('show.bs.tab', function(e){
+      localStorage.setItem('activeTab', $(e.target).attr('href'));
+    });
+    var activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+      $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
+  });
+</script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag()
-  {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-  gtag('config', 'UA-56159088-1');
-</script>

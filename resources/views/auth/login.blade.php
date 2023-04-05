@@ -4,7 +4,7 @@
     <div class="wrapper vh-100">
         <div class="align-items-center h-100 d-flex">
             <div class="col-lg-3 mx-auto text-center">
-                <h4>SISTEM INFORMASI {{$sekolah->nama_sekolah}}</h4>
+                <h4>SISTEM INFORMASI </h4> <h5>{{$sekolah->nama_sekolah}}</h5>
                 <a class="navbar-brand mx-auto mt-2 flex-fill text-center">
                     <img src="{{ asset('storage/'. $sekolah->logo) }}" alt="" width="70px">
                 </a>

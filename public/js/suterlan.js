@@ -12,6 +12,11 @@ $(document).ready(function () {
     $("#tbJurusan").DataTable();
     // tabel siswa
     $("#tbSiswa").DataTable();
+    // table post blog
+    $("#tbPost").DataTable({
+        paging: false,
+        info: false,
+    });
 
     // MODUL TENTANG
     // JAVASCRIPT QUILL EDITOR
@@ -62,6 +67,20 @@ $(document).ready(function () {
         });
     }
 
+    let body = document.getElementById("body");
+    if (body) {
+        var quillBody = new Quill(body, {
+            modules: {
+                toolbar: toolbarOptions,
+            },
+            theme: "snow",
+        });
+        quillBody.on("text-change", function (delta, oldDelta, source) {
+            document.querySelector("input[name='body']").value =
+                quillBody.root.innerHTML;
+        });
+    }
+
     // Ubah Kelas with modal
     let btnEditKelas = $(".btn-edit-kelas");
     btnEditKelas.each(function () {
@@ -81,6 +100,30 @@ $(document).ready(function () {
                         "action",
                         "/dashboard/kelas/" + response.id
                     );
+                },
+            });
+        });
+    });
+
+    // Ubah Kategori dengan modal
+    let btnEditCategory = $(".btn-edit-category");
+    btnEditCategory.each(function (e) {
+        $(this).on("click", function () {
+            let id_category = $(this).data("id");
+            $.ajax({
+                url: "/dashboard/category/edit/" + id_category,
+                cache: false,
+                success: function (response) {
+                    // fill input edit category
+                    $("#_name").val(response.name);
+                    $("#_slug").val(response.slug);
+                    // set action form edit category
+                    $("#editKategori").attr(
+                        "action",
+                        "/dashboard/category/" + response.slug
+                    );
+                    // open modal
+                    $("#editCategory").modal("show");
                 },
             });
         });

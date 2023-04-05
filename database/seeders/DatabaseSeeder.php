@@ -5,10 +5,12 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Guru;
+use App\Models\Category;
 use App\Models\Iklan;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Klasifikasi;
+use App\Models\Post;
 use App\Models\PPDB;
 use App\Models\Sekolah;
 use App\Models\SuratMasuk;
@@ -92,5 +94,16 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Guru::factory(10)->create();
+
+        Category::create([
+            'name'      => 'Penerimaan Peserta Didik Baru',
+            'slug'      => 'penerimaan-peserta-didik-baru'
+        ]);
+        Category::create([
+            'name'      => 'Ujian akhir',
+            'slug'      => 'ujian-akhir'
+        ]);
+
+        Post::factory(20)->create();
     }
 }

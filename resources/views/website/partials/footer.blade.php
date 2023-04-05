@@ -2,8 +2,8 @@
     <div class="container-fluid bg-secondary text-white mt-5 py-5 px-sm-3 px-md-5">
       <div class="row pt-5">
         <div class="col-lg-3 col-md-6 mb-5">
-          <a href="" class="navbar-brand font-weight-bold text-primary m-0 mb-4 p-0" style="font-size: 40px; line-height: 40px">
-            <img src="{{ asset('storage/'. $setting->pavicon) }}" width="40">
+          <a href="/" class="navbar-brand font-weight-bold text-primary m-0 mb-4 p-0" style="font-size: 30px; line-height: 40px">
+            <img src="{{ asset('storage/'. $setting->logo) }}" width="40">
             <span class="text-white">{{$setting->nama_sekolah}}</span>
           </a>
           <p>Mendidik dengan sepenuh hati untuk menciptakan lulusan yang berakhlakul karimah</p>

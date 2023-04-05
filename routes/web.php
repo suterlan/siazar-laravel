@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JurusanController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\IklanController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\SuratKeluarController;
 use App\Http\Controllers\SuratMasukController;
@@ -41,6 +43,8 @@ use App\Http\Controllers\website\WebController;
     Route::get('/pendidik', [WebController::class, 'pendidik'])->name('pendidik');
     Route::get('/galeri', [WebController::class, 'galeri'])->name('galeri');
     Route::get('/blog', [WebController::class, 'blog'])->name('blog');
+    Route::get('/blog/{post:slug}', [WebController::class, 'singleBlog']);
+    Route::get('/blog/categories/{category:slug}', [WebController::class, 'blogCategories']);
     Route::get('/tentang', [WebController::class, 'tentang'])->name('tentang');
     Route::get('/kontak', [WebController::class, 'kontak'])->name('kontak');
 
@@ -144,4 +148,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/settings-tentang', [TentangController::class, 'index']);
     Route::put('/dashboard/settings-tentang/{tentang}', [TentangController::class, 'update']);
 
+    // Route Category Post
+    Route::get('/dashboard/category/setSlug', [CategoryController::class, 'setSlug']);
+    Route::get('/dashboard/category/edit/{category}', [CategoryController::class, 'edit']);
+    Route::post('/dashboard/category', [CategoryController::class, 'store']);
+    Route::put('/dashboard/category/{category}', [CategoryController::class, 'update']);
+    Route::delete('/dashboard/category/{category}', [CategoryController::class, 'destroy']);
+    // Route Post
+    Route::get('/dashboard/posts/setSlug', [PostController::class, 'setSlug']);
+    Route::resource('/dashboard/posts', PostController::class);
 });
