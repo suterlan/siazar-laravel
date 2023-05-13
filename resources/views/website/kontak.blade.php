@@ -11,51 +11,81 @@
         </div>
         <div class="row">
           <div class="col-lg-7 mb-5">
+            @if (session()->has('success'))
+            <div class="alert alert-success col-12" role="alert">
+                <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
+            </div>
+            @endif
             <div class="contact-form">
               <div id="success"></div>
-              <form name="sentMessage" id="contactForm" novalidate="novalidate">
+              <form action="/pesan" id="contactForm" method="post" class="needs-validation @if ($errors->any()) was-validated @endif" novalidate="novalidate">
+                @csrf
                 <div class="control-group">
                   <input
                     type="text"
-                    class="form-control"
-                    id="name"
-                    placeholder="Your Name"
+                    class="form-control {{$errors->first('nama') ? "is-invalid" : "" }}"
+                    id="nama"
+                    name="nama"
+                    placeholder="Masukan Nama"
                     required="required"
                     data-validation-required-message="Please enter your name"
                   />
+                @error('nama')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
                   <p class="help-block text-danger"></p>
                 </div>
                 <div class="control-group">
                   <input
                     type="email"
-                    class="form-control"
+                    class="form-control {{$errors->first('email') ? "is-invalid" : "" }}"
                     id="email"
-                    placeholder="Your Email"
+                    name="email"
+                    placeholder="Email"
                     required="required"
                     data-validation-required-message="Please enter your email"
                   />
+                  @error('email')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                   <p class="help-block text-danger"></p>
                 </div>
                 <div class="control-group">
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control {{$errors->first('subject') ? "is-invalid" : "" }}"
                     id="subject"
+                    name="subject"
                     placeholder="Subject"
                     required="required"
                     data-validation-required-message="Please enter a subject"
                   />
+                  @error('subject')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
                   <p class="help-block text-danger"></p>
                 </div>
                 <div class="control-group">
                   <textarea
-                    class="form-control"
+                    class="form-control {{$errors->first('pesan') ? "is-invalid" : "" }}"
                     rows="6"
-                    id="message"
-                    placeholder="Message"
+                    id="pesan"
+                    name="pesan"
+                    placeholder="Tulis pesan anda..."
                     required="required"
                     data-validation-required-message="Please enter your message"
                   ></textarea>
+                  @error('pesan')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
                   <p class="help-block text-danger"></p>
                 </div>
                 <div>

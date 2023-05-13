@@ -114,6 +114,14 @@
         </p>
         <ul class="navbar-nav flex-fill w-100 mb-1">
             <li class="nav-item">
+                <a href="/dashboard/pesan" aria-expanded="false" class="nav-link {{ Request::is('dashboard/pesan*') ? 'link-active' : '' }}">
+                    <i class="fe fe-file-text fe-16"></i>
+                    <span class="ml-3 item-text">Pesan Pengunjung</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav flex-fill w-100 mb-1">
+            <li class="nav-item">
                 <a href="/dashboard/posts" aria-expanded="false" class="nav-link {{ Request::is('dashboard/posts*') ? 'link-active' : '' }}">
                     <i class="fe fe-file-text fe-16"></i>
                     <span class="ml-3 item-text">Blog Post</span>

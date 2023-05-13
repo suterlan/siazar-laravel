@@ -14,6 +14,7 @@ use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\IklanController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\SuratKeluarController;
@@ -55,6 +56,7 @@ use App\Http\Controllers\website\WebController;
         Route::get('/pendaftaran/getKecamatan', [PendaftaranController::class, 'getKecamatan'])->name('kecamatan');
         Route::get('/pendaftaran/getKelurahan', [PendaftaranController::class, 'getKelurahan'])->name('kelurahan');
     // end front
+    Route::resource('/pesan', PesanController::class)->only(['store']);
 // });
 
 // ROUTE LOGIN TO DASHBOARD ADMIN PANEL
@@ -157,4 +159,11 @@ Route::group(['middleware' => ['auth']], function () {
     // Route Post
     Route::get('/dashboard/posts/setSlug', [PostController::class, 'setSlug']);
     Route::resource('/dashboard/posts', PostController::class);
+
+    Route::get('/dashboard/pesan/tulis-email/{id}', [PesanController::class, 'TulisEmail']);
+    // Route::get('/dashboard/pesan/kirim-email', [PesanController::class, 'KirimEmail']);
+    Route::post('/dashboard/pesan/kirim-email', [PesanController::class, 'KirimEmail']);
+
+    Route::delete('/dashboard/pesan/delete-all', [PesanController::class, 'deleteAll']);
+    Route::resource('/dashboard/pesan', PesanController::class);
 });
