@@ -159,7 +159,7 @@
               <ul class="list-inline mb-4">
                 {{$tentang->visi}}
               </ul>
-              
+
               <h5 class="mb-4 text-primary">Misi</h5>
               <ul class="list-inline m-0">
                 {!! $tentang->misi !!}

@@ -17,6 +17,8 @@ $(document).ready(function () {
         paging: false,
         info: false,
     });
+    // tabel pesan pengunjung
+    $("#tbPesan").DataTable();
 
     // MODUL TENTANG
     // JAVASCRIPT QUILL EDITOR
@@ -66,7 +68,9 @@ $(document).ready(function () {
                 quillMisi.root.innerHTML;
         });
     }
+    // end form tentang
 
+    // form posts
     let body = document.getElementById("body");
     if (body) {
         var quillBody = new Quill(body, {
@@ -80,6 +84,23 @@ $(document).ready(function () {
                 quillBody.root.innerHTML;
         });
     }
+    // end form posts
+
+    // form kirim email
+    let content = document.getElementById("content");
+    if (content) {
+        var quillContent = new Quill(content, {
+            modules: {
+                toolbar: toolbarOptions,
+            },
+            theme: "snow",
+        });
+        quillContent.on("text-change", function (delta, oldDelta, source) {
+            document.querySelector("input[name='content']").value =
+                quillContent.root.innerHTML;
+        });
+    }
+    // end form posts
 
     // Ubah Kelas with modal
     let btnEditKelas = $(".btn-edit-kelas");
@@ -126,6 +147,24 @@ $(document).ready(function () {
                     $("#editCategory").modal("show");
                 },
             });
+        });
+    });
+
+    // FITUR DELETE CHECKBOX
+    $("#checkAll").on("click", function (e) {
+        if ($(this).is(":checked", true)) {
+            $(".sub-check").prop("checked", true);
+            $("#delAll").removeClass("d-none");
+        } else {
+            $(".sub-check").prop("checked", false);
+            $("#delAll").addClass("d-none");
+        }
+    });
+
+    let subCheck = $(".sub-check");
+    subCheck.each(function (e) {
+        $(this).on("click", function () {
+            $("#delAll").removeClass("d-none");
         });
     });
 });
