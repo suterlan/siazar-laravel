@@ -33,13 +33,24 @@
                         <div class="row my-4 pb-4 show-detail">
                             @foreach ($galeris as $galeri )
                             <div class="col-md-3">
-                                <div class="card shadow text-center mb-4">
+                                <div class="card shadow text-center mb-4 @if ($galeri->slide_aktif == true) bg-primary-lighter @endif">
                                     <div class="card-body file galeri">
                                         <div class="file-action">
                                             <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <span class="text-muted sr-only">Action</span>
                                             </button>
                                             <div class="dropdown-menu m-2">
+                                                <form action="/dashboard/galeri/{{$galeri->id}}" method="POST">
+                                                    @method('put')
+                                                    @csrf
+                                                    @if ($galeri->slide_aktif == false)
+                                                        <input type="hidden" name="aksi" value="set">
+                                                        <button class="dropdown-item" type="submit"><i class="fe fe-image fe-12 mr-4"></i>Jadikan Slide</button>
+                                                    @else
+                                                        <input type="hidden" name="aksi" value="remove">
+                                                        <button class="dropdown-item" type="submit"><i class="fe fe-image fe-12 mr-4"></i>Hapus Slide</button>
+                                                    @endif
+                                                </form>
                                                 <a class="dropdown-item" href="/dashboard/galeri/download/{{ $galeri->id }}"><i class="fe fe-download fe-12 mr-4"></i>Download</a>
                                                 <form action="/dashboard/galeri/{{ $galeri->id }}" method="POST">
                                                     @method('delete')
@@ -48,7 +59,7 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <div class="circle circle-lg bg-light my-4">
+                                        <div class="mb-3 px-2" style="max-height: 150px; overflow: hidden;">
                                             <img src="{{ asset('storage/'. $galeri->gambar) }}" class="img-fluid gambar" data-size="{{ number_format($galeri->gambar_size / 1048576,2); }}" data-type="{{ $galeri->gambar_type }}" data-caption="{{ $galeri->caption }}" data-created="{{ $galeri->created_at }}" data-updated="{{ $galeri->updated_at }}">
                                         </div>
                                         <div class="file-info">

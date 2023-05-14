@@ -4,6 +4,7 @@ namespace App\Http\Controllers\website;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Galeri;
 use App\Models\Iklan;
 use App\Models\Jurusan;
 use App\Models\Post;
@@ -11,6 +12,9 @@ use App\Models\Sekolah;
 use App\Models\Tentang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Constraint\IsTrue;
+
+use function PHPUnit\Framework\isTrue;
 
 class WebController extends Controller
 {
@@ -27,7 +31,8 @@ class WebController extends Controller
             'setting'   => $this->setting,
             'jurusans'  => Jurusan::all(),
             'tentang'   => Tentang::first(),
-            'posts'     => Post::latest()->with('category')->limit(3)->get()
+            'posts'     => Post::latest()->with('category')->limit(3)->get(),
+            'slides'    => Galeri::where('slide_aktif', true)->get()
         ]);
     }
 

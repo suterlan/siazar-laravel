@@ -39,8 +39,8 @@
                                             <span class="text-muted sr-only">Action</span>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="/dashboard/klasifikasi/{{ $klasifikasi->id }}/edit"><span class="fe fe-edit text-warning"></span> Edit</a>
-                                            <form action="/dashboard/klasifikasi/{{ $klasifikasi->id }}" method="post">
+                                            <a class="dropdown-item" href="/dashboard/surat/klasifikasi/{{ $klasifikasi->id }}/edit"><span class="fe fe-edit text-warning"></span> Edit</a>
+                                            <form action="/dashboard/surat/klasifikasi/{{ $klasifikasi->id }}" method="post">
                                                 @method('delete')
                                                 @csrf
                                                 <button class="dropdown-item" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete text-danger"></span> Remove</button>
@@ -67,7 +67,7 @@
             <span aria-hidden="true">×</span>
             </button>
         </div>
-        <form action="/dashboard/klasifikasi" method="post" class="needs-validation @foreach ($errors->all() as $error) was-validated @endforeach" >
+        <form action="/dashboard/surat/klasifikasi" method="post" class="needs-validation @foreach ($errors->all() as $error) was-validated @endforeach" >
             <div class="modal-body">
                 @csrf
                 <div class="form-group mb-1">

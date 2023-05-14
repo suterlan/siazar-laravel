@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'password'  => bcrypt('password')
         ]);
 
-        User::factory(10)->create();
+        // User::factory(10)->create();
 
         // seed Klasifikasi
         Klasifikasi::create([
@@ -72,14 +72,6 @@ class DatabaseSeeder extends Seeder
             'guru_id' => 1,
             'nama'  => 'X'
         ]);
-        Kelas::create([
-            'guru_id' => 2,
-            'nama'  => 'XI'
-        ]);
-        Kelas::create([
-            'guru_id' => 3,
-            'nama'  => 'XII'
-        ]);
 
         PPDB::factory(15)->create();
 
@@ -92,8 +84,6 @@ class DatabaseSeeder extends Seeder
         Iklan::create([
             'id'    => 1,
         ]);
-
-        Guru::factory(10)->create();
 
         Category::create([
             'name'      => 'Penerimaan Peserta Didik Baru',

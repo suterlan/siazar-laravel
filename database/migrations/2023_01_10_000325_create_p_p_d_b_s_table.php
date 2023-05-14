@@ -51,8 +51,8 @@ return new class extends Migration
             $table->boolean('confirmed')->default(0);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('jurusan_id')->references('id')->on('jurusans');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL');;
+            $table->foreign('jurusan_id')->references('id')->on('jurusans')->onDelete('SET NULL');
             $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('SET NULL');
         });
     }

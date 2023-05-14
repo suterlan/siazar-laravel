@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="mb-5">
-                    <img class="img-fluid rounded w-100 mb-4" src="img/detail.jpg" alt="Image"/>
+                    <img class="img-fluid rounded w-100 mb-4" src="{{ asset('storage/'. $post->image) }}" alt="Image"/>
                     <p>
                         {!! $post->body !!}
                     </p>
