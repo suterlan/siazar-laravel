@@ -9,7 +9,7 @@
                 <div class="card shadow">
                     <div class="card-header">Edit Klasifikasi Surat</div>
                     <div class="card-body">
-                        <form action="/dashboard/klasifikasi/{{ $klasifikasi->id }}" method="post" class="needs-validation @foreach ($errors->all() as $error) was-validated @endforeach" >
+                        <form action="/dashboard/surat/klasifikasi/{{ $klasifikasi->id }}" method="post" class="needs-validation @foreach ($errors->all() as $error) was-validated @endforeach" >
                             @method('put')
                             @csrf
                             <div class="form-group mb-1">

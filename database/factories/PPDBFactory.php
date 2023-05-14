@@ -24,9 +24,8 @@ class PPDBFactory extends Factory
             'tgl_lahir'     => now(),
             'asal_sekolah'  => 'SMPN 1',
             'jurusan_id'    => mt_rand(1, 3),
-            'kelas_id'    => mt_rand(1, 3),
             'nama_ibu'     => fake()->name(),
-            'user_id'       => mt_rand(1, 5)
+            'user_id'       => 1
         ];
     }
 }

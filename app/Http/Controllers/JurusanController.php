@@ -124,12 +124,12 @@ class JurusanController extends Controller
         // if(response(500)){
         //     return redirect('/dashboard/jurusan')->with('error', 'Jurusan ' .$jurusan->nama. ' tidak dapat dihapus! karena telah digunakan di data siswa. Jika ingin menghapusnya silahkan ubah atau hapus terlebih dahulu siswa yang memiliki jurusan ini (Hati-hati data siswa bisa hilang!)');
         // }
-        $cekForeignPppdb = PPDB::where('jurusan_id', $jurusan->id)->get();
-        $cekForeignSiswa = Siswa::where('jurusan_id', $jurusan->id)->get();
+        // $cekForeignPppdb = PPDB::where('jurusan_id', $jurusan->id)->get();
+        // $cekForeignSiswa = Siswa::where('jurusan_id', $jurusan->id)->get();
 
-        if($cekForeignSiswa->count() > 0 || $cekForeignPppdb->count() > 0){
-            return redirect('/dashboard/jurusan')->with('error', 'Jurusan ' .$jurusan->nama. ' tidak dapat dihapus! karena sedang digunakan di data siswa atau ppdb.');
-        }
+        // if($cekForeignSiswa->count() > 0 || $cekForeignPppdb->count() > 0){
+        //     return redirect('/dashboard/jurusan')->with('error', 'Jurusan ' .$jurusan->nama. ' tidak dapat dihapus! karena sedang digunakan di data siswa atau ppdb.');
+        // }
 
         if ($jurusan->logo) {
             Storage::delete($jurusan->logo);

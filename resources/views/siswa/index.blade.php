@@ -38,8 +38,8 @@
                                         <td>{{ $siswa->nama_siswa }}</td>
                                         <td>{{ $siswa->tempat_lahir . ', ' . \Carbon\Carbon::parse($siswa->tgl_lahir)->format('d-m-Y') }}</td>
                                         <td>{{ $siswa->nisn }}</td>
-                                        <td>{{ $siswa->kelas->nama }}</td>
-                                        <td>{{ $siswa->jurusan->kode }}</td>
+                                        <td>{{ $siswa->kelas->nama ?? '' }}</td>
+                                        <td>{{ $siswa->jurusan->kode ?? '' }}</td>
                                         <td class="d-flex float-right">
                                             <a class="btn btn-sm btn-info ml-1" href="/dashboard/siswa/{{ $siswa->id }}" title="Detail"><span class="fe fe-eye"></span></a>
                                             <a class="btn btn-sm btn-primary ml-1" href="/dashboard/siswa/{{ $siswa->id }}/edit" title="Edit"><span class="fe fe-edit"></span></a>

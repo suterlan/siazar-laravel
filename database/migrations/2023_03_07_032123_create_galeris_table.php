@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('gambar');
             $table->string('gambar_type');
             $table->integer('gambar_size');
+            $table->boolean('slide_aktif')->default(false);
             $table->timestamps();
 
 

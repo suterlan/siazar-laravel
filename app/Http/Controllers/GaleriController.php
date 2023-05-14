@@ -89,7 +89,21 @@ class GaleriController extends Controller
      */
     public function update(Request $request, Galeri $galeri)
     {
-        //
+        if($request->aksi === 'set'){
+            $data = [
+                'slide_aktif'   => true
+            ];
+        }
+
+        if($request->aksi === 'remove'){
+            $data = [
+                'slide_aktif'   => false
+            ];
+        }
+        
+        Galeri::where('id', $galeri->id)
+            ->update($data);
+        return redirect('/dashboard/galeri')->with('success', 'Gambar ' . $galeri->caption . ' berhasil dijadikan slide');     
     }
 
     /**

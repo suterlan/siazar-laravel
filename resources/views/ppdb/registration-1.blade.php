@@ -157,7 +157,6 @@
             </div>
         </div>
     </div>
-{{-- @livewireScripts --}}
 <script>
     function selectChange(url, code, idSelect){
         fetch(url + code)

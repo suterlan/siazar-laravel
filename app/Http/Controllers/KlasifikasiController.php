@@ -47,7 +47,7 @@ class KlasifikasiController extends Controller
         ]);
 
         Klasifikasi::create($validated);
-        return redirect('/dashboard/klasifikasi')->with('success', 'Klasifikasi surat berhasil ditambahkan');
+        return redirect('/dashboard/surat/klasifikasi')->with('success', 'Klasifikasi surat berhasil ditambahkan');
     }
 
     /**
@@ -93,7 +93,7 @@ class KlasifikasiController extends Controller
         Klasifikasi::where('id', $klasifikasi->id)
                     ->update($validated);
 
-        return redirect('/dashboard/klasifikasi')->with('success', 'Klasifikasi surat dengan kode ' . $klasifikasi->kode . ' berhasil diubah');
+        return redirect('/dashboard/surat/klasifikasi')->with('success', 'Klasifikasi surat dengan kode ' . $klasifikasi->kode . ' berhasil diubah');
     }
 
     /**
@@ -107,10 +107,10 @@ class KlasifikasiController extends Controller
         $cekForeignSuratMasuk = SuratMasuk::where('klasifikasi_id', $klasifikasi->id)->get();
         $cekForeignSuratKeluar = SuratKeluar::where('klasifikasi_id', $klasifikasi->id)->get();
         if($cekForeignSuratMasuk->count() > 0 || $cekForeignSuratKeluar->count() > 0){
-            return redirect('/dashboard/klasifikasi')->with('error', 'Klasifikasi dengan kode ' . $klasifikasi->kode . ' tidak dapat dihapus! karena sedang digunakan di data surat');
+            return redirect('/dashboard/surat/klasifikasi')->with('error', 'Klasifikasi dengan kode ' . $klasifikasi->kode . ' tidak dapat dihapus! karena sedang digunakan di data surat');
         }
 
         Klasifikasi::destroy($klasifikasi->id);
-        return redirect('/dashboard/klasifikasi')->with('success', 'Klasifikasi dengan kode ' . $klasifikasi->kode . ' berhasil dihapus');
+        return redirect('/dashboard/surat/klasifikasi')->with('success', 'Klasifikasi dengan kode ' . $klasifikasi->kode . ' berhasil dihapus');
     }
 }

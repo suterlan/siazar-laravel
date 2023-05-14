@@ -13,6 +13,7 @@ use App\Http\Controllers\PPDBController;
 use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\IklanController;
 use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\GuruController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SiswaController;
@@ -95,6 +96,9 @@ Route::group(['middleware' => ['auth']], function () {
     // Route Siswa
     Route::resource('/dashboard/siswa', SiswaController::class)->except(['store', 'create'])->middleware('admin');
 
+    // Route Guru
+    Route::resource('/dashboard/guru', GuruController::class);
+
     // Route Jurusan
     Route::resource('/dashboard/jurusan', JurusanController::class)->except(['create', 'show'])->middleware('admin');
     // route manipulasi akun user
@@ -106,7 +110,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/user/ubahrole', [UserController::class, 'changeRole']);
 
     // Route klasifikasi
-    Route::resource('/dashboard/klasifikasi', KlasifikasiController::class)->except(['create', 'show'])->middleware('admin');
+    Route::resource('/dashboard/surat/klasifikasi', KlasifikasiController::class)->except(['create', 'show'])->middleware('admin');
 
         // ROUTE untuk membuat no surat otomatis
     Route::get('/getCodeKlasifikasi', [SuratKeluarController::class, 'getCodeKlasifikasi']);

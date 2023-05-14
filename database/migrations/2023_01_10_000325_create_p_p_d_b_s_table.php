@@ -35,13 +35,13 @@ return new class extends Migration
             $table->string('nama_kip')->nullable();
             $table->string('nama_ayah')->nullable();
             $table->string('nik_ayah', 16)->nullable();
-            $table->timestamp('tgl_lahir_ayah')->nullable();
+            $table->dateTime('tgl_lahir_ayah')->nullable();
             $table->string('pendidikan_ayah', 32)->nullable();
             $table->string('pekerjaan_ayah', 64)->nullable();
             $table->integer('penghasilan_ayah')->nullable();
             $table->string('nama_ibu')->nullable();
             $table->string('nik_ibu', 16)->nullable();
-            $table->timestamp('tgl_lahir_ibu')->nullable();
+            $table->dateTime('tgl_lahir_ibu')->nullable();
             $table->string('pendidikan_ibu', 32)->nullable();
             $table->string('pekerjaan_ibu', 64)->nullable();
             $table->integer('penghasilan_ibu')->nullable();
@@ -51,8 +51,8 @@ return new class extends Migration
             $table->boolean('confirmed')->default(0);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('jurusan_id')->references('id')->on('jurusans');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL');;
+            $table->foreign('jurusan_id')->references('id')->on('jurusans')->onDelete('SET NULL');
             $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('SET NULL');
         });
     }

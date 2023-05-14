@@ -35,7 +35,7 @@
                             <p class="small mb-0 text-muted">{{ $siswa->kelurahan }}</p>
                             <p class="small mb-0 text-muted">{{ $siswa->kecamatan .', '. $siswa->kabupaten .', '. $siswa->provinsi}}</p>
                             <p class="small mb-0 text-muted">HP : {{ $siswa->no_hp }}</p>
-                            <p class="mb-0 text-muted">Kelas {{$siswa->kelas->nama . ' - ' . $siswa->jurusan->kode . ' ' . $siswa->tahun_ajaran}}</p>
+                            <p class="mb-0 text-muted">Kelas {{$siswa->kelas->nama ?? '' . ' - ' . $siswa->jurusan->kode ?? '' . ' ' . $siswa->tahun_ajaran}}</p>
                         </div>
                         <div class="col">
                             <p class="small mb-0 text-muted">Asal Sekolah <b>{{ $siswa->asal_sekolah }}</b></p>
@@ -116,7 +116,11 @@
                         <div class="card-header">Kartu Keluarga</div>
                         <div class="card-body text-center my-4">
                             <div class="embed-responsive embed-responsive-21by9">
-                                <iframe src="{{ asset('storage/' . $siswa->dokumen->kartu_keluarga) }}" ></iframe>
+                                @if (isset($siswa->dokumen->kartu_keluarga))
+                                    <iframe src="{{ asset('storage/' . $siswa->dokumen->kartu_keluarga) }}" ></iframe>          
+                                @else
+                                    Tidak ada dokumen
+                                @endif
                             </div>
                         </div> <!-- .card-body -->
                     </div> <!-- .card -->
@@ -126,7 +130,11 @@
                         <div class="card-header">Ijazah</div>
                         <div class="card-body text-center my-4">
                             <div class="embed-responsive embed-responsive-16by9">
-                                <iframe src="{{ asset('storage/' . $siswa->dokumen->ijazah) }}" ></iframe>
+                                @if (isset($siswa->dokumen->ijazah))
+                                    <iframe src="{{ asset('storage/' . $siswa->dokumen->ijazah) }}" ></iframe>
+                                @else
+                                Tidak ada dokumen
+                                @endif
                             </div>
                         </div> <!-- .card-body -->
                     </div> <!-- .card -->
@@ -134,7 +142,11 @@
                         <div class="card-header">Akte Kelahiran</div>
                         <div class="card-body text-center my-4">
                             <div class="embed-responsive embed-responsive-16by9">
+                                @if (isset($siswa->dokumen->akte))
                                 <iframe src="{{ asset('storage/' . $siswa->dokumen->akte) }}" ></iframe>
+                                @else
+                                Tidak ada dokumen
+                                @endif
                             </div>
                         </div> <!-- .card-body -->
                     </div> <!-- .card -->
@@ -144,7 +156,11 @@
                         <div class="card-header">KTP Orang Tua</div>
                         <div class="card-body text-center my-4">
                             <div class="embed-responsive embed-responsive-16by9">
+                                @if (isset($siswa->dokumen->ktp_ortu))
                                 <iframe src="{{ asset('storage/' . $siswa->dokumen->ktp_ortu) }}" ></iframe>
+                                @else
+                                Tidak ada dokumen
+                                @endif
                             </div>
                         </div> <!-- .card-body -->
                     </div> <!-- .card -->
@@ -152,7 +168,11 @@
                         <div class="card-header">Berkas Lainnya</div>
                         <div class="card-body text-center my-4">
                             <div class="embed-responsive embed-responsive-16by9">
+                                @if (isset($siswa->dokumen->berkas))
                                 <iframe src="{{ asset('storage/' . $siswa->dokumen->berkas) }}" ></iframe>
+                                @else
+                                Tidak ada dokumen
+                                @endif
                             </div>
                         </div> <!-- .card-body -->
                     </div> <!-- .card -->

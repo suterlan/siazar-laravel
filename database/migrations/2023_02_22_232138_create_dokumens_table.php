@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('dokumens', function (Blueprint $table) {
             $table->id();
             $table->string('nisn', 10)->nullable();
+            $table->string('nik', 16)->nullable();
             $table->string('kartu_keluarga')->nullable();
             $table->string('ijazah')->nullable();
             $table->string('akte')->nullable();

@@ -25,7 +25,7 @@ class SiswaController extends Controller
                 ->where('lulus', false)
                 ->get();
         return view('siswa.index', [
-            'title'     => 'Siswa | SIAZAR',
+            'title'     => 'Siswa | '. config('app.name'),
             'siswas'     => $siswa
         ]);
     }
@@ -60,7 +60,7 @@ class SiswaController extends Controller
     public function show(Siswa $siswa)
     {
         return view('siswa.detail',[
-            'title'     => 'Detail Siswa | SIAZAR',
+            'title'     => 'Detail Siswa | '. config('app.name'),
             'siswa'     => $siswa
         ]);
     }
@@ -75,7 +75,7 @@ class SiswaController extends Controller
     {
         $provinces= Province::pluck('name', 'code');
         return view('siswa.edit',[
-            'title'     => 'Edit Siswa | SIAZAR',
+            'title'     => 'Edit Siswa | '. config('app.name'),
             'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
             'kelas'     => Kelas::select('id', 'nama')->get(),
             'provinces' => $provinces,
@@ -150,42 +150,44 @@ class SiswaController extends Controller
             if($request->old_foto){
                 Storage::delete($request->old_foto);
             }
-            $documents['foto'] = $request->file('foto')->store('dokumen/' . $siswa->nisn . '_' . $siswa->nama_siswa);
+            $documents['foto'] = $request->file('foto')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('kartu_keluarga')) {
             if($request->old_kartu_keluarga){
                 Storage::delete($request->old_kartu_keluarga);
             }
-            $documents['kartu_keluarga'] = $request->file('kartu_keluarga')->store('dokumen/' . $siswa->nisn . '_' . $siswa->nama_siswa);
+            $documents['kartu_keluarga'] = $request->file('kartu_keluarga')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('ijazah')) {
             if($request->old_ijazah){
                 Storage::delete($request->old_ijazah);
             }
-            $documents['ijazah'] = $request->file('ijazah')->store('dokumen/' . $siswa->nisn . '_' . $siswa->nama_siswa);
+            $documents['ijazah'] = $request->file('ijazah')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('akte')) {
             if($request->old_akte){
                 Storage::delete($request->old_akte);
             }
-            $documents['akte'] = $request->file('akte')->store('dokumen/' . $siswa->nisn . '_' . $siswa->nama_siswa);
+            $documents['akte'] = $request->file('akte')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('ktp_ortu')) {
             if($request->old_ktp_ortu){
                 Storage::delete($request->old_ktp_ortu);
             }
-            $documents['ktp_ortu'] = $request->file('ktp_ortu')->store('dokumen/' . $siswa->nisn . '_' . $siswa->nama_siswa);
+            $documents['ktp_ortu'] = $request->file('ktp_ortu')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('berkas')) {
             if($request->old_berkas){
                 Storage::delete($request->old_berkas);
             }
-            $documents['berkas'] = $request->file('berkas')->store('dokumen/' . $siswa->nisn . '_' . $siswa->nama_siswa);
+            $documents['berkas'] = $request->file('berkas')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
 
         // update tabel dokumen
-        Dokumen::where('nisn', $siswa->nisn)
-            ->update($documents);
+        Dokumen::updateOrCreate(
+            ['nisn'     => $request->nisn],
+            $documents
+        );
 
         // update tabel siswa
         Siswa::where('id', $siswa->id)
