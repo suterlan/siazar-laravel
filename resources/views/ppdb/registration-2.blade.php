@@ -26,7 +26,22 @@
                     <div id="step2" class="my-2 pt-4">
                         <div class="mb-3">
                             <label for="asal_sekolah" class="form-label">Asal Sekolah <small class="text-danger">(*)</small></label>
-                            <input id="asal_sekolah" type="text" name="asal_sekolah" class="form-control {{$errors->first('asal_sekolah') ? "is-invalid" : "" }}" value="{{ old('asal_sekolah', $registrasi->asal_sekolah ?? '') }}" required>
+                            <input type="text" list="asal" name="asal_sekolah" class="form-control {{$errors->first('asal_sekolah') ? "is-invalid" : "" }}" required />
+                                <datalist id="asal">
+                                    <option>SMPN 1 Leles</option>
+                                    <option>SMPN 2 Leles</option>
+                                    <option>SMPN 5 Leles</option>
+                                    <option>SMPN 1 Agrabinta</option>
+                                    <option>SMP Parungkeusik</option>
+                                    <option>SMP PGRI</option>
+                                    <option>SMP Lugina</option>
+                                    <option>SMP Purabaya</option>
+                                    <option>SMP Sukamulya</option>
+                                    <option>MTs Leles</option>
+                                    <option>MTs Puncakwangi</option>
+                                    <option>MTs Almutmainah</option>
+                                    <option>MTs Albayan</option>
+                                </datalist>
                             @error('asal_sekolah')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -78,8 +93,8 @@
                             <a href="/dashboard/ppdb/registrasi-step1" class="btn btn-danger" type="button"><span class="fe fe-arrow-left"></span> Back</a>
                             <button class="btn btn-primary" type="submit"><span class="fe fe-arrow-right"></span>Next</button>
                         </div>
-                    </div> 
-                </form>  
+                    </div>
+                </form>
             </div>
         </div>
     </div>

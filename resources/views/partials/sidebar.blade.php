@@ -29,7 +29,6 @@
                 </a>
             </li>
         </ul>
-
         <ul class="navbar-nav flex-fill w-100 mb-1">
             <li class="nav-item dropdown">
                 <a href="#siswa" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link {{ Request::is('dashboard/siswa*') ? 'link-active collapsed' : '' }} ">
@@ -43,6 +42,7 @@
                 </ul>
             </li>
         </ul>
+    @can('admin')
         <ul class="navbar-nav flex-fill w-100 mb-1">
             <li class="nav-item dropdown">
                 <a href="#guru" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link {{ Request::is('dashboard/guru*') ? 'link-active collapsed' : '' }} ">
@@ -72,6 +72,7 @@
                 </a>
             </li>
         </ul>
+    @endcan
         <ul class="navbar-nav flex-fill w-100 mb-1">
             <li class="nav-item dropdown">
                 <a href="/dashboard/galeri" aria-expanded="false" class="nav-link {{ Request::is('dashboard/galeri') ? 'link-active' : '' }}">
@@ -108,11 +109,21 @@
                 </ul>
             </li>
         </ul>
+        @if(!auth()->user()->role == '1')
+        <ul class="navbar-nav flex-fill w-100 mb-1">
+            <li class="nav-item">
+                <a href="/dashboard/akun" aria-expanded="false" class="nav-link {{ Request::is('dashboard/akun*') ? 'link-active' : '' }}">
+                    <i class="fe fe-file-text fe-16"></i>
+                    <span class="ml-3 item-text">Akun Setting</span>
+                </a>
+            </li>
+        </ul>
+        @endif
 
         @can('admin')
         <ul class="navbar-nav flex-fill w-100 mb-1">
             <li class="nav-item">
-                
+
             </li>
         </ul>
         <ul class="navbar-nav flex-fill w-100 mb-1">

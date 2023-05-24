@@ -72,8 +72,21 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="pekerjaan_ayah" class="form-label">Pekerjaan Ayah</label>
-                        <input id="pekerjaan_ayah" name="pekerjaan_ayah" type="text" class="form-control {{$errors->first('pekerjaan_ayah') ? "is-invalid" : "" }}" value="{{ old('pekerjaan_ayah', $registrasi->pekerjaan_ayah ?? '')}}">
+                        <label for="pekerjaan_ayah">Pekerjaan Ayah</label>
+                        <select id="pekerjaan_ayah" name="pekerjaan_ayah" class="custom-select {{$errors->first('pekerjaan_ayah') ? "is-invalid" : "" }}" >
+                            @if(isset($registrasi->pekerjaan_ayah))
+                                <option value="{{$registrasi->pekerjaan_ayah ?? ''}}" selected>{{$registrasi->pekerjaan_ayah ?? ''}}</option>
+                            @endif
+                            <option value="">&nbsp;</option>
+                            <option value="Wiraswasta">Wiraswasta</option>
+                            <option value="Petani">Petani</option>
+                            <option value="Pedagang">Pedagang</option>
+                            <option value="Pengusaha">Pengusaha</option>
+                            <option value="Buruh">Buruh</option>
+                            <option value="Pensiunan">Pensiunan</option>
+                            <option value="Guru">Guru</option>
+                            <option value="PNS">PNS</option>
+                        </select>
                         @error('pekerjaan_ayah')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -139,8 +152,21 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="pekerjaan_ibu" class="form-label">Pekerjaan Ibu</label>
-                        <input id="pekerjaan_ibu" name="pekerjaan_ibu" type="text" class="form-control {{$errors->first('pekerjaan_ibu') ? "is-invalid" : "" }}" value="{{ old('pekerjaan_ibu', $registrasi->pekerjaan_ibu ?? '')}}">
+                        <label for="pekerjaan_ibu">Pekerjaan Ibu</label>
+                        <select id="pekerjaan_ibu" name="pekerjaan_ibu" class="custom-select {{$errors->first('pekerjaan_ibu') ? "is-invalid" : "" }}" >
+                            @if(isset($registrasi->pekerjaan_ibu))
+                                <option value="{{$registrasi->pekerjaan_ibu ?? ''}}" selected>{{$registrasi->pekerjaan_ibu ?? ''}}</option>
+                            @endif
+                            <option value="">&nbsp;</option>
+                            <option value="Ibu Rumah Tangga">Ibu Rumah Tangga</option>
+                            <option value="Wiraswasta">Wiraswasta</option>
+                            <option value="Pedagang">Pedagang</option>
+                            <option value="Pengusaha">Pengusaha</option>
+                            <option value="Buruh">Buruh</option>
+                            <option value="Pensiunan">Pensiunan</option>
+                            <option value="Guru">Guru</option>
+                            <option value="PNS">PNS</option>
+                        </select>
                         @error('pekerjaan_ibu')
                         <div class="invalid-feedback">
                             {{ $message }}

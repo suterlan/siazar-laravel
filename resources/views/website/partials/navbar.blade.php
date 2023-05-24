@@ -16,6 +16,13 @@
             <a href="{{ route('galeri') }}" class="nav-item nav-link {{ Request::is('galeri') ? 'active' : '' }}">Galeri</a>
             <a href="{{ route('blog') }}" class="nav-item nav-link {{ Request::is('blog') ? 'active' : '' }}">Blog</a>
             <a href="{{ route('tentang') }}" class="nav-item nav-link {{ Request::is('tentang') ? 'active' : '' }}">Tentang Kami</a>
+            <div class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Akademik</a>
+              <div class="dropdown-menu rounded-0 m-0">
+                <a class="dropdown-item" href="https://cbtsmk.endesoft.id/panel" target="blank">Ujian</a>
+                <a class="dropdown-item" href="http://103.150.60.29:8154/" target="blank">e-Raport</a>
+              </div>
+            </div>
             <a href="{{ route('kontak') }}" class="nav-item nav-link {{ Request::is('kontak') ? 'active' : '' }}">Kontak</a>
           </div>
           <a href="{{ route('pendaftaran') }}" class="btn btn-primary px-4">Daftar Sekarang</a>
