@@ -143,4 +143,5 @@ class UserController extends Controller
             return redirect('/dashboard/user')->with('error', 'Perubahan data gagal, akun user sedang login!');
         }
     }
+
 }

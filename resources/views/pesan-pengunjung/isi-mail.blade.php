@@ -1,5 +1,5 @@
 <div style="background-color: red">
-    <img style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 1cm;" src="{{ asset('storage/' . $footer->logo) }}" width="100px">
+    <img style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 1cm;" src="{{ public_path('logo_smk.jpg') }}" width="100px">
 </div>
 
 

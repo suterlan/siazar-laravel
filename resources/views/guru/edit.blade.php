@@ -36,7 +36,7 @@
                                     <div class="form-group mb-2">
                                         <label for="foto">Foto @if(isset($guru->dokumen->foto)) <span class="fe fe-check fe-16 text-success"></span> @endif</label>
                                         <div class="custom-file">
-                                            <input type="hidden" name="old_foto" value="{{$guru->dokumen->foto}}">
+                                            <input type="hidden" name="old_foto" value="{{$guru->dokumen->foto ?? ''}}">
                                             <input name="foto" type="file" class="custom-file-input {{$errors->first('foto') ? "is-invalid" : "" }}" id="foto" >
                                             <label class="custom-file-label" for="foto">Ubah Foto</label>
                                             @error('foto')
@@ -47,7 +47,7 @@
                                     <div class="form-group mb-2">
                                         <label for="kartu_keluarga">Kartu Keluarga @if(isset($guru->dokumen->kartu_keluarga)) <span class="fe fe-check fe-16 text-success"></span> @endif</label>
                                         <div class="custom-file">
-                                            <input type="hidden" name="old_kartu_keluarga" value="{{$guru->dokumen->kartu_keluarga}}">
+                                            <input type="hidden" name="old_kartu_keluarga" value="{{$guru->dokumen->kartu_keluarga ?? ''}}">
                                             <input name="kartu_keluarga" type="file" class="custom-file-input {{$errors->first('kartu_keluarga') ? "is-invalid" : "" }}" id="kartu_keluarga" >
                                             <label class="custom-file-label" for="kartu_keluarga">Ubah KK</label>
                                             @error('kartu_keluarga')
@@ -58,7 +58,7 @@
                                     <div class="form-group mb-2">
                                         <label for="ijazah">Ijazah Terakhir @if(isset($guru->dokumen->ijazah)) <span class="fe fe-check fe-16 text-success"></span> @endif</label>
                                         <div class="custom-file">
-                                            <input type="hidden" name="old_ijazah" value="{{$guru->dokumen->ijazah}}">
+                                            <input type="hidden" name="old_ijazah" value="{{$guru->dokumen->ijazah ?? ''}}">
                                             <input name="ijazah" type="file" class="custom-file-input {{$errors->first('ijazah') ? "is-invalid" : "" }}" id="ijazah" >
                                             <label class="custom-file-label" for="ijazah">Ubah Ijazah</label>
                                             @error('ijazah')
@@ -69,7 +69,7 @@
                                     <div class="form-group mb-2">
                                         <label for="berkas">Berkas Lainnya @if(isset($guru->dokumen->berkas)) <span class="fe fe-check fe-16 text-success"></span> @endif</label>
                                         <div class="custom-file">
-                                            <input type="hidden" name="old_berkas" value="{{$guru->dokumen->berkas}}">
+                                            <input type="hidden" name="old_berkas" value="{{$guru->dokumen->berkas ?? ''}}">
                                             <input name="berkas" type="file" class="custom-file-input {{$errors->first('berkas') ? "is-invalid" : "" }}" id="berkas" >
                                             <label class="custom-file-label" for="berkas">Ubah berkas lainnya</label>
                                             @error('berkas')
@@ -445,7 +445,7 @@
     kabupaten.addEventListener('change', async () =>{
         let code = kabupaten.options[kabupaten.selectedIndex].getAttribute('data-code');
         const idSelect = document.querySelector('#kecamatan');
-        
+
         const wilayah = await getWilayah('/getKecamatan?code=', code);
         updateOption(wilayah, idSelect);
     });
@@ -454,7 +454,7 @@
     kecamatan.addEventListener('change', async () =>{
         let code = kecamatan.options[kecamatan.selectedIndex].getAttribute('data-code');
         const idSelect = document.querySelector('#kelurahan');
-        
+
         const wilayah = await getWilayah('/getKelurahan?code=', code);
         updateOption(wilayah, idSelect);
     });

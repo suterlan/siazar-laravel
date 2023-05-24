@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AkunSettingController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Coba;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JurusanController;
@@ -103,6 +105,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Route Jurusan
     Route::resource('/dashboard/jurusan', JurusanController::class)->except(['create', 'show'])->middleware('admin');
+
     // route manipulasi akun user
     Route::resource('/dashboard/user', UserController::class)->except(['create', 'show'])->middleware('admin');
 
@@ -170,4 +173,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::delete('/dashboard/pesan/delete-all', [PesanController::class, 'deleteAll']);
     Route::resource('/dashboard/pesan', PesanController::class);
+
+    // Route Akun Setting
+    Route::get('/dashboard/akun', [AkunSettingController::class, 'index']);
+    Route::put('/dashboard/akun/{akun}', [AkunSettingController::class, 'update']);
 });

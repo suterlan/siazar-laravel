@@ -78,7 +78,7 @@ class GuruController extends Controller
             'no_rek'                => 'nullable',
             'nama_rek'              => 'nullable',
         ]);
-        
+
         $ruleDocument = [
             'foto'                  => 'image|file|mimes:png,jpg|max:2048|nullable',
             'kartu_keluarga'        => 'file|mimes:pdf|max:2048|nullable',
@@ -108,7 +108,7 @@ class GuruController extends Controller
             'role'      => false
         ];
 
-        
+
         //insert ke tabel guru
         Guru::create($validated);
         // insert data ke tabel dokumen
@@ -194,7 +194,7 @@ class GuruController extends Controller
         }
 
         $validated = $request->validate($validate);
-        
+
         $ruleDocument = [
             'foto'                  => 'image|file|mimes:png,jpg|max:2048',
             'kartu_keluarga'        => 'file|mimes:pdf|max:2048',
@@ -236,7 +236,7 @@ class GuruController extends Controller
                 ->update($akun);
         }
 
-        
+
         //update tabel guru
         Guru::where('id', $guru->id)
             ->update($validated);
@@ -263,4 +263,5 @@ class GuruController extends Controller
 
         return redirect('/dashboard/guru')->with('success', 'Data guru ' . $guru->nama . ' berhasil dihapus');
     }
+
 }
