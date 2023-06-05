@@ -39,7 +39,11 @@
                             <div class="row mt-5 align-items-center">
                                 <div class="col-md-4 mb-4">
                                     <div class="avatar avatar-xl text-center">
+                                        @if(isset($akun->dokumen->foto))
                                         <img src="{{ asset('storage/'. $akun->dokumen->foto) }}" alt="..." class="avatar-img rounded-circle">
+                                        @else
+                                        <img src="#" class="avatar-img rounded-circle">
+                                        @endif
                                     </div>
                                     <div class="custom-file mt-3">
                                         <input type="hidden" name="old_foto" value="{{$akun->dokumen->foto ?? ''}}">

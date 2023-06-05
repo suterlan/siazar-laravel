@@ -7,6 +7,13 @@ $(document).ready(function () {
             [10, 20, 50, 100, "All"],
         ],
     });
+    $("#tbUserSiswa").DataTable({
+        responsive: true,
+        lengthMenu: [
+            [10, 20, 50, 100, -1],
+            [10, 20, 50, 100, "All"],
+        ],
+    });
 
     // tabel jurusan
     $("#tbJurusan").DataTable();

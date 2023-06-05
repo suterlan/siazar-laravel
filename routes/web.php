@@ -98,24 +98,25 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/getKelurahan', [WilayahIndonesiaController::class, 'getKelurahan'])->name('kelurahan');
 
     // Route Siswa
-    Route::resource('/dashboard/siswa', SiswaController::class)->except(['store', 'create'])->middleware('admin');
+    Route::resource('/dashboard/siswa', SiswaController::class)->except(['store', 'create']);
 
     // Route Guru
     Route::resource('/dashboard/guru', GuruController::class);
 
     // Route Jurusan
-    Route::resource('/dashboard/jurusan', JurusanController::class)->except(['create', 'show'])->middleware('admin');
+    Route::resource('/dashboard/jurusan', JurusanController::class)->except(['create', 'show']);
 
     // route manipulasi akun user
-    Route::resource('/dashboard/user', UserController::class)->except(['create', 'show'])->middleware('admin');
+    Route::get('/dashboard/get-user-role', [UserController::class, 'GetUserRole']);
+    Route::put('/dashboard/user/role', [UserController::class, 'RoleChange']);
+
+    Route::resource('/dashboard/user', UserController::class)->except(['create', 'show'])->middleware('can:admin');
 
     // Route Kelas
     Route::resource('/dashboard/kelas', KelasController::class);
 
-    Route::get('/dashboard/user/ubahrole', [UserController::class, 'changeRole']);
-
     // Route klasifikasi
-    Route::resource('/dashboard/surat/klasifikasi', KlasifikasiController::class)->except(['create', 'show'])->middleware('admin');
+    Route::resource('/dashboard/surat/klasifikasi', KlasifikasiController::class)->except(['create', 'show']);
 
         // ROUTE untuk membuat no surat otomatis
     Route::get('/getCodeKlasifikasi', [SuratKeluarController::class, 'getCodeKlasifikasi']);

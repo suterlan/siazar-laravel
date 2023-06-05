@@ -105,7 +105,7 @@ class GuruController extends Controller
             'username'  => $validated['email'],
             'email'     => $validated['email'],
             'password'  => Hash::make('12345678'),
-            'role'      => false
+            'role'      => 'guru'
         ];
 
 

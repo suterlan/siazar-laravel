@@ -16,7 +16,9 @@ use App\Models\Sekolah;
 use App\Models\SuratMasuk;
 use App\Models\Tentang;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -31,9 +33,25 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'username' => 'admin',
             'email' => 'admin@admin.com',
-            'role'  => 1,
+            'role'  => 'admin',
             'password'  => bcrypt('password')
         ]);
+
+        // user seeder
+        for($i=0;$i<10;$i++){
+            $role = ['kurikulum', 'kaprog', 'walas', 'guru', 'siswa'];
+            $rand_keys = array_rand($role);
+            $data[$i] = [
+                'name' => fake()->name(),
+                'username'  => fake()->unique()->userName(mt_rand(5, 8)),
+                'email' => fake()->unique()->safeEmail(),
+                'email_verified_at' => now(),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'remember_token' => Str::random(10),
+                'role' => $role[$rand_keys],
+            ];
+        }
+        DB::table('users')->insert($data);
 
         // User::factory(10)->create();
 

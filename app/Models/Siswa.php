@@ -11,6 +11,8 @@ class Siswa extends Model
 
     protected $guarded = ['id'];
 
+    protected $with = ['user', 'dokumen'];
+
     public function jurusan()
     {
         return $this->belongsTo(Jurusan::class);
@@ -25,5 +27,7 @@ class Siswa extends Model
         return $this->hasOne(Dokumen::class, 'nisn', 'nisn');
     }
 
-    protected $with = ['dokumen'];
+    public function user(){
+        return $this->belongsTo(User::class, 'nisn', 'username');
+    }
 }

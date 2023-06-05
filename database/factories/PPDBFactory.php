@@ -20,6 +20,7 @@ class PPDBFactory extends Factory
             'nama_siswa'    => fake()->name(),
             'jk'            => 'Laki-laki',
             'nik'           => $this->faker->nik(),
+            'nisn'          => $this->faker->numerify('##########'),
             'tempat_lahir'  => fake()->city(),
             'tgl_lahir'     => now(),
             'asal_sekolah'  => 'SMPN 1',

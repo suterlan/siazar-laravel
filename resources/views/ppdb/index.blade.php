@@ -121,6 +121,9 @@
                                     <th>Asal Sekolah</th>
                                     <th>Jurusan</th>
                                     <th>Diinput Oleh</th>
+                                    @can('admin')
+                                    <th>Tgl Input</th>
+                                    @endcan
                                     <th></th>
                                 </thead>
                                 <tbody>
@@ -141,6 +144,9 @@
                                         <td>{{ $ppdb->asal_sekolah }}</td>
                                         <td>{{ $ppdb->jurusan->kode ?? '' }}</td>
                                         <td>{{ $ppdb->user->name ?? ''}}</td>
+                                        @can('admin')
+                                        <td class="text-nowrap">{{ \Carbon\Carbon::parse($ppdb->created_at)->format('d-m-Y') }}</td>
+                                        @endcan
                                         <td>
                                             <div class="d-flex">
                                                 <a class="btn btn-sm btn-info ml-1" href="/dashboard/ppdb/detail/{{ $ppdb->id }}" title="Detail"><span class="fe fe-eye"></span></a>

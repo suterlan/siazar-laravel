@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Enum;
 
 class UserController extends Controller
 {
@@ -18,7 +19,7 @@ class UserController extends Controller
     {
         return view('user.index',[
             'title'     => 'User Settings | SIAZAR',
-            'users'     => User::orderby('role', 'desc')->get()
+            'users'     => User::orderby('role', 'asc')->get()
         ]);
     }
 
@@ -45,7 +46,8 @@ class UserController extends Controller
             'username' => 'required|unique:users',
             'email' => 'required|email|unique:users', //untuk email jika sudah mode produksi, ubah dari 'email' menjadi 'email:dns'
             'password'  => 'required|min:8|required_with:password_confirmation|same:password_confirmation',
-            'password_confirmation' => 'required|min:8'
+            'password_confirmation' => 'required|min:8',
+            'role'      => 'required'
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
@@ -127,18 +129,35 @@ class UserController extends Controller
         return redirect('dashboard/user')->with('success', 'Akun user berhasil dihapus!');
     }
 
-    public function changeRole(Request $request){
+    // public function changeRole(Request $request){
+    //     $userLogin = Auth::user()->id;
+    //     if($request->id != $userLogin){
+    //         if ($request->role != 'admin'){
+    //             $data = ['role' => 'admin'];
+    //             User::where('id', $request->id)
+    //                 ->update($data);
+    //         }elseif($request->role == 'admin'){
+    //             $data = ['role' => 'guru'];
+    //             User::where('id', $request->id)
+    //                 ->update($data);
+    //         }
+    //     }else{
+    //         return redirect('/dashboard/user')->with('error', 'Perubahan data gagal, akun user sedang login!');
+    //     }
+    // }
+
+    public function GetUserRole(Request $request){
+        $user = User::find($request->id);
+        return response()->json($user);
+    }
+
+    public function RoleChange(Request $request){
         $userLogin = Auth::user()->id;
         if($request->id != $userLogin){
-            if ($request->role == 0){
-                $data = ['role' => 1];
-                User::where('id', $request->id)
-                    ->update($data);
-            }elseif($request->role == 1){
-                $data = ['role' => 0];
-                User::where('id', $request->id)
-                    ->update($data);
-            }
+            $data = ['role'  => $request->role];
+            User::where('id', $request->id)
+                ->update($data);
+            return redirect('/dashboard/user')->with('success', 'Role user berhasil diubah!');
         }else{
             return redirect('/dashboard/user')->with('error', 'Perubahan data gagal, akun user sedang login!');
         }
