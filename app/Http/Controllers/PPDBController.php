@@ -7,9 +7,12 @@ use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\PPDB;
 use App\Models\Siswa;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Laravolt\Indonesia\Models\City;
 use Laravolt\Indonesia\Models\District;
@@ -19,7 +22,7 @@ use Laravolt\Indonesia\Models\Village;
 class PPDBController extends Controller
 {
     public function  index(){
-        if (auth()->user()->role != 1) {
+        if (!Gate::allows('admin')) {
             $data = PPDB::latest()
                         ->with(['jurusan', 'kelas'])
                         ->where('user_id', auth()->user()->id)
@@ -390,10 +393,26 @@ class PPDBController extends Controller
                     'jml_saudara_kandung'   => $value->jml_saudara_kandung,
                 ]);
 
+                // data akun siswa
+                // $akun = [
+                //     'name'      => $value->nama_siswa,
+                //     'username'  => $value->nisn,
+                //     'password'  => Hash::make($value->nisn),
+                //     'role'      => 'siswa'
+                // ];
+
                 PPDB::where('id', $value->id)
                     ->update([
                         'confirmed' => true
                     ]);
+
+                // create akun siswa
+                User::create([
+                    'name'      => $value->nama_siswa,
+                    'username'  => $value->nisn,
+                    'password'  => Hash::make($value->nisn),
+                    'role'      => ['siswa']
+                ]);
             }
             return redirect('/dashboard/ppdb')->with('success', 'Data PPDB berhasil di approve!');
         }else{

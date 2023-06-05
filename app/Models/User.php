@@ -22,6 +22,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -45,5 +46,9 @@ class User extends Authenticatable
 
     public function guru(){
         return $this->hasOne(Guru::class, 'email', 'email');
+    }
+
+    public function siswa(){
+        return $this->hasOne(Siswa::class, 'username', 'nisn');
     }
 }

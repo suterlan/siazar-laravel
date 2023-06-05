@@ -42,12 +42,14 @@
                                         <td>{{ $siswa->jurusan->kode ?? '' }}</td>
                                         <td class="d-flex float-right">
                                             <a class="btn btn-sm btn-info ml-1" href="/dashboard/siswa/{{ $siswa->id }}" title="Detail"><span class="fe fe-eye"></span></a>
+                                            @canany(['admin', 'kurikulum'])
                                             <a class="btn btn-sm btn-primary ml-1" href="/dashboard/siswa/{{ $siswa->id }}/edit" title="Edit"><span class="fe fe-edit"></span></a>
                                             <form action="/dashboard/siswa/{{$siswa->id}}" method="POST">
                                                 @method('delete')
                                                 @csrf
                                                 <button class="btn btn-sm btn-danger ml-1" type="submit" title="Remove" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete"></span></button>
                                             </form>
+                                            @endcanany
                                         </td>
                                     </tr>
                                     @endforeach

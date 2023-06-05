@@ -21,7 +21,7 @@
         <p class="text-muted nav-heading mt-2 mb-1">
             <span>Akademik</span>
         </p>
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item dropdown">
                 <a href="/dashboard/ppdb" aria-expanded="false" class="nav-link {{ Request::is('dashboard/ppdb') ? 'link-active' : '' }}">
                 <i class="fe fe-flag fe-16"></i>
@@ -29,7 +29,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item dropdown">
                 <a href="#siswa" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link {{ Request::is('dashboard/siswa*') ? 'link-active collapsed' : '' }} ">
                     <i class="fe fe-database fe-16"></i>
@@ -39,11 +39,14 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link pl-3 {{ Request::is('dashboard/siswa*') ? 'link-active' : '' }}" href="/dashboard/siswa"><span class="ml-1">Semua Siswa</span></a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link pl-3 {{ Request::is('dashboard/filter/siswa') ? 'link-active' : '' }}" href="/dashboard/filter/siswa"><span class="ml-1">Siswa Per Jurusan</span></a>
+                    </li>
                 </ul>
             </li>
         </ul>
     @can('admin')
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item dropdown">
                 <a href="#guru" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link {{ Request::is('dashboard/guru*') ? 'link-active collapsed' : '' }} ">
                     <i class="fe fe-database fe-16"></i>
@@ -56,7 +59,7 @@
                 </ul>
             </li>
         </ul>
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item dropdown">
                 <a href="/dashboard/jurusan" aria-expanded="false" class="nav-link {{ Request::is('dashboard/jurusan') ? 'link-active' : '' }}">
                     <i class="fe fe-map fe-16"></i>
@@ -64,7 +67,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item dropdown">
                 <a href="/dashboard/kelas" aria-expanded="false" class="nav-link {{ Request::is('dashboard/kelas') ? 'link-active' : '' }}">
                     <i class="fe fe-columns fe-16"></i>
@@ -73,7 +76,7 @@
             </li>
         </ul>
     @endcan
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item dropdown">
                 <a href="/dashboard/galeri" aria-expanded="false" class="nav-link {{ Request::is('dashboard/galeri') ? 'link-active' : '' }}">
                     <i class="fe fe-image fe-16"></i>
@@ -85,7 +88,7 @@
         <p class="text-muted nav-heading mt-4 mb-1">
             <span>Manajemen</span>
         </p>
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item dropdown">
                 <a href="#surat" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link {{ Request::is('dashboard/surat*') ? 'link-active collapsed' : '' }} ">
                     <i class="fe fe-mail fe-16"></i>
@@ -109,8 +112,8 @@
                 </ul>
             </li>
         </ul>
-        @if(!auth()->user()->role == '1')
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        @if(Gate::denies('admin'))
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item">
                 <a href="/dashboard/akun" aria-expanded="false" class="nav-link {{ Request::is('dashboard/akun*') ? 'link-active' : '' }}">
                     <i class="fe fe-file-text fe-16"></i>
@@ -121,12 +124,12 @@
         @endif
 
         @can('admin')
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item">
 
             </li>
         </ul>
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item">
                 <a href="/dashboard/user" aria-expanded="false" class="nav-link {{ Request::is('dashboard/user') ? 'link-active' : '' }}">
                     <i class="fe fe-users fe-16"></i>
@@ -137,7 +140,7 @@
         <p class="text-muted nav-heading mt-4 mb-1">
             <span>Website</span>
         </p>
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item">
                 <a href="/dashboard/pesan" aria-expanded="false" class="nav-link {{ Request::is('dashboard/pesan*') ? 'link-active' : '' }}">
                     <i class="fe fe-file-text fe-16"></i>
@@ -145,7 +148,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item">
                 <a href="/dashboard/posts" aria-expanded="false" class="nav-link {{ Request::is('dashboard/posts*') ? 'link-active' : '' }}">
                     <i class="fe fe-file-text fe-16"></i>
@@ -153,7 +156,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item dropdown">
                 <a href="#settings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link {{ Request::is('dashboard/settings*') ? 'link-active collapsed' : '' }} ">
                     <i class="fe fe-settings fe-16"></i>
@@ -172,7 +175,7 @@
                 </ul>
             </li>
         </ul>
-        <ul class="navbar-nav flex-fill w-100 mb-1">
+        <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item">
                 <a href="{{route('sekolah')}}" aria-expanded="false" class="nav-link {{ Request::is('dashboard/sekolah') ? 'link-active' : '' }}">
                     <i class="fe fe-grid fe-16"></i>
