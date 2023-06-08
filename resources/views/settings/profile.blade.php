@@ -189,8 +189,9 @@
                                     @foreach ($provinces as $code => $name)
                                         @if (old('provinsi', $akun->provinsi) == $name)
                                         <option value="{{ $name }}" data-code="{{ $code }}" selected>{{ $name }}</option>
-                                        @endif
+                                        @else
                                         <option value="{{ $name }}" data-code="{{ $code }}">{{ $name }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                                 @error('provinsi')
@@ -540,5 +541,44 @@
             </div> <!-- /.col-12 -->
         </div> <!-- .row -->
     </div>
+<script>
+    function selectChange(url, code, idSelect){
+        fetch(url + code)
+        .then(response => response.json())
+        .then(response => {
+            let options = '';
+            options += `<option value="">==Pilih==</option>`;
+            response.forEach(i => {
+                options += `<option value="${i.name}" data-code="${i.code}">${i.name}</option>`;
+            });
+
+            idSelect.innerHTML = options;
+        });
+    }
+
+    let provinsi = document.querySelector('#provinsi');
+    provinsi.addEventListener('change', () =>{
+        let code = provinsi.options[provinsi.selectedIndex].getAttribute('data-code');
+        const idSelect = document.querySelector('#kabupaten');
+
+        selectChange('/getKabupaten?code=', code, idSelect);
+    });
+
+    let kabupaten = document.querySelector('#kabupaten');
+    kabupaten.addEventListener('change', () =>{
+        let code = kabupaten.options[kabupaten.selectedIndex].getAttribute('data-code');
+        const idSelect = document.querySelector('#kecamatan');
+
+        selectChange('/getKecamatan?code=', code, idSelect);
+    });
+
+    let kecamatan = document.querySelector('#kecamatan');
+    kecamatan.addEventListener('change', () =>{
+        let code = kecamatan.options[kecamatan.selectedIndex].getAttribute('data-code');
+        const idSelect = document.querySelector('#kelurahan');
+
+        selectChange('/getKelurahan?code=', code, idSelect);
+    });
+</script>
 @endsection
 

@@ -41,17 +41,24 @@
     /* line-height: 0.1cm; */
     padding: 0;
 }
-.text-center{
-   text-align: center;
+.text-center {
+    text-align: center;
 }
-.pl-5{
+.pl-5 {
     padding-left: 8mm;
 }
-.table-ttd{
+.table-ttd {
     float: right;
     margin-top: 10mm;
     text-align: left;
     margin-right: 10mm;
+}
+.table-ttd-2 {
+    width: 100%;
+    margin-top: 20mm;
+    text-align: center;
+    margin-right: 20mm;
+    vertical-align: bottom;
 }
 .footer-page {
     position: relative;
@@ -60,9 +67,9 @@
     height: 0.5cm;
     font-size: 10px;
 }
-#foot-note{
+#foot-note {
     float: left;
 }
-#versi{
+#versi {
     float: right;
 }

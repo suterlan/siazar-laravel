@@ -40,6 +40,117 @@ class SiswaController extends Controller
         //
     }
 
+    public function registration1(Request $request){
+        $provinces= Province::pluck('name', 'code');
+        $registrasi = $request->session()->get('registrasi');
+        return view('siswa.registration-1', [
+            'title'         => 'Tambah Siswa Baru | '. config('app.name'),
+            'step'          => 1,
+            'registrasi'    => $registrasi,
+            'provinces'     => $provinces
+        ]);
+    }
+
+    function postRegistration1(Request $request){
+        $validatedData = $request->validate([
+            'user_id'       => 'numeric',
+            'nama_siswa'    => 'required',
+            'jk'            => 'required',
+            'nik'           => 'min:16|required|numeric',
+            'tempat_lahir'  => 'required',
+            'tgl_lahir'     => 'required',
+            'no_hp'         => 'max:13',
+            'alamat'        => 'max:255',
+            'provinsi'      => 'max:64',
+            'kabupaten'     => 'max:64',
+            'kecamatan'     => 'max:64',
+            'kelurahan'     => 'max:64',
+            'jml_saudara_kandung'   => 'max:1'
+        ]);
+
+        if (empty($request->session()->get('registrasi'))) {
+            $registrasi = new Siswa();
+            $registrasi->fill($validatedData);
+            $request->session()->put('registrasi', $registrasi);
+        }else{
+            $registrasi = $request->session()->get('registrasi');
+            $registrasi->fill($validatedData);
+            $request->session()->put('registrasi', $registrasi);
+        }
+
+        return redirect('/dashboard/siswa/registrasi-step2');
+    }
+
+    public function registration2(Request $request){
+        $registrasi = $request->session()->get('registrasi');
+        return view('siswa.registration-2', [
+            'title'         => 'Tambah Siswa Baru | '. config('app.name'),
+            'step'          => 2,
+            'registrasi'    => $registrasi
+        ]);
+    }
+
+    public function postRegistration2(Request $request){
+        $validatedData = $request->validate([
+            'asal_sekolah'  => 'required',
+            'nis'           => 'min:11|numeric|required',
+            'nisn'          => 'min:10|numeric|required',
+            'no_ijazah'     => 'min:16|nullable',
+            'no_skhun'      => 'min:7|nullable',
+            'no_kip'        => 'min:7|nullable',
+            'nama_kip'      => 'max:255'
+        ]);
+
+        $registrasi = $request->session()->get('registrasi');
+        $registrasi->fill($validatedData);
+        $request->session()->put('registrasi', $registrasi);
+
+        return redirect('/dashboard/siswa/registrasi-step3');
+    }
+
+    public function registration3(Request $request){
+        $registrasi = $request->session()->get('registrasi');
+        return view('siswa.registration-3', [
+            'title'         => 'Tambah Siswa Baru | '. config('app.name'),
+            'step'          => 3,
+            'registrasi'    => $registrasi
+        ]);
+    }
+
+    public function postRegistration3(Request $request){
+        $validatedData = $request->validate([
+            'nama_ayah'         => 'nullable',
+            'nik_ayah'          => 'min:16|numeric|nullable',
+            'tgl_lahir_ayah'    => 'nullable',
+            'pendidikan_ayah'   => 'max:32',
+            'pekerjaan_ayah'    => 'max:64',
+            'penghasilan_ayah'  => 'numeric|nullable',
+            'nama_ibu'          => 'required',
+            'nik_ibu'           => 'min:16|numeric|nullable',
+            'tgl_lahir_ibu'     => 'nullable',
+            'pendidikan_ibu'    => 'max:32',
+            'pekerjaan_ibu'     => 'max:64',
+            'penghasilan_ibu'   => 'numeric|nullable',
+        ]);
+
+        $registrasi = $request->session()->get('registrasi');
+        $registrasi->fill($validatedData);
+        $request->session()->put('registrasi', $registrasi);
+
+        return redirect('/dashboard/siswa/registrasi-step4');
+    }
+
+    public function registration4(Request $request){
+        $registrasi = $request->session()->get('registrasi');
+        return view('siswa.registration-4', [
+            'title'     => 'Tambah Siswa Baru | '. config('app.name'),
+            'step'      => 4,
+            'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
+            'kelas'     => Kelas::select('id', 'nama')->get(),
+            'registrasi'    => $registrasi
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -48,7 +159,19 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'jurusan_id'   => 'required',
+            'kelas_id'     => 'required',
+        ]);
+
+        $registrasi = $request->session()->get('registrasi');
+        $registrasi->fill($validatedData);
+        $request->session()->put('registrasi', $registrasi);
+
+        $registrasi->save();
+
+        session()->forget('registrasi');
+        return redirect('/dashboard/siswa')->with('success', 'Data berhasil disimpan!');
     }
 
     /**

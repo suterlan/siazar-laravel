@@ -23,9 +23,10 @@
                       <div class="row align-items-center">
                         <div class="col-md-7">
                           <h4 class="mb-1">{{ $siswa->nama_siswa }}</h4>
+                          <p class="mb-0"><span class="badge badge-dark">NIS : {{$siswa->nis}}</span></p>
                           <p class="mb-0"><span class="badge badge-dark">NISN : {{$siswa->nisn}}</span></p>
                           <p class="mb-3">NIK : <b>{{$siswa->nik}}</b></p>
-                          <div><b>{{$siswa->jk}}</b></div> 
+                          <div><b>{{$siswa->jk}}</b></div>
                           <div>Lahir di <b>{{$siswa->tempat_lahir .', '. \Carbon\Carbon::parse($siswa->tgl_lahir)->format('d F Y') }}</b></div>
                         </div>
                       </div>
@@ -117,7 +118,7 @@
                         <div class="card-body text-center my-4">
                             <div class="embed-responsive embed-responsive-21by9">
                                 @if (isset($siswa->dokumen->kartu_keluarga))
-                                    <iframe src="{{ asset('storage/' . $siswa->dokumen->kartu_keluarga) }}" ></iframe>          
+                                    <iframe src="{{ asset('storage/' . $siswa->dokumen->kartu_keluarga) }}" ></iframe>
                                 @else
                                     Tidak ada dokumen
                                 @endif

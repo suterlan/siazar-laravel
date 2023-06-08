@@ -18,7 +18,7 @@ class PenerimaanController extends Controller
     public function index()
     {
         return view('surat-keluar.surat-penerimaan.index',[
-            'title'     => 'Surat Keluar | SIAZAR',
+            'title'     => 'Surat Penerimaan | '. config('app.name'),
             'surats'    => SuratPenerimaan::with('suratkeluar')->latest()->get()
         ]);
     }
@@ -30,10 +30,10 @@ class PenerimaanController extends Controller
      */
     public function create()
     {
-         return view('surat-keluar.surat-penerimaan.create', [
-                'title'         => 'Surat Penerimaan Baru | SIAZAR',
-                'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get()
-            ]);
+        return view('surat-keluar.surat-penerimaan.create', [
+            'title'         => 'Surat Penerimaan Baru | '. config('app.name'),
+            'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get()
+        ]);
     }
 
     /**
@@ -70,7 +70,7 @@ class PenerimaanController extends Controller
     public function show(SuratPenerimaan $penerimaan)
     {
         return view('surat-keluar.surat-penerimaan.detail',[
-            'title'     => 'Detail Surat | SIAZAR',
+            'title'     => 'Detail Surat | '. config('app.name'),
             'surat'     => $penerimaan
         ]);
     }
@@ -84,7 +84,7 @@ class PenerimaanController extends Controller
     public function edit(SuratPenerimaan $penerimaan)
     {
         return view('surat-keluar.surat-penerimaan.edit', [
-            'title'     => 'Edit Surat | SIAZAR',
+            'title'     => 'Edit Surat | '. config('app.name'),
             'surat'     => $penerimaan,
             'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get()
         ]);
