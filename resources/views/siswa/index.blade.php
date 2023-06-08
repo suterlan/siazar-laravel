@@ -8,7 +8,7 @@
                     <div class="card shadow">
                         <div class="card-header">
                             <strong class="card-title">Data Siswa</strong>
-                            <a href="/dashboard/ppdb/registrasi-step1">
+                            <a href="/dashboard/siswa/registrasi-step1">
                                 <button class="btn btn-primary btn-sm float-right"><span class="fe fe-plus"></span> Tambah Siswa </button>
                             </a>
                             <p class="card-text">Data seluruh siswa</p>

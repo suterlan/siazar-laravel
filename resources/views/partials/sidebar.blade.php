@@ -106,6 +106,8 @@
                             <a href="/dashboard/suratkeluar/penerimaan" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/penerimaan*') ? 'link-active' : '' }}"><span class="ml-1"> Penerimaan Siswa</span></a>
                             <a href="/dashboard/suratkeluar/panggilan" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/panggilan*') ? 'link-active' : '' }}"><span class="ml-1"> Pemanggilan Siswa</span></a>
                             <a href="/dashboard/suratkeluar/mutasi" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/mutasi*') ? 'link-active' : '' }}"><span class="ml-1"> Mutasi Siswa</span></a>
+                            <a href="/dashboard/suratkeluar/undangan" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/undangan*') ? 'link-active' : '' }}"><span class="ml-1"> Surat Undangan</span></a>
+                            <a href="/dashboard/suratkeluar/umum" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/umum*') ? 'link-active' : '' }}"><span class="ml-1"> Surat Umum</span></a>
                         </ul>
                     </li>
                     <a class="nav-link pl-3 {{ Request::is('dashboard/suratmasuk*') ? 'link-active' : '' }}" href="/dashboard/suratmasuk"><span class="ml-1">Surat Masuk</span></a>

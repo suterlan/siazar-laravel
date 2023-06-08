@@ -25,6 +25,12 @@ class SuratKeluar extends Model
     public function panggilan(){
         return $this->belongsTo(SuratPanggilan::class, 'no_surat', 'no_surat');
     }
+    public function undangan(){
+        return $this->belongsTo(SuratUndangan::class, 'no_surat', 'no_surat');
+    }
+    public function umum(){
+        return $this->belongsTo(SuratUmum::class, 'no_surat', 'no_surat');
+    }
 
      // Rubah tampilan format tanggal surat secara global
     public function getTanggalSuratAttribute()

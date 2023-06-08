@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AkunSettingController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\Coba;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JurusanController;
@@ -22,6 +21,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\SuratKeluarController;
 use App\Http\Controllers\SuratMasukController;
+use App\Http\Controllers\SuratUmumController;
+use App\Http\Controllers\SuratUndanganController;
 use App\Http\Controllers\TentangController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WilayahIndonesiaController;
@@ -98,7 +99,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/getKelurahan', [WilayahIndonesiaController::class, 'getKelurahan'])->name('kelurahan');
 
     // Route Siswa
-    Route::resource('/dashboard/siswa', SiswaController::class)->except(['store', 'create']);
+    Route::get('/dashboard/siswa/registrasi-step1', [SiswaController::class, 'registration1']);
+    Route::post('/dashboard/siswa/registrasi-step1', [SiswaController::class, 'postRegistration1']);
+    Route::get('/dashboard/siswa/registrasi-step2', [SiswaController::class, 'registration2']);
+    Route::post('/dashboard/siswa/registrasi-step2', [SiswaController::class, 'postRegistration2']);
+    Route::get('/dashboard/siswa/registrasi-step3', [SiswaController::class, 'registration3']);
+    Route::post('/dashboard/siswa/registrasi-step3', [SiswaController::class, 'postRegistration3']);
+    Route::get('/dashboard/siswa/registrasi-step4', [SiswaController::class, 'registration4']);
+
+    Route::resource('/dashboard/siswa', SiswaController::class)->except(['create']);
 
     // Route Guru
     Route::resource('/dashboard/guru', GuruController::class);
@@ -139,6 +148,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/dashboard/suratkeluar/mutasi', MutasiController::class);
     Route::get('/dashboard/suratkeluar/mutasi/cetak/{mutasi}', [MutasiController::class, 'cetak']);
     Route::get('/dashboard/suratkeluar/mutasi/download/{mutasi}', [MutasiController::class, 'download']);
+
+    // Route Surat Keluar (undangan)
+    Route::resource('/dashboard/suratkeluar/undangan', SuratUndanganController::class);
+    Route::get('/dashboard/suratkeluar/undangan/cetak/{undangan}', [SuratUndanganController::class, 'cetak']);
+    Route::get('/dashboard/suratkeluar/undangan/download/{undangan}', [SuratUndanganController::class, 'download']);
+
+    // Route Surat Keluar (umum)
+    Route::resource('/dashboard/suratkeluar/umum', SuratUmumController::class);
 
     // Route surat masuk
     Route::resource('/dashboard/suratmasuk', SuratMasukController::class);
