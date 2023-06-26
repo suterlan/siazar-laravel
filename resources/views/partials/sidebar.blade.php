@@ -40,7 +40,7 @@
                         <a class="nav-link pl-3 {{ Request::is('dashboard/siswa*') ? 'link-active' : '' }}" href="/dashboard/siswa"><span class="ml-1">Semua Siswa</span></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link pl-3 {{ Request::is('dashboard/filter/siswa') ? 'link-active' : '' }}" href="/dashboard/filter/siswa"><span class="ml-1">Siswa Per Jurusan</span></a>
+                        <a class="nav-link pl-3 {{ Request::is('dashboard/rombel') ? 'link-active' : '' }}" href="/dashboard/rombel"><span class="ml-1">Siswa Rombel</span></a>
                     </li>
                 </ul>
             </li>
@@ -98,7 +98,7 @@
                     <li class="nav-item dropdown">
                         <a href="/dashboard/surat/klasifikasi" aria-expanded="false" class="nav-link {{ Request::is('dashboard/surat/klasifikasi*') ? 'link-active' : '' }}">
                             {{-- <i class="fe fe-list fe-16"></i> --}}
-                            <span class="ml-3 item-text">Klasifikasi</span><span class="sr-only">(current)</span>
+                            <span class="ml-1 item-text">Klasifikasi</span><span class="sr-only">(current)</span>
                         </a>
                         <a href="#suratkeluar" class="dropdown-toggle nav-link pl-3 {{ Request::is('dashboard/suratkeluar*') ? 'link-active collapsed' : '' }}" data-toggle="collapse" aria-expanded="false"><span class="ml-1">Surat Keluar</span></a>
                         <ul class="list-unstyled pl-4 w-100 collapse {{ Request::is('dashboard/suratkeluar*') ? 'show' : '' }}" id="suratkeluar" style="">

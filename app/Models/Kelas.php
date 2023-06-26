@@ -11,10 +11,11 @@ class Kelas extends Model
 
     protected $fillable = [
         'nama',
+        'jurusan_id',
         'guru_id'
     ];
 
-    protected $with = ['guru'];
+    protected $with = ['guru', 'jurusan'];
 
     public function siswa(){
         return $this->hasMany(Siswa::class);
@@ -22,5 +23,10 @@ class Kelas extends Model
 
     public function guru(){
         return $this->belongsTo(Guru::class);
+    }
+
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class);
     }
 }

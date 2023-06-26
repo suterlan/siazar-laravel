@@ -18,6 +18,7 @@ use App\Http\Controllers\GuruController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RombelController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\SuratKeluarController;
 use App\Http\Controllers\SuratMasukController;
@@ -93,6 +94,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/dashboard/ppdb/update', [PPDBController::class, 'update']);
     Route::get('/dashboard/ppdb/delete/{id}', [PPDBController::class, 'delete']);
     Route::delete('/dashboard/ppdb/delete-all', [PPDBController::class, 'deleteAll']);
+    // route export data ppdb
+    Route::get('/dashboard/ppdb/export', [PPDBController::class, 'export']);
     // Route untuk mengambil data wilayah dengan javascript (plugin laravolt)
     Route::get('/getKabupaten', [WilayahIndonesiaController::class, 'getKabupaten'])->name('kabupaten');
     Route::get('/getKecamatan', [WilayahIndonesiaController::class, 'getKecamatan'])->name('kecamatan');
@@ -108,6 +111,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/siswa/registrasi-step4', [SiswaController::class, 'registration4']);
 
     Route::resource('/dashboard/siswa', SiswaController::class)->except(['create']);
+    Route::get('/dashboard/rombel', [RombelController::class, 'index']);
 
     // Route Guru
     Route::resource('/dashboard/guru', GuruController::class);

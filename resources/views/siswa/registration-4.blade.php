@@ -26,7 +26,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="jurusan_id">Jurusan</label>
-                                <select class="custom-select {{$errors->first('jurusan_id') ? "is-invalid" : "" }}" id="jurusan_id" name="jurusan_id" required>
+                                <select class="form-control select2 {{$errors->first('jurusan_id') ? "is-invalid" : "" }}" id="jurusan_id" name="jurusan_id" required>
                                     <option value="">==Pilih jurusan==</option>
                                     @foreach ($jurusan as $value)
                                         @if (old('jurusan_id') == $value->id)
@@ -41,12 +41,13 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="kelas_id">Kelas</label>
-                                <select class="custom-select {{$errors->first('kelas_id') ? "is-invalid" : "" }}" id="kelas_id" name="kelas_id" required>
+                                <select class="form-control select2 {{$errors->first('kelas_id') ? "is-invalid" : "" }}" id="kelas_id" name="kelas_id" required>
+                                    <option value="">==Pilih Kelas==</option>
                                     @foreach ($kelas as $value)
                                         @if (old('kelas_id') == $value->id)
-                                            <option value="{{ $value->id }}" selected>{{ $value->nama }}</option>
+                                            <option value="{{ $value->id }}" selected>{{ $value->nama . '-' . $value->jurusan->kode }}</option>
                                         @endif
-                                        <option value="{{ $value->id }}">{{ $value->nama }}</option>
+                                        <option value="{{ $value->id }}">{{ $value->nama . '-' . $value->jurusan->kode }}</option>
                                     @endforeach
                                 </select>
                                 @error('kelas_id')

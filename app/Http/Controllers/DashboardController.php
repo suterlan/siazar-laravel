@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
 use App\Models\Klasifikasi;
+use App\Models\PPDB;
+use App\Models\Siswa;
 use App\Models\SuratKeluar;
 use App\Models\SuratMasuk;
 use ArielMejiaDev\LarapexCharts\Facades\LarapexChart;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -46,11 +50,22 @@ class DashboardController extends Controller
                     ]
                 ]);
 
+        $startYear = Carbon::now();
+        $ppdb = PPDB::select('id')
+            ->whereYear('created_at', $startYear)
+            ->where('confirmed', 0)
+            ->count();
+        $siswa = Siswa::select('id')->where('lulus', false)->where('status_siswa', true)->count();
+        $guru = Guru::select('id')->count();
+
         return view('index', [
             'title'         => 'Dashboard | SIAZAR',
             'jmlSuratkeluar'    => SuratKeluar::all()->count(),
             'jmlSuratmasuk'     => SuratMasuk::all()->count(),
             'chart'             => $chart,
+            'ppdb'              => $ppdb,
+            'siswa'             => $siswa,
+            'guru'              => $guru,
         ]);
     }
 }

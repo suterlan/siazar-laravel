@@ -53,6 +53,7 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                    <p><small class="text-primary">* Untuk hasil terbaik ukuran foto harus 300 x 300</small></p>
                                 </div>
                                 <div class="col">
                                     <div class="row align-items-center">

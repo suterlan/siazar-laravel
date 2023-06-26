@@ -23,7 +23,7 @@
                         @endif
                         <table id="tbUser" class="table table-stripped table-hover">
                             <thead class="thead-dark">
-                                <th>#</th>
+                                {{-- <th>#</th> --}}
                                 <th>Nama</th>
                                 <th>Username</th>
                                 <th>Email</th>
@@ -36,15 +36,15 @@
                                         @continue
                                     @endif
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    {{-- <td>{{ $loop->iteration }}</td> --}}
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td class="text-nowrap">{{ $user->email }}</td>
                                     <td>
                                         @if ($user->role == 'admin')
-                                            <div class="badge badge-primary"> {{ $user->role }}</div>
+                                            <div class="badge badge-primary"> {{ @Str::upper($user->role) }}</div>
                                         @else
-                                            <div class="badge badge-info">{{ $user->role }}</div>
+                                            <div class="badge badge-info">{{ @Str::upper($user->role) }}</div>
                                         @endif
                                     </td>
                                     {{-- <td>
@@ -73,7 +73,6 @@
                         <hr class="mb-4 mt-4">
                         <table id="tbUserSiswa" class="table table-stripped table-hover">
                             <thead class="thead-dark">
-                                <th>#</th>
                                 <th>Nama</th>
                                 <th>Username</th>
                                 <th>Role</th>
@@ -85,15 +84,10 @@
                                         @continue
                                     @endif
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td>
-                                        @if ($user->role == 'admin')
-                                            <div class="badge badge-primary"> {{ $user->role }}</div>
-                                        @else
-                                            <div class="badge badge-info">{{ $user->role }}</div>
-                                        @endif
+                                        <div class="badge badge-info">{{ @Str::upper($user->role) }}</div>
                                     </td>
                                     <td>
                                         <div class="d-flex float-right">

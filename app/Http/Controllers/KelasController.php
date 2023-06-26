@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Models\Jurusan;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class KelasController extends Controller
         return view('kelas.index', [
             'title'     => 'Kelas | '. config('app.name'),
             'kelas'     => Kelas::all(),
+            'jurusans'  => Jurusan::select('id', 'kode')->get(),
             'gurus'     => Guru::select('id', 'nama')->get(),
         ]);
     }
@@ -42,6 +44,7 @@ class KelasController extends Controller
     {
         $validated = $request->validate([
             'nama'  => 'required',
+            'jurusan_id'   => 'required',
             'guru_id'   => 'required',
         ]);
         Kelas::create($validated);
@@ -81,12 +84,14 @@ class KelasController extends Controller
     {
         $rules = [
             '_nama'     => 'required',
+            '_jurusan_id'   => 'required',
             '_guru_id'   => 'required',
         ];
         $validated = $request->validate($rules);
 
         $data = [
             'nama'      => $validated['_nama'],
+            'jurusan_id'   => $validated['_jurusan_id'],
             'guru_id'   => $validated['_guru_id'],
         ];
 

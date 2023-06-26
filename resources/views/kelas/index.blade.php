@@ -24,7 +24,8 @@
                             <table id="tbJurusan" class="table table-stripped table-hover">
                                 <thead class="thead-dark">
                                     <th>No</th>
-                                    <th>Nama</th>
+                                    <th>Kelas</th>
+                                    <th>Jurusan</th>
                                     <th>Wali Kelas</th>
                                     <th class="text-center" scope="col"><span class="fe fe-tool text-info fe-16"></span></th>
                                 </thead>
@@ -32,7 +33,8 @@
                                     @foreach ($kelas as $row)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $row->nama}}</td>
+                                        <td>{{ $row->nama }}</td>
+                                        <td>{{ $row->jurusan->kode }}</td>
                                         <td>{{ $row->guru->nama ?? '' }}</td>
                                         <td>
                                             <div class="d-flex float-right">
@@ -71,6 +73,22 @@
                         <label for="nama">Nama</label>
                         <input name="nama" id="nama" type="text" class="form-control" value="{{ old('nama') }}" required>
                         @error('nama')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-2">
+                        <Label for="jurusan_id">Jurusan </Label>
+                        <select id="jurusan_id" name="jurusan_id" class="custom-select {{$errors->first('jurusan_id') ? "is-invalid" : "" }}" required>
+                            <option value="">&nbsp;</option>
+                            @foreach ($jurusans as $jurusan )
+                                @if (old('jurusan_id') == $jurusan->id)
+                                    <option value="{{ $jurusan->id }}" selected>{{ $jurusan->kode }}</option>
+                                @else
+                                    <option value="{{ $jurusan->id }}">{{ $jurusan->kode }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        @error('jurusan_id')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -117,6 +135,22 @@
                         <label for="_nama">Nama</label>
                         <input name="_nama" id="_nama" type="text" class="form-control" value="{{ old('_nama') }}" required>
                         @error('_nama')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-2">
+                        <Label for="_jurusan_id">Jurusan </Label>
+                        <select id="_jurusan_id" name="_jurusan_id" class="form-control select2" required>
+                            <option value="">&nbsp;</option>
+                            @foreach ($jurusans as $jurusan )
+                                @if (old('_jurusan_id') == $jurusan->id)
+                                    <option value="{{ $jurusan->id }}" selected>{{ $jurusan->kode }}</option>
+                                @else
+                                    <option value="{{ $jurusan->id }}">{{ $jurusan->kode }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        @error('_jurusan_id')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

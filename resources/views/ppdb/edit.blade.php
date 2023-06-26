@@ -14,8 +14,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="jurusan_id">Jurusan</label>
-                                <select class="custom-select {{$errors->first('jurusan_id') ? "is-invalid" : "" }}" id="jurusan_id" name="jurusan_id" required>
-                                    <option value="">==Pilih jurusan==</option>
+                                <select class="form-control select2 {{$errors->first('jurusan_id') ? "is-invalid" : "" }}" id="jurusan_id" name="jurusan_id" required>
                                     @foreach ($jurusan as $value)
                                         @if (old('jurusan_id', $ppdb->jurusan_id) == $value->id)
                                             <option value="{{ $value->id }}" selected>{{ $value->kode . ' - ' . $value->nama }}</option>
@@ -30,12 +29,12 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="kelas_id">Kelas</label>
-                                <select class="custom-select {{$errors->first('kelas_id') ? "is-invalid" : "" }}" id="kelas_id" name="kelas_id" required>
+                                <select class="form-control select2 {{$errors->first('kelas_id') ? "is-invalid" : "" }}" id="kelas_id" name="kelas_id" required>
                                     @foreach ($kelas as $value)
                                         @if (old('kelas_id', $ppdb->kelas_id) == $value->id)
-                                            <option value="{{ $value->id }}" selected>{{ $value->nama }}</option>
+                                            <option value="{{ $value->id }}" selected>{{ $value->nama . '-' . $value->jurusan->kode }}</option>
                                         @else
-                                            <option value="{{ $value->id }}">{{ $value->nama }}</option>
+                                            <option value="{{ $value->id }}">{{ $value->nama . '-' . $value->jurusan->kode }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -428,43 +427,4 @@
             </div>
         </div>
     </div>
-<script>
-    function selectChange(url, code, idSelect){
-        fetch(url + code)
-        .then(response => response.json())
-        .then(response => {
-            let options = '';
-            options += `<option value="">==Pilih==</option>`;
-            response.forEach(i => {
-                options += `<option value="${i.name}" data-code="${i.code}">${i.name}</option>`;
-            });
-
-            idSelect.innerHTML = options;
-        });
-    }
-
-    let provinsi = document.querySelector('#provinsi');
-    provinsi.addEventListener('change', () =>{
-        let code = provinsi.options[provinsi.selectedIndex].getAttribute('data-code');
-        const idSelect = document.querySelector('#kabupaten');
-
-        selectChange('/getKabupaten?code=', code, idSelect);
-    });
-
-    let kabupaten = document.querySelector('#kabupaten');
-    kabupaten.addEventListener('change', () =>{
-        let code = kabupaten.options[kabupaten.selectedIndex].getAttribute('data-code');
-        const idSelect = document.querySelector('#kecamatan');
-
-        selectChange('/getKecamatan?code=', code, idSelect);
-    });
-
-    let kecamatan = document.querySelector('#kecamatan');
-    kecamatan.addEventListener('change', () =>{
-        let code = kecamatan.options[kecamatan.selectedIndex].getAttribute('data-code');
-        const idSelect = document.querySelector('#kelurahan');
-
-        selectChange('/getKelurahan?code=', code, idSelect);
-    });
-</script>
 @endsection

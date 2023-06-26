@@ -58,7 +58,7 @@
                 <tr>
                     <td width="60">Perihal</td>
                     <td width="10">:</td>
-                    <td>Surat {{ $surat->suratkeluar->klasifikasi->nama }}</td>
+                    <td>{{ $surat->suratkeluar->klasifikasi->nama }}</td>
                 </tr>
                 <tr>
                     <td height="15"></td>

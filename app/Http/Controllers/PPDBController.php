@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PPDBExport;
 use App\Models\Dokumen;
 use App\Models\Jurusan;
 use App\Models\Kelas;
@@ -18,6 +19,7 @@ use Laravolt\Indonesia\Models\City;
 use Laravolt\Indonesia\Models\District;
 use Laravolt\Indonesia\Models\Province;
 use Laravolt\Indonesia\Models\Village;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PPDBController extends Controller
 {
@@ -43,17 +45,20 @@ class PPDBController extends Controller
             $disabled = 'disabled';
         }
 
+        $startYear = Carbon::now();
+
         $jurusan = PPDB::select('p_p_d_b_s.jurusan_id', 'jurusans.logo as logo', 'jurusans.nama as nama', DB::raw('count(jurusans.id) as countJurusan'))
                         ->join('jurusans', 'p_p_d_b_s.jurusan_id', 'jurusans.id')
                         ->groupBy('p_p_d_b_s.jurusan_id', 'logo', 'nama')
+                        ->whereYear('p_p_d_b_s.created_at', $startYear)
                         ->where('p_p_d_b_s.confirmed', 0)
                         ->get();
 
         return view('ppdb.index',[
             'title'     => 'PPDB | '. config('app.name'),
-            'jmlCalonSiswa' => PPDB::where('confirmed', 0)->count(),
-            'jmlPerempuan'  => PPDB::where('confirmed', 0)->where('jk', 'Perempuan')->count(),
-            'jmlLakiLaki'   => PPDB::where('confirmed', 0)->where('jk', 'Laki-Laki')->count(),
+            'jmlCalonSiswa' => PPDB::where('confirmed', 0)->whereYear('created_at', $startYear)->count(),
+            'jmlPerempuan'  => PPDB::where('confirmed', 0)->where('jk', 'Perempuan')->whereYear('created_at', $startYear)->count(),
+            'jmlLakiLaki'   => PPDB::where('confirmed', 0)->where('jk', 'Laki-Laki')->whereYear('created_at', $startYear)->count(),
             'jurusan'       => $jurusan,
             'btnClass'  => $disabled,
             'ppdbs'     => $data,
@@ -165,7 +170,7 @@ class PPDBController extends Controller
             'title'     => 'Pendaftaran Siswa Baru | '. config('app.name'),
             'step'      => 4,
             'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
-            'kelas'     => Kelas::select('id', 'nama')->get(),
+            'kelas'     => Kelas::all(),
             'registrasi'    => $registrasi
         ]);
     }
@@ -199,7 +204,7 @@ class PPDBController extends Controller
         return view('ppdb.edit',[
             'title'     => 'Edit Siswa Baru | '. config('app.name'),
             'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
-            'kelas'     => Kelas::select('id', 'nama')->get(),
+            'kelas'     => Kelas::all(),
             'provinces'     => $provinces,
             'ppdb'      => PPDB::with('dokumen')->whereId($id)->first(),
         ]);
@@ -386,37 +391,33 @@ class PPDBController extends Controller
                     'penghasilan_ayah'      => $value->penghasilan_ayah,
                     'nama_ibu'              => $value->nama_ibu,
                     'nik_ibu'               => $value->nik_ibu,
-                    'tgl_lahir_ibu'         => $value-> tgl_lahir_ibu,
+                    'tgl_lahir_ibu'         => $value->tgl_lahir_ibu,
                     'pendidikan_ibu'        => $value->pendidikan_ibu,
                     'pekerjaan_ibu'         => $value->pekerjaan_ibu,
                     'penghasilan_ibu'       => $value->penghasilan_ibu,
                     'jml_saudara_kandung'   => $value->jml_saudara_kandung,
                 ]);
 
-                // data akun siswa
-                // $akun = [
-                //     'name'      => $value->nama_siswa,
-                //     'username'  => $value->nisn,
-                //     'password'  => Hash::make($value->nisn),
-                //     'role'      => 'siswa'
-                // ];
-
-                PPDB::where('id', $value->id)
-                    ->update([
-                        'confirmed' => true
-                    ]);
-
                 // create akun siswa
                 User::create([
                     'name'      => $value->nama_siswa,
                     'username'  => $value->nisn,
                     'password'  => Hash::make($value->nisn),
-                    'role'      => ['siswa']
+                    'role'      => 'siswa'
                 ]);
+
+                PPDB::where('id', $value->id)
+                    ->update([
+                        'confirmed' => true
+                    ]);
             }
             return redirect('/dashboard/ppdb')->with('success', 'Data PPDB berhasil di approve!');
         }else{
             return redirect('/dashboard/ppdb')->with('error', 'Tidak ada data yang dipilih!');
         }
+    }
+
+    public function export(){
+        return Excel::download(new PPDBExport, 'data-ppdb.xlsx');
     }
 }
