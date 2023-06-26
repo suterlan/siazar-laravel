@@ -19,7 +19,7 @@
                                 <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
                             </div>
                             @endif
-                            <table id="tbSiswa" class="table table-stripped table-hover datatables">
+                            <table id="tbSiswa" class="table table-stripped table-hover datatables" style="font-size: 12px">
                                 <thead class="thead-dark">
                                     <th>No</th>
                                     <th>NIS</th>
@@ -38,8 +38,8 @@
                                         <td>{{ $siswa->nama_siswa }}</td>
                                         <td>{{ $siswa->tempat_lahir . ', ' . \Carbon\Carbon::parse($siswa->tgl_lahir)->format('d-m-Y') }}</td>
                                         <td>{{ $siswa->nisn }}</td>
-                                        <td>{{ $siswa->kelas->nama ?? '' }}</td>
-                                        <td>{{ $siswa->jurusan->kode ?? '' }}</td>
+                                        <td>{{ $siswa->kelas->nama ?? '' }} - {{ $siswa->kelas->jurusan->kode ?? '' }}</td>
+                                        <td>{{ $siswa->jurusan->nama ?? '' }}</td>
                                         <td class="d-flex float-right">
                                             <a class="btn btn-sm btn-info ml-1" href="/dashboard/siswa/{{ $siswa->id }}" title="Detail"><span class="fe fe-eye"></span></a>
                                             @canany(['admin', 'kurikulum'])

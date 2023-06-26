@@ -22,6 +22,68 @@
                   </form>
                 </div>
               </div>
+              {{-- row widget ppdb & siswa --}}
+              <div class="row">
+                <div class="col-md-6 col-xl-4 mb-4">
+                    <a href="/dashboard/ppdb" style="text-decoration: none">
+                        <div class="card shadow bg-primary text-white">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-3 text-center">
+                                        <span class="circle circle-sm bg-primary-darker">
+                                            <i class="fe fe-16 fe-users text-white mb-0"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col pr-0">
+                                        <p class="small text-white mb-0">PPDB Tahun ini</p>
+                                        <span class="h3 mb-0 text-white">{{ $ppdb }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-xl-4 mb-4">
+                    <a href="/dashboard/siswa" style="text-decoration: none">
+                        <div class="card shadow bg-success-light">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-3 text-center">
+                                        <span class="circle circle-sm bg-success-darker">
+                                            <i class="fe fe-16 fe-users text-white mb-0"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col pr-0">
+                                        <p class="small text-white mb-0">Siswa </p>
+                                        <span class="h3 text-white mb-0">{{$siswa }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-xl-4 mb-4">
+                    <a href="/dashboard/guru" style="text-decoration: none">
+                        <div class="card shadow bg-danger-light">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-3 text-center">
+                                        <span class="circle circle-sm bg-danger-darker">
+                                            <i class="fe fe-16 fe-user-check text-white mb-0"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col pr-0">
+                                        <p class="small text-white mb-0">Guru </p>
+                                        <span class="h3 text-white mb-0">{{$guru }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+              </div>
+              {{-- end .row widget ppdb & siswa --}}
+              {{-- row widget surat --}}
               <div class="row my-4">
                 <div class="col-md-6">
                   <div class="card shadow mb-4">

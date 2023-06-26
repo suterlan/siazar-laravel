@@ -121,6 +121,7 @@ $(document).ready(function () {
                     // fill the modal input
                     $("#_id").val(response.id);
                     $("#_nama").val(response.nama);
+                    $("#_jurusan_id").val(response.jurusan_id).change();
                     $("#_guru_id").val(response.guru_id).change();
                     // open modal edit
                     $("#ubahKelasModal").modal("show");
@@ -175,3 +176,51 @@ $(document).ready(function () {
         });
     });
 });
+
+// FUNGSI GET WILAYAH INDONESIA
+let provinsi = document.querySelector("#provinsi");
+provinsi.addEventListener("change", async () => {
+    let code =
+        provinsi.options[provinsi.selectedIndex].getAttribute("data-code");
+    const idSelect = document.querySelector("#kabupaten");
+
+    const wilayah = await getWilayah("/getKabupaten?code=", code);
+    updateOption(wilayah, idSelect);
+});
+
+let kabupaten = document.querySelector("#kabupaten");
+kabupaten.addEventListener("change", async () => {
+    let code =
+        kabupaten.options[kabupaten.selectedIndex].getAttribute("data-code");
+    const idSelect = document.querySelector("#kecamatan");
+
+    const wilayah = await getWilayah("/getKecamatan?code=", code);
+    updateOption(wilayah, idSelect);
+});
+
+let kecamatan = document.querySelector("#kecamatan");
+kecamatan.addEventListener("change", async () => {
+    let code =
+        kecamatan.options[kecamatan.selectedIndex].getAttribute("data-code");
+    const idSelect = document.querySelector("#kelurahan");
+
+    const wilayah = await getWilayah("/getKelurahan?code=", code);
+    updateOption(wilayah, idSelect);
+});
+
+function getWilayah(url, code) {
+    return fetch(url + code)
+        .then((response) => response.json())
+        .then((response) => response);
+}
+
+function updateOption(wilayah, idSelect) {
+    let options = "";
+    options += `<option value="">==Pilih==</option>`;
+    wilayah.forEach(
+        (i) =>
+            (options += `<option value="${i.name}" data-code="${i.code}">${i.name}</option>`)
+    );
+    idSelect.innerHTML = options;
+}
+// END FUNC GET WILAYAH

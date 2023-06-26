@@ -13,13 +13,22 @@ class Jurusan extends Model
         'kode',
         'nama',
         'deskripsi',
-        'logo' 
+        'logo'
     ];
+
+    // protected $with = ['kelas'];
 
     public function siswa(){
         return $this->hasMany(Siswa::class);
     }
     public function ppdb(){
         return $this->hasMany(PPDB::class);
+    }
+    public function galeri(){
+        return $this->hasMany(Galeri::class);
+    }
+
+    public function kelas(){
+        return $this->hasMany(Kelas::class);
     }
 }

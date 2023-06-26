@@ -11,7 +11,7 @@ class Siswa extends Model
 
     protected $guarded = ['id'];
 
-    protected $with = ['user', 'dokumen'];
+    protected $with = ['user', 'dokumen', 'jurusan', 'kelas'];
 
     public function jurusan()
     {

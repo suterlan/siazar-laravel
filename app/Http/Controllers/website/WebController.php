@@ -5,14 +5,12 @@ namespace App\Http\Controllers\website;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Galeri;
+use App\Models\Guru;
 use App\Models\Iklan;
 use App\Models\Jurusan;
 use App\Models\Post;
 use App\Models\Sekolah;
 use App\Models\Tentang;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use PHPUnit\Framework\Constraint\IsTrue;
 
 use function PHPUnit\Framework\isTrue;
 
@@ -44,21 +42,35 @@ class WebController extends Controller
     }
 
     public function pendidik(){
+        $guru = Guru::select('nama', 'nuptk', 'nik')
+                ->with(['dokumen' => function($query){
+                    $query->select('nik','foto');
+                }])->get();
         return view('website.pendidik',[
             'setting'   => $this->setting,
+            'gurus'     => $guru
         ]);
     }
 
     public function galeri(){
+        $kategori_gambar = Jurusan::select('kode')->get();
+
         return view('website.galeri',[
             'setting'   => $this->setting,
+            'kategoris' => $kategori_gambar,
+            "gambars"   => Galeri::select('jurusan_id', 'caption', 'gambar')->where('slide_aktif', true)->get()
         ]);
     }
 
     public function tentang(){
+        $guru = Guru::select('nama', 'nuptk', 'nik')
+                ->with(['dokumen' => function($query){
+                    $query->select('nik','foto');
+                }])->get();
         return view('website.tentang',[
             'setting'   => $this->setting,
-            'tentang'   => Tentang::first()
+            'tentang'   => Tentang::first(),
+            'gurus'     => $guru
         ]);
     }
 

@@ -35,6 +35,7 @@
                                 <div class="col-md-8">
                                     <div class="form-group mb-2">
                                         <label for="foto">Foto @if(isset($guru->dokumen->foto)) <span class="fe fe-check fe-16 text-success"></span> @endif</label>
+                                        <p><small class="text-info">Untuk hasil terbaik ukuran foto harus 300 x 300</small></p>
                                         <div class="custom-file">
                                             <input type="hidden" name="old_foto" value="{{$guru->dokumen->foto ?? ''}}">
                                             <input name="foto" type="file" class="custom-file-input {{$errors->first('foto') ? "is-invalid" : "" }}" id="foto" >

@@ -142,7 +142,7 @@
                 <label for="gambar">Gambar <small><i class="text-danger">(Gambar harus format PNG/JPG)</i></small></label>
                 <div class="custom-file mb-3">
                     <input name="gambar" type="file" class="custom-file-input {{$errors->first('gambar') ? "is-invalid" : "" }}" id="gambar" required>
-                    <label class="custom-file-label" for="file">Pilih Gambar</label>
+                    <label class="custom-file-label" for="gambar">Pilih Gambar</label>
                     @error('gambar')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

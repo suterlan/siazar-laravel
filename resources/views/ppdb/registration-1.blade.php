@@ -150,50 +150,11 @@
                         <div class="mb-3">
                             <div>Ket : <span class="text-danger">(*)</span> = Wajib diisi</div>
                         </div>
-        
+
                         <button class="btn btn-primary float-right" type="submit">Next <span class="fe fe-arrow-right"></span></button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-<script>
-    function selectChange(url, code, idSelect){
-        fetch(url + code)
-        .then(response => response.json())
-        .then(response => { 
-            let options = '';
-            options += `<option value="">==Pilih==</option>`;
-            response.forEach(i => {
-                options += `<option value="${i.name}" data-code="${i.code}">${i.name}</option>`;
-            });
-            
-            idSelect.innerHTML = options;
-        });
-    }
-
-    let provinsi = document.querySelector('#provinsi');
-    provinsi.addEventListener('change', () =>{
-        let code = provinsi.options[provinsi.selectedIndex].getAttribute('data-code');
-        const idSelect = document.querySelector('#kabupaten');
-
-        selectChange('/getKabupaten?code=', code, idSelect);
-    });
-
-    let kabupaten = document.querySelector('#kabupaten');
-    kabupaten.addEventListener('change', () =>{
-        let code = kabupaten.options[kabupaten.selectedIndex].getAttribute('data-code');
-        const idSelect = document.querySelector('#kecamatan');
-        
-        selectChange('/getKecamatan?code=', code, idSelect);
-    });
-
-    let kecamatan = document.querySelector('#kecamatan');
-    kecamatan.addEventListener('change', () =>{
-        let code = kecamatan.options[kecamatan.selectedIndex].getAttribute('data-code');
-        const idSelect = document.querySelector('#kelurahan');
-        
-        selectChange('/getKelurahan?code=', code, idSelect);
-    });
-</script>
 @endsection

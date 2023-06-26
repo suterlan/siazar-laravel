@@ -34,6 +34,20 @@ $(document).ready(function () {
         .appendTo("#tbPpdb_wrapper .col-md-6:eq(0)");
 });
 
+function selectChange(url, code, idSelect) {
+    fetch(url + code)
+        .then((response) => response.json())
+        .then((response) => {
+            let options = "";
+            options += `<option value="">==Pilih==</option>`;
+            response.forEach((i) => {
+                options += `<option value="${i.name}" data-code="${i.code}">${i.name}</option>`;
+            });
+
+            idSelect.innerHTML = options;
+        });
+}
+
 // fungsi untuk mengapprove dan menghapus data ppdb dengan menyeleksi
 function selectFunction(aksi, url) {
     if (aksi == "approve") {

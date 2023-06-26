@@ -146,7 +146,7 @@ class SiswaController extends Controller
             'title'     => 'Tambah Siswa Baru | '. config('app.name'),
             'step'      => 4,
             'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
-            'kelas'     => Kelas::select('id', 'nama')->get(),
+            'kelas'     => Kelas::all(),
             'registrasi'    => $registrasi
         ]);
     }
@@ -200,7 +200,7 @@ class SiswaController extends Controller
         return view('siswa.edit',[
             'title'     => 'Edit Siswa | '. config('app.name'),
             'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
-            'kelas'     => Kelas::select('id', 'nama')->get(),
+            'kelas'     => Kelas::all(),
             'provinces' => $provinces,
             'siswa'     => $siswa
         ]);

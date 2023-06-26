@@ -80,6 +80,7 @@
                     <div class="card-header">
                     <strong class="card-title">DATA PPDB</strong>
                     <a href="/dashboard/ppdb/registrasi-step1" class="btn btn-primary float-right"><i class="fe fe-plus"></i> Siswa Baru</a>
+                    <a href="/dashboard/ppdb/export" class="btn btn-secondary text-white float-right mr-3">Export Excel</a>
                     </div>
                     <div class="card-body">
                         @if (session()->has('success'))
@@ -97,7 +98,7 @@
                             <span class="fe fe-info fe-16 mr-2"></span><b>Informasi!</b><p><b>Approve</b> berfungsi untuk menyimpan seluruh data <b>PPDB</b> menjadi data <b>Siswa.</b> Pada saat Approve dijalankan <b>NIS</b> akan di generate secara otomatis! dan data PPDB akan diarsipkan!
                             <b>NIS</b> akan otomatis di generate</p>
                         </div>
-                        {{-- <a href="/dashboard/ppdb/approve" class="btn btn-success mb-3 float-right {{$btnClass}}" type="button" onclick="return confirm('Yakin mau approve sekarang? Data PPDB akan diarsipkan!')" id="approve">Approve</a> --}}
+                        {{-- <a href="/dashboard/ppdb/approve" class="btn btn-success mb-3 float-right {{$btnClass}}" type="button" onclick="return confirm('Yakin mau approve sekarang? Data PPDB akan diarsipkan!')" id="approve">Approve</a> --}}.
                         <form id="formSelect" method="post">
                             <input type="hidden" name="_method">
                             @csrf
