@@ -56,6 +56,24 @@ return [
             'throw' => false,
         ],
 
+        'google' => [
+            'driver' => 'google',
+            'clientId' => env('GOOGLE_DRIVE_CLIENT_ID'),
+            'clientSecret' => env('GOOGLE_DRIVE_CLIENT_SECRET'),
+            'refreshToken' => env('GOOGLE_DRIVE_REFRESH_TOKEN'),
+            'folder' => env('GOOGLE_DRIVE_FOLDER'), // without folder is root of drive or team drive
+            //'teamDriveId' => env('GOOGLE_DRIVE_TEAM_DRIVE_ID'),
+        ],
+        // you can use more accounts, only add more disks and configs on .env
+        // also you can use the same account and point to a diferent folders for each disk
+        /*'second_google' => [
+            'driver' => 'google',
+            'clientId' => env('SECOND_GOOGLE_DRIVE_CLIENT_ID'),
+            'clientSecret' => env('SECOND_GOOGLE_DRIVE_CLIENT_SECRET'),
+            'refreshToken' => env('SECOND_GOOGLE_DRIVE_REFRESH_TOKEN'),
+            'folder' => env('SECOND_GOOGLE_DRIVE_FOLDER'),
+        ],*/
+
     ],
 
     /*

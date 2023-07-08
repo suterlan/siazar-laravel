@@ -243,7 +243,7 @@ class GuruController extends Controller
 
         // update data tabel dokumen
         Dokumen::updateOrCreate(
-            ['nik'  => $guru->nik],
+            ['nik'  => $validated['nik']],
             $documents
         );
 

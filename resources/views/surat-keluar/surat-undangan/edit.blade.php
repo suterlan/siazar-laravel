@@ -55,7 +55,7 @@
                             @enderror
                         </div>
                         <div class="form-group mb-3">
-                            <label for="ketua_panitia">Ketua Panitia</label>
+                            <label for="ketua_panitia">Ketua Panitia <span class="text-danger">(Kosongkan jika tidak ada!)</span></label>
                             <input id="ketua_panitia" type="text" name="ketua_panitia" class="form-control" value="{{ old('ketua_panitia', $surat->ketua_panitia) }}" required>
                             @error('ketua_panitia')
                                 <div class="invalid-feedback">{{ $message }}</div>

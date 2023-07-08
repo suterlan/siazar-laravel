@@ -24,7 +24,7 @@ class Siswa extends Model
     }
 
     public function dokumen(){
-        return $this->hasOne(Dokumen::class, 'nisn', 'nisn');
+        return $this->belongsTo(Dokumen::class, 'nisn', 'nisn');
     }
 
     public function user(){

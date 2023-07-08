@@ -7,6 +7,11 @@
                 <div class="card-body">
                     <h4><strong>Buat Surat Undangan </strong></h3>
                     <p>Silahkan isi form dibawah untuk membuat surat undangan baru</p>
+                    @if (session()->has('success'))
+                        <div class="alert alert-success col-12" role="alert">
+                            <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
+                        </div>
+                    @endif
                     <form class="needs-validation  @if ($errors->any()) was-validated @endif" action="/dashboard/suratkeluar/undangan" method="post" novalidate>
                         @csrf
                         <div class="form-row">
@@ -55,8 +60,8 @@
                             @enderror
                         </div>
                         <div class="form-group mb-3">
-                            <label for="ketua_panitia">Ketua Panitia</label>
-                            <input id="ketua_panitia" type="text" name="ketua_panitia" class="form-control" value="{{ old('ketua_panitia') }}" required>
+                            <label for="ketua_panitia">Ketua Panitia <span class="text-danger">(Kosongkan jika tidak ada!)</span></label>
+                            <input id="ketua_panitia" type="text" name="ketua_panitia" class="form-control" value="{{ old('ketua_panitia') }}">
                             @error('ketua_panitia')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -99,7 +104,8 @@
                             @enderror
                         </div>
                         <div class="form-group mb-3 mt-4">
-                            <button class="btn btn-primary" type="submit"><span class="fe fe-save"></span> Simpan</button>
+                            <a href="/dashboard/suratkeluar/undangan" class="btn btn-danger"><span class="fe fe-arrow-left"></span> Kembali</a>
+                            <button class="btn btn-primary float-right" type="submit"><span class="fe fe-save"></span> Simpan</button>
                         </div>
                     </form>
                 </div>

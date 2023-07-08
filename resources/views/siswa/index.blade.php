@@ -55,6 +55,11 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            {{-- <nav aria-label="Table Paging" class="mb-0 text-muted mt-3">
+                                <ul class="pagination justify-content-center mb-0">
+                                    {{$siswas->links()}}
+                                </ul>
+                            </nav> --}}
                         </div>
                     </div>
                 </div>

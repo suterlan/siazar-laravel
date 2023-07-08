@@ -16,6 +16,7 @@ use App\Http\Controllers\IklanController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\MapelController;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RombelController;
@@ -199,4 +200,6 @@ Route::group(['middleware' => ['auth']], function () {
     // Route Akun Setting
     Route::get('/dashboard/akun', [AkunSettingController::class, 'index']);
     Route::put('/dashboard/akun/{akun}', [AkunSettingController::class, 'update']);
+
+    Route::resource('/dashboard/mapel', MapelController::class);
 });

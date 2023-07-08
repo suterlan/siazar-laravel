@@ -8,7 +8,7 @@
                     <div class="card shadow">
                         <div class="card-header">
                             <strong class="card-title">Kelas</strong>
-                                <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#newKelasModal" type="button"><span class="fe fe-user-plus"></span> Tambah </button>
+                                <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#newKelasModal" type="button"><span class="fe fe-plus"></span> Tambah </button>
                         </div>
                         <div class="card-body">
                             @if (session()->has('success'))
@@ -21,7 +21,7 @@
                                 <span class="fe fe-info fe-16 mr-2"></span> {{ session('error') }}
                             </div>
                             @endif
-                            <table id="tbJurusan" class="table table-stripped table-hover">
+                            <table id="tbKelas" class="table table-stripped table-hover">
                                 <thead class="thead-dark">
                                     <th>No</th>
                                     <th>Kelas</th>

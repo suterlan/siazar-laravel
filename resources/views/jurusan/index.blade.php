@@ -8,7 +8,7 @@
                     <div class="card shadow">
                         <div class="card-header">
                             <strong class="card-title">Jurusan</strong>
-                                <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#newJurusanModal" type="button"><span class="fe fe-user-plus"></span> Tambah </button>
+                                <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#newJurusanModal" type="button"><span class="fe fe-plus"></span> Tambah </button>
                         </div>
                         <div class="card-body">
                             @if (session()->has('success'))

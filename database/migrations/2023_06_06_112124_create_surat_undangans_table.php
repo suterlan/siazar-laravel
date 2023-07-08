@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('tanggal_acara')->nullable();
             $table->time('waktu');
             $table->string('tempat');
-            $table->string('ketua_panitia');
+            $table->string('ketua_panitia')->nullable();
             $table->string('penerima');
             $table->timestamps();
         });
