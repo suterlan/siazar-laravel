@@ -106,6 +106,7 @@
                                         <td colspan="3"><div class="mt-3 mb-5" align="justify">Demikian surat undangan ini kami sampaikan. Atas kehadiran dan perhatiannya kami ucapkan terima kasih.</div>
                                         </td>
                                     </tr>
+                                    @isset($surat->ketua_panitia)
                                     <tr>
                                         <td style="text-align: center">
                                             <div>Mengetahui</div>
@@ -119,6 +120,17 @@
                                             <div class="mt-5"><u><b>{{ $surat->ketua_panitia }}</b></u></div>
                                         </td>
                                     </tr>
+                                    @else
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="float-right mr-4 mt-5">
+                                                <div>Cianjur, {{ \Carbon\Carbon::parse($surat->suratkeluar->tanggal_surat)->translatedFormat('d F Y') }}</div>
+                                                <div>Kepala Sekolah,</div>
+                                                <div class="mt-5"><u><b>SITI ROHIMAH, S.Sos</b></u></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endisset
                                 </table>
                             </div>
                         </div>

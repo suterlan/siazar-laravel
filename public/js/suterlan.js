@@ -2,6 +2,7 @@ $(document).ready(function () {
     //USERS DATATABLE
     $("#tbUser").DataTable({
         responsive: true,
+        stateSave: true,
         lengthMenu: [
             [10, 20, 50, 100, -1],
             [10, 20, 50, 100, "All"],
@@ -9,6 +10,7 @@ $(document).ready(function () {
     });
     $("#tbUserSiswa").DataTable({
         responsive: true,
+        stateSave: true,
         lengthMenu: [
             [10, 20, 50, 100, -1],
             [10, 20, 50, 100, "All"],
@@ -17,8 +19,16 @@ $(document).ready(function () {
 
     // tabel jurusan
     $("#tbJurusan").DataTable();
+    $("#tbKelas").DataTable();
     // tabel siswa
-    $("#tbSiswa").DataTable();
+    $("#tbSiswa").DataTable({
+        responsive: true,
+        stateSave: true,
+        lengthMenu: [
+            [10, 20, 50, 100, -1],
+            [10, 20, 50, 100, "All"],
+        ],
+    });
     // table post blog
     $("#tbPost").DataTable({
         paging: false,
@@ -26,6 +36,8 @@ $(document).ready(function () {
     });
     // tabel pesan pengunjung
     $("#tbPesan").DataTable();
+    // table guru
+    $("#tbGuru").DataTable();
 
     // MODUL TENTANG
     // JAVASCRIPT QUILL EDITOR

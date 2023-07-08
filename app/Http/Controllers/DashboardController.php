@@ -59,7 +59,7 @@ class DashboardController extends Controller
         $guru = Guru::select('id')->count();
 
         return view('index', [
-            'title'         => 'Dashboard | SIAZAR',
+            'title'             => 'Dashboard '. config('app.name'),
             'jmlSuratkeluar'    => SuratKeluar::all()->count(),
             'jmlSuratmasuk'     => SuratMasuk::all()->count(),
             'chart'             => $chart,

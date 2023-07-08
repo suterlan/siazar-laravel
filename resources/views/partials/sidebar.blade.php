@@ -61,6 +61,14 @@
         </ul>
         <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item dropdown">
+                <a href="/dashboard/mapel" aria-expanded="false" class="nav-link {{ Request::is('dashboard/mapel*') ? 'link-active' : '' }}">
+                    <i class="fe fe-book fe-16"></i>
+                    <span class="ml-3 item-text">Mata Pelajaran</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav flex-fill w-100 mb-0">
+            <li class="nav-item dropdown">
                 <a href="/dashboard/jurusan" aria-expanded="false" class="nav-link {{ Request::is('dashboard/jurusan') ? 'link-active' : '' }}">
                     <i class="fe fe-map fe-16"></i>
                     <span class="ml-3 item-text">Jurusan</span>
@@ -95,11 +103,11 @@
                     <span class="ml-3 item-text">Surat</span><span class="sr-only">(current)</span>
                 </a>
                 <ul class="list-unstyled pl-4 w-100 collapse {{ Request::is('dashboard/surat*') ? 'show' : '' }}" id="surat" style="">
+                    <a href="/dashboard/surat/klasifikasi" aria-expanded="false" class="nav-link pl-3 {{ Request::is('dashboard/surat/klasifikasi*') ? 'link-active' : '' }}">
+                        {{-- <i class="fe fe-list fe-16"></i> --}}
+                        <span class="ml-1 item-text">Klasifikasi</span><span class="sr-only">(current)</span>
+                    </a>
                     <li class="nav-item dropdown">
-                        <a href="/dashboard/surat/klasifikasi" aria-expanded="false" class="nav-link {{ Request::is('dashboard/surat/klasifikasi*') ? 'link-active' : '' }}">
-                            {{-- <i class="fe fe-list fe-16"></i> --}}
-                            <span class="ml-1 item-text">Klasifikasi</span><span class="sr-only">(current)</span>
-                        </a>
                         <a href="#suratkeluar" class="dropdown-toggle nav-link pl-3 {{ Request::is('dashboard/suratkeluar*') ? 'link-active collapsed' : '' }}" data-toggle="collapse" aria-expanded="false"><span class="ml-1">Surat Keluar</span></a>
                         <ul class="list-unstyled pl-4 w-100 collapse {{ Request::is('dashboard/suratkeluar*') ? 'show' : '' }}" id="suratkeluar" style="">
                             <a href="/dashboard/suratkeluar" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar') ? 'link-active' : '' }}"><span class="ml-1">Semua Surat</span></a>

@@ -542,7 +542,7 @@
             </div> <!-- /.col-12 -->
         </div> <!-- .row -->
     </div>
-<script>
+{{-- <script>
     function selectChange(url, code, idSelect){
         fetch(url + code)
         .then(response => response.json())
@@ -580,6 +580,6 @@
 
         selectChange('/getKelurahan?code=', code, idSelect);
     });
-</script>
+</script> --}}
 @endsection
 

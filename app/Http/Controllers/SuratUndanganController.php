@@ -52,13 +52,13 @@ class SuratUndanganController extends Controller
             'tanggal_acara'     => 'required',
             'waktu'             => 'required',
             'tempat'            => 'required',
-            'ketua_panitia'     => 'required',
+            'ketua_panitia'     => 'nullable',
             'penerima'          => 'required',
         ]);
 
         SuratKeluar::create($validated);
         SuratUndangan::create($validated);
-        return redirect('/dashboard/suratkeluar/undangan')->with('success', 'Surat undangan baru berhasil dibuat!');
+        return redirect('/dashboard/suratkeluar/undangan/create')->with('success', 'Surat undangan baru berhasil dibuat!');
     }
 
     /**
@@ -106,7 +106,7 @@ class SuratUndanganController extends Controller
                 'tanggal_acara'     => 'required',
                 'waktu'             => 'required',
                 'tempat'            => 'required',
-                'ketua_panitia'     => 'required',
+                'ketua_panitia'     => 'nullable',
                 'penerima'          => 'required',
             ];
 

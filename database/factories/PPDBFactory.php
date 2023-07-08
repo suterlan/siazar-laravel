@@ -24,7 +24,7 @@ class PPDBFactory extends Factory
             'tempat_lahir'  => fake()->city(),
             'tgl_lahir'     => now(),
             'asal_sekolah'  => 'SMPN 1',
-            'kelas_id'      => mt_rand(1, 6),
+            'kelas_id'      => 1,
             'jurusan_id'    => mt_rand(1, 3),
             'nama_ibu'     => fake()->name(),
             'user_id'       => 1

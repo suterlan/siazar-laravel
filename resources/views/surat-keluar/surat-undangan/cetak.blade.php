@@ -88,20 +88,34 @@
                 </tr>
             </table>
             <div align="justify" style="margin-top: 3mm">Demikian surat undangan ini kami sampaikan. Atas kehadiran dan perhatiannya kami ucapkan terima kasih.</div>
-            <table class="table-ttd-2">
+            @isset($surat->ketua_panitia)
+                <table class="table-ttd-2">
+                    <tr>
+                        <td width="50%">Mengetahui</td>
+                        <td width="50%">Hormat Kami,</td>
+                    </tr>
+                    <tr>
+                        <td>Kepala Sekolah</td>
+                        <td>Ketua Panitia</td>
+                    </tr>
+                    <tr>
+                        <td height="150px"><u><b>SITI ROHIMAH, S.Sos</b></u></td>
+                        <td height="150px"><u><b>{{ $surat->ketua_panitia }}</b></u></td>
+                    </tr>
+                </table>
+            @else
+            <table class="table-ttd">
                 <tr>
-                    <td width="50%">Mengetahui</td>
-                    <td width="50%">Hormat Kami,</td>
+                    <td>Cianjur, {{ \Carbon\Carbon::parse($surat->suratkeluar->tanggal_surat)->translatedFormat('d F Y')  }}</td>
                 </tr>
                 <tr>
-                    <td>Kepala Sekolah</td>
-                    <td>Ketua Panitia</td>
+                    <td>Kepala Sekolah,</td>
                 </tr>
                 <tr>
-                    <td height="150px"><u><b>SITI ROHIMAH, S.Sos</b></u></td>
-                    <td height="150px"><u><b>{{ $surat->ketua_panitia }}</b></u></td>
+                    <td rowspan="30"><u><b>SITI ROHIMAH, S.Sos</b></u></td>
                 </tr>
             </table>
+            @endisset
         </div>
         <div class="footer-page">
             <div id="foot-note"> Dicetak dari <b>SIAZAR (Sistem Informasi Akademik SMK AZ-ZARKASYIH)</b></div>

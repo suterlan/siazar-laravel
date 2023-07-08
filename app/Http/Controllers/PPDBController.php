@@ -359,57 +359,58 @@ class PPDBController extends Controller
 
                 if($nisn_siswa->count() > 0){
                     return redirect('/dashboard/ppdb')->with('error', 'Proses approve berhenti! ada duplikasi NISN, silahkan periksa lagi data PPDB');
-                }
-                // kemudian insert ke tabel siswa
-                Siswa::create([
-                    'nis'                   => $nis,
-                    'nisn'                  => $value->nisn,
-                    'jurusan_id'            => $value->jurusan_id,
-                    'kelas_id'              => $value->kelas_id,
-                    'nama_siswa'            => $value->nama_siswa,
-                    'jk'                    => $value->jk,
-                    'tempat_lahir'          => $value->tempat_lahir,
-                    'tgl_lahir'             => $value->tgl_lahir,
-                    'no_hp'                 => $value->no_hp,
-                    'tahun_ajaran'          => date('Y') . '/' . date('Y')+1,
-                    'nik'                   => $value->nik,
-                    'alamat'                => $value->alamat,
-                    'provinsi'              => $value->provinsi,
-                    'kabupaten'             => $value->kabupaten,
-                    'kecamatan'             => $value->kecamatan,
-                    'kelurahan'             => $value->keluarahan,
-                    'asal_sekolah'          => $value->asal_sekolah,
-                    'no_ijazah'             => $value->no_ijazah,
-                    'no_skhun'              => $value->no_skhun,
-                    'no_kip'                => $value->no_kip,
-                    'nama_kip'              => $value->nama_kip,
-                    'nama_ayah'             => $value->nama_ayah,
-                    'nik_ayah'              => $value->nik_ayah,
-                    'tgl_lahir_ayah'        => $value->tgl_lahir_ayah,
-                    'pendidikan_ayah'       => $value->pendidikan_ayah,
-                    'pekerjaan_ayah'        => $value->pekerjaan_ayah,
-                    'penghasilan_ayah'      => $value->penghasilan_ayah,
-                    'nama_ibu'              => $value->nama_ibu,
-                    'nik_ibu'               => $value->nik_ibu,
-                    'tgl_lahir_ibu'         => $value->tgl_lahir_ibu,
-                    'pendidikan_ibu'        => $value->pendidikan_ibu,
-                    'pekerjaan_ibu'         => $value->pekerjaan_ibu,
-                    'penghasilan_ibu'       => $value->penghasilan_ibu,
-                    'jml_saudara_kandung'   => $value->jml_saudara_kandung,
-                ]);
-
-                // create akun siswa
-                User::create([
-                    'name'      => $value->nama_siswa,
-                    'username'  => $value->nisn,
-                    'password'  => Hash::make($value->nisn),
-                    'role'      => 'siswa'
-                ]);
-
-                PPDB::where('id', $value->id)
-                    ->update([
-                        'confirmed' => true
+                }else{
+                    // kemudian insert ke tabel siswa
+                    Siswa::create([
+                        'nis'                   => $nis,
+                        'nisn'                  => $value->nisn,
+                        'jurusan_id'            => $value->jurusan_id,
+                        'kelas_id'              => $value->kelas_id,
+                        'nama_siswa'            => $value->nama_siswa,
+                        'jk'                    => $value->jk,
+                        'tempat_lahir'          => $value->tempat_lahir,
+                        'tgl_lahir'             => $value->tgl_lahir,
+                        'no_hp'                 => $value->no_hp,
+                        'tahun_ajaran'          => date('Y') . '/' . date('Y')+1,
+                        'nik'                   => $value->nik,
+                        'alamat'                => $value->alamat,
+                        'provinsi'              => $value->provinsi,
+                        'kabupaten'             => $value->kabupaten,
+                        'kecamatan'             => $value->kecamatan,
+                        'kelurahan'             => $value->keluarahan,
+                        'asal_sekolah'          => $value->asal_sekolah,
+                        'no_ijazah'             => $value->no_ijazah,
+                        'no_skhun'              => $value->no_skhun,
+                        'no_kip'                => $value->no_kip,
+                        'nama_kip'              => $value->nama_kip,
+                        'nama_ayah'             => $value->nama_ayah,
+                        'nik_ayah'              => $value->nik_ayah,
+                        'tgl_lahir_ayah'        => $value->tgl_lahir_ayah,
+                        'pendidikan_ayah'       => $value->pendidikan_ayah,
+                        'pekerjaan_ayah'        => $value->pekerjaan_ayah,
+                        'penghasilan_ayah'      => $value->penghasilan_ayah,
+                        'nama_ibu'              => $value->nama_ibu,
+                        'nik_ibu'               => $value->nik_ibu,
+                        'tgl_lahir_ibu'         => $value->tgl_lahir_ibu,
+                        'pendidikan_ibu'        => $value->pendidikan_ibu,
+                        'pekerjaan_ibu'         => $value->pekerjaan_ibu,
+                        'penghasilan_ibu'       => $value->penghasilan_ibu,
+                        'jml_saudara_kandung'   => $value->jml_saudara_kandung,
                     ]);
+
+                    // create akun siswa
+                    User::create([
+                        'name'      => $value->nama_siswa,
+                        'username'  => $value->nisn,
+                        'password'  => Hash::make($value->nisn),
+                        'role'      => 'siswa'
+                    ]);
+
+                    PPDB::where('id', $value->id)
+                        ->update([
+                            'confirmed' => true
+                        ]);
+                }
             }
             return redirect('/dashboard/ppdb')->with('success', 'Data PPDB berhasil di approve!');
         }else{

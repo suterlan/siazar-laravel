@@ -19,6 +19,10 @@ class Guru extends Model
     }
 
     public function dokumen(){
-        return $this->hasOne(Dokumen::class, 'nik', 'nik');
+        return $this->belongsTo(Dokumen::class, 'nik', 'nik');
+    }
+
+    public function mapel(){
+        return $this->hasMany(Mapel::class);
     }
 }
