@@ -11,7 +11,7 @@ class Mapel extends Model
 
     protected $guarded = ['id'];
 
-    protected $with = ['dokumen_ajar', 'guru'];
+    protected $with = ['dokumen_ajar'];
 
         public function dokumen_ajar(){
             return $this->belongsTo(DokumenAjar::class, 'kode', 'kode');
@@ -20,5 +20,10 @@ class Mapel extends Model
         public function guru()
         {
             return $this->belongsTo(Guru::class);
+        }
+
+        public function mengajars()
+        {
+            return $this->hasMany(Mengajar::class, 'kode', 'kode_mapel');
         }
 }

@@ -174,4 +174,12 @@ class MapelController extends Controller
 
         return redirect('/dashboard/mapel')->with('success', 'Mapel berhasil dihapus!');
     }
+
+    public function pembagianMapel(){
+        $gurus = Guru::select('id', 'nama', 'nuptk')->with('mapels')->get();
+        return view('mapel.pembagianmapel', [
+            'title' => 'Pembagian Mapel '. config('app.name'),
+            'gurus' => $gurus,
+        ]);
+    }
 }

@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Klasifikasi extends Model
+class SKBM extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $with = ['suratkeluar'];
 
-    public function suratkeluars(){
-        return $this->hasMany(SuratKeluar::class);
+    public function suratkeluar(){
+        return $this->hasOne(SuratKeluar::class, 'no_surat', 'no_surat');
     }
 }

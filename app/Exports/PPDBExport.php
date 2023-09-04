@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\PPDB;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -16,8 +17,13 @@ class PPDBExport implements FromView, ShouldAutoSize, WithColumnFormatting, With
 {
     public function view(): View
     {
+        $thisYear = Carbon::now();
         return view('export.ppdb', [
-            'ppdbs' => PPDB::with(['jurusan', 'kelas', 'user'])->latest()->where('confirmed', 0)->get()
+            'ppdbs' => PPDB::with(['jurusan', 'kelas', 'user'])
+                ->latest()
+                ->where('confirmed', 0)
+                ->whereYear('created_at', $thisYear)
+                ->get()
         ]);
     }
 

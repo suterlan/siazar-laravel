@@ -12,7 +12,7 @@ class Guru extends Model
 
     protected $guarded = ['id'];
 
-    protected $with = ['user', 'dokumen'];
+    protected $with = ['user', 'dokumen', 'mapels'];
 
     public function user(){
         return $this->belongsTo(User::class, 'email', 'email');
@@ -22,7 +22,11 @@ class Guru extends Model
         return $this->belongsTo(Dokumen::class, 'nik', 'nik');
     }
 
-    public function mapel(){
+    public function mapels(){
         return $this->hasMany(Mapel::class);
+    }
+
+    public function mengajar(){
+        return $this->hasMany(Mengajar::class);
     }
 }

@@ -20,7 +20,7 @@
                             </div>
                             <div class="form-group mb-2">
                                 <label for="nama">Nama</label>
-                                <input name="nama" id="nama" type="text" class="form-control {{$errors->first('name') ? "is-invalid" : "" }}" value="{{ old('nama') }}" required>
+                                <input name="nama" id="nama" type="text" class="form-control {{$errors->first('nama') ? "is-invalid" : "" }}" value="{{ old('nama') }}" required>
                                 @error('nama')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

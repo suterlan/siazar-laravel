@@ -154,7 +154,7 @@ class SuratUndanganController extends Controller
         SuratUndangan::where('no_surat', $undangan->no_surat)->delete();
         SuratKeluar::where('no_surat', $undangan->no_surat)->delete();
 
-        return redirect('/dashboard/suratkeluar/undangan')->with('success', 'Surat keluar dengan no surat : ' . $undangan->no_surat . ' berhasil dihapus');
+        return redirect('/dashboard/suratkeluar/undangan')->with('success', 'Surat Undangan dengan no surat : ' . $undangan->no_surat . ' berhasil dihapus');
     }
 
     public function cetak(SuratUndangan $undangan){

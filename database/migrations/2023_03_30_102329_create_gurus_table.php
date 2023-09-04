@@ -22,7 +22,7 @@ return new class extends Migration
             $table->char('jk', 1)->nullable();
             $table->string('nik', 16)->nullable();
             $table->string('tempat_lahir', 64)->nullable();
-            $table->timestamp('tanggal_lahir')->nullable();
+            $table->dateTime('tanggal_lahir')->nullable();
             $table->string('agama', 32)->nullable();
             $table->string('no_hp', 13)->nullable();
             $table->string('nama_ibu')->nullable();

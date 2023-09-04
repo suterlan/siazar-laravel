@@ -17,7 +17,7 @@ class Kelas extends Model
 
     protected $with = ['guru', 'jurusan'];
 
-    public function siswa(){
+    public function siswas(){
         return $this->hasMany(Siswa::class);
     }
 
@@ -28,6 +28,11 @@ class Kelas extends Model
     public function jurusan()
     {
         return $this->belongsTo(Jurusan::class);
+    }
+
+    public function mengajars()
+    {
+        return $this->hasMany(Mengajar::class);
     }
 
 }

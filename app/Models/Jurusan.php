@@ -18,13 +18,13 @@ class Jurusan extends Model
 
     // protected $with = ['kelas'];
 
-    public function siswa(){
+    public function siswas(){
         return $this->hasMany(Siswa::class);
     }
-    public function ppdb(){
+    public function ppdbs(){
         return $this->hasMany(PPDB::class);
     }
-    public function galeri(){
+    public function galeris(){
         return $this->hasMany(Galeri::class);
     }
 

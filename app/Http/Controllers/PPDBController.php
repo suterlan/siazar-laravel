@@ -15,23 +15,25 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Laravolt\Indonesia\Models\City;
-use Laravolt\Indonesia\Models\District;
 use Laravolt\Indonesia\Models\Province;
-use Laravolt\Indonesia\Models\Village;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PPDBController extends Controller
 {
     public function  index(){
+        $thisYear = Carbon::now();
         if (!Gate::allows('admin')) {
             $data = PPDB::latest()
                         ->with(['jurusan', 'kelas'])
                         ->where('user_id', auth()->user()->id)
                         ->where('confirmed', 0)
+                        ->whereYear('created_at', $thisYear)
                         ->get();
         }else{
-            $data = PPDB::with(['jurusan', 'kelas', 'user'])->latest()->where('confirmed', 0)->get();
+            $data = PPDB::with(['jurusan', 'kelas', 'user'])->latest()
+                ->where('confirmed', 0)
+                ->whereYear('created_at', $thisYear)
+                ->get();
         }
 
         $query = PPDB::select('confirmed')->get();
@@ -377,7 +379,7 @@ class PPDBController extends Controller
                         'provinsi'              => $value->provinsi,
                         'kabupaten'             => $value->kabupaten,
                         'kecamatan'             => $value->kecamatan,
-                        'kelurahan'             => $value->keluarahan,
+                        'kelurahan'             => $value->kelurahan,
                         'asal_sekolah'          => $value->asal_sekolah,
                         'no_ijazah'             => $value->no_ijazah,
                         'no_skhun'              => $value->no_skhun,

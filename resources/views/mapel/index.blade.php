@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="col-12">
-            <div class="mapel">
+            <div class="row">
                 <div class="col-md-8">
                     <div class="card shadow">
                         <div class="card-header">
@@ -54,6 +54,21 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="alert alert-success" role="alert">
+                        <h5 class="alert-heading">Pembagian Mata Pelajaran</h5>
+                        <p>Untuk melihat pembagian mata pelajaran setiap guru silahkan klik tombol dibawah</p>
+                        <hr>
+                        <p class="mb-0"><a href="/dashboard/mapel/pembagian-mapel" class="btn btn-primary">Lihat</a></p>
+                    </div>
+
+                    <div class="alert alert-info" role="alert">
+                        <h5 class="alert-heading">Atur Jam Mengajar</h5>
+                        <p>Jam mengajar diatur sesuai mapel yang di pegang masing-masing guru berdasarkan tahun ajaran</p>
+                        <hr>
+                        <p class="mb-0"><a href="/dashboard/mengajar" class="btn btn-primary">Atur Jam Mengajar</a></p>
                     </div>
                 </div>
             </div>

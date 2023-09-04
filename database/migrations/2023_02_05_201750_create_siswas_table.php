@@ -38,13 +38,13 @@ return new class extends Migration
             $table->string('nama_kip')->nullable();
             $table->string('nama_ayah')->nullable();
             $table->string('nik_ayah', 16)->nullable();
-            $table->timestamp('tgl_lahir_ayah')->nullable();
+            $table->dateTime('tgl_lahir_ayah')->nullable();
             $table->string('pendidikan_ayah', 32)->nullable();
             $table->string('pekerjaan_ayah', 64)->nullable();
             $table->integer('penghasilan_ayah')->nullable();
             $table->string('nama_ibu')->nullable();
             $table->string('nik_ibu', 16)->nullable();
-            $table->timestamp('tgl_lahir_ibu')->nullable();
+            $table->dateTime('tgl_lahir_ibu')->nullable();
             $table->string('pendidikan_ibu', 32)->nullable();
             $table->string('pekerjaan_ibu', 64)->nullable();
             $table->integer('penghasilan_ibu')->nullable();
