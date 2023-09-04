@@ -21,14 +21,20 @@ $(document).ready(function () {
     $("#tbJurusan").DataTable();
     $("#tbKelas").DataTable();
     // tabel siswa
-    $("#tbSiswa").DataTable({
-        responsive: true,
-        stateSave: true,
-        lengthMenu: [
-            [10, 20, 50, 100, -1],
-            [10, 20, 50, 100, "All"],
-        ],
-    });
+    $("#tbSiswa")
+        .DataTable({
+            responsive: true,
+            stateSave: true,
+            lengthMenu: [
+                [10, 20, 50, 100, -1],
+                [10, 20, 50, 100, "All"],
+            ],
+            buttons: ["csv", "excel", "pdf", "print"],
+        })
+        .buttons()
+        .container()
+        .appendTo("#tbSiswa_wrapper .col-md-6:eq(0)");
+
     // table post blog
     $("#tbPost").DataTable({
         paging: false,
@@ -38,8 +44,33 @@ $(document).ready(function () {
     $("#tbPesan").DataTable();
     // table guru
     $("#tbGuru").DataTable();
+    // tabel mapel
+    $("#tbMapel").DataTable({
+        stateSave: true,
+        lengthMenu: [
+            [10, 20, 50, 100, -1],
+            [10, 20, 50, 100, "All"],
+        ],
+    });
+    $("#tbMengajar").DataTable({
+        stateSave: true,
+        lengthMenu: [
+            [10, 20, 50, 100, -1],
+            [10, 20, 50, 100, "All"],
+        ],
+    });
+    // tabel pembagian mapel
+    $("#tbPembagianMapel")
+        .DataTable({
+            paging: false,
+            info: false,
+            ordering: false,
+            buttons: ["csv", "excel", "pdf", "print"],
+        })
+        .buttons()
+        .container()
+        .appendTo("#tbPembagianMapel_wrapper .col-md-6:eq(0)");
 
-    // MODUL TENTANG
     // JAVASCRIPT QUILL EDITOR
     // options quill toolbar
     var toolbarOptions = [
@@ -119,7 +150,41 @@ $(document).ready(function () {
                 quillContent.root.innerHTML;
         });
     }
-    // end form posts
+    // end kirim email
+
+    // form isi surat umum
+    let isi_surat = document.getElementById("isi_surat");
+    if (isi_surat) {
+        var quillIsiSurat = new Quill(isi_surat, {
+            modules: {
+                toolbar: toolbarOptions,
+            },
+            theme: "snow",
+        });
+        quillIsiSurat.on("text-change", function (delta, oldDelta, source) {
+            document.querySelector("input[name='isi_surat']").value =
+                quillIsiSurat.root.innerHTML;
+        });
+    }
+    // end isi surat umum
+
+    // form detail surat umum
+    let detail_surat = document.getElementById("detail_surat");
+    if (detail_surat) {
+        var quillDetailSurat = new Quill(detail_surat, {
+            modules: {
+                toolbar: false,
+            },
+            theme: false,
+        });
+        quillDetailSurat.on("text-change", function (delta, oldDelta, source) {
+            document.querySelector("input[name='detail_surat']").value =
+                quillDetailSurat.root.innerHTML;
+        });
+    }
+    // end detail surat umum
+
+    // END QUILL EDITOR
 
     // Ubah Kelas with modal
     let btnEditKelas = $(".btn-edit-kelas");
@@ -189,50 +254,92 @@ $(document).ready(function () {
     });
 });
 
-// FUNGSI GET WILAYAH INDONESIA
-let provinsi = document.querySelector("#provinsi");
-provinsi.addEventListener("change", async () => {
-    let code =
-        provinsi.options[provinsi.selectedIndex].getAttribute("data-code");
-    const idSelect = document.querySelector("#kabupaten");
+window.addEventListener("DOMContentLoaded", (event) => {
+    // FUNGSI GET WILAYAH INDONESIA
+    let provinsi = document.querySelector("#provinsi");
+    if (provinsi) {
+        provinsi.addEventListener("change", async () => {
+            let code =
+                provinsi.options[provinsi.selectedIndex].getAttribute(
+                    "data-code"
+                );
+            const idSelect = document.querySelector("#kabupaten");
 
-    const wilayah = await getWilayah("/getKabupaten?code=", code);
-    updateOption(wilayah, idSelect);
+            const wilayah = await getWilayah("/getKabupaten?code=", code);
+            updateOption(wilayah, idSelect);
+        });
+    }
+
+    let kabupaten = document.querySelector("#kabupaten");
+    if (kabupaten) {
+        kabupaten.addEventListener("change", async () => {
+            let code =
+                kabupaten.options[kabupaten.selectedIndex].getAttribute(
+                    "data-code"
+                );
+            const idSelect = document.querySelector("#kecamatan");
+
+            const wilayah = await getWilayah("/getKecamatan?code=", code);
+            updateOption(wilayah, idSelect);
+        });
+    }
+
+    let kecamatan = document.querySelector("#kecamatan");
+    if (kecamatan) {
+        kecamatan.addEventListener("change", async () => {
+            let code =
+                kecamatan.options[kecamatan.selectedIndex].getAttribute(
+                    "data-code"
+                );
+            const idSelect = document.querySelector("#kelurahan");
+
+            const wilayah = await getWilayah("/getKelurahan?code=", code);
+            updateOption(wilayah, idSelect);
+        });
+    }
+
+    function getWilayah(url, code) {
+        return fetch(url + code)
+            .then((response) => response.json())
+            .then((response) => response);
+    }
+
+    function updateOption(wilayah, idSelect) {
+        let options = "";
+        options += `<option value="">==Pilih==</option>`;
+        wilayah.forEach(
+            (i) =>
+                (options += `<option value="${i.name}" data-code="${i.code}">${i.name}</option>`)
+        );
+        idSelect.innerHTML = options;
+    }
+    // END FUNC GET WILAYAH
+
+    // GET MAPEL PER GURU
+    let guruId = document.querySelector("#guru_id");
+    if (guruId) {
+        guruId.addEventListener("change", async () => {
+            let id =
+                guruId.options[guruId.selectedIndex].getAttribute("data-id");
+
+            const mengajarMapel = document.querySelector("#kode_mapel");
+            const mapel = await getMapel("/getMapel?id=", id);
+            setOptionMapel(mapel, mengajarMapel);
+        });
+    }
+
+    function getMapel(link, id) {
+        return fetch(link + id)
+            .then((response) => response.json())
+            .then((response) => response);
+    }
+
+    function setOptionMapel(mapel, mengajarMapel) {
+        let options = "";
+        options += `<option value="">==Pilih Mapel==</option>`;
+        mapel.forEach(
+            (i) => (options += `<option value="${i.kode}">${i.nama}</option>`)
+        );
+        mengajarMapel.innerHTML = options;
+    }
 });
-
-let kabupaten = document.querySelector("#kabupaten");
-kabupaten.addEventListener("change", async () => {
-    let code =
-        kabupaten.options[kabupaten.selectedIndex].getAttribute("data-code");
-    const idSelect = document.querySelector("#kecamatan");
-
-    const wilayah = await getWilayah("/getKecamatan?code=", code);
-    updateOption(wilayah, idSelect);
-});
-
-let kecamatan = document.querySelector("#kecamatan");
-kecamatan.addEventListener("change", async () => {
-    let code =
-        kecamatan.options[kecamatan.selectedIndex].getAttribute("data-code");
-    const idSelect = document.querySelector("#kelurahan");
-
-    const wilayah = await getWilayah("/getKelurahan?code=", code);
-    updateOption(wilayah, idSelect);
-});
-
-function getWilayah(url, code) {
-    return fetch(url + code)
-        .then((response) => response.json())
-        .then((response) => response);
-}
-
-function updateOption(wilayah, idSelect) {
-    let options = "";
-    options += `<option value="">==Pilih==</option>`;
-    wilayah.forEach(
-        (i) =>
-            (options += `<option value="${i.name}" data-code="${i.code}">${i.name}</option>`)
-    );
-    idSelect.innerHTML = options;
-}
-// END FUNC GET WILAYAH

@@ -44,7 +44,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="d-flex">
+                                            <div class="d-flex float-right">
                                                 <a class="btn btn-outline-info btn-sm" href="/dashboard/suratkeluar/umum/{{ $surat->id }}"><span class="fe fe-eye"></span> Detail</a>
                                                 <a class="btn btn-outline-warning btn-sm ml-1" href="/dashboard/suratkeluar/umum/{{ $surat->id }}/edit"><span class="fe fe-edit"></span> Edit</a>
                                                 <form action="/dashboard/suratkeluar/umum/{{ $surat->id }}" method="post">

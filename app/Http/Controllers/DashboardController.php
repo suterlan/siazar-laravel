@@ -53,6 +53,13 @@ class DashboardController extends Controller
         $startYear = Carbon::now();
         $ppdb = PPDB::select('id')
             ->whereYear('created_at', $startYear)
+            ->count();
+        $ppdb_approve = PPDB::select('id')
+            ->whereYear('created_at', $startYear)
+            ->where('confirmed', 1)
+            ->count();
+        $ppdb_notapprove = PPDB::select('id')
+            ->whereYear('created_at', $startYear)
             ->where('confirmed', 0)
             ->count();
         $siswa = Siswa::select('id')->where('lulus', false)->where('status_siswa', true)->count();
@@ -64,6 +71,8 @@ class DashboardController extends Controller
             'jmlSuratmasuk'     => SuratMasuk::all()->count(),
             'chart'             => $chart,
             'ppdb'              => $ppdb,
+            'ppdb_approve'      => $ppdb_approve,
+            'ppdb_notapprove'   => $ppdb_notapprove,
             'siswa'             => $siswa,
             'guru'              => $guru,
         ]);

@@ -69,6 +69,14 @@
         </ul>
         <ul class="navbar-nav flex-fill w-100 mb-0">
             <li class="nav-item dropdown">
+                <a href="/dashboard/mengajar" aria-expanded="false" class="nav-link {{ Request::is('dashboard/mengajar*') ? 'link-active' : '' }}">
+                    <i class="fe fe-book-open fe-16"></i>
+                    <span class="ml-3 item-text">Mengajar</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav flex-fill w-100 mb-0">
+            <li class="nav-item dropdown">
                 <a href="/dashboard/jurusan" aria-expanded="false" class="nav-link {{ Request::is('dashboard/jurusan') ? 'link-active' : '' }}">
                     <i class="fe fe-map fe-16"></i>
                     <span class="ml-3 item-text">Jurusan</span>
@@ -80,6 +88,14 @@
                 <a href="/dashboard/kelas" aria-expanded="false" class="nav-link {{ Request::is('dashboard/kelas') ? 'link-active' : '' }}">
                     <i class="fe fe-columns fe-16"></i>
                     <span class="ml-3 item-text">Kelas</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav flex-fill w-100 mb-0">
+            <li class="nav-item">
+                <a href="/dashboard/struktur-organisasi" aria-expanded="false" class="nav-link {{ Request::is('dashboard/struktur*') ? 'link-active' : '' }}">
+                    <i class="fe fe-git-commit fe-16"></i>
+                    <span class="ml-3 item-text">Struktur Organisasi</span>
                 </a>
             </li>
         </ul>
@@ -115,7 +131,8 @@
                             <a href="/dashboard/suratkeluar/panggilan" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/panggilan*') ? 'link-active' : '' }}"><span class="ml-1"> Pemanggilan Siswa</span></a>
                             <a href="/dashboard/suratkeluar/mutasi" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/mutasi*') ? 'link-active' : '' }}"><span class="ml-1"> Mutasi Siswa</span></a>
                             <a href="/dashboard/suratkeluar/undangan" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/undangan*') ? 'link-active' : '' }}"><span class="ml-1"> Surat Undangan</span></a>
-                            <a href="/dashboard/suratkeluar/umum" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/umum*') ? 'link-active' : '' }}"><span class="ml-1"> Surat Umum</span></a>
+                            {{-- <a href="/dashboard/suratkeluar/umum" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/umum*') ? 'link-active' : '' }}"><span class="ml-1"> Surat Umum</span></a> --}}
+                            <a href="/dashboard/suratkeluar/skbm" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/skbm*') ? 'link-active' : '' }}"><span class="ml-1"> Surat KBM</span></a>
                         </ul>
                     </li>
                     <a class="nav-link pl-3 {{ Request::is('dashboard/suratmasuk*') ? 'link-active' : '' }}" href="/dashboard/suratmasuk"><span class="ml-1">Surat Masuk</span></a>

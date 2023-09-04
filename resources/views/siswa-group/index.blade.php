@@ -36,7 +36,7 @@
                                     <th class="text-center" scope="col"><span class="fe fe-tool text-info fe-16"></span></th>
                                 </thead>
                                 <tbody>
-                                    @foreach ($row->siswa as $value )
+                                    @foreach ($row->siswas as $value )
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $value->nis }}</td>

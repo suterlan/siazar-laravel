@@ -14,13 +14,17 @@ use App\Http\Controllers\PPDBController;
 use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\IklanController;
 use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\GetMapelController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MapelController;
+use App\Http\Controllers\MengajarController;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RombelController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\StrukturOrganisasiController;
+use App\Http\Controllers\SuratKBMController;
 use App\Http\Controllers\SuratKeluarController;
 use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\SuratUmumController;
@@ -159,8 +163,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/suratkeluar/undangan/cetak/{undangan}', [SuratUndanganController::class, 'cetak']);
     Route::get('/dashboard/suratkeluar/undangan/download/{undangan}', [SuratUndanganController::class, 'download']);
 
+    // Route Surat KBM
+    Route::resource('/dashboard/suratkeluar/skbm', SuratKBMController::class);
+    Route::get('/dashboard/suratkeluar/skbm/cetak/{skbm}', [SuratKBMController::class, 'cetak']);
+    Route::get('/dashboard/suratkeluar/skbm/download/{skbm}', [SuratKBMController::class, 'download']);
+
     // Route Surat Keluar (umum)
     Route::resource('/dashboard/suratkeluar/umum', SuratUmumController::class);
+    Route::get('/dashboard/suratkeluar/umum/cetak/{umum}', [SuratUmumController::class, 'cetak']);
+    Route::get('/dashboard/suratkeluar/umum/download/{umum}', [SuratUmumController::class, 'download']);
 
     // Route surat masuk
     Route::resource('/dashboard/suratmasuk', SuratMasukController::class);
@@ -201,5 +212,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/akun', [AkunSettingController::class, 'index']);
     Route::put('/dashboard/akun/{akun}', [AkunSettingController::class, 'update']);
 
+    Route::get('/dashboard/mapel/pembagian-mapel', [MapelController::class, 'pembagianMapel']);
     Route::resource('/dashboard/mapel', MapelController::class);
+
+    Route::resource('/dashboard/struktur-organisasi', StrukturOrganisasiController::class)->except('show');
+
+    Route::get('/getMapel', [GetMapelController::class, 'getMapel']);
+    Route::get('/dashboard/mengajar/delete/{mengajar}', [MengajarController::class, 'delete']);
+    Route::resource('/dashboard/mengajar', MengajarController::class)->except(['show', 'edit', 'destroy']);
+
 });
