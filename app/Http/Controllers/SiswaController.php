@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SiswaExport;
 use App\Models\Dokumen;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Siswa;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Laravolt\Indonesia\Models\Province;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
@@ -93,11 +98,11 @@ class SiswaController extends Controller
     public function postRegistration2(Request $request){
         $validatedData = $request->validate([
             'asal_sekolah'  => 'required',
-            'nis'           => 'min:11|numeric|required',
-            'nisn'          => 'min:10|numeric|required',
+            'nis'           => 'min:11|numeric|required|unique:siswas',
+            'nisn'          => 'min:10|numeric|required|unique:siswas',
             'no_ijazah'     => 'min:16|nullable',
             'no_skhun'      => 'min:7|nullable',
-            'no_kip'        => 'min:7|nullable',
+            'no_kip'        => 'min:6|nullable',
             'nama_kip'      => 'max:255'
         ]);
 
@@ -170,6 +175,14 @@ class SiswaController extends Controller
 
         $registrasi->save();
 
+        // create akun siswa
+        User::create([
+            'name'      => $registrasi->nama_siswa,
+            'username'  => $registrasi->nisn,
+            'password'  => Hash::make($registrasi->nisn),
+            'role'      => 'siswa'
+        ]);
+
         session()->forget('registrasi');
         return redirect('/dashboard/siswa')->with('success', 'Data berhasil disimpan!');
     }
@@ -234,7 +247,7 @@ class SiswaController extends Controller
                 'asal_sekolah'          => 'required',
                 'no_ijazah'             => 'min:16|nullable',
                 'no_skhun'              => 'min:7|nullable',
-                'no_kip'                => 'min:7|nullable',
+                'no_kip'                => 'min:6|nullable',
                 'nama_kip'              => 'max:255|nullable',
                 'nama_ayah'             => 'nullable',
                 'nik_ayah'              => 'min:16|numeric|nullable',
@@ -350,5 +363,10 @@ class SiswaController extends Controller
         Dokumen::where('nis', $siswa->nis)->delete();
 
         return redirect('/dashboard/siswa')->with('success', 'Data siswa ' . $siswa->nama_siswa . ' berhasil dihapus!');
+    }
+
+    public function export(){
+        $date = Carbon::now();
+        return Excel::download(new SiswaExport, 'data_siswa_' . $date . '.xlsx');
     }
 }

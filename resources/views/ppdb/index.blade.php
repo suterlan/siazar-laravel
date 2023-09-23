@@ -78,9 +78,9 @@
             <div class="col-md-12">
                 <div class="card shadow">
                     <div class="card-header">
-                    <strong class="card-title">DATA PPDB</strong>
-                    <a href="/dashboard/ppdb/registrasi-step1" class="btn btn-primary float-right"><i class="fe fe-plus"></i> Siswa Baru</a>
-                    <a href="/dashboard/ppdb/export" class="btn btn-secondary text-white float-right mr-3">Export Excel</a>
+                        <strong class="card-title">DATA PPDB</strong>
+                        <a href="/dashboard/ppdb/registrasi-step1" class="btn btn-primary float-right"><i class="fe fe-plus"></i> Siswa Baru</a>
+                        <a href="/dashboard/ppdb/export" class="btn btn-secondary text-white float-right mr-3">Export Excel</a>
                     </div>
                     <div class="card-body">
                         @if (session()->has('success'))

@@ -30,7 +30,11 @@ class LoginController extends Controller
         ]);
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+            if (auth()->user()->role == 'siswa') {
+                return redirect()->intended('/dashboard-siswa');
+            }else{
+                return redirect()->intended('/dashboard');
+            }
         }
 
         return back()->with('loginError', 'Login Gagal!');

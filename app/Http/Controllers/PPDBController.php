@@ -123,7 +123,7 @@ class PPDBController extends Controller
             'nisn'          => 'min:10|numeric|required',
             'no_ijazah'     => 'min:16|nullable',
             'no_skhun'      => 'min:7|nullable',
-            'no_kip'        => 'min:7|nullable',
+            'no_kip'        => 'min:6|nullable',
             'nama_kip'      => 'max:255'
         ]);
 
@@ -230,7 +230,7 @@ class PPDBController extends Controller
             'nisn'              => 'min:10|numeric|required',
             'no_ijazah'         => 'min:16|nullable',
             'no_skhun'          => 'min:7|nullable',
-            'no_kip'            => 'min:7|nullable',
+            'no_kip'            => 'min:6|nullable',
             'nama_kip'          => 'max:255',
             'nama_ayah'         => 'nullable',
             'nik_ayah'          => 'min:16|numeric|nullable',

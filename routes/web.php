@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AkunSettingController;
+use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\dashboard_siswa\DashboardSiswaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JurusanController;
@@ -76,7 +78,7 @@ Route::get('/login', [LoginController::class, 'index'])->name('login')->middlewa
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
-// ================= GROUP AUTENTIKASI ==========================
+// ===================== GROUP AUTENTIKASI ======================
 Route::group(['middleware' => ['auth']], function () {
 
     // ======================= ROUTE DASHBOARD =======================
@@ -114,6 +116,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/siswa/registrasi-step3', [SiswaController::class, 'registration3']);
     Route::post('/dashboard/siswa/registrasi-step3', [SiswaController::class, 'postRegistration3']);
     Route::get('/dashboard/siswa/registrasi-step4', [SiswaController::class, 'registration4']);
+    // Route eksport excel data siswa
+    Route::get('/dashboard/siswa/export', [SiswaController::class, 'export']);
 
     Route::resource('/dashboard/siswa', SiswaController::class)->except(['create']);
     Route::get('/dashboard/rombel', [RombelController::class, 'index']);
@@ -221,4 +225,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/mengajar/delete/{mengajar}', [MengajarController::class, 'delete']);
     Route::resource('/dashboard/mengajar', MengajarController::class)->except(['show', 'edit', 'destroy']);
 
+    Route::get('/dashboard/arsip', [ArsipController::class, 'index']);
+    Route::get('/dashboard/arsip/ppdb', [ArsipController::class, 'ppdb']);
+
+});
+
+// ================= GROUP AUTENTIKASI SISWA ====================
+Route::group(['middleware' => ['auth', 'checkrole:siswa']], function(){
+    Route::get('/dashboard-siswa', [DashboardSiswaController::class, 'index']);
 });

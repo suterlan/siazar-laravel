@@ -140,6 +140,7 @@
                     @enderror
                 </div>
                 <label for="gambar">Gambar <small><i class="text-danger">(Gambar harus format PNG/JPG)</i></small></label>
+                <p class="text-danger" style="font-size: 12px">*Disarankan ukuran gambar 400x300</p>
                 <div class="custom-file mb-3">
                     <input name="gambar" type="file" class="custom-file-input {{$errors->first('gambar') ? "is-invalid" : "" }}" id="gambar" required>
                     <label class="custom-file-label" for="gambar">Pilih Gambar</label>
