@@ -43,7 +43,7 @@
                 <div class="col-lg-4 col-md-6 mb-4 portfolio-item {{ $gambar->jurusan->kode }}">
                     <div class="position-relative overflow-hidden mb-2">
                         <div style="max-height: 200px; overflow: hidden;">
-                            <img class="img-fluid w-100" src="{{ asset('storage/'. $gambar->gambar) }}" alt="" />
+                            <img class="img-fluid w-100" src="{{ asset('storage/'. $gambar->gambar) }}" />
                         </div>
                         {{-- <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
                             <a href="{{ asset('storage/'. $gambar->gambar) }}" data-lightbox="portfolio">

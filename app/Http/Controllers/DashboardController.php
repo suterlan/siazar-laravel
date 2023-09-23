@@ -11,7 +11,9 @@ use App\Models\SuratMasuk;
 use ArielMejiaDev\LarapexCharts\Facades\LarapexChart;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class DashboardController extends Controller
 {

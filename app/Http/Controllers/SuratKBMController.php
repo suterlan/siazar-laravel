@@ -150,26 +150,25 @@ class SuratKBMController extends Controller
 
     public function cetak(SKBM $skbm){
 
-        $kelas = Kelas::orderBy('nama')->get()->groupBy(function($data){
+        $kelas = Kelas::orderBy('id')->get()->groupBy(function($data){
             return $data->nama;
         });
 
 
         $mengajars = Mengajar::with(['guru', 'mapel', 'kelas'])
-            ->orderBy('id', 'ASC')
+            ->orderBy('kelas_id', 'ASC')
             ->where('tahun_ajaran', $skbm->tahun_ajaran)->get();
         $groupMengajar = $mengajars->groupBy(['guru.nama', 'mapel.nama', 'kelas.nama']);
-
-        dd($groupMengajar);
+        // dd($groupMengajar);
 
         $strukturs = StrukturOrganisasi::orderBy('id')->get()->groupBy(function($data){
             return $data->keterangan;
         });
         $pdf = FacadePdf::loadView('surat-keluar.surat-kbm.cetak', [
-            'title'     => 'Cetak Surat | '. config('app.name'),
-            'surat'     => $skbm,
-            'mengajars' => $groupMengajar,
-            'strukturs' => $strukturs,
+            'title'         => 'Cetak Surat | '. config('app.name'),
+            'surat'         => $skbm,
+            'mengajars'     => $groupMengajar,
+            'strukturs'     => $strukturs,
         ]);
         return $pdf->stream('surat-skbm');
         // exit(0);

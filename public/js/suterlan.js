@@ -52,6 +52,7 @@ $(document).ready(function () {
             [10, 20, 50, 100, "All"],
         ],
     });
+    // tabel Mengajar
     $("#tbMengajar").DataTable({
         stateSave: true,
         lengthMenu: [
@@ -59,6 +60,7 @@ $(document).ready(function () {
             [10, 20, 50, 100, "All"],
         ],
     });
+
     // tabel pembagian mapel
     $("#tbPembagianMapel")
         .DataTable({
@@ -70,6 +72,23 @@ $(document).ready(function () {
         .buttons()
         .container()
         .appendTo("#tbPembagianMapel_wrapper .col-md-6:eq(0)");
+
+    // tabel Arsip PPDB
+    $("#tbArsipPpdb")
+        .DataTable({
+            paging: true,
+            info: false,
+            ordering: true,
+            stateSave: true,
+            lengthMenu: [
+                [10, 20, 50, 100, -1],
+                [10, 20, 50, 100, "All"],
+            ],
+            buttons: ["csv", "excel", "pdf", "print", "colvis"],
+        })
+        .buttons()
+        .container()
+        .appendTo("#tbArsipPpdb_wrapper .col-md-6:eq(0)");
 
     // JAVASCRIPT QUILL EDITOR
     // options quill toolbar

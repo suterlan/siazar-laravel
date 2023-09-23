@@ -11,6 +11,7 @@
                             <a href="/dashboard/siswa/registrasi-step1">
                                 <button class="btn btn-primary btn-sm float-right"><span class="fe fe-plus"></span> Tambah Siswa </button>
                             </a>
+                            <a class="btn btn-secondary btn-sm float-right mr-3" href="/dashboard/siswa/export">Export Excel</a>
                             <p class="card-text">Data seluruh siswa</p>
                         </div>
                         <div class="card-body">

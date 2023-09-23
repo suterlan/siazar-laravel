@@ -179,9 +179,11 @@
         </div>
         <div class="row">
             @foreach ($gurus as $guru)
-            <div class="col-md-6 col-lg-3 text-center team mb-5">
+            <div class="col-md-3 col-lg-2 text-center team mb-5">
                 <div class="position-relative overflow-hidden mb-4" style="border-radius: 100%">
-                    <img class="img-fluid w-100" src="{{ asset('storage/'. $guru->dokumen->foto) }}" alt="" />
+                     @isset($guru->dokumen->foto)
+                    <img class="img-fluid w-100" src="{{ asset('storage/'. $guru->dokumen->foto) }}" />
+                    @endisset
                     <div class="team-social d-flex align-items-center justify-content-center w-100 h-100 position-absolute">
                     </div>
                 </div>

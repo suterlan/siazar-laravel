@@ -2,38 +2,38 @@
 
 namespace App\Exports;
 
-use App\Models\PPDB;
-use Carbon\Carbon;
+use App\Models\Siswa;
 use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
-use Maatwebsite\Excel\Concerns\WithDrawings;
-use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use Maatwebsite\Excel\Concerns\WithDrawings;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
-class PPDBExport implements FromView, ShouldAutoSize, WithColumnFormatting, WithDrawings, WithColumnWidths
+class SiswaExport implements FromView, ShouldAutoSize, WithColumnFormatting, WithDrawings, WithColumnWidths
 {
+    /**
+    * @return \Illuminate\Support\Collection
+    */
     public function view(): View
     {
-        $thisYear = Carbon::now();
-        return view('export.ppdb', [
-            'title' => 'Export PPDB'. config('app.name'),
-            'ppdbs' => PPDB::with(['jurusan', 'kelas', 'user'])
-                ->latest()
-                ->where('confirmed', 0)
-                ->whereYear('created_at', $thisYear)
-                ->get()
+        return view('export.siswa-export', [
+            'title'     => 'Export SISWA'. config('app.name'),
+            'siswas'    => Siswa::orderBy('nis', 'ASC')
+                            ->where('lulus', false)
+                            ->get(),
         ]);
     }
 
     public function columnFormats(): array
     {
         return [
-            'D' => NumberFormat::FORMAT_NUMBER,
-            'T' => NumberFormat::FORMAT_NUMBER,
-            'Y' => NumberFormat::FORMAT_NUMBER,
+            // 'D' => NumberFormat::FORMAT_TEXT,
+            // 'T' => NumberFormat::FORMAT_NUMBER,
+            // 'Y' => NumberFormat::FORMAT_NUMBER,
         ];
     }
 

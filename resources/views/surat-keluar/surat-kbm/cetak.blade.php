@@ -302,15 +302,24 @@
                         </thead>
                         <tbody>
                             @foreach ($mengajars as $guru => $mapels)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $guru }}</td>
-                                <td>
-                                    @foreach ($mapels as $mapel => $jam )
-                                        <div>{{ $mapel }}</div>
-                                    @endforeach
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        {{ $guru }}
+                                    </td>
+                                    <td>
+                                        @foreach ($mapels as $mapel => $kelas)
+                                            <div style="padding: 2px">{{ $mapel }}</div>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach ($mapels as $mapel => $kelas)
+                                            @foreach ($kelas as $kel => $jam)
+                                                <div style="padding: 2px">{{ $kel }}</div>
+                                            @endforeach
+                                        @endforeach
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
