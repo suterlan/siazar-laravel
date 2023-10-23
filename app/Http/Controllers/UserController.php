@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Position;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,8 @@ class UserController extends Controller
     {
         return view('user.index',[
             'title'     => 'User Settings | SIAZAR',
-            'users'     => User::orderby('role', 'asc')->get()
+            'users'     => User::orderby('role_id', 'asc')->get(),
+            'positions' => Position::select('id', 'name')->get(),
         ]);
     }
 
@@ -47,7 +49,8 @@ class UserController extends Controller
             'email' => 'required|email|unique:users', //untuk email jika sudah mode produksi, ubah dari 'email' menjadi 'email:dns'
             'password'  => 'required|min:8|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'required|min:8',
-            'role'      => 'required'
+            'role_id'      => 'required',
+            'position_id'      => 'required'
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
@@ -77,7 +80,8 @@ class UserController extends Controller
     {
         return view('user.edit',[
             'title'     => 'User Edit | SIAZAR',
-            'user'      => $user
+            'user'      => $user,
+            'positions' => Position::select('id', 'name')->get(),
         ]);
     }
 
@@ -92,6 +96,8 @@ class UserController extends Controller
     {
         $rules = [
             'name'  => 'required|max:255',
+            'role_id'  => 'required',
+            'position_id'  => 'required',
         ];
 
         if ($request->username != $user->username) {
@@ -154,7 +160,7 @@ class UserController extends Controller
     public function RoleChange(Request $request){
         $userLogin = Auth::user()->id;
         if($request->id != $userLogin){
-            $data = ['role'  => $request->role];
+            $data = ['role_id'  => $request->role_id];
             User::where('id', $request->id)
                 ->update($data);
             return redirect('/dashboard/user')->with('success', 'Role user berhasil diubah!');

@@ -29,12 +29,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(RoleSeeder::class);
+        $this->call(PositionSeeder::class);
+
         User::create([
             'name' => 'admin',
             'username' => 'admin',
             'email' => 'admin@admin.com',
             'role'  => 'admin',
-            'password'  => bcrypt('password')
+            'password'  => bcrypt('password'),
+            'role_id' => 1,
+            'position_id' => 1,
         ]);
 
         // user seeder
@@ -47,8 +52,12 @@ class DatabaseSeeder extends Seeder
                 'email' => fake()->unique()->safeEmail(),
                 'email_verified_at' => now(),
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'role_id' => mt_rand(3, 4),
+                'position_id' => mt_rand(6, 7),
                 'remember_token' => Str::random(10),
                 'role' => $role[$rand_keys],
+                'created_at'    => now(),
+                'updated_at'    => now(),
             ];
         }
         DB::table('users')->insert($data);
@@ -114,5 +123,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Post::factory(20)->create();
+
     }
 }

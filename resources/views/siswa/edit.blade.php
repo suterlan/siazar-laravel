@@ -313,6 +313,17 @@
                                         </div>
                                         @enderror
                                     </div>
+                                    <div class="form-group col-md-6">
+                                        <label>STATUS SISWA</label>
+                                        <div class="custom-control custom-radio pr-4">
+                                            <input type="radio" id="status_siswa1" name="status_siswa" class="custom-control-input" value="1" {{{ (isset($siswa->status_siswa) && $siswa->status_siswa == '1') ? "checked" : "" }}}>
+                                            <label class="custom-control-label" for="status_siswa1"><b>Aktif</b></label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="status_siswa2" name="status_siswa" class="custom-control-input" value="0" {{{ (isset($siswa->status_siswa) && $siswa->status_siswa == '0') ? "checked" : "" }}}>
+                                            <label class="custom-control-label" for="status_siswa2"><b>Tidak Aktif</b></label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <h5>DATA ORANG TUA SISWA</h5>
                                 <div class="row mb-3">

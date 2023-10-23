@@ -405,7 +405,8 @@ class PPDBController extends Controller
                         'name'      => $value->nama_siswa,
                         'username'  => $value->nisn,
                         'password'  => Hash::make($value->nisn),
-                        'role'      => 'siswa'
+                        'role_id'      => 4,
+                        'position_id'      => 7,
                     ]);
 
                     PPDB::where('id', $value->id)

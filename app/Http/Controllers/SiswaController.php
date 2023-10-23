@@ -28,6 +28,7 @@ class SiswaController extends Controller
                 ->with(['jurusan', 'kelas'])
                 ->orderBy('nis', 'ASC')
                 ->where('lulus', false)
+                ->where('status_siswa', true)
                 ->get();
         return view('siswa.index', [
             'title'     => 'Siswa | '. config('app.name'),
@@ -167,6 +168,7 @@ class SiswaController extends Controller
         $validatedData = $request->validate([
             'jurusan_id'   => 'required',
             'kelas_id'     => 'required',
+            'status_siswa'  => 'required',
         ]);
 
         $registrasi = $request->session()->get('registrasi');
@@ -180,11 +182,12 @@ class SiswaController extends Controller
             'name'      => $registrasi->nama_siswa,
             'username'  => $registrasi->nisn,
             'password'  => Hash::make($registrasi->nisn),
-            'role'      => 'siswa'
+            'role_id'      => 4,
+            'position_id'      => 7,
         ]);
 
         session()->forget('registrasi');
-        return redirect('/dashboard/siswa')->with('success', 'Data berhasil disimpan!');
+        return redirect('/dashboard/siswa/registrasi-step1')->with('success', 'Data berhasil disimpan!');
     }
 
     /**

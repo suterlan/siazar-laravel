@@ -11,13 +11,11 @@
         </div>
 
         @can('admin')
-            @include('partials.sidepart.side-admin');
-        @elsecan('kesiswaan')
-            @include('partials.sidepart.side-kesiswaan');
+            @include('partials.sidepart.side-admin')
         @elsecan('guru')
-            @include('partials.sidepart.side-guru');
+            @include('partials.sidepart.side-guru')
         @elsecan('siswa')
-            @include('partials.sidepart.side-siswa');
+            @include('partials.sidepart.side-siswa')
         @endcan
 
     </nav>

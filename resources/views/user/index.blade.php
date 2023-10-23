@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="col-12">
             <div class="row">
-                <div class="card shadow">
+                <div class="card shadow col-12">
                     <div class="card-header">
                         <strong class="card-title">Data User</strong>
                             <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#newUserModal" type="button"><span class="fe fe-user-plus"></span> Tambah User </button>
@@ -27,12 +27,13 @@
                                 <th>Nama</th>
                                 <th>Username</th>
                                 <th>Email</th>
+                                <th>Posisi</th>
                                 <th>Role</th>
                                 <th class="text-center" scope="col"><span class="fe fe-tool text-info fe-16"></span></th>
                             </thead>
                             <tbody>
                                 @foreach ($users as $user)
-                                    @if($user->role == 'siswa')
+                                    @if($user->role->name == 'siswa')
                                         @continue
                                     @endif
                                 <tr>
@@ -40,11 +41,12 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td class="text-nowrap">{{ $user->email }}</td>
+                                    <td>{{ $user->position->name }}</td>
                                     <td>
-                                        @if ($user->role == 'admin')
-                                            <div class="badge badge-primary"> {{ @Str::upper($user->role) }}</div>
+                                        @if ($user->role->name == 'admin')
+                                            <div class="badge badge-primary"> {{ @Str::upper($user->role->name) }}</div>
                                         @else
-                                            <div class="badge badge-info">{{ @Str::upper($user->role) }}</div>
+                                            <div class="badge badge-info">{{ @Str::upper($user->role->name) }}</div>
                                         @endif
                                     </td>
                                     {{-- <td>
@@ -54,9 +56,9 @@
                                         </div>
                                     </td> --}}
                                     <td>
-                                        <div class="d-flex">
+                                        <div class="d-flex float-right">
                                             {{-- <a class="btn btn-info btn-sm" href="/dashboard/user/{{ $user->id }}"><span class="fe fe-eye"></span></a> --}}
-                                            <button class="btn btn-secondary btn-sm ml-1 btn-role" id="btnRole" data-toggle="modal" data-target="#role" data-id="{{ $user->id }}">Ubah Role</button>
+                                            <a class="btn btn-secondary btn-sm ml-1 btn-role text-white" id="btnRole" data-toggle="modal" data-target="#role" data-id="{{ $user->id }}">Ubah Role</a>
                                             <a class="btn btn-warning btn-sm ml-1" href="/dashboard/user/{{ $user->id }}/edit"><span class="fe fe-edit"></span></a>
                                             <form action="/dashboard/user/{{ $user->id }}" method="post">
                                                 @method('delete')
@@ -71,26 +73,30 @@
                         </table>
 
                         <hr class="mb-4 mt-4">
+                        <h6>Data Akun Siswa</h6>
                         <table id="tbUserSiswa" class="table table-stripped table-hover">
                             <thead class="thead-dark">
                                 <th>Nama</th>
                                 <th>Username</th>
+                                <th>Posisi</th>
                                 <th>Role</th>
                                 <th class="text-center" scope="col"><span class="fe fe-tool text-info fe-16"></span></th>
                             </thead>
                             <tbody>
                                 @foreach ($users as $user)
-                                    @if($user->role != 'siswa')
+                                    @if($user->role->name != 'siswa')
                                         @continue
                                     @endif
                                 <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->username }}</td>
+                                    <td>{{ $user->position->name }}</td>
                                     <td>
-                                        <div class="badge badge-info">{{ @Str::upper($user->role) }}</div>
+                                        <div class="badge badge-success text-white">{{ @Str::upper($user->role->name) }}</div>
                                     </td>
                                     <td>
                                         <div class="d-flex float-right">
+                                            <a class="btn btn-secondary btn-sm ml-1 btn-role text-white" id="btnRole" data-toggle="modal" data-target="#role" data-id="{{ $user->id }}">Ubah Role</a>
                                             <a class="btn btn-warning btn-sm ml-1" href="/dashboard/user/{{ $user->id }}/edit"><span class="fe fe-edit"></span></a>
                                             <form action="/dashboard/user/{{ $user->id }}" method="post">
                                                 @method('delete')
@@ -123,21 +129,21 @@
                 <div class="modal-body m-3 pt-0">
                     <div class="form-group mb-2">
                         <label for="name">Nama</label>
-                        <input name="name" id="name" type="text" class="form-control" value="{{ old('name') }}" required>
+                        <input name="name" id="name" type="text" class="form-control form-control-sm" value="{{ old('name') }}" required>
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group mb-2">
                         <label for="username">Username</label>
-                        <input name="username" id="username" type="text" class="form-control" value="{{ old('username') }}" required>
+                        <input name="username" id="username" type="text" class="form-control form-control-sm" value="{{ old('username') }}" required>
                         @error('username')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group mb-2">
                         <label for="email">Email</label>
-                        <input name="email" id="email" type="email" class="form-control" value="{{ old('email') }}" required>
+                        <input name="email" id="email" type="email" class="form-control form-control-sm" value="{{ old('email') }}" required>
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -146,7 +152,7 @@
                         <div class="col-md-6">
                             <div class="form-group mb-2">
                                 <label for="password">Password</label>
-                                <input name="password" id="password" type="password" class="form-control" required>
+                                <input name="password" id="password" type="password" class="form-control form-control-sm" required>
                                 @error('password')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -155,7 +161,7 @@
                         <div class="col-md-6">
                             <div class="form-group mb-0">
                                 <label for="password_confirmation">Konfirmasi Password</label>
-                                <input name="password_confirmation" id="password_confirmation" type="password" class="form-control" required>
+                                <input name="password_confirmation" id="password_confirmation" type="password" class="form-control form-control-sm" required>
                                 @error('password_confirmation')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -163,39 +169,46 @@
                         </div>
                     </div>
                     <div>Pilih role user : </div>
-                    <div class="row">
+                    <div class="row mb-2">
                         <div class="col-sm-6">
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="roleAdmin" name="role" value="admin">
+                                <input type="radio" class="form-check-input" id="roleAdmin" name="role_id" value="1">
                                 <label class="form-check-label" for="roleAdmin">Admin</label>
                             </div>
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="roleKurikulum" name="role" value="kurikulum">
-                                <label class="form-check-label" for="roleKurikulum">Kurikulum</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" id="roleKesiswaan" name="role" value="kesiswaan">
-                                <label class="form-check-label" for="roleKesiswaan">Kesiswaan</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" id="roleKaprog" name="role" value="kaprog">
-                                <label class="form-check-label" for="roleKaprog">Kaprog</label>
+                                <input type="radio" class="form-check-input" id="roleOperator" name="role_id" value="2">
+                                <label class="form-check-label" for="roleOperator">Operator</label>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="roleWalas" name="role" value="walas">
-                                <label class="form-check-label" for="roleWalas">Wali Kelas</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" id="roleGuru" name="role" value="guru">
+                                <input type="radio" class="form-check-input" id="roleGuru" name="role_id" value="3">
                                 <label class="form-check-label" for="roleGuru">Guru</label>
                             </div>
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="roleSiswa" name="role" value="siswa">
+                                <input type="radio" class="form-check-input" id="roleSiswa" name="role_id" value="4">
                                 <label class="form-check-label" for="roleSiswa">Siswa</label>
                             </div>
                         </div>
+                        @error('role_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="position_id">Posisi User</label>
+                        <select name="position_id" id="position_id" class="form-control" required>
+                            <option value="">--Pilih Posisi--</option>
+                            @foreach ($positions as $position )
+                                @if (old('position_id') == $position->id)
+                                    <option value="{{ $position->id }}" selected>{{ $position->name }}</option>
+                                @else
+                                    <option value="{{ $position->id }}">{{ $position->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        @error('position_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer m-3">
@@ -261,30 +274,22 @@
             rowRadioRole.innerHTML = `
                 <div class="col-sm-6">
                     <div class="form-check">
-                        <input type="radio" class="form-check-input" id="roleAdmin" name="role" value="admin" ${user.role == 'admin' ? "checked" : "" }>
+                        <input type="radio" class="form-check-input" id="roleAdmin" name="role_id" value="1" ${user.role.name == 'admin' ? "checked" : "" }>
                         <label class="form-check-label" for="roleAdmin">Admin</label>
                     </div>
                     <div class="form-check">
-                        <input type="radio" class="form-check-input" id="roleKurikulum" name="role" value="kurikulum" ${user.role == 'kurikulum' ? "checked" : "" }>
-                        <label class="form-check-label" for="roleKurikulum">Kurikulum</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="radio" class="form-check-input" id="roleKesiswaan" name="role" value="kesiswaan" ${user.role == 'kesiswaan' ? "checked" : "" }>
-                        <label class="form-check-label" for="roleKesiswaan">Kesiswaan</label>
+                        <input type="radio" class="form-check-input" id="roleOperator" name="role_id" value="2" ${user.role.name == 'operator' ? "checked" : "" }>
+                        <label class="form-check-label" for="roleOperator">Operator</label>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-check">
-                        <input type="radio" class="form-check-input" id="roleKaprog" name="role" value="kaprog" ${user.role == 'kaprog' ? "checked" : "" }>
-                        <label class="form-check-label" for="roleKaprog">Kaprog</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="radio" class="form-check-input" id="roleWalas" name="role" value="walas" ${user.role == 'walas' ? "checked" : "" }>
-                        <label class="form-check-label" for="roleWalas">Wali Kelas</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="radio" class="form-check-input" id="roleGuru" name="role" value="guru" ${user.role == 'guru' ? "checked" : "" }>
+                        <input type="radio" class="form-check-input" id="roleGuru" name="role_id" value="3" ${user.role.name == 'guru' ? "checked" : "" }>
                         <label class="form-check-label" for="roleGuru">Guru</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="roleSiswa" name="role_id" value="4" ${user.role.name == 'siswa' ? "checked" : "" }>
+                        <label class="form-check-label" for="roleSiswa">Siswa</label>
                     </div>
                 </div>
             `;

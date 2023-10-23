@@ -22,8 +22,11 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'role'
+        'role_id',
+        'position_id',
     ];
+
+    protected $with = ['role', 'position'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -51,4 +54,13 @@ class User extends Authenticatable
     public function siswa(){
         return $this->hasOne(Siswa::class, 'username', 'nisn');
     }
+
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
+
+    public function position(){
+        return $this->belongsTo(Position::class);
+    }
+
 }

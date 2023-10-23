@@ -3,6 +3,11 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10">
+                @if (session()->has('success'))
+                <div class="alert alert-success col-12" role="alert">
+                    <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
+                </div>
+                @endif
                 <div class="row justify-content-center">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
@@ -151,6 +156,7 @@
                             <div>Ket : <span class="text-danger">(*)</span> = Wajib diisi</div>
                         </div>
 
+                        <a href="/dashboard/siswa" class="btn btn-danger"><span class="fe fe-arrow-left"> Close</span></a>
                         <button class="btn btn-primary float-right" type="submit">Next <span class="fe fe-arrow-right"></span></button>
                     </div>
                 </form>
