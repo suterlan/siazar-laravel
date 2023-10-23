@@ -26,7 +26,6 @@
         <th>ASAL SEKOLAH</th>
         <th>KELAS</th>
         <th>JURUSAN</th>
-        <th>INPUT OLEH</th>
         <th>TGL INPUT</th>
         <th>NO HP</th>
         <th>ALAMAT</th>
@@ -64,7 +63,6 @@
             <td>{{ $siswa->asal_sekolah }}</td>
             <td>{{ $siswa->kelas->nama ?? '' }}</td>
             <td>{{ $siswa->jurusan->kode ?? '' }}</td>
-            <td>{{ $siswa->user->name ?? ''}}</td>
             <td class="text-nowrap">{{ \Carbon\Carbon::parse($siswa->created_at)->format('d-m-Y') }}</td>
             <td>{{ $siswa->no_hp ?? ''}}</td>
             <td>{{ $siswa->alamat ?? ''}}</td>

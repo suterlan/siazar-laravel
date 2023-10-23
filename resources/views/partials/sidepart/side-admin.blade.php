@@ -22,6 +22,15 @@
     </ul>
     <ul class="navbar-nav flex-fill w-100 mb-0">
         <li class="nav-item dropdown">
+            <a href="http://localhost:8001/" aria-expanded="false" class="nav-link" target="_blank">
+            <i class="fe fe-calendar fe-16 text-success"></i>
+            <span class="ml-3 item-text">Absensi</span>
+            </a>
+        </li>
+    </ul>
+
+    <ul class="navbar-nav flex-fill w-100 mb-0">
+        <li class="nav-item dropdown">
             <a href="#siswa" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link {{ Request::is('dashboard/siswa*') ? 'link-active collapsed' : '' }} ">
                 <i class="fe fe-database fe-16"></i>
                 <span class="ml-3 item-text">Data Siswa</span><span class="sr-only">(current)</span>

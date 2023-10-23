@@ -22,6 +22,19 @@
                 <form action="/dashboard/siswa" method="POST">
                     @csrf
                     <div id="step4" class="my-2 pt-4">
+                        <div class="alert alert-warning col-12" role="alert">
+                            <span class="fe fe-check-circle fe-16 mr-2"></span>Untuk Siswa Fiktif silahkan pilih tidak <b>TIDAK AKTIF</b>
+                        </div>
+                        <div class="form-row mb-4">
+                            <div class="custom-control custom-radio pr-4">
+                                <input type="radio" id="status_siswa1" name="status_siswa" class="custom-control-input" value="1" checked>
+                                <label class="custom-control-label" for="status_siswa1"><b>Aktif</b></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="status_siswa2" name="status_siswa" class="custom-control-input" value="0">
+                                <label class="custom-control-label" for="status_siswa2"><b>Tidak Aktif</b></label>
+                            </div>
+                        </div><hr>
                         <h6><span class="fe fe-list text-primary"></span> PILIH JURUSAN YANG DIMINATI</h6>
                         <div class="form-row">
                             <div class="form-group col-md-6">

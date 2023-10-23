@@ -64,6 +64,48 @@
                                     </div>
                                 </div>
                             </div>
+                            <div>Pilih role user : </div>
+                            <div class="row mb-2">
+                                <div class="col-sm-6">
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="roleAdmin" name="role_id" value="1" {{ $user->role_id == 1 ? "checked" : "" }}>
+                                        <label class="form-check-label" for="roleAdmin">Admin</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="roleOperator" name="role_id" value="2" {{ $user->role_id == 2 ? "checked" : "" }}>
+                                        <label class="form-check-label" for="roleOperator">Operator</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="roleGuru" name="role_id" value="3" {{ $user->role_id == 3 ? "checked" : "" }}>
+                                        <label class="form-check-label" for="roleGuru">Guru</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="roleSiswa" name="role_id" value="4" {{ $user->role_id == 4 ? "checked" : "" }}>
+                                        <label class="form-check-label" for="roleSiswa">Siswa</label>
+                                    </div>
+                                </div>
+                                @error('role_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="position_id">Posisi User</label>
+                                <select name="position_id" id="position_id" class="form-control" required>
+                                    <option value="">--Pilih Posisi--</option>
+                                    @foreach ($positions as $position )
+                                        @if (old('position_id', $user->position->id) == $position->id)
+                                            <option value="{{ $position->id }}" selected>{{ $position->name }}</option>
+                                        @else
+                                            <option value="{{ $position->id }}">{{ $position->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                @error('position_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="form-group m-3 mt-4">
                                 <a href="/dashboard/user" type="button" class="btn mb-1 btn-danger "> Batal</a>
                                 <button type="submit" class="btn mb-1 btn-success float-right"> <span class="fe fe-save"></span> Update</button>

@@ -30,7 +30,8 @@ class LoginController extends Controller
         ]);
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            if (auth()->user()->role == 'siswa') {
+            // if (auth()->user()->role_id === 4) {
+            if (auth()->user()->role->name === 'siswa') {
                 return redirect()->intended('/dashboard-siswa');
             }else{
                 return redirect()->intended('/dashboard');
