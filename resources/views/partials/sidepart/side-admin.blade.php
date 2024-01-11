@@ -20,14 +20,6 @@
             </a>
         </li>
     </ul>
-    <ul class="navbar-nav flex-fill w-100 mb-0">
-        <li class="nav-item dropdown">
-            <a href="http://localhost:8001/" aria-expanded="false" class="nav-link" target="_blank">
-            <i class="fe fe-calendar fe-16 text-success"></i>
-            <span class="ml-3 item-text">Absensi</span>
-            </a>
-        </li>
-    </ul>
 
     <ul class="navbar-nav flex-fill w-100 mb-0">
         <li class="nav-item dropdown">
@@ -54,6 +46,22 @@
             <ul class="list-unstyled pl-4 w-100 collapse {{ Request::is('dashboard/guru*') ? 'show' : '' }}" id="guru" style="">
                 <li class="nav-item dropdown">
                     <a class="nav-link pl-3 {{ Request::is('dashboard/guru*') ? 'link-active' : '' }}" href="/dashboard/guru"><span class="ml-1">Semua Guru</span></a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="navbar-nav flex-fill w-100 mb-0">
+        <li class="nav-item dropdown">
+            <a href="#nilai" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link {{ Request::is('dashboard/nilai*') ? 'link-active collapsed' : '' }} ">
+                <i class="fe fe-award fe-16"></i>
+                <span class="ml-3 item-text">Nilai</span><span class="sr-only">(current)</span>
+            </a>
+            <ul class="list-unstyled pl-4 w-100 collapse {{ Request::is('dashboard/nilai*') ? 'show' : '' }}" id="nilai" style="">
+                <li class="nav-item dropdown">
+                    <a class="nav-link pl-3 {{ Request::is('dashboard/nilai-input*') ? 'link-active' : '' }}" href="/dashboard/nilai-input"><span class="ml-1">Input Nilai</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link pl-3 {{ Request::is('dashboard/nilai-siswa*') ? 'link-active' : '' }}" href="/dashboard/nilai-siswa"><span class="ml-1">Nilai Siswa</span></a>
                 </li>
             </ul>
         </li>

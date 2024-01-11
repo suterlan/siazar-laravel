@@ -13,7 +13,7 @@ class Mengajar extends Model
 
     public function mapel()
     {
-        return $this->belongsTo(Mapel::class, 'kode_mapel', 'kode');
+        return $this->belongsTo(Mapel::class);
     }
 
     public function kelas()

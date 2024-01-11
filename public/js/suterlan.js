@@ -73,6 +73,7 @@ $(document).ready(function () {
         .container()
         .appendTo("#tbPembagianMapel_wrapper .col-md-6:eq(0)");
 
+    // ---------- ARSIP -----------
     // tabel Arsip PPDB
     $("#tbArsipPpdb")
         .DataTable({
@@ -89,6 +90,25 @@ $(document).ready(function () {
         .buttons()
         .container()
         .appendTo("#tbArsipPpdb_wrapper .col-md-6:eq(0)");
+    // end tabel arsip ppdb
+
+    // tabel arsip tracing alumni
+    $("#tbArsipTracingAlumni")
+        .DataTable({
+            paging: true,
+            info: false,
+            ordering: false,
+            stateSave: true,
+            lengthMenu: [
+                [10, 20, 50, 100, -1],
+                [10, 20, 50, 100, "All"],
+            ],
+            buttons: ["csv", "excel", "pdf", "print", "colvis"],
+        })
+        .buttons()
+        .container()
+        .appendTo("#tbArsipTracingAlumni_wrapper .col-md-6:eq(0)");
+    // end tabel arsip tracing alumni
 
     // JAVASCRIPT QUILL EDITOR
     // options quill toolbar
@@ -255,22 +275,22 @@ $(document).ready(function () {
     });
 
     // FITUR DELETE CHECKBOX
-    $("#checkAll").on("click", function (e) {
-        if ($(this).is(":checked", true)) {
-            $(".sub-check").prop("checked", true);
-            $("#delAll").removeClass("d-none");
-        } else {
-            $(".sub-check").prop("checked", false);
-            $("#delAll").addClass("d-none");
-        }
-    });
+    // $("#checkAll").on("click", function (e) {
+    //     if ($(this).is(":checked", true)) {
+    //         $(".sub-check").prop("checked", true);
+    //         $("#delAll").removeClass("d-none");
+    //     } else {
+    //         $(".sub-check").prop("checked", false);
+    //         $("#delAll").addClass("d-none");
+    //     }
+    // });
 
-    let subCheck = $(".sub-check");
-    subCheck.each(function (e) {
-        $(this).on("click", function () {
-            $("#delAll").removeClass("d-none");
-        });
-    });
+    // let subCheck = $(".sub-check");
+    // subCheck.each(function (e) {
+    //     $(this).on("click", function () {
+    //         $("#delAll").removeClass("d-none");
+    //     });
+    // });
 });
 
 window.addEventListener("DOMContentLoaded", (event) => {
@@ -335,30 +355,30 @@ window.addEventListener("DOMContentLoaded", (event) => {
     // END FUNC GET WILAYAH
 
     // GET MAPEL PER GURU
-    let guruId = document.querySelector("#guru_id");
-    if (guruId) {
-        guruId.addEventListener("change", async () => {
-            let id =
-                guruId.options[guruId.selectedIndex].getAttribute("data-id");
+    // let guruId = document.querySelector("#guru_id");
+    // if (guruId) {
+    //     guruId.addEventListener("change", async () => {
+    //         let id =
+    //             guruId.options[guruId.selectedIndex].getAttribute("data-id");
 
-            const mengajarMapel = document.querySelector("#kode_mapel");
-            const mapel = await getMapel("/getMapel?id=", id);
-            setOptionMapel(mapel, mengajarMapel);
-        });
-    }
+    //         const mengajarMapel = document.querySelector("#kode_mapel");
+    //         const mapel = await getMapel("/getMapel?id=", id);
+    //         setOptionMapel(mapel, mengajarMapel);
+    //     });
+    // }
 
-    function getMapel(link, id) {
-        return fetch(link + id)
-            .then((response) => response.json())
-            .then((response) => response);
-    }
+    // function getMapel(link, id) {
+    //     return fetch(link + id)
+    //         .then((response) => response.json())
+    //         .then((response) => response);
+    // }
 
-    function setOptionMapel(mapel, mengajarMapel) {
-        let options = "";
-        options += `<option value="">==Pilih Mapel==</option>`;
-        mapel.forEach(
-            (i) => (options += `<option value="${i.kode}">${i.nama}</option>`)
-        );
-        mengajarMapel.innerHTML = options;
-    }
+    // function setOptionMapel(mapel, mengajarMapel) {
+    //     let options = "";
+    //     options += `<option value="">==Pilih Mapel==</option>`;
+    //     mapel.forEach(
+    //         (i) => (options += `<option value="${i.kode}">${i.nama}</option>`)
+    //     );
+    //     mengajarMapel.innerHTML = options;
+    // }
 });

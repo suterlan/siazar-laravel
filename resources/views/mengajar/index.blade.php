@@ -39,7 +39,7 @@
                                     </div>
                                 </div>
                             </form>
-
+                            <div class="table-responsive">
                             <table id="tbMengajar" class="table table-bordered datatables table-hover mb-0">
                                 <thead class="text-center">
                                     <th class="text-dark">No</th>
@@ -56,9 +56,9 @@
                                         @method('put')
                                         @csrf
                                         <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td>{{ $mengajar->kode_mapel }}</td>
+                                        <td>{{ $mengajar->mapel->kode }}</td>
                                         <td class="p-1">
-                                            <select id="guru_id[{{ $mengajar->id }}]" name="guru_id" class="form-control select2 {{$errors->first('guru_id') ? "is-invalid" : "" }}" required>
+                                            <select id="guru_id[{{ $mengajar->id }}]" name="guru_id" class="form-control {{$errors->first('guru_id') ? "is-invalid" : "" }}" required>
                                                 @foreach ($gurus as $guru )
                                                     @if (old('guru_id', $mengajar->guru_id) == $guru->id)
                                                         <option value="{{ $guru->id }}" selected>{{ $guru->nama }}</option>
@@ -69,18 +69,18 @@
                                             </select>
                                         </td>
                                         <td class="p-1">
-                                            <select class="form-control select2 {{$errors->first('kelas_id') ? "is-invalid" : "" }}" id="kelas_id[{{ $mengajar->id }}]" name="kelas_id" required>
+                                            <select class="form-control {{$errors->first('kelas_id') ? "is-invalid" : "" }}" id="kelas_id[{{ $mengajar->id }}]" name="kelas_id" required>
                                                 @foreach ($kelas as $value)
                                                     @if (old('kelas_id', $mengajar->kelas_id) == $value->id)
                                                         <option value="{{ $value->id }}" selected>{{ $value->nama . '-' . $value->jurusan->kode }}</option>
                                                     @else
-                                                    <option value="{{ $value->id }}">{{ $value->nama . '-' . $value->jurusan->kode }}</option>
+                                                        <option value="{{ $value->id }}">{{ $value->nama . '-' . $value->jurusan->kode }}</option>
                                                     @endif
                                                 @endforeach
                                             </select>
                                         </td>
                                         <td class="p-1">
-                                           <select id="jam[{{ $mengajar->id }}]" name="jam" class="custom-select {{$errors->first('jam') ? "is-invalid" : "" }}" >
+                                           <select id="jam[{{ $mengajar->id }}]" name="jam" class="custom-select form-control {{$errors->first('jam') ? "is-invalid" : "" }}" >
                                             @for ($no = 0; $no < 50; $no++)
                                                 @if($mengajar->jam == $no)
                                                     <option value="{{$mengajar->jam ?? ''}}" selected>{{$mengajar->jam ?? ''}}</option>
@@ -95,7 +95,7 @@
                                                 <div class="btn-group" role="group" aria-label="Tombol mengajar">
                                                     {{-- <a href="/dashboard/mengajar/{{ $mengajar->id }}" class="btn btn-info btn-sm ml-2"><span class="fe fe-eye text-white"></span></a> --}}
                                                     <button class="btn btn-primary btn-sm ml-2" type="submit"><span class="fe fe-edit text-white"></span></button>
-                                                        <a href="/dashboard/mengajar/delete/{{ $mengajar->id }}" class="btn btn-danger btn-sm ml-2" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete"></span></a>
+                                                    <a href="/dashboard/mengajar/delete/{{ $mengajar->id }}" class="btn btn-danger btn-sm ml-2" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete"></span></a>
                                                 </div>
                                             </div>
                                         </td>
@@ -104,6 +104,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </div>

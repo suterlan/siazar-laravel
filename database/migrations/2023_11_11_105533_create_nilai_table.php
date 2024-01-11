@@ -13,18 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mengajars', function (Blueprint $table) {
+        Schema::create('nilai', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('siswa_id');
             $table->unsignedBigInteger('mapel_id');
-            $table->unsignedBigInteger('kelas_id');
-            $table->unsignedBigInteger('guru_id');
-            $table->integer('jam')->nullable();
-            $table->string('tahun_ajaran');
+            $table->integer('nilai')->default(0);
+            $table->string('tahun_ajaran', 10);
             $table->timestamps();
 
+            $table->foreign('siswa_id')->references('id')->on('siswas')->onDelete('cascade');
             $table->foreign('mapel_id')->references('id')->on('mapels')->onDelete('cascade');
-            $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
-            $table->foreign('guru_id')->references('id')->on('gurus')->onDelete('cascade');
         });
     }
 
@@ -35,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mengajars');
+        Schema::dropIfExists('nilai');
     }
 };

@@ -35,6 +35,22 @@
                 </div>
                 </a>
             </div>
+            <div class="col-md-6 col-xl-3 mb-4">
+                <a href="{{ route('tracing-alumni') }}" style="text-decoration: none;">
+                <div id="tracing_alumni" class="card shadow-lg">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h4 class="p-0 m-auto" style="font-size: 1rem">Tracing Alumni</h4>
+                            </div>
+                            <div class="col-5 mr-2 py-2 bg-danger-dark rounded">
+                                <span class="h4 mb-0 text-white">1,869</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
         </div>
     </div>
 </div>

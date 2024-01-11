@@ -363,7 +363,7 @@ class SiswaController extends Controller
         }
 
         Siswa::where('nis', $siswa->nis)->delete();
-        Dokumen::where('nis', $siswa->nis)->delete();
+        // Dokumen::where('nisn', $siswa->nisn)->delete();
 
         return redirect('/dashboard/siswa')->with('success', 'Data siswa ' . $siswa->nama_siswa . ' berhasil dihapus!');
     }

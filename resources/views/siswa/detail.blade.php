@@ -4,9 +4,9 @@
         <div class="row justify-content-center">
             <div class="col-12">
                 <h2 class="h3 mb-3 page-title">Detail Siswa</h2>
-                <div>
+                {{-- <div>
                     <a href="/dashboard/siswa" class="btn btn-danger" type="button"><span class="fe fe-arrow-left"></span> Back</a>
-                </div>
+                </div> --}}
                 <div class="row mt-5 align-items-center">
                     <div class="col-md-3 text-center mb-5">
                         <div class="avatar avatar-xl">

@@ -12,10 +12,10 @@ class Dokumen extends Model
     protected $guarded = ['id'];
 
     public function siswa(){
-        return $this->hasOne(Siswa::class, 'nis', 'nis');
+        return $this->belongsTo(Siswa::class, 'nis', 'nis');
     }
 
     public function guru(){
-        return $this->hasOne(Guru::class, 'nik', 'nik');
+        return $this->belongsTo(Guru::class, 'nik', 'nik');
     }
 }

@@ -12,21 +12,28 @@ class Guru extends Model
 
     protected $guarded = ['id'];
 
-    protected $with = ['user', 'dokumen', 'mapels'];
+    protected $with = ['user', 'dokumen'];
 
     public function user(){
         return $this->belongsTo(User::class, 'email', 'email');
     }
 
     public function dokumen(){
-        return $this->belongsTo(Dokumen::class, 'nik', 'nik');
+        return $this->hasOne(Dokumen::class, 'nik', 'nik');
     }
 
-    public function mapels(){
-        return $this->hasMany(Mapel::class);
-    }
-
-    public function mengajar(){
+    public function mengajars(){
         return $this->hasMany(Mengajar::class);
     }
+
+    // public function mapels(){
+    //     return $this->belongsToMany(Mapel::class, 'mengajars')
+    //             ->withPivot('jam', 'tahun_ajaran');
+    // }
+
+    // public function kelas(){
+    //     return $this->belongsToMany(Kelas::class, 'mengajars')
+    //             ->withPivot('jam', 'tahun_ajaran');
+    // }
+
 }

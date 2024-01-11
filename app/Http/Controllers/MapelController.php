@@ -32,7 +32,6 @@ class MapelController extends Controller
     {
         return view('mapel.create', [
             'title'     => 'Mapel Baru '. config('app.name'),
-            'gurus'     => Guru::select('id', 'nama')->get()
         ]);
     }
 
@@ -48,7 +47,6 @@ class MapelController extends Controller
             'kode'  => 'required|unique:mapels',
             'nama'  => 'required',
             'jenis' => 'required',
-            'guru_id'   => 'required',
         ]);
 
         $ruleDokumenAjar = [
@@ -89,7 +87,6 @@ class MapelController extends Controller
     {
         return view('mapel.detail', [
             'title'     => 'Detail Mapel '. config('app.name'),
-            'gurus'     => Guru::select('id', 'nama')->get(),
             'mapel'     => $mapel
         ]);
     }
@@ -117,7 +114,6 @@ class MapelController extends Controller
         $validate = [
             'nama'  => 'required',
             'jenis' => 'required',
-            'guru_id'   => 'required',
         ];
 
         if($request->kode != $mapel->kode){

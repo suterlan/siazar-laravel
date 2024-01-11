@@ -18,7 +18,7 @@ class MutasiController extends Controller
     public function index()
     {
         return view('surat-keluar.surat-mutasi.index',[
-            'title'     => 'Surat Mutasi | SIAZAR',
+            'title'     => 'Surat Mutasi '. config('app.name'),
             'surats'    => SuratMutasi::with('suratkeluar')->latest()->get()
         ]);
     }
@@ -31,7 +31,7 @@ class MutasiController extends Controller
     public function create()
     {
         return view('surat-keluar.surat-mutasi.create',[
-            'title'     => 'Surat Mutasi Baru | SIAZAR',
+            'title'     => 'Surat Mutasi Baru '. config('app.name'),
             'klasifikasi'    => Klasifikasi::select('id', 'kode', 'nama')->get()
         ]);
     }
@@ -78,7 +78,7 @@ class MutasiController extends Controller
     public function show(SuratMutasi $mutasi)
     {
         return view('surat-keluar.surat-mutasi.detail', [
-            'title'     => 'Detail Surat Mutasi | SIAZAR',
+            'title'     => 'Detail Surat Mutasi '. config('app.name'),
             'surat'     => $mutasi
         ]);
     }
@@ -92,7 +92,7 @@ class MutasiController extends Controller
     public function edit(SuratMutasi $mutasi)
     {
         return view('surat-keluar.surat-mutasi.edit', [
-            'title'         => 'Edit Surat Mutasi | SIAZAR',
+            'title'         => 'Edit Surat Mutasi '. config('app.name'),
             'surat'         => $mutasi,
             'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get()
         ]);
@@ -182,7 +182,7 @@ class MutasiController extends Controller
 
     public function cetak(SuratMutasi $mutasi){
         $pdf = FacadePdf::loadView('surat-keluar.surat-mutasi.cetak',[
-            'title'     => 'Cetak surat mutasi | SIAZAR',
+            'title'     => 'Cetak surat mutasi '. config('app.name'),
             'surat'     => $mutasi
         ]);
         return $pdf->stream('surat-mutasi-siswa');
@@ -190,7 +190,7 @@ class MutasiController extends Controller
 
     public function download(SuratMutasi $mutasi){
         $pdf = FacadePdf::loadView('surat-keluar.surat-mutasi.cetak',[
-            'title'     => 'Cetak surat mutasi | SIAZAR',
+            'title'     => 'Cetak surat mutasi '. config('app.name'),
             'surat'     => $mutasi
         ]);
         return $pdf->download('surat-mutasi-siswa.pdf');

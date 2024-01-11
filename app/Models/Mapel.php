@@ -13,17 +13,28 @@ class Mapel extends Model
 
     protected $with = ['dokumen_ajar'];
 
-        public function dokumen_ajar(){
-            return $this->belongsTo(DokumenAjar::class, 'kode', 'kode');
-        }
+    public function dokumen_ajar(){
+        return $this->hasOne(DokumenAjar::class, 'kode', 'kode');
+    }
 
-        public function guru()
-        {
-            return $this->belongsTo(Guru::class);
-        }
+    // public function kelas(){
+    //     return $this->belongsToMany(Kelas::class, 'mengajars')
+    //             ->withPivot('id', 'jam', 'tahun_ajaran');
+    // }
 
-        public function mengajars()
-        {
-            return $this->hasMany(Mengajar::class, 'kode', 'kode_mapel');
-        }
+    // public function gurus(){
+    //     return $this->belongsToMany(Guru::class, 'mengajars')
+    //             ->withPivot('id', 'jam', 'tahun_ajaran');
+    // }
+
+    public function mengajars(){
+        return $this->hasMany(Mengajar::class);
+    }
+
+    public function siswas(){
+        return $this->belongsToMany(Siswa::class, 'nilai')
+                ->withPivot('nilai')
+                ->orderByPivot('mapel_id', 'asc');
+    }
+
 }
