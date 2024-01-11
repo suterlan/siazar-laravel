@@ -23,7 +23,7 @@ class MengajarController extends Controller
         $mengajars = [];
 
         if(request('filter_tahun')){
-            $mengajars = Mengajar::where('tahun_ajaran', request('filter_tahun'))->orderBy('kode_mapel')->get();
+            $mengajars = Mengajar::where('tahun_ajaran', request('filter_tahun'))->orderBy('mapel_id')->get();
         }
 
         return view('mengajar.index', [
@@ -59,7 +59,7 @@ class MengajarController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'kode_mapel'    => 'required',
+            'mapel_id'      => 'required',
             'kelas_id'      => 'required',
             'guru_id'       => 'required',
             'jam'           => 'required|min:0',
@@ -102,11 +102,11 @@ class MengajarController extends Controller
      */
     public function update(Request $request, Mengajar $mengajar)
     {
+
         $validated = $request->validate([
             'kelas_id'      => 'required',
             'guru_id'       => 'required',
             'jam'           => 'required|min:0',
-            'tahun_ajaran'  => 'required',
         ]);
 
         Mengajar::where('id', $mengajar->id)

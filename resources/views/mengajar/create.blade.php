@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <div class="form-group mb-3">
                                 <select id="guru_id" name="guru_id" class="custom-select {{$errors->first('guru_id') ? "is-invalid" : "" }}" required>
-                                    <option value="">== Pilih Guru ==</option>
+                                    <option value="">-- Pilih Guru --</option>
                                     @foreach ($gurus as $guru )
                                         @if (old('guru_id') == $guru->id)
                                             <option value="{{ $guru->id }}" data-id="{{ $guru->id }}" selected>{{ $guru->nama }}</option>
@@ -27,23 +27,24 @@
                                 @enderror
                             </div>
                             <div class="form-group mb-3">
-                                <select id="kode_mapel" name="kode_mapel" class="form-control select2 {{$errors->first('kode_mapel') ? "is-invalid" : "" }}" required>
-                                    @if (old('kode_mapel'))
-                                        <option value="{{ old('kode_mapel')}}" selected>{{ old('kode_mapel')}}</option>
-                                    @endif
+                                <select id="mapel_id" name="mapel_id" class="form-control select2 {{$errors->first('mapel_id') ? "is-invalid" : "" }}" required>
+                                    <option value="">-- Pilih Mapel --</option>
+                                    @foreach ($mapels as $mapel)
+                                        <option value="{{ $mapel->id }}" @selected(old('mapel_id') == $mapel->id)>{{ $mapel->nama }}</option>
+                                    @endforeach
                                 </select>
-                                @error('kode_mapel')
+                                @error('mapel_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group mb-3">
                                 <select class="form-control select2 {{$errors->first('kelas_id') ? "is-invalid" : "" }}" id="kelas_id" name="kelas_id" required>
-                                    <option value="">== Pilih Kelas ==</option>
+                                    <option value="">-- Pilih Kelas --</option>
                                     @foreach ($kelas as $value)
                                         @if (old('kelas_id') == $value->id)
                                             <option value="{{ $value->id }}" selected>{{ $value->nama . '-' . $value->jurusan->kode }}</option>
                                         @else
-                                        <option value="{{ $value->id }}">{{ $value->nama . '-' . $value->jurusan->kode }}</option>
+                                            <option value="{{ $value->id }}">{{ $value->nama . '-' . $value->jurusan->kode }}</option>
                                         @endif
                                      @endforeach
                                 </select>

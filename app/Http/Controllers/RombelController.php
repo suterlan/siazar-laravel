@@ -15,4 +15,25 @@ class RombelController extends Controller
             'kelas'     => $kelas,
         ]);
     }
+
+    function Kelulusan(Request $request) {
+        Siswa::where('nis', $request->nis)
+            ->update([
+                'lulus' => true
+            ]);
+        return redirect(route('rombel'))->with('success', 'Siswa dengan NIS ' . $request->nis . ' berhasil diluluskan');
+    }
+
+    function KelulusanAll(Request $request) {
+        if($request->check_lulus != ''){
+            $data = $request->check_lulus;
+            Siswa::whereIn('nis', $data)
+                ->update(['lulus' => true]);
+
+            return redirect(route('rombel'))->with('success', 'Siswa berhasil diluluskan');
+        }else{
+            return redirect(route('rombel'))->with('error', 'Tidak ada data yang dipilih!');
+        }
+
+    }
 }

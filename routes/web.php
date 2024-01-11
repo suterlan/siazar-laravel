@@ -4,6 +4,7 @@ use App\Http\Controllers\AkunSettingController;
 use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\dashboard_siswa\DashboardSiswaController;
+use App\Http\Controllers\dashboard_siswa\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JurusanController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\GuruController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\MengajarController;
+use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RombelController;
@@ -120,10 +122,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/siswa/export', [SiswaController::class, 'export']);
 
     Route::resource('/dashboard/siswa', SiswaController::class)->except(['create']);
-    Route::get('/dashboard/rombel', [RombelController::class, 'index']);
+    Route::get('/dashboard/rombel', [RombelController::class, 'index'])->name('rombel');
+    Route::get('/dashboard/rombel/{nis}', [RombelController::class, 'Kelulusan']);
+    Route::put('/dashboard/rombel/lulus-all', [RombelController::class, 'KelulusanAll'])->name('lulus-all');
 
     // Route Guru
     Route::resource('/dashboard/guru', GuruController::class);
+
+    // Route Nilai
+    Route::get('/dashboard/get-mapel-mengajar', [NilaiController::class, 'getMapelMengajar']);
+    Route::get('/dashboard/get-kelas-mengajar', [NilaiController::class, 'getKelasMengajar']);
+    Route::get('/dashboard/get-siswa', [NilaiController::class, 'getSiswaMengajar']);
+    Route::get('/dashboard/nilai-input', [NilaiController::class, 'index'])->name('nilai-input');
+    Route::post('/dashboard/nilai-input', [NilaiController::class, 'store']);
+    Route::get('/dashboard/nilai-siswa', [NilaiController::class, 'rekap'])->name('nilai-siswa');
 
     // Route Jurusan
     Route::resource('/dashboard/jurusan', JurusanController::class)->except(['create', 'show']);
@@ -191,6 +203,7 @@ Route::group(['middleware' => ['auth']], function () {
     // Route Setting Profile Sekolah
     Route::get('/dashboard/sekolah', [SekolahController::class, 'index'])->name('sekolah');
     Route::put('/dashboard/sekolah/{sekolah}', [SekolahController::class, 'update']);
+
     // Route Setting Tentang
     Route::get('/dashboard/settings-tentang', [TentangController::class, 'index']);
     Route::put('/dashboard/settings-tentang/{tentang}', [TentangController::class, 'update']);
@@ -216,21 +229,34 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/akun', [AkunSettingController::class, 'index']);
     Route::put('/dashboard/akun/{akun}', [AkunSettingController::class, 'update']);
 
+    // Route Mapel
     Route::get('/dashboard/mapel/pembagian-mapel', [MapelController::class, 'pembagianMapel']);
     Route::resource('/dashboard/mapel', MapelController::class);
 
+    // route struktur organisasi
     Route::resource('/dashboard/struktur-organisasi', StrukturOrganisasiController::class)->except('show');
 
+    // Route mengajar
     Route::get('/getMapel', [GetMapelController::class, 'getMapel']);
     Route::get('/dashboard/mengajar/delete/{mengajar}', [MengajarController::class, 'delete']);
     Route::resource('/dashboard/mengajar', MengajarController::class)->except(['show', 'edit', 'destroy']);
 
+    // Route arsip
     Route::get('/dashboard/arsip', [ArsipController::class, 'index']);
     Route::get('/dashboard/arsip/ppdb', [ArsipController::class, 'ppdb']);
+    Route::get('/dashboard/arsip/tracing-alumni', [ArsipController::class, 'tracingAlumni'])->name('tracing-alumni');
 
 });
 
 // ================= GROUP AUTENTIKASI SISWA ====================
 Route::group(['middleware' => ['auth', 'checkrole:siswa']], function(){
-    Route::get('/dashboard-siswa', [DashboardSiswaController::class, 'index']);
+    Route::prefix('dashboard-siswa')->group(function () {
+        Route::get('/', [DashboardSiswaController::class, 'index']);
+        Route::get('/akun', [ProfileController::class, 'index']);
+        Route::put('/akun/{siswa}', [ProfileController::class, 'updateProfile']);
+    });
+
+    Route::get('/tracing-alumni', [ProfileController::class, 'tracingAlumni']);
+    Route::post('/tracing-alumni/store', [ProfileController::class, 'StoreTracingAlumni'])->name('tracing-store');
+
 });

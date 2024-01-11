@@ -30,9 +30,18 @@ class Kelas extends Model
         return $this->belongsTo(Jurusan::class);
     }
 
-    public function mengajars()
-    {
+    public function mengajars(){
         return $this->hasMany(Mengajar::class);
     }
+
+    // public function gurus(){
+    //     return $this->belongsToMany(Guru::class, 'mengajars')
+    //             ->withPivot('jam', 'tahun_ajaran');
+    // }
+
+    // public function mapels(){
+    //     return $this->belongsToMany(Mapel::class, 'mengajars')
+    //             ->withPivot('jam', 'tahun_ajaran');
+    // }
 
 }

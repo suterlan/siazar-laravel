@@ -36,7 +36,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'username' => 'admin',
             'email' => 'admin@admin.com',
-            'role'  => 'admin',
             'password'  => bcrypt('password'),
             'role_id' => 1,
             'position_id' => 1,
@@ -44,8 +43,8 @@ class DatabaseSeeder extends Seeder
 
         // user seeder
         for($i=0;$i<10;$i++){
-            $role = ['kurikulum', 'kaprog', 'walas', 'guru', 'siswa'];
-            $rand_keys = array_rand($role);
+            // $role = ['kurikulum', 'kaprog', 'walas', 'guru', 'siswa'];
+            // $rand_keys = array_rand($role);
             $data[$i] = [
                 'name' => fake()->name(),
                 'username'  => fake()->unique()->userName(mt_rand(5, 8)),
@@ -55,7 +54,7 @@ class DatabaseSeeder extends Seeder
                 'role_id' => mt_rand(3, 4),
                 'position_id' => mt_rand(6, 7),
                 'remember_token' => Str::random(10),
-                'role' => $role[$rand_keys],
+                // 'role' => $role[$rand_keys],
                 'created_at'    => now(),
                 'updated_at'    => now(),
             ];

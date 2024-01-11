@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // FITUR DELETE CHECKBOX
+    // FITUR DELETE & APPROVE CHECKBOX
     $("#checkAll").on("click", function (e) {
         if ($(this).is(":checked", true)) {
             $(".sub-check").prop("checked", true);

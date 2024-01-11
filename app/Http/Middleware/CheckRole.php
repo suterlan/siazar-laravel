@@ -27,6 +27,9 @@ class CheckRole
             if ($userRole->name === $role) {
                 return $next($request);
             }
+            else{
+                abort(403);
+            }
         }
     }
 }

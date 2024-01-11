@@ -38,22 +38,6 @@
                                 </div>
                                 @enderror
                             </div>
-                            <div class="form-group mb-2">
-                                <Label for="guru_id">Guru Mapel </Label>
-                                <select id="guru_id" name="guru_id" class="form-control select2 {{$errors->first('guru_id') ? "is-invalid" : "" }}" required>
-                                    <option value="">&nbsp;</option>
-                                    @foreach ($gurus as $guru )
-                                        @if (old('guru_id') == $guru->id)
-                                            <option value="{{ $guru->id }}" selected>{{ $guru->nama }}</option>
-                                        @else
-                                            <option value="{{ $guru->id }}">{{ $guru->nama }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                                @error('guru_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
                             <label for="cp">Capaian Pembelajaran (CP) / KD <small><i class="text-warning">(File harus format PDF)</i></small></label>
                             <div class="custom-file mb-2">
                                 <input name="cp" type="file" class="custom-file-input" id="cp">
