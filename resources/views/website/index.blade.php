@@ -184,7 +184,7 @@
         <div class="row">
             @foreach ($jurusans as $jurusan )
                 <div class="col-lg-4 mb-5">
-                    <div class="card border-0 bg-light shadow-sm pb-2">
+                    <div class="card border-0 pb-2">
                         <div class="card-header text-center"><b>{{ strtoupper($jurusan->kode) }}</b></div>
                         <img class="mb-2 mt-3 img-fluid mx-auto" src="{{ asset('storage/'. $jurusan->logo) }}" width="150"/>
                         <div class="card-body text-center">

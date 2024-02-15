@@ -19,8 +19,8 @@ class TentangController extends Controller
         $validated = $request->validate([
             'sambutan'      => 'required',
             'visi'          => 'max:255|required',
-            'misi'          => 'max:255|required',                      
-            'deskripsi'     => 'max:255|nullable',                      
+            'misi'          => 'required',
+            'deskripsi'     => 'max:255|nullable',
             'gambar_1'      => 'image|file|max:2048|mimes:png,jpg|nullable',
         	'gambar_2'      => 'image|file|max:2048|mimes:png,jpg|nullable',
             'video'         => 'file|mimetypes:video/mp4|nullable',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Klasifikasi;
+use App\Models\Sekolah;
 use App\Models\SuratKeluar;
 use App\Models\SuratPenerimaan;
 use Illuminate\Http\Request;
@@ -10,6 +11,12 @@ use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class PenerimaanController extends Controller
 {
+    protected $sekolah;
+    public function __construct()
+    {
+        $this->sekolah = Sekolah::first();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -160,8 +167,9 @@ class PenerimaanController extends Controller
 
     public function cetak(SuratPenerimaan $penerimaan){
         $pdf = FacadePdf::loadView('surat-keluar.surat-penerimaan.cetak', [
-            'title'     => 'Cetak Surat | SIAZAR',
-            'surat'     => $penerimaan
+            'title'     => 'Cetak Surat '. config('app.name'),
+            'surat'     => $penerimaan,
+            'sekolah'   => $this->sekolah,
         ]);
         return $pdf->stream('surat-penerimaan-siswa');
         // exit(0);
@@ -169,9 +177,14 @@ class PenerimaanController extends Controller
 
     public function download(SuratPenerimaan $penerimaan){
         $pdf = FacadePdf::loadView('surat-keluar.surat-penerimaan.cetak', [
-            'title'     => 'Cetak Surat | SIAZAR',
-            'surat'     => $penerimaan
+            'title'     => 'Cetak Surat '. config('app.name'),
+            'surat'     => $penerimaan,
+            'sekolah'   => $this->sekolah,
         ]);
-        return $pdf->download('surat-penerimaan-siswa.pdf');
+
+        // remove whitespace
+        $nama = str_replace(' ', '', $penerimaan->nama_siswa);
+
+        return $pdf->download('surat-penerimaan-siswa'.$nama.'.pdf');
     }
 }

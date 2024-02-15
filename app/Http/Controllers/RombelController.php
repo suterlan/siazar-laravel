@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kelas;
+use App\Models\Klasifikasi;
 use App\Models\Siswa;
+use App\Models\SuratKeluar;
+use App\Models\SuratKelulusan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RombelController extends Controller
 {
@@ -17,23 +22,155 @@ class RombelController extends Controller
     }
 
     function Kelulusan(Request $request) {
-        Siswa::where('nis', $request->nis)
-            ->update([
-                'lulus' => true
+
+        $klasifikasi = Klasifikasi::where('nama', 'like', '%Keterangan Lulus%')->first();
+        if(!$klasifikasi){
+            return back()->with('error', 'Klasifikasi Surat Keterangan Lulus tidak ada! Silahkan buat dulu!');
+        }else{
+            $siswa = Siswa::where('nis', $request->nis)->with('mapels')->first();
+            // dd($siswa);
+
+            $kodeKlasifikasi = $klasifikasi->kode;
+            $no_surat = self::nomorSurat($kodeKlasifikasi);
+            // dump($no_surat);
+
+            SuratKelulusan::create([
+                'no_surat'  => $no_surat,
+                'nis'       => $siswa->nis,
+                'nisn'      => $siswa->nisn,
+                'ttl'       => $siswa->tempat_lahir.', '. Carbon::parse($siswa->tgl_lahir)->translatedFormat('d F Y'),
+                'nama'      => $siswa->nama_siswa,
+                'jurusan'   => $siswa->jurusan->nama
             ]);
-        return redirect(route('rombel'))->with('success', 'Siswa dengan NIS ' . $request->nis . ' berhasil diluluskan');
+
+            SuratKeluar::create([
+                'no_surat'  => $no_surat,
+                'klasifikasi_id'    => $klasifikasi->id,
+                'tanggal_surat'     => date('Y-m-d'),
+            ]);
+
+            Siswa::where('nis', $request->nis)
+                ->update([
+                    'lulus' => true
+            ]);
+
+            return redirect(route('rombel'))->with('success', 'Siswa dengan NIS ' . $request->nis . ' berhasil diluluskan');
+        }
     }
 
     function KelulusanAll(Request $request) {
+        // dd($request->check_lulus);
         if($request->check_lulus != ''){
             $data = $request->check_lulus;
-            Siswa::whereIn('nis', $data)
-                ->update(['lulus' => true]);
 
-            return redirect(route('rombel'))->with('success', 'Siswa berhasil diluluskan');
+            $klasifikasi = Klasifikasi::where('nama', 'like', '%Keterangan Lulus%')->first();
+            if(!$klasifikasi){
+                return back()->with('error', 'Klasifikasi Surat Keterangan Lulus tidak ada! Silahkan buat dulu!');
+            }else{
+                $kodeKlasifikasi = $klasifikasi->kode;
+
+                $siswas = Siswa::whereIn('nis', $data)->with('mapels')->get();
+                foreach($siswas as $siswa){
+                    $no_surat = self::nomorSurat($kodeKlasifikasi);
+
+                    SuratKelulusan::create([
+                        'no_surat'  => $no_surat,
+                        'nis'       => $siswa->nis,
+                        'nisn'      => $siswa->nisn,
+                        'ttl'       => $siswa->tempat_lahir.', '. Carbon::parse($siswa->tgl_lahir)->translatedFormat('d F Y'),
+                        'nama'      => $siswa->nama_siswa,
+                        'jurusan'   => $siswa->jurusan->nama
+                    ]);
+                    SuratKeluar::create([
+                        'no_surat'  => $no_surat,
+                        'klasifikasi_id'    => $klasifikasi->id,
+                        'tanggal_surat'     => date('Y-m-d'),
+                    ]);
+
+                    Siswa::where('nis', $siswa->nis)->update(['lulus' => true]);
+                }
+
+                return redirect(route('rombel'))->with('success', 'Siswa berhasil diluluskan');
+            }
         }else{
             return redirect(route('rombel'))->with('error', 'Tidak ada data yang dipilih!');
         }
 
+    }
+
+    function nomorSurat($kodeKlasifikasi){
+        if ($kodeKlasifikasi != '') {
+            // // hitung banyak data surat di db dan ubah jadikan collection
+            // $currentSurat = collect(SuratKeluar::all())->count();
+
+            // cari no_surat terbesar dari tabel surat keluar
+            // dengan mengambil 2 digit dari kiri
+            $query = DB::table('surat_keluars')
+                    ->select(DB::raw('MAX(LEFT(no_surat, 2)) as lastNoSurat'));
+            // jika hasil pencarian didapatkan lebih dari 0
+            if ($query->count() > 0 ) {
+                // lakukan perulangan
+                foreach ($query->get() as $key) {
+                    // no surat terakhir ubah jadi integer dan tambah dengan 1
+                    $temp = ((int)$key->lastNoSurat)+1;
+                    // ubah kembali jadi string 2 digit dengan menambahkan angka 0 di depan no surat
+                    $no_surat = sprintf('%02s', $temp);
+                }
+            }else{
+                $no_surat = '01';
+            }
+
+            // Buat bulan dalam angka romawi
+            $currenMonth = date('n');
+            $romawi = self::toRomawi($currenMonth);
+
+            // gabungkan, sehingga menjadi no surat
+            $no_surat = $no_surat . '/' . $kodeKlasifikasi . '/SMK-AZ/' . $romawi . '/' . date('Y');
+
+            return $no_surat;
+        }else{
+            return $no_surat = '';
+        }
+    }
+
+    function toRomawi($currenMonth){
+        switch ($currenMonth) {
+            case 1:
+                return 'I';
+                break;
+            case 2:
+                return 'II';
+                break;
+            case 3:
+                return 'III';
+                break;
+            case 4:
+                return 'IV';
+                break;
+            case 5:
+                return 'V';
+                break;
+            case 6:
+                return 'VI';
+                break;
+            case 7:
+                return 'VII';
+                break;
+            case 8:
+                return 'VIII';
+                break;
+            case 9:
+                return 'IX';
+                break;
+            case 10:
+                return 'X';
+                break;
+            case 11:
+                return 'XI';
+                break;
+            case 12:
+                return 'XII';
+                break;
+        }
     }
 }

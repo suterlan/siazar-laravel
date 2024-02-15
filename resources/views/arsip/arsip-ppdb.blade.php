@@ -12,7 +12,7 @@
                         </div>
                         <div class="card-body">
                             <form action="/dashboard/arsip/ppdb">
-                                <div class="input-group mb-3 col-3">
+                                <div class="input-group mb-3 col-sm-4 col-md-6 col-lg-4">
                                     <select id="filter_tahun" name="filter_tahun" class="form-control select2" aria-describedby="btn-filter">
                                         <option value="">-- Filter Tahun --</option>
                                         @for($i=date('Y'); $i>=date('Y')-10; $i-=1)

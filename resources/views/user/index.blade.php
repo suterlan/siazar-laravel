@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="col-12">
             <div class="row">
-                <div class="card shadow col-12">
+                <div class="card shadow">
                     <div class="card-header">
                         <strong class="card-title">Data User</strong>
                             <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#newUserModal" type="button"><span class="fe fe-user-plus"></span> Tambah User </button>
@@ -58,7 +58,7 @@
                                     <td>
                                         <div class="d-flex float-right">
                                             {{-- <a class="btn btn-info btn-sm" href="/dashboard/user/{{ $user->id }}"><span class="fe fe-eye"></span></a> --}}
-                                            <a class="btn btn-secondary btn-sm ml-1 btn-role text-white" id="btnRole" data-toggle="modal" data-target="#role" data-id="{{ $user->id }}">Ubah Role</a>
+                                            <a class="btn btn-secondary btn-sm ml-1 btn-role text-white" id="btnRole" data-toggle="modal" data-target="#role" data-id="{{ $user->id }}" title="Ubah Role"><span class="fe fe-shield"></span></a>
                                             <a class="btn btn-warning btn-sm ml-1" href="/dashboard/user/{{ $user->id }}/edit"><span class="fe fe-edit"></span></a>
                                             <form action="/dashboard/user/{{ $user->id }}" method="post">
                                                 @method('delete')
@@ -96,7 +96,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex float-right">
-                                            <a class="btn btn-secondary btn-sm ml-1 btn-role text-white" id="btnRole" data-toggle="modal" data-target="#role" data-id="{{ $user->id }}">Ubah Role</a>
+                                            <a class="btn btn-secondary btn-sm ml-1 btn-role text-white" id="btnRole" data-toggle="modal" data-target="#role" data-id="{{ $user->id }} title="Ubah Role"><span class="fe fe-shield"></span></a>
                                             <a class="btn btn-warning btn-sm ml-1" href="/dashboard/user/{{ $user->id }}/edit"><span class="fe fe-edit"></span></a>
                                             <form action="/dashboard/user/{{ $user->id }}" method="post">
                                                 @method('delete')

@@ -1,21 +1,32 @@
 $(document).ready(function () {
     //USERS DATATABLE
-    $("#tbUser").DataTable({
-        responsive: true,
-        stateSave: true,
-        lengthMenu: [
-            [10, 20, 50, 100, -1],
-            [10, 20, 50, 100, "All"],
-        ],
-    });
-    $("#tbUserSiswa").DataTable({
-        responsive: true,
-        stateSave: true,
-        lengthMenu: [
-            [10, 20, 50, 100, -1],
-            [10, 20, 50, 100, "All"],
-        ],
-    });
+    $("#tbUser")
+        .DataTable({
+            responsive: false,
+            stateSave: true,
+            lengthMenu: [
+                [10, 20, 50, 100, -1],
+                [10, 20, 50, 100, "All"],
+            ],
+            buttons: ["excel", "pdf", "print"],
+        })
+        .buttons()
+        .container()
+        .appendTo("#tbUser_wrapper .col-md-6:eq(0)");
+
+    $("#tbUserSiswa")
+        .DataTable({
+            responsive: false,
+            stateSave: true,
+            lengthMenu: [
+                [10, 20, 50, 100, -1],
+                [10, 20, 50, 100, "All"],
+            ],
+            buttons: ["excel", "pdf", "print"],
+        })
+        .buttons()
+        .container()
+        .appendTo("#tbUserSiswa_wrapper .col-md-6:eq(0)");
 
     // tabel jurusan
     $("#tbJurusan").DataTable();
@@ -64,14 +75,38 @@ $(document).ready(function () {
     // tabel pembagian mapel
     $("#tbPembagianMapel")
         .DataTable({
-            paging: false,
+            paging: true,
             info: false,
             ordering: false,
+            lengthMenu: [
+                [30, 50, 100, -1],
+                [30, 50, 100, "All"],
+            ],
             buttons: ["csv", "excel", "pdf", "print"],
         })
         .buttons()
         .container()
         .appendTo("#tbPembagianMapel_wrapper .col-md-6:eq(0)");
+
+    // tabel Nilai
+    $("#tableNilai")
+        .DataTable({
+            paging: true,
+            info: false,
+            rowReorder: true,
+            columnDefs: [
+                { orderable: true, className: "reorder", targets: [0, 1] },
+                { orderable: false, targets: "_all" },
+            ],
+            lengthMenu: [
+                [30, 50, 100, -1],
+                [30, 50, 100, "All"],
+            ],
+            buttons: ["excel", "pdf", "print"],
+        })
+        .buttons()
+        .container()
+        .appendTo("#tableNilai_wrapper .col-md-6:eq(0)");
 
     // ---------- ARSIP -----------
     // tabel Arsip PPDB

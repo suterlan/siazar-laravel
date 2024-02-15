@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama_sekolah')->nullable();
             $table->string('kepala_sekolah')->nullable();
+            $table->string('nip', 18)->nullable();
+            $table->string('nuptk', 16)->nullable();
             $table->string('alamat')->nullable();
             $table->string('email')->nullable();
             $table->string('no_telepon', 13)->nullable();

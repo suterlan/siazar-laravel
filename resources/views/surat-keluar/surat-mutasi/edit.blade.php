@@ -50,7 +50,7 @@
                         <div class="form-row">
                             <div class="form-group mb-3 col-lg-6">
                                 <label for="nama_siswa">Nama Siswa</label>
-                                <input id="nama_siswa" type="text" name="nama_siswa" class="form-control" value="{{ old('nama_siswa', $surat->nama_siswa) }}" required>
+                                <input id="nama_siswa" type="text" name="nama_siswa" class="form-control" value="{{ old('nama_siswa', $surat->nama_siswa) }}" readonly required>
                                 @error('nama_siswa')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -65,7 +65,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="nisn">NISN</label>
-                            <input id="nisn" type="tel" name="nisn" class="form-control" value="{{ old('nisn', $surat->nisn) }}" onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required>
+                            <input id="nisn" type="tel" name="nisn" class="form-control" value="{{ old('nisn', $surat->nisn) }}" onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;" onkeypress='return event.charCode >= 48 && event.charCode <= 57' readonly required>
                             @error('nisn')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('nisn', 10);
             $table->string('jk', 16);
             $table->string('tahun_pelajaran', 10);
-            $table->string('kelas', 16);
+            $table->string('kelas', 100);
             $table->string('nama_ayah');
             $table->string('ttl_ayah', 64);
             $table->string('pekerjaan', 128);

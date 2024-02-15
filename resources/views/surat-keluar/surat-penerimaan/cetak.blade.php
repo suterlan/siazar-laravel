@@ -51,12 +51,12 @@
                 <tr>
                     <td width="100" class="pl-5">Nama</td>
                     <td width="10">:</td>
-                    <td>SITI ROHIMAH, S.Sos</td>
+                    <td>{{ $sekolah->kepala_sekolah }}</td>
                 </tr>
                 <tr>
-                    <td width="100" class="pl-5">NIP</td>
+                    <td width="100" class="pl-5">NIP/NUPTK</td>
                     <td width="10">:</td>
-                    <td>-</td>
+                    <td>{{ $sekolah->nip . ' / ' . $sekolah->nuptk }}</td>
                 </tr>
                 <tr>
                     <td width="100" class="pl-5">Jabatan</td>
@@ -123,7 +123,7 @@
                     <td>Kepala Sekolah,</td>
                 </tr>
                 <tr>
-                    <td rowspan="30"><u><b>SITI ROHIMAH, S.Sos</b></u></td>
+                    <td rowspan="30"><u><b>{{ $sekolah->kepala_sekolah }}</b></u></td>
                 </tr>
             </table>
         </div>

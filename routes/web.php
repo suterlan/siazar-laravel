@@ -28,8 +28,10 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\RombelController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\StrukturOrganisasiController;
+use App\Http\Controllers\SuratCustomController;
 use App\Http\Controllers\SuratKBMController;
 use App\Http\Controllers\SuratKeluarController;
+use App\Http\Controllers\SuratKelulusanController;
 use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\SuratUmumController;
 use App\Http\Controllers\SuratUndanganController;
@@ -173,6 +175,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/dashboard/suratkeluar/mutasi', MutasiController::class);
     Route::get('/dashboard/suratkeluar/mutasi/cetak/{mutasi}', [MutasiController::class, 'cetak']);
     Route::get('/dashboard/suratkeluar/mutasi/download/{mutasi}', [MutasiController::class, 'download']);
+    Route::get('/get-siswa-mutasi', [MutasiController::class, 'getSiswa']);
+    Route::get('/get-detail-siswa-mutasi', [MutasiController::class, 'getDetailSiswa']);
 
     // Route Surat Keluar (undangan)
     Route::resource('/dashboard/suratkeluar/undangan', SuratUndanganController::class);
@@ -189,7 +193,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/suratkeluar/umum/cetak/{umum}', [SuratUmumController::class, 'cetak']);
     Route::get('/dashboard/suratkeluar/umum/download/{umum}', [SuratUmumController::class, 'download']);
 
-    // Route surat masuk
+    // Route Generate Nomor Surat (untuk surat custom)
+    Route::resource('/dashboard/suratkeluar/custom', SuratCustomController::class);
+
+    // Route Surat Kelulusan Siswa
+    Route::resource('/dashboard/suratkeluar/kelulusan', SuratKelulusanController::class);
+    Route::get('/dashboard/suratkeluar/kelulusan/cetak/{kelulusan}', [SuratKelulusanController::class, 'cetak']);
+    Route::get('/dashboard/suratkeluar/kelulusan/download/{kelulusan}', [SuratKelulusanController::class, 'download']);
+
+    // Route SURAT MASUK //
     Route::resource('/dashboard/suratmasuk', SuratMasukController::class);
 
     // Route Setting website

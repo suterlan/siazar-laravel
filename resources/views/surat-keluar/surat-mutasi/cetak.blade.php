@@ -123,7 +123,7 @@
                     <td>Kepala Sekolah,</td>
                 </tr>
                 <tr>
-                    <td rowspan="30"><u><b>SITI ROHIMAH, S.Sos</b></u></td>
+                    <td rowspan="30"><u><b>{{ $sekolah->kepala_sekolah }}</b></u></td>
                 </tr>
             </table>
         </div>
@@ -216,7 +216,7 @@
         <script>
             setTimeout(() => {
                 window.print();
-            }, 10000);
+            }, 1000);
         </script>
 	</body>
 </html>

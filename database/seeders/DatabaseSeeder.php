@@ -76,7 +76,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // seed Surat Masuk
-        SuratMasuk::factory(5)->create();
+        // SuratMasuk::factory(5)->create();
 
         Jurusan::create([
             'kode'  => 'TML',
@@ -99,6 +99,16 @@ class DatabaseSeeder extends Seeder
             'guru_id' => 1,
             'nama'  => 'X'
         ]);
+        Kelas::create([
+            'jurusan_id' => 1,
+            'guru_id' => 1,
+            'nama'  => 'XI'
+        ]);
+        Kelas::create([
+            'jurusan_id' => 1,
+            'guru_id' => 1,
+            'nama'  => 'XII'
+        ]);
 
         PPDB::factory(15)->create();
 
@@ -112,16 +122,16 @@ class DatabaseSeeder extends Seeder
             'id'    => 1,
         ]);
 
-        Category::create([
-            'name'      => 'Penerimaan Peserta Didik Baru',
-            'slug'      => 'penerimaan-peserta-didik-baru'
-        ]);
-        Category::create([
-            'name'      => 'Ujian akhir',
-            'slug'      => 'ujian-akhir'
-        ]);
+        // Category::create([
+        //     'name'      => 'Penerimaan Peserta Didik Baru',
+        //     'slug'      => 'penerimaan-peserta-didik-baru'
+        // ]);
+        // Category::create([
+        //     'name'      => 'Ujian akhir',
+        //     'slug'      => 'ujian-akhir'
+        // ]);
 
-        Post::factory(20)->create();
+        // Post::factory(20)->create();
 
     }
 }

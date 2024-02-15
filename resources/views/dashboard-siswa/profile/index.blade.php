@@ -169,6 +169,64 @@
                                 </div>
                                 @enderror
                             </div>
+
+                            <hr>
+                            <h5 class="mt-4 mb-3">Upload Dokumen (format Pdf)</h5>
+                            <div class="form-group mb-3">
+                                {{-- <label for="">Kartu Keluarga @if(isset($siswa->dokumen->kartu_keluarga)) <span class="fe fe-check fe-16 text-success"></span> @endif</label> --}}
+                                <div class="custom-file">
+                                    <input type="hidden" name="old_kartu_keluarga" value="{{$siswa->dokumen->kartu_keluarga ?? ''}}">
+                                    <input name="kartu_keluarga" type="file" class="custom-file-input {{$errors->first('kartu_keluarga') ? "is-invalid" : "" }}" id="kartu_keluarga" >
+                                    <label class="custom-file-label" for="kartu_keluarga">Scan KK</label>
+                                    @error('kartu_keluarga')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                {{-- <label for="">Ijazah SMP @if(isset($siswa->dokumen->ijazah)) <span class="fe fe-check fe-16 text-success"></span> @endif</label> --}}
+                                <div class="custom-file">
+                                    <input type="hidden" name="old_ijazah" value="{{$siswa->dokumen->ijazah ?? ''}}">
+                                    <input name="ijazah" type="file" class="custom-file-input {{$errors->first('ijazah') ? "is-invalid" : "" }}" id="ijazah" >
+                                    <label class="custom-file-label" for="ijazah">Scan Ijazah</label>
+                                    @error('ijazah')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                {{-- <label for="">Akte Kelahiran @if(isset($siswa->dokumen->akte)) <span class="fe fe-check fe-16 text-success"></span> @endif</label> --}}
+                                <div class="custom-file">
+                                    <input type="hidden" name="old_akte" value="{{$siswa->dokumen->akte ?? ''}}">
+                                    <input name="akte" type="file" class="custom-file-input {{$errors->first('akte') ? "is-invalid" : "" }}" id="akte" >
+                                    <label class="custom-file-label" for="akte">Scan Akte Kelahiran</label>
+                                    @error('akte')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                {{-- <label for="">KTP Orang Tua @if(isset($siswa->dokumen->ktp_ortu)) <span class="fe fe-check fe-16 text-success"></span> @endif</label> --}}
+                                <div class="custom-file">
+                                    <input type="hidden" name="old_ktp_ortu" value="{{$siswa->dokumen->ktp_ortu ?? ''}}">
+                                    <input name="ktp_ortu" type="file" class="custom-file-input {{$errors->first('ktp_ortu') ? "is-invalid" : "" }}" id="ktp_ortu" >
+                                    <label class="custom-file-label" for="ktp_ortu">Scan KTP Ortu</label>
+                                    @error('ktp_ortu')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                {{-- <label for="">Berkas Lainnya @if(isset($siswa->dokumen->berkas)) <span class="fe fe-check fe-16 text-success"></span> @endif</label> --}}
+                                <div class="custom-file">
+                                    <input type="hidden" name="old_berkas" value="{{$siswa->dokumen->berkas ?? ''}}">
+                                    <input name="berkas" type="file" class="custom-file-input {{$errors->first('berkas') ? "is-invalid" : "" }}" id="berkas" >
+                                    <label class="custom-file-label" for="berkas">Scan berkas lainnya</label>
+                                    @error('berkas')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                             {{-- Button Submit --}}
                             <button type="submit" class="btn btn-primary mt-3"><span class="fe fe-save"></span> Simpan</button>
                         </div>

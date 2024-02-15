@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="col-12">
             <div class="row">
-                <div class="col-md-12">
+                {{-- <div class="col-md-12"> --}}
                     <div class="card shadow">
                         <div class="card-header">
                             <strong class="card-title">Arsip Tracing Alumni</strong>
@@ -12,10 +12,10 @@
                         </div>
                         <div class="card-body">
                             <form action="/dashboard/arsip/tracing-alumni">
-                                <div class="d-flex mb-3">
-                                    <div class="input-group col-3">
+                                <div class="d-flex mb-3 col-md-6">
+                                    <div class="input-group">
                                         <select id="filter_tahun" name="filter_tahun" class="form-control select2" required>
-                                            <option value="">-- Filter Tahun --</option>
+                                            <option value="">-- Tahun --</option>
                                             @for($i=date('Y'); $i>=date('Y')-10; $i-=1)
                                                 @if (request('filter_tahun') == $i)
                                                     <option value="{{ $i }}" selected> {{ $i }} </option>
@@ -25,9 +25,9 @@
                                             @endfor
                                         </select>
                                     </div>
-                                    <div class="input-group col-3">
+                                    <div class="input-group">
                                         <select id="filter_status" name="filter_status" class="form-control select2">
-                                            <option value="">-- Filter Status --</option>
+                                            <option value="">-- Status --</option>
                                             <option value="">Semua</option>
                                             <option value="Kerja" @if(request('filter_status') == 'Kerja') selected @endif>Kerja</option>
                                             <option value="Kuliah" @if(request('filter_status') == 'Kuliah') selected @endif>Kuliah</option>
@@ -35,7 +35,9 @@
                                             <option value="Usaha Mandiri" @if(request('filter_status') == 'Usaha Mandiri') selected @endif>Usaha Mandiri</option>
                                         </select>
                                     </div>
-                                    <button class="btn btn-primary" type="submit"><i class="fe fe-filter"> Filter</i></button>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">Filter</button>
+                                    </div>
                                 </div>
                             </form>
 
@@ -73,7 +75,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                {{-- </div> --}}
             </div>
         </div>
     </div>
