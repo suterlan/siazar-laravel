@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('siswa_id');
             $table->unsignedBigInteger('mapel_id');
-            $table->integer('nilai')->default(0);
+            $table->decimal('nilai', 8, 2)->default(0);
             $table->string('tahun_ajaran', 10);
+            $table->string('semester', 6);
             $table->timestamps();
 
             $table->foreign('siswa_id')->references('id')->on('siswas')->onDelete('cascade');

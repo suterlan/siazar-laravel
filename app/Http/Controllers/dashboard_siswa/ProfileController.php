@@ -39,6 +39,11 @@ class ProfileController extends Controller
 
         $ruleDocument = [
             'foto'                  => 'image|file|max:2048|mimes:png,jpg',
+            'kartu_keluarga'        => 'file|mimes:pdf|max:2048',
+            'ijazah'                => 'file|mimes:pdf|max:2048',
+            'akte'                  => 'file|mimes:pdf|max:2048',
+            'ktp_ortu'              => 'file|mimes:pdf|max:2048',
+            'berkas'                => 'file|mimes:pdf|max:2048',
         ];
 
         $documents = $request->validate($ruleDocument);
@@ -48,6 +53,36 @@ class ProfileController extends Controller
                 Storage::delete($request->old_foto);
             }
             $documents['foto'] = $request->file('foto')->store('dokumen/' . $siswa->nisn . '_' . trim($validated['nama_siswa'], '.'));
+        }
+        if ($request->file('kartu_keluarga')) {
+            if($request->old_kartu_keluarga){
+                Storage::delete($request->old_kartu_keluarga);
+            }
+            $documents['kartu_keluarga'] = $request->file('kartu_keluarga')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
+        }
+        if ($request->file('ijazah')) {
+            if($request->old_ijazah){
+                Storage::delete($request->old_ijazah);
+            }
+            $documents['ijazah'] = $request->file('ijazah')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
+        }
+        if ($request->file('akte')) {
+            if($request->old_akte){
+                Storage::delete($request->old_akte);
+            }
+            $documents['akte'] = $request->file('akte')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
+        }
+        if ($request->file('ktp_ortu')) {
+            if($request->old_ktp_ortu){
+                Storage::delete($request->old_ktp_ortu);
+            }
+            $documents['ktp_ortu'] = $request->file('ktp_ortu')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
+        }
+        if ($request->file('berkas')) {
+            if($request->old_berkas){
+                Storage::delete($request->old_berkas);
+            }
+            $documents['berkas'] = $request->file('berkas')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
 
         // Ubah password,

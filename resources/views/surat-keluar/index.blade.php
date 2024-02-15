@@ -8,7 +8,7 @@
                     <div class="card shadow">
                         <div class="card-header">
                             <strong class="card-title">Surat Keluar</strong>
-                                <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#newSuratModal" type="button"><span class="fe fe-file-plus"></span> Surat Baru </button>
+                                <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#generateNoSurat" type="button"><span class="fe fe-cpu"></span> Generate Nomor Surat </button>
                             <p class="card-text">Tabel Surat Keluar</p>
                         </div>
                         <div class="card-body">
@@ -17,6 +17,7 @@
                                 <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
                             </div>
                             @endif
+
                             <table id="tbSuratKeluar" class="table table-stripped table-hover">
                                 <thead class="thead-dark">
                                     <th>#</th>
@@ -45,40 +46,77 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="newSuratModal" tabindex="-1" role="dialog" aria-labelledby="newSuratModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="generateNoSurat" tabindex="-1" role="dialog" aria-labelledby="generateNoSuratLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="newSuratModalLabel">Buat Surat Baru</h5>
+                    <h5 class="modal-title" id="generateNoSuratLabel">Generate Nomor Surat</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                {{-- <form action="/dashboard/suratkeluar/suratbaru" method="post">
-                    @csrf --}}
+                <form action="/dashboard/suratkeluar/custom" method="POST">
+                    @csrf
                 <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            {{-- <input type="hidden" name="jenis" id="jenis" value="{{ $jenis }}"> --}}
+                            <Label for="klasifikasi">Pilih Klasifikasi</Label>
+                            <select id="klasifikasi" name="klasifikasi_id" class="form-control select2" required>
+                                <option value="">&nbsp;</option>
+                                @foreach ($klasifikasi as $klasifikasi )
+                                    @if (old('klasifikasi_id') == $klasifikasi->id)
+                                        <option value="{{ $klasifikasi->id }}" selected>{{ $klasifikasi->nama }}</option>
+                                    @else
+                                        <option value="{{ $klasifikasi->id }}">{{ $klasifikasi->nama }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            @error('klasifikasi_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="tanggal_surat">Tanggal Surat</label>
+                            <div class="input-group">
+                                <input name="tanggal_surat" type="text" class="form-control drgpicker" id="tanggal_surat" value="{{ date('Y/m/d') }}" aria-describedby="button-addon-date" required>
+                                <div class="input-group-append">
+                                <div class="input-group-text" id="button-addon-date"><span class="fe fe-calendar fe-16"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="nomorSurat()" class="btn mb-3 btn-primary btn-block"><span class="fe fe-cpu"></span> Generate Nomor</button>
+
                     <div class="form-group">
-                        <label for="jenis_surat">Pilih Jenis Surat</label>
-                        <select name="jenis_surat" onchange="SelectJenis()" class="form-control select2" id="jenis_surat" required>
-                            <option value="">&nbsp;</option>
-                            <option value="Penerimaan">Surat Penerimaan Siswa</option>
-                            <option value="panggilan">Surat Pemanggilan Siswa</option>
-                            <option value="mutasi">Surat Mutasi Siswa</option>
-                        </select>
+                        <label for="no_surat">Nomor Surat</label>
+                        {{-- <p class="text-info" style="font-size: 80%"><span class="fe fe-info"></span> Nomor surat akan diisi otomatis saat memilih klasifikasi</p> --}}
+                        <input name="no_surat" id="no_surat" type="text" class="form-control" aria-describedby="addonSurat" value="{{ old('no_surat') }}" readonly required>
+                        @error('no_surat')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="keterangan">Keterangan</label>
+                        <input name="keterangan" id="keterangan" type="text" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a id="btnJenisSurat" href="dashboard/suratkeluar/suratbaru/{{ $jenis = "" }}" type="submit" class="btn mb-2 btn-primary btn-block">Next</a>
+                    <button type="submit" class="btn mb-2 btn-secondary btn-block"><span class="fe fe-save"></span> Simpan</button>
                 </div>
-                {{-- </form> --}}
+                </form>
             </div>
         </div>
     </div>
-    <script>
-        function SelectJenis(){
-            let jenis_surat = document.querySelector('#jenis_surat');
-            const btnJenisSurat = document.querySelector('#btnJenisSurat');
-            btnJenisSurat.setAttribute('href', '/dashboard/surat/' + jenis_surat.value);
-        }
-    </script>
+<script>
+    function nomorSurat(){
+        const kode = document.querySelector('#klasifikasi');
+        const noSurat = document.querySelector('#no_surat');
+        // console.log(kode.value);
+        fetch('/getCodeKlasifikasi?kode=' + kode.value)
+        .then(response => response.json())
+        .then(data => noSurat.value = data.no_surat)
+    };
+</script>
 @endsection

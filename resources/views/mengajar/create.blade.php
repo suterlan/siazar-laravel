@@ -53,14 +53,33 @@
                                 @enderror
                             </div>
                             <div class="input-group mb-3">
-                                <input class="form-control" id="jam" type="number" name="jam" placeholder="0" min="0">
+                                <input class="form-control {{$errors->first('jam') ? "is-invalid" : "" }}" id="jam" type="number" name="jam" value="{{ old('jam') }}" min="0" required>
                                 <div class="input-group-append">
-                                <span class="input-group-text" id="jam">Jam</span>
+                                    <span class="input-group-text" id="jam">Jam</span>
                                 </div>
+                                @error('jam')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="form-group mb-2">
-                                <label for="tahun_ajaran">Tahun Ajaran</label>
-                                <input class="form-control input-tahun-ajaran col-lg-6" id="tahun_ajaran" type="text" name="tahun_ajaran" placeholder="____/____" maxlength="9" required>
+                            <div class="form-row">
+                                <div class="form-group col-lg-6">
+                                    <label for="tahun_ajaran">Tahun Ajaran</label>
+                                    <input class="form-control input-tahun-ajaran {{$errors->first('tahun_ajaran') ? "is-invalid" : "" }}" id="tahun_ajaran" type="text" name="tahun_ajaran" placeholder="____/____" maxlength="9" required>
+                                    @error('tahun_ajaran')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="semester">Semester</label>
+                                    <select name="semester" id="semester" class="form-control {{$errors->first('semester') ? "is-invalid" : "" }}" required>
+                                        <option value="">-- Semester --</option>
+                                        <option value="Ganjil">Ganjil</option>
+                                        <option value="Genap">Genap</option>
+                                    </select>
+                                    @error('semester')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="card-footer">

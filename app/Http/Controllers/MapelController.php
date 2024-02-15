@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\DokumenAjar;
 use App\Models\Guru;
+use App\Models\Jurusan;
+use App\Models\Kelas;
 use App\Models\Mapel;
+use App\Models\Mengajar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class MapelController extends Controller
@@ -172,9 +176,28 @@ class MapelController extends Controller
     }
 
     public function pembagianMapel(){
-        $gurus = Guru::select('id', 'nama', 'nuptk')->with('mapels')->get();
+
+        $years = Mengajar::select('tahun_ajaran')->orderBy('tahun_ajaran')->get()->groupBy('tahun_ajaran');
+
+        $gurus = [];
+
+        if(request('filter_tahun') && request('filter_semester')){
+            $gurus = Guru::select('id', 'nama')
+                ->with(['mengajars' => function ($query) {
+                    $query->where('semester', '=', request('filter_semester'))
+                        ->where('tahun_ajaran', '=', request('filter_tahun'));
+                    $query->with('mapel');
+                    $query->with('kelas');
+                    $query->sum('mengajars.jam');
+                }])->withSum(['mengajars as total_jam' => function($q){
+                    $q->where('semester', '=', request('filter_semester'))
+                        ->where('tahun_ajaran', '=', request('filter_tahun'));
+                }], 'jam')->get();
+        }
+
         return view('mapel.pembagianmapel', [
             'title' => 'Pembagian Mapel '. config('app.name'),
+            'years'     => $years,
             'gurus' => $gurus,
         ]);
     }

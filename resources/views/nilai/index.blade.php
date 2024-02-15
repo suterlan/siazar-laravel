@@ -10,8 +10,18 @@
                     </div>
                     <form class="needs-validation @if ($errors->any()) was-validated @endif" action="#" method="POST" novalidate>
                     <div class="card-body px-5">
-                        <div class="form-group mb-3">
-                            <select class="form-control {{$errors->first('kelas_id') ? "is-invalid" : "" }}" id="tahun_ajaran" name="tahun_ajaran" required>
+                        <div class="form-group mb-2">
+                            <select id="semester" name="semester" class="form-control {{$errors->first('semester') ? "is-invalid" : "" }}" required>
+                                <option value="">-- Semester --</option>
+                                <option value="Ganjil">Ganjil</option>
+                                <option value="Genap">Genap</option>
+                            </select>
+                            @error('semester')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group mb-2">
+                            <select class="form-control {{$errors->first('tahun_ajaran') ? "is-invalid" : "" }}" id="tahun_ajaran" name="tahun_ajaran" required>
                                 <option value="">-- Tahun Ajaran --</option>
                                 @foreach ($tahuns as $tahun => $value)
                                     @if (old('tahun_ajaran') == $tahun)
@@ -21,7 +31,7 @@
                                     @endif
                                 @endforeach
                             </select>
-                            @error('kelas_id')
+                            @error('tahun_ajaran')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -33,7 +43,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-2">
                             <select class="form-control {{$errors->first('kelas_id') ? "is-invalid" : "" }}" id="kelas_id" name="kelas_id" required>
                                 {{-- render from js --}}
                             </select>
@@ -41,7 +51,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-2">
                             <select class="form-control {{$errors->first('jurusan_id') ? "is-invalid" : "" }}" id="jurusan_id" name="jurusan_id" required disabled>
                                 {{-- render from js --}}
                             </select>
@@ -90,16 +100,19 @@
         </div>
     </div>
 <script>
+    const selectSemester = document.querySelector('#semester');
     const selectKelas = document.querySelector('#kelas_id');
     const selectTahun = document.querySelector('#tahun_ajaran');
     const selectMapel = document.querySelector('#select_mapel_id');
     const selectJurusan = document.querySelector('#jurusan_id');
 
     selectTahun.addEventListener('change', async () => {
+        const semester = selectSemester.value;
         const tahun = selectTahun.value;
         // console.log(tahun);
 
-        const mapel = await getFetch("/dashboard/get-mapel-mengajar?tahun=", tahun);
+        const response = await fetch("/dashboard/get-mapel-mengajar?tahun="+ tahun + "&&semester=" + semester);
+        const mapel = await response.json();
         // console.log(mapel);
 
         setOptionMapel(mapel, selectMapel);
@@ -150,11 +163,12 @@
     // fungsi get siswa
     async function getSiswa(idKelas, idJurusan) {
         const tahun_ajaran  = selectTahun.value;
+        const semester = selectSemester.value;
         const mapel_id  = selectMapel.value;
 
-        const response = await fetch("/dashboard/get-siswa?kelas_id=" + idKelas + "&&jurusan_id=" + idJurusan + "&&tahun_ajaran=" + tahun_ajaran + "&&mapel_id=" + mapel_id);
+        const response = await fetch("/dashboard/get-siswa?kelas_id=" + idKelas + "&&jurusan_id=" + idJurusan + "&&tahun_ajaran=" + tahun_ajaran + "&&mapel_id=" + mapel_id + "&&semester=" + semester);
         const siswa = await response.json();
-        console.log(siswa);
+        // console.log(siswa);
 
         const cardSiswa = document.querySelector('#card-siswa');
         const btnSimpanNilai = document.querySelector('#simpanNilai');
@@ -184,8 +198,11 @@
                         <div class="form-group">
                             <input type="text" id="tahun_ajaran${e.id}" name="tahun_ajaran" class="form-control" value="${tahun_ajaran}" hidden>
                         </div>
+                        <div class="form-group">
+                            <input type="text" id="semester${e.id}" name="semester" class="form-control" value="${semester}" hidden>
+                        </div>
                         <div class="form-group col-lg-4">
-                            <input type="number" id="nilai${e.id}" name="nilai[]" class="form-control" min="0" value="${inputNilai}" max="100">
+                            <input type="number" step="0.01" id="nilai${e.id}" name="nilai[]" class="form-control" min="0" value="${inputNilai}" max="100">
                         </div>
                     </div>
                 `;
@@ -193,6 +210,7 @@
 
         cardSiswa.innerHTML = formInputNilaiSiswa;
         btnSimpanNilai.removeAttribute('hidden');
+
     }
 
     function getFetch(link, id) {

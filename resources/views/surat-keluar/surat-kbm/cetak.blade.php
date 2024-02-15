@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ $title; }}</title>
-<style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{{ $title; }}</title>
+        <style>
             /** Define the margins of your page **/
             @page {
                 margin: 1cm 2cm;
@@ -35,6 +35,7 @@
                 left: 0cm;
                 right: 0cm;
             }
+
             .kop {
                 width: 100%;
                 border-bottom: 5px solid black;
@@ -54,7 +55,7 @@
                 font-size: 10px;
             }
             #versi {
-                margin-left: auto;
+                float: right;
             }
             .table-border {
                 border: 1px solid black;
@@ -354,7 +355,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <table class="table-ttd">
+                    <table class="table-ttd" style="margin-right: 5cm">
                         <tr>
                             <td>Ditetapkan di : Cianjur</td>
                         </tr>

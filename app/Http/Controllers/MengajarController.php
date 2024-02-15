@@ -22,8 +22,10 @@ class MengajarController extends Controller
 
         $mengajars = [];
 
-        if(request('filter_tahun')){
-            $mengajars = Mengajar::where('tahun_ajaran', request('filter_tahun'))->orderBy('mapel_id')->get();
+        if(request('filter_tahun') && request('filter_semester')){
+            $mengajars = Mengajar::where('tahun_ajaran', request('filter_tahun'))
+                        ->where('semester', request('filter_semester'))
+                        ->orderBy('mapel_id')->get();
         }
 
         return view('mengajar.index', [
@@ -64,6 +66,7 @@ class MengajarController extends Controller
             'guru_id'       => 'required',
             'jam'           => 'required|min:0',
             'tahun_ajaran'  => 'required',
+            'semester'      => 'required',
         ]);
 
         Mengajar::create($validated);

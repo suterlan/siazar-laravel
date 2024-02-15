@@ -141,6 +141,7 @@
                         <a href="/dashboard/suratkeluar/undangan" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/undangan*') ? 'link-active' : '' }}"><span class="ml-1"> Surat Undangan</span></a>
                         {{-- <a href="/dashboard/suratkeluar/umum" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/umum*') ? 'link-active' : '' }}"><span class="ml-1"> Surat Umum</span></a> --}}
                         <a href="/dashboard/suratkeluar/skbm" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/skbm*') ? 'link-active' : '' }}"><span class="ml-1"> Surat KBM</span></a>
+                        <a href="/dashboard/suratkeluar/kelulusan" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/kelulusan*') ? 'link-active' : '' }}"><span class="ml-1"> Surat Kelulusan</span></a>
                     </ul>
                 </li>
                 <a class="nav-link pl-3 {{ Request::is('dashboard/suratmasuk*') ? 'link-active' : '' }}" href="/dashboard/suratmasuk"><span class="ml-1">Surat Masuk</span></a>

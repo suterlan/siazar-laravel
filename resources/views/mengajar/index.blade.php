@@ -23,17 +23,26 @@
                             @endif
 
                             <form action="/dashboard/mengajar">
-                                <div class="input-group mb-3 col-3">
-                                    <select id="filter_tahun" name="filter_tahun" class="form-control select2" aria-describedby="btn-filter" required>
-                                        <option value="">-- Tahun Ajaran --</option>
-                                        @foreach ($years as $year => $tahun )
-                                            @if (request('filter_tahun') == $year)
-                                                <option value="{{$year}}" selected>{{ $year}}</option>
-                                            @else
-                                                <option value="{{$year}}">{{ $year}}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
+                                <div class="d-flex mb-3 col-md-6">
+                                    <div class="input-group">
+                                        <select id="filter_tahun" name="filter_tahun" class="form-control select2" aria-describedby="btn-filter" required>
+                                            <option value="">-- Tahun Ajaran --</option>
+                                            @foreach ($years as $year => $tahun )
+                                                @if (request('filter_tahun') == $year)
+                                                    <option value="{{$year}}" selected>{{ $year}}</option>
+                                                @else
+                                                    <option value="{{$year}}">{{ $year}}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <select id="filter_semester" name="filter_semester" class="form-control select2" required>
+                                            <option value="">-- Semester --</option>
+                                            <option value="Ganjil" @if(request('filter_semester') == 'Ganjil') selected @endif>Ganjil</option>
+                                            <option value="Genap" @if(request('filter_semester') == 'Genap') selected @endif>Genap</option>
+                                        </select>
+                                    </div>
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit" id="button-filter">Filter</button>
                                     </div>

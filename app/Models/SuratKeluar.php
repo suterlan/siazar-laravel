@@ -12,6 +12,8 @@ class SuratKeluar extends Model
 
     protected $guarded = ['id'];
 
+    protected $with = ['klasifikasi', 'penerimaan', 'mutasi', 'panggilan', 'undangan', 'kelulusan'];
+
     public function klasifikasi(){
         return $this->belongsTo(Klasifikasi::class);
     }
@@ -30,6 +32,9 @@ class SuratKeluar extends Model
     }
     public function umum(){
         return $this->belongsTo(SuratUmum::class, 'no_surat', 'no_surat');
+    }
+    public function kelulusan(){
+        return $this->belongsTo(SuratKelulusan::class, 'no_surat', 'no_surat');
     }
 
      // Rubah tampilan format tanggal surat secara global

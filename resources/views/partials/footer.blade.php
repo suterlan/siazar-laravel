@@ -77,6 +77,11 @@
     if(activeTab){
       $('#myTab a[href="' + activeTab + '"]').tab('show');
     }
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
   });
 </script>
 <!-- Global site tag (gtag.js) - Google Analytics -->

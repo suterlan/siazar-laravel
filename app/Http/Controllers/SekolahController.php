@@ -20,6 +20,8 @@ class SekolahController extends Controller
             $validated = $request->validate([
                 'nama_sekolah'      => 'max:64|nullable',
                 'kepala_sekolah'    => 'max:64|nullable',
+                'nip'               => 'max:18|nullable',
+                'nuptk'             => 'max:16|nullable',
                 'alamat'            => 'nullable',
                 'email'             => 'email|nullable',
                 'no_telepon'        => 'max:13|nullable',

@@ -14,19 +14,14 @@ class SuratKeluarController extends Controller
     public function index()
     {
         return view('surat-keluar.index',[
-            'title'     => 'Surat Keluar | SIAZAR',
-            'surats'    => SuratKeluar::with(['klasifikasi', 'penerimaan', 'mutasi', 'panggilan'])->latest()->get()
+            'title'     => 'Surat Keluar | '. config('app.name'),
+            'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get(),
+            'surats'    => SuratKeluar::latest()->get()
         ]);
     }
 
-    public function create($jenis){
-        if ($jenis == "Penerimaan") {
-            return redirect('/dashboard/suratkeluar/penerimaan/create');
-        }elseif ($jenis == "Panggilan") {
-            return redirect('/dashboard/suratkeluar/panggilan/create');
-        }elseif ($jenis == "mutasi") {
-            return redirect('/dashboard/suratkeluar/mutasi/create');
-        }
+    public function create(){
+        //
     }
 
     //Fungsi untuk mengenerate nomor surat otomatis

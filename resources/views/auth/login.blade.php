@@ -29,7 +29,7 @@
                         <input type="checkbox" value="remember-me"> Stay logged in </label>
                     </div> --}}
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-                    <p class="mt-5 mb-3 text-muted">© {{ date('Y') }}</p>
+                    <p class="mt-5 mb-3 text-muted">© 2022 - {{ date('Y') }}</p>
                 </form>
             </div>
         </div>

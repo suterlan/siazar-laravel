@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('guru_id');
             $table->integer('jam')->nullable();
             $table->string('tahun_ajaran');
+            $table->string('semester', 6);
             $table->timestamps();
 
             $table->foreign('mapel_id')->references('id')->on('mapels')->onDelete('cascade');

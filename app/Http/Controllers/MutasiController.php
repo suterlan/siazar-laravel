@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
 use App\Models\Klasifikasi;
+use App\Models\Sekolah;
+use App\Models\Siswa;
 use App\Models\SuratKeluar;
 use App\Models\SuratMutasi;
 use Illuminate\Http\Request;
@@ -10,6 +13,11 @@ use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class MutasiController extends Controller
 {
+    protected $sekolah;
+    public function __construct()
+    {
+        $this->sekolah = Sekolah::first();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +40,8 @@ class MutasiController extends Controller
     {
         return view('surat-keluar.surat-mutasi.create',[
             'title'     => 'Surat Mutasi Baru '. config('app.name'),
-            'klasifikasi'    => Klasifikasi::select('id', 'kode', 'nama')->get()
+            'klasifikasi'    => Klasifikasi::select('id', 'kode', 'nama')->get(),
+            'kelas'     => Kelas::select('id', 'jurusan_id', 'nama')->get(),
         ]);
     }
 
@@ -52,19 +61,30 @@ class MutasiController extends Controller
             'ttl'               => 'required',
             'nisn'              => 'required|max:10',
             'jk'                => 'required',
-            'kelas'             => 'required|max:64',
+            'kelas'             => 'required|max:100',
             'tahun_pelajaran'   => 'required',
             'alamat'            => 'required',
             'alasan_pindah'     => 'required',
             'nama_ayah'         => 'required',
             'ttl_ayah'          => 'required',
-            'pekerjaan'         => 'required',
+            'pekerjaan'         => 'required|max:128',
             'nama_ibu'          => 'required',
             'ttl_ibu'           => 'required'
 
         ]);
         SuratKeluar::create($validated);
         SuratMutasi::create($validated);
+
+        // copy data in siswa table to siswa_mutasis table
+        // and delete data siswa in siswa table
+        // where nisn is equal
+        $siswa = Siswa::where('nisn', $validated['nisn'])->first();
+        $siswaMutasi = $siswa->replicate();
+        $siswaMutasi->setTable('siswa_mutasis');
+        $siswaMutasi->save();
+
+        $siswa->delete();
+
 
         return redirect('/dashboard/suratkeluar/mutasi')->with('success', 'Surat mutasi baru berhasil dibuat!');
     }
@@ -114,13 +134,13 @@ class MutasiController extends Controller
             'ttl'               => 'required',
             'nisn'              => 'required|max:10',
             'jk'                => 'required',
-            'kelas'             => 'required|max:64',
+            'kelas'             => 'required|max:100',
             'tahun_pelajaran'   => 'required',
             'alamat'            => 'required',
             'alasan_pindah'     => 'required',
             'nama_ayah'         => 'required',
             'ttl_ayah'          => 'required',
-            'pekerjaan'         => 'required',
+            'pekerjaan'         => 'required|max:128',
             'nama_ibu'          => 'required',
             'ttl_ibu'           => 'required'
         ];
@@ -183,7 +203,8 @@ class MutasiController extends Controller
     public function cetak(SuratMutasi $mutasi){
         $pdf = FacadePdf::loadView('surat-keluar.surat-mutasi.cetak',[
             'title'     => 'Cetak surat mutasi '. config('app.name'),
-            'surat'     => $mutasi
+            'surat'     => $mutasi,
+            'sekolah'   => $this->sekolah,
         ]);
         return $pdf->stream('surat-mutasi-siswa');
     }
@@ -191,8 +212,27 @@ class MutasiController extends Controller
     public function download(SuratMutasi $mutasi){
         $pdf = FacadePdf::loadView('surat-keluar.surat-mutasi.cetak',[
             'title'     => 'Cetak surat mutasi '. config('app.name'),
-            'surat'     => $mutasi
+            'surat'     => $mutasi,
+            'sekolah'   => $this->sekolah,
         ]);
-        return $pdf->download('surat-mutasi-siswa.pdf');
+
+        // remove whitespace
+        $nama = str_replace(' ', '', $mutasi->nama_siswa);
+
+        return $pdf->download('surat-mutasi-siswa-'.$nama.'.pdf');
+    }
+
+    public function getSiswa(Request $request){
+        $siswa = Siswa::select('id', 'nama_siswa', 'kelas_id')
+        ->where('kelas_id', $request->kelas_id)
+        ->get();
+        return response()->json($siswa);
+    }
+
+    public function getDetailSiswa(Request $request){
+        $siswa = Siswa::select('id', 'nama_siswa', 'kelas_id', 'tempat_lahir', 'tgl_lahir', 'nisn', 'jk', 'alamat', 'nama_ayah', 'tgl_lahir_ayah', 'pekerjaan_ayah', 'nama_ibu', 'tgl_lahir_ibu')
+        ->find($request->id);
+
+        return response()->json($siswa);
     }
 }

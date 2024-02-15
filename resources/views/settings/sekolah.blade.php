@@ -37,6 +37,20 @@
                                     @enderror
                                 </div>
                                 <div class="form-group mb-3">
+                                    <label for="nip" class="form-label">NIP</label>
+                                    <input id="nip" type="tel" name="nip" class="form-control {{$errors->first('nip') ? "is-invalid" : "" }}" value="{{ old('nip', $sekolah->nip ) }}" onKeyDown="if(this.value.length==18 && event.keyCode!=8) return false;" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required>
+                                    @error('nip')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="nuptk" class="form-label">NUPTK</label>
+                                    <input id="nuptk" type="tel" name="nuptk" class="form-control {{$errors->first('nuptk') ? "is-invalid" : "" }}" value="{{ old('nuptk', $sekolah->nuptk ) }}" onKeyDown="if(this.value.length==16 && event.keyCode!=8) return false;" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required>
+                                    @error('nuptk')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group mb-3">
                                     <label for="alamat">Alamat Sekolah</label>
                                     <textarea class="form-control {{$errors->first('alamat') ? "is-invalid" : "" }}" id="alamat" name="alamat" rows="2" required>{{old('alamat', $sekolah->alamat) }}</textarea>
                                     @error('alamat')
