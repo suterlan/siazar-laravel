@@ -7,9 +7,9 @@
                 <div class="col-md-12">
                     <div class="card shadow">
                         <div class="card-header">
-                            <strong class="card-title">Surat Keluar</strong>
+                            <strong class="card-title">Surat Custom</strong>
                             <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#generateNoSurat" type="button"><span class="fe fe-cpu"></span> Generate Nomor Surat </button>
-                            <p class="card-text">Tabel Surat Keluar</p>
+                            <p class="card-text">Tabel surat hasil dari <b>"generate nomor surat"</b> yang dibuat hanya <b>"nomor surat"</b> saja untuk keperluan arsip surat</p>
                         </div>
                         <div class="card-body">
                             @if (session()->has('success'))
@@ -17,25 +17,28 @@
                                 <span class="fe fe-check-circle fe-16 mr-2"></span> {{ session('success') }}
                             </div>
                             @endif
-
-                            <table id="tbSuratKeluar" class="table table-stripped table-hover">
+                            <table id="tbSuratUndangan" class="table table-stripped table-hover table-surat-keluar">
                                 <thead class="thead-dark">
                                     <th>#</th>
-                                    <th>Kode Klasifikasi</th>
-                                    <th>Klasifikasi</th>
                                     <th>No Surat</th>
-                                    <th>Tanggal Surat</th>
-                                    <th>Tanggal Dibuat</th>
+                                    <th>Keterangan</th>
+                                    <th class="text-center" scope="col"><span class="fe fe-tool text-info fe-16"></span></th>
                                 </thead>
                                 <tbody>
                                     @foreach ($surats as $surat)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td class="text-center">{{ $surat->klasifikasi->kode }}</td>
-                                        <td>{{ $surat->klasifikasi->nama }}</td>
                                         <td class="text-nowrap">{{ $surat->no_surat }}</td>
-                                        <td class="text-nowrap">{{ \Carbon\Carbon::parse($surat->tanggal_surat)->translatedFormat('d F Y')  }}</td>
-                                        <td>{{ $surat->created_at }}</td>
+                                        <td>{{ $surat->keterangan }}</td>
+                                        <td>
+                                            <div class="d-flex float-right">
+                                                <form action="/dashboard/suratkeluar/custom/{{ $surat->id }}" method="post">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button class="btn btn-outline-danger btn-sm ml-1" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete"></span> Remove</button>
+                                                </form>
+                                            </div>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

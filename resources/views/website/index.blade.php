@@ -131,46 +131,63 @@
     </div> --}}
     <!-- Facilities Start -->
 
-   <!-- About Start -->
-   <div class="container-fluid py-5">
+<!-- About Start -->
+<div class="container-fluid py-5">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-5">
+      <div class="row">
+        <div class="col-lg-4">
           <img
             class="img-fluid rounded mb-5 mb-lg-0"
             src="{{asset('storage/'. $tentang->gambar_1)}}"
             alt=""
           />
         </div>
-        <div class="col-lg-7">
+        <div class="col-lg-8">
           <p class="section-title pr-5">
             <span class="pr-2">Tentang Kami</span>
           </p>
           <h2 class="mb-4">Sambutan Kepala Sekolah</h2>
-          <p>
+          <p class="text-justify">
             {!! $tentang->sambutan !!}
           </p>
-          <div class="row pt-2 pb-4">
-            <div class="col-6 col-md-4">
-              <img class="img-fluid rounded" src="{{asset('storage/'. $tentang->gambar_2)}}" alt="" />
-            </div>
-            <div class="col-6 col-md-8">
-              <h5 class="mb-2 text-primary">Visi</h5>
-              <ul class="list-inline mb-4">
-                {{$tentang->visi}}
-              </ul>
-
-              <h5 class="mb-4 text-primary">Misi</h5>
-              <ul class="list-inline m-0">
-                {!! $tentang->misi !!}
-              </ul>
-            </div>
+        </div>
+        <div class="row col-12 pt-2">
+          <div class="col-12">
+            <img class="rounded" height="300px" width="100%" style="object-fit: cover" src="{{asset('storage/'. $tentang->gambar_2)}}" alt="" />
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- About End -->
+</div>
+<!-- About End -->
+
+  {{-- Visi --}}
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <p class="section-title px-5">
+                <span class="px-2"><b>VISI</b></span>
+            </p>
+        </div>
+    <div class="row justify-content-center">
+        "{{$tentang->visi}}"
+    </div>
+</div>
+
+  {{-- Misi --}}
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <p class="section-title px-5">
+                <span class="px-2"><b>Misi</b></span>
+            </p>
+        </div>
+    <div class="row justify-content-center">
+        <ul class="list-inline m-0">
+            {!! $tentang->misi !!}
+        </ul>
+    </div>
+</div>
 
     <!-- Jurusan Start -->
     <div class="container-fluid pt-5">
@@ -182,21 +199,23 @@
           <h1 class="mb-4">Jurusan Pilihan</h1>
         </div>
         <div class="row">
-            @foreach ($jurusans as $jurusan )
-                <div class="col-lg-4 mb-5">
-                    <div class="card border-0 pb-2">
-                        <div class="card-header text-center"><b>{{ strtoupper($jurusan->kode) }}</b></div>
-                        <img class="mb-2 mt-3 img-fluid mx-auto" src="{{ asset('storage/'. $jurusan->logo) }}" width="150"/>
-                        <div class="card-body text-center">
-                            <h4 class="card-title">{{ $jurusan->nama }}</h4>
-                            <p class="card-text">
-                            {{ $jurusan->deskripsi }}
-                            </p>
+            <div class="card-deck">
+                @foreach ($jurusans as $jurusan )
+                    {{-- <div class="col-lg-4 mb-5"> --}}
+                        <div class="card border-0 bg-light shadow-sm">
+                            <div class="card-header text-center"><b>{{ strtoupper($jurusan->kode) }}</b></div>
+                            <div class="card-body text-center">
+                                <img class="mb-2 mt-3 img-fluid mx-auto p-5" src="{{ asset('storage/'. $jurusan->logo) }}" />
+                                <h4 class="card-title">{{ $jurusan->nama }}</h4>
+                                <p class="card-text">{{ $jurusan->deskripsi }}</p>
+                            </div>
+                            <div class="card-footer border-0 bg-light text-center">
+                                <a href="{{ route('pendaftaran') }}" class="btn btn-primary px-4 mx-auto mb-4">Daftar Sekarang</a>
+                            </div>
                         </div>
-                        <a href="{{ route('pendaftaran') }}" class="btn btn-primary px-4 mx-auto mb-4">Daftar Sekarang</a>
-                    </div>
-                </div>
-            @endforeach
+                    {{-- </div> --}}
+                @endforeach
+            </div>
         </div>
       </div>
     </div>

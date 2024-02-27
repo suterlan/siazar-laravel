@@ -20,10 +20,15 @@
         </li>
     </ul>
     <ul class="navbar-nav flex-fill w-100 mb-0">
+        @php
+            $id = auth()->user()->guru()->get('id')->first();
+            $cekWalas = \App\Models\Kelas::where('guru_id', $id->id)->get();
+        @endphp
+        @if (!blank($cekWalas))
         <li class="nav-item dropdown">
             <a href="#siswa" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link {{ Request::is('dashboard/siswa*') ? 'link-active collapsed' : '' }} ">
                 <i class="fe fe-database fe-16"></i>
-                <span class="ml-3 item-text">Data Siswa</span><span class="sr-only">(current)</span>
+                <span class="ml-3 item-text">Wali Kelas</span><span class="sr-only">(current)</span>
             </a>
             <ul class="list-unstyled pl-4 w-100 collapse {{ Request::is('dashboard/siswa*') ? 'show' : '' }}" id="siswa" style="">
                 <li class="nav-item dropdown">
@@ -34,6 +39,7 @@
                 </li>
             </ul>
         </li>
+        @endif
     </ul>
 
     <p class="text-muted nav-heading mt-2 mb-1">

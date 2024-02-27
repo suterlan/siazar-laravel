@@ -123,7 +123,11 @@
                     <td>Kepala Sekolah,</td>
                 </tr>
                 <tr>
-                    <td rowspan="30"><u><b>{{ $sekolah->kepala_sekolah }}</b></u></td>
+                    @empty($sekolah->nip)
+                        <td rowspan="30"><u><b>{{ $sekolah->kepala_sekolah }}</b></u> <br> NUPTK.{{ $sekolah->nuptk }}</td>
+                    @else
+                        <td rowspan="30"><u><b>{{ $sekolah->kepala_sekolah }}</b></u> <br> NIP.{{ $sekolah->nip }}</td>
+                    @endempty
                 </tr>
             </table>
         </div>

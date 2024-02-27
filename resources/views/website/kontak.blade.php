@@ -102,34 +102,35 @@
           </div>
           <div class="col-lg-5 mb-5">
             <p>Mendidik dengan sepenuh hati untuk menciptakan lulusan yang berakhlakul karimah</p>
-            <div class="d-flex">
+            <div class="d-flex mb-2">
               <i
-                class="fa fa-map-marker-alt d-inline-flex align-items-center justify-content-center bg-primary text-secondary rounded-circle"
+                class="fa fa-map-marker-alt d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle"
                 style="width: 45px; height: 45px"
               ></i>
               <div class="pl-3">
                 <h5>Alamat</h5>
-                <p>{{$setting->alamat}}</p>
               </div>
             </div>
-            <div class="d-flex">
+            <p>{{$setting->alamat}}</p>
+
+            <div class="d-flex mb-3">
               <i
-                class="fa fa-envelope d-inline-flex align-items-center justify-content-center bg-primary text-secondary rounded-circle"
+                class="fa fa-envelope d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle"
                 style="width: 45px; height: 45px"
               ></i>
               <div class="pl-3">
                 <h5>Email</h5>
-                <p>{{$setting->email}}</p>
+                <small>{{$setting->email}}</small>
               </div>
             </div>
-            <div class="d-flex">
+            <div class="d-flex mb-3">
               <i
-                class="fa fa-phone-alt d-inline-flex align-items-center justify-content-center bg-primary text-secondary rounded-circle"
+                class="fa fa-phone-alt d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle"
                 style="width: 45px; height: 45px"
               ></i>
               <div class="pl-3">
                 <h5>Telepon</h5>
-                <p>{{$setting->no_telepon}}</p>
+                <small>{{$setting->no_telepon}}</small>
               </div>
             </div>
           </div>

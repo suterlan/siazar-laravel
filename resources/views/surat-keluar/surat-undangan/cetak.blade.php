@@ -69,7 +69,7 @@
             <div style="padding-bottom: 5mm">Di Tempat</div>
             <div style="padding-bottom: 2mm"><i>Assalamu'alaikum Wr. Wb.</i></div>
             <div>Dengan hormat,</div>
-            <div align="justify" style="margin-bottom: 3mm">Sehubungan dengan akan diadakannya kegiatan {{ $surat->kegiatan }}, maka kami selaku Kepala Panitia bermaksud mengundang Bapak/Ibu {{ $surat->penerima }} untuk dapat menghadiri kegiatan tersebut yang akan di selenggarakan pada :</div>
+            <div align="justify" style="margin-bottom: 3mm">Sehubungan dengan akan diadakannya kegiatan {{ $surat->kegiatan }}, maka kami bermaksud mengundang Bapak/Ibu {{ $surat->penerima }} untuk dapat menghadiri kegiatan tersebut yang akan di selenggarakan pada :</div>
             <table cellspacing="5">
                 <tr>
                     <td width="80" class="pl-5">Hari, Tanggal</td>
@@ -112,7 +112,11 @@
                     <td>Kepala Sekolah,</td>
                 </tr>
                 <tr>
-                    <td rowspan="30"><u><b>SITI ROHIMAH, S.Sos</b></u></td>
+                    @empty($sekolah->nip)
+                        <td rowspan="30"><u><b>{{ $sekolah->kepala_sekolah }}</b></u> <br> NUPTK.{{ $sekolah->nuptk }}</td>
+                    @else
+                        <td rowspan="30"><u><b>{{ $sekolah->kepala_sekolah }}</b></u> <br> NIP.{{ $sekolah->nip }}</td>
+                    @endempty
                 </tr>
             </table>
             @endisset

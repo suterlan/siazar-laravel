@@ -3,7 +3,7 @@
       <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
         <a href="/" class="navbar-brand font-weight-bold text-secondary" style="font-size: 30px">
             <img src="{{ asset('storage/'. $setting->logo) }}" width="30">
-            <span class="text-primary">{{$setting->nama_sekolah}}</span>
+            <span style="color: #0033CC">{{ strtoupper($setting->nama_sekolah)}}</span>
         </a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
           <span class="navbar-toggler-icon"></span>

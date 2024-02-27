@@ -10,11 +10,19 @@ use App\Models\SuratKelulusan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class RombelController extends Controller
 {
     public function index(){
-        $kelas = Kelas::with(['siswas', 'guru'])->get();
+        if (!Gate::allows('admin')) {
+            $kelas = Kelas::with(['siswas', 'guru'])
+                    ->where('guru_id', auth()->user()->id)
+                    ->get();
+        }else{
+            $kelas = Kelas::with(['siswas', 'guru'])
+                    ->get();
+        }
         return view('siswa-group.index', [
             'title'     => 'Siswa Rombel | '. config('app.name'),
             'kelas'     => $kelas,
