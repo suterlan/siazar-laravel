@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Klasifikasi;
 use App\Models\SuratCustom;
 use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
@@ -15,7 +16,11 @@ class SuratCustomController extends Controller
      */
     public function index()
     {
-        //
+        return view('surat-keluar.surat-custom.index', [
+            'title'     => 'Surat Kelulusan | '. config('app.name'),
+            'surats'    => SuratCustom::latest()->get(),
+            'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get(),
+        ]);
     }
 
     /**
@@ -90,8 +95,11 @@ class SuratCustomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(SuratCustom $custom)
     {
-        //
+        SuratCustom::where('no_surat', $custom->no_surat)->delete();
+        SuratKeluar::where('no_surat', $custom->no_surat)->delete();
+        return redirect('/dashboard/suratkeluar/custom')->with('success', 'Surat Custom dengan no surat : ' . $custom->no_surat . ' berhasil dihapus');
+
     }
 }

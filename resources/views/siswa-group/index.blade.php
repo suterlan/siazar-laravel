@@ -31,6 +31,7 @@
                             <div class="pt-2">Data Rombel : <b>Kelas {{ $row->nama }}</b></div>
                             <div class="mb-4">Jurusan : <b>{{ $row->jurusan->nama }}</b></div>
 
+                            @can('admin')
                             @if ($row->nama == 'XII')
                                 <div class="alert alert-info col-12" role="alert">
                                     <span class="fe fe-help-circle fe-16 mr-2"> Informasi!</span>
@@ -41,6 +42,7 @@
                             @method('put')
                                 <button id="btnLulus" class="btn btn-primary mb-3" type="submit">Luluskan Semua</button>
                             @endif
+                            @endcan
                             <table id="tbSiswaRombel" class="table table-stripped table-hover datatables" style="font-size: 12px">
                                 <thead class="thead-dark">
                                     <th>#</th>
@@ -70,9 +72,11 @@
                                         <td>{{ $value->nik }}</td>
                                         <td>{{ $value->kelas->jurusan->nama ?? '' }}</td>
                                         <td class="d-flex float-right">
+                                            @can('admin')
                                             @if ($row->nama == 'XII')
                                             <a href="/dashboard/rombel/{{ $value->nis }}" class="btn btn-sm btn-secondary ml-1">Luluskan</a>
                                             @endif
+                                            @endcan
                                             <a class="btn btn-sm btn-info ml-1" href="/dashboard/siswa/{{ $value->id }}" title="Detail"><span class="fe fe-eye"></span></a>
                                         </td>
                                     </tr>

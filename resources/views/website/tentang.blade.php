@@ -1,46 +1,63 @@
 @extends('website.layout.main')
 @section('content')
 
-    <!-- About Start -->
-    <div class="container-fluid py-5">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-5">
-            <img
-              class="img-fluid rounded mb-5 mb-lg-0"
-              src="{{asset('storage/'. $tentang->gambar_1)}}"
-              alt=""
-            />
-          </div>
-          <div class="col-lg-7">
-            <p class="section-title pr-5">
-              <span class="pr-2">Tentang Kami</span>
-            </p>
-            <h2 class="mb-4">Sambutan Kepala Sekolah</h2>
-            <p>
-              {!! $tentang->sambutan !!}
-            </p>
-            <div class="row pt-2 pb-4">
-              <div class="col-6 col-md-4">
-                <img class="img-fluid rounded" src="{{asset('storage/'. $tentang->gambar_2)}}" alt="" />
-              </div>
-              <div class="col-6 col-md-8">
-                <h5 class="mb-2 text-primary">Visi</h5>
-                <ul class="list-inline mb-4">
-                  {{$tentang->visi}}
-                </ul>
-
-                <h5 class="mb-4 text-primary">Misi</h5>
-                <ul class="list-inline m-0">
-                  {!! $tentang->misi !!}
-                </ul>
-              </div>
-            </div>
+<!-- About Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <img
+            class="img-fluid rounded mb-5 mb-lg-0"
+            src="{{asset('storage/'. $tentang->gambar_1)}}"
+            alt=""
+          />
+        </div>
+        <div class="col-lg-8">
+          <p class="section-title pr-5">
+            <span class="pr-2">Tentang Kami</span>
+          </p>
+          <h2 class="mb-4">Sambutan Kepala Sekolah</h2>
+          <p class="text-justify">
+            {!! $tentang->sambutan !!}
+          </p>
+        </div>
+        <div class="row col-12 pt-2">
+          <div class="col-12">
+            <img class="rounded" height="300px" width="100%" style="object-fit: cover" src="{{asset('storage/'. $tentang->gambar_2)}}" alt="" />
           </div>
         </div>
       </div>
     </div>
-    <!-- About End -->
+</div>
+<!-- About End -->
+
+  {{-- Visi --}}
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <p class="section-title px-5">
+                <span class="px-2"><b>VISI</b></span>
+            </p>
+        </div>
+    <div class="row justify-content-center">
+        "{{$tentang->visi}}"
+    </div>
+</div>
+
+  {{-- Misi --}}
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <p class="section-title px-5">
+                <span class="px-2"><b>Misi</b></span>
+            </p>
+        </div>
+    <div class="row justify-content-center">
+        <ul class="list-inline m-0">
+            {!! $tentang->misi !!}
+        </ul>
+    </div>
+</div>
 
     {{-- video kami --}}
     <div class="container-fluid pt-5">
@@ -188,7 +205,6 @@
                     </div>
                 </div>
                 <h4>{{ $guru->nama }}</h4>
-                <i>Music Teacher</i>
             </div>
             @endforeach
         </div>

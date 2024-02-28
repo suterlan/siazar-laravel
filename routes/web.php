@@ -194,7 +194,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/suratkeluar/umum/download/{umum}', [SuratUmumController::class, 'download']);
 
     // Route Generate Nomor Surat (untuk surat custom)
-    Route::resource('/dashboard/suratkeluar/custom', SuratCustomController::class);
+    Route::resource('/dashboard/suratkeluar/custom', SuratCustomController::class)->except(['create', 'show', 'edit', 'update']);
 
     // Route Surat Kelulusan Siswa
     Route::resource('/dashboard/suratkeluar/kelulusan', SuratKelulusanController::class);

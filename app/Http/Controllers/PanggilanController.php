@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Klasifikasi;
+use App\Models\Sekolah;
 use App\Models\SuratKeluar;
 use App\Models\SuratPanggilan;
 use Illuminate\Http\Request;
@@ -10,6 +11,11 @@ use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class PanggilanController extends Controller
 {
+    protected $sekolah;
+    public function __construct()
+    {
+        $this->sekolah = Sekolah::first();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +24,7 @@ class PanggilanController extends Controller
     public function index()
     {
         return view('surat-keluar.surat-panggilan.index',[
-            'title'     => 'Surat Panggilan | SIAZAR',
+            'title'     => 'Surat Panggilan '. config('app.name'),
             'surats'    => SuratPanggilan::with('suratkeluar')->latest()->get(),
         ]);
     }
@@ -31,7 +37,7 @@ class PanggilanController extends Controller
     public function create()
     {
         return view('surat-keluar.surat-panggilan.create',[
-            'title'         => 'Surat Panggilan Baru | SIAZAR',
+            'title'         => 'Surat Panggilan Baru '. config('app.name'),
             'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get()
         ]);
     }
@@ -71,7 +77,7 @@ class PanggilanController extends Controller
     public function show(SuratPanggilan $panggilan)
     {
         return view('surat-keluar.surat-panggilan.detail', [
-            'title'     => 'Detail Surat Pemanggilan | SIAZAR',
+            'title'     => 'Detail Surat Pemanggilan '. config('app.name'),
             'surat'     => $panggilan
         ]);
     }
@@ -85,7 +91,7 @@ class PanggilanController extends Controller
     public function edit(SuratPanggilan $panggilan)
     {
         return view('surat-keluar.surat-panggilan.edit',[
-            'title'     => 'Edit Surat Panggilan | SIAZAR',
+            'title'     => 'Edit Surat Panggilan '. config('app.name'),
             'surat'     => $panggilan,
             'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get()
         ]);
@@ -161,8 +167,9 @@ class PanggilanController extends Controller
 
     public function cetak(SuratPanggilan $panggilan){
         $pdf = FacadePdf::loadView('surat-keluar.surat-panggilan.cetak', [
-            'title'     => 'Cetak Surat | SIAZAR',
-            'surat'     => $panggilan
+            'title'     => 'Cetak Surat '. config('app.name'),
+            'surat'     => $panggilan,
+            'sekolah'   => $this->sekolah,
         ]);
         return $pdf->stream('surat-pemanggilan-siswa');
         // exit(0);
@@ -170,10 +177,14 @@ class PanggilanController extends Controller
 
     public function download(SuratPanggilan $panggilan){
         $pdf = FacadePdf::loadView('surat-keluar.surat-panggilan.cetak', [
-            'title'     => 'Cetak Surat | SIAZAR',
-            'surat'     => $panggilan
+            'title'     => 'Cetak Surat '. config('app.name'),
+            'surat'     => $panggilan,
+            'sekolah'   => $this->sekolah,
         ]);
-        return $pdf->download('surat-pemanggilan-siswa.pdf');
+
+         // remove whitespace
+        $nama = str_replace(' ', '', $panggilan->nama_siswa);
+        return $pdf->download('surat-pemanggilan-siswa-'.$nama.'.pdf');
         // exit(0);
     }
 }

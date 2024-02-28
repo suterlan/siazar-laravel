@@ -185,6 +185,6 @@ class PenerimaanController extends Controller
         // remove whitespace
         $nama = str_replace(' ', '', $penerimaan->nama_siswa);
 
-        return $pdf->download('surat-penerimaan-siswa'.$nama.'.pdf');
+        return $pdf->download('surat-penerimaan-siswa-'.$nama.'.pdf');
     }
 }

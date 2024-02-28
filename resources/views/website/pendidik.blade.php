@@ -19,8 +19,8 @@
                     <div class="team-social d-flex align-items-center justify-content-center w-100 h-100 position-absolute">
                     </div>
                 </div>
-                <h4>{{ $guru->nama }}</h4>
-                <i>Music Teacher</i>
+                <h6>{{ $guru->nama }}</h6>
+                {{-- <i>Music Teacher</i> --}}
             </div>
             @endforeach
         </div>

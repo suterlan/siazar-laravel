@@ -135,6 +135,7 @@
                     <a href="#suratkeluar" class="dropdown-toggle nav-link pl-3 {{ Request::is('dashboard/suratkeluar*') ? 'link-active collapsed' : '' }}" data-toggle="collapse" aria-expanded="false"><span class="ml-1">Surat Keluar</span></a>
                     <ul class="list-unstyled pl-4 w-100 collapse {{ Request::is('dashboard/suratkeluar*') ? 'show' : '' }}" id="suratkeluar" style="">
                         <a href="/dashboard/suratkeluar" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar') ? 'link-active' : '' }}"><span class="ml-1">Semua Surat</span></a>
+                        <a href="/dashboard/suratkeluar/custom" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/custom*') ? 'link-active' : '' }}"><span class="ml-1"> Surat Custom</span></a>
                         <a href="/dashboard/suratkeluar/penerimaan" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/penerimaan*') ? 'link-active' : '' }}"><span class="ml-1"> Penerimaan Siswa</span></a>
                         <a href="/dashboard/suratkeluar/panggilan" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/panggilan*') ? 'link-active' : '' }}"><span class="ml-1"> Pemanggilan Siswa</span></a>
                         <a href="/dashboard/suratkeluar/mutasi" class="nav-link pl-3 {{ Request::is('dashboard/suratkeluar/mutasi*') ? 'link-active' : '' }}"><span class="ml-1"> Mutasi Siswa</span></a>

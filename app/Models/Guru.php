@@ -22,6 +22,10 @@ class Guru extends Model
         return $this->hasOne(Dokumen::class, 'nik', 'nik');
     }
 
+    public function kelas(){
+        return $this->hasMany(Kelas::class);
+    }
+
     public function mengajars(){
         return $this->hasMany(Mengajar::class);
     }

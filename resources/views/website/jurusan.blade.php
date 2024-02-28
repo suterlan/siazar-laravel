@@ -25,21 +25,23 @@
           <h1 class="mb-4">Jurusan Pilihan</h1>
         </div>
         <div class="row">
-            @foreach ($jurusans as $jurusan )
-                <div class="col-lg-4 mb-5">
-                    <div class="card border-0 bg-light shadow-sm pb-2">
-                        <div class="card-header text-center"><b>{{ strtoupper($jurusan->kode) }}</b></div>
-                        <img class="mb-2 mt-3 img-fluid mx-auto col-sm-6" src="{{ asset('storage/'. $jurusan->logo) }}" />
-                        <div class="card-body text-center">
-                            <h4 class="card-title">{{ $jurusan->nama }}</h4>
-                            <p class="card-text">
-                            {{ $jurusan->deskripsi }}
-                            </p>
+            <div class="card-deck">
+                @foreach ($jurusans as $jurusan )
+                    {{-- <div class="col-lg-4 mb-5"> --}}
+                        <div class="card border-0 bg-light shadow-sm">
+                            <div class="card-header text-center"><b>{{ strtoupper($jurusan->kode) }}</b></div>
+                            <div class="card-body text-center">
+                                <img class="mb-2 mt-3 img-fluid mx-auto p-5" src="{{ asset('storage/'. $jurusan->logo) }}" />
+                                <h4 class="card-title">{{ $jurusan->nama }}</h4>
+                                <p class="card-text">{{ $jurusan->deskripsi }}</p>
+                            </div>
+                            <div class="card-footer border-0 bg-light text-center">
+                                <a href="{{ route('pendaftaran') }}" class="btn btn-primary px-4 mx-auto mb-4">Daftar Sekarang</a>
+                            </div>
                         </div>
-                        <a href="{{ route('pendaftaran') }}" class="btn btn-primary px-4 mx-auto mb-4">Daftar Sekarang</a>
-                    </div>
-                </div>
-            @endforeach
+                    {{-- </div> --}}
+                @endforeach
+            </div>
         </div>
       </div>
     </div>
@@ -55,38 +57,18 @@
           <h1 class="mb-4">Kegiatan Praktek Jurusan</h1>
         </div>
         <div class="owl-carousel testimonial-carousel">
+          @foreach ($slides as $slide)
           <div class="testimonial-item px-3">
             <div class="bg-light shadow-sm rounded mb-2 p-2">
-              <img class="card-img-top" src="{{ asset('front') }}/img/blog-1.jpg" alt="" />
+              <div style="max-height: 200px; overflow: hidden;">
+                <img class="card-img-top" src="{{ asset('storage/'. $slide->gambar) }}" alt="Gambar" />
+              </div>
             </div>
             <div class="d-flex align-items-center">
-                <i>Profession</i>
+                <i>{{$slide->caption}}</i>
             </div>
           </div>
-          <div class="testimonial-item px-3">
-            <div class="bg-light shadow-sm rounded mb-2 p-2">
-              <img class="card-img-top" src="{{ asset('front') }}/img/blog-2.jpg" alt="" />
-            </div>
-            <div class="d-flex align-items-center">
-                <i>Profession</i>
-            </div>
-          </div>
-          <div class="testimonial-item px-3">
-            <div class="bg-light shadow-sm rounded mb-2 p-2">
-              <img class="card-img-top" src="{{ asset('front') }}/img/blog-3.jpg" alt="" />
-            </div>
-            <div class="d-flex align-items-center">
-                <i>Profession</i>
-            </div>
-          </div>
-          <div class="testimonial-item px-3">
-            <div class="bg-light shadow-sm rounded mb-2 p-2">
-              <img class="card-img-top" src="{{ asset('front') }}/img/portfolio-1.jpg" alt="" />
-            </div>
-            <div class="d-flex align-items-center">
-                <i>Profession</i>
-            </div>
-          </div>
+          @endforeach
         </div>
       </div>
     </div>

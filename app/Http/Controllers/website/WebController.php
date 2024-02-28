@@ -11,6 +11,7 @@ use App\Models\Jurusan;
 use App\Models\Post;
 use App\Models\Sekolah;
 use App\Models\Tentang;
+use Carbon\Carbon;
 
 use function PHPUnit\Framework\isTrue;
 
@@ -37,15 +38,18 @@ class WebController extends Controller
     public function jurusan(){
         return view('website.jurusan', [
             'setting'   => $this->setting,
-            'jurusans'  => Jurusan::all()
+            'jurusans'  => Jurusan::all(),
+            'slides'    => Galeri::where('slide_aktif', true)->get()
         ]);
     }
 
     public function pendidik(){
+
         $guru = Guru::select('nama', 'nuptk', 'nik')
                 ->with(['dokumen' => function($query){
                     $query->select('nik','foto');
                 }])->get();
+
         return view('website.pendidik',[
             'setting'   => $this->setting,
             'gurus'     => $guru

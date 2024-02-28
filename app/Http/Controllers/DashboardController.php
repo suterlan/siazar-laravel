@@ -23,6 +23,7 @@ class DashboardController extends Controller
                     DB::raw("(SELECT COUNT(id) AS s_keluarCount FROM surat_keluars WHERE surat_keluars.klasifikasi_id=klasifikasis.id) as s_keluarCount"),
                     DB::raw("(SELECT COUNT(id) AS s_masukCount FROM surat_masuks WHERE surat_masuks.klasifikasi_id=klasifikasis.id) as s_masukCount")
                 )
+                // ->whereYear('created_at', Carbon::now('Y'))
                 ->get();
 
         $klasifikasi = [];
@@ -69,8 +70,8 @@ class DashboardController extends Controller
 
         return view('index', [
             'title'             => 'Dashboard '. config('app.name'),
-            'jmlSuratkeluar'    => SuratKeluar::all()->count(),
-            'jmlSuratmasuk'     => SuratMasuk::all()->count(),
+            'jmlSuratkeluar'    => SuratKeluar::whereYear('created_at', $startYear)->count(),
+            'jmlSuratmasuk'     => SuratMasuk::whereYear('created_at', $startYear)->count(),
             'chart'             => $chart,
             'ppdb'              => $ppdb,
             'ppdb_approve'      => $ppdb_approve,

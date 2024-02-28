@@ -130,7 +130,7 @@
                     <div class="card-body">
                       <div class="row align-items-center">
                         <div class="col">
-                          <small class="text-muted mb-1">Surat Keluar</small>
+                          <small class="text-muted mb-1">Surat Keluar Tahun Ini</small>
                           <h3 class="card-title mb-0">{{ $jmlSuratkeluar }}</h3>
                           <p class="small text-muted mb-0"><span class="fe fe-arrow-up fe-12 text-success"></span><span>Jumlah surat keluar</span></p>
                         </div>
@@ -146,7 +146,7 @@
                     <div class="card-body">
                       <div class="row align-items-center">
                         <div class="col">
-                          <small class="text-muted mb-1">Surat Masuk</small>
+                          <small class="text-muted mb-1">Surat Masuk Tahun Ini</small>
                           <h3 class="card-title mb-0">{{ $jmlSuratmasuk }}</h3>
                           <p class="small text-muted mb-0"><span class="fe fe-arrow-down fe-12 text-danger"></span><span>Jumlah surat masuk</span></p>
                         </div>

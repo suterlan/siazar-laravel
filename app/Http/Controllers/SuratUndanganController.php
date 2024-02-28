@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Klasifikasi;
+use App\Models\Sekolah;
 use App\Models\SuratKeluar;
 use App\Models\SuratUndangan;
 use Illuminate\Http\Request;
@@ -10,6 +11,11 @@ use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class SuratUndanganController extends Controller
 {
+    protected $sekolah;
+    public function __construct()
+    {
+        $this->sekolah = Sekolah::first();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -160,7 +166,8 @@ class SuratUndanganController extends Controller
     public function cetak(SuratUndangan $undangan){
         $pdf = FacadePdf::loadView('surat-keluar.surat-undangan.cetak', [
             'title'     => 'Cetak Surat | '. config('app.name'),
-            'surat'     => $undangan
+            'surat'     => $undangan,
+            'sekolah'   => $this->sekolah,
         ]);
         return $pdf->stream('surat-undangan');
         // exit(0);
@@ -169,9 +176,13 @@ class SuratUndanganController extends Controller
     public function download(SuratUndangan $undangan){
         $pdf = FacadePdf::loadView('surat-keluar.surat-undangan.cetak', [
             'title'     => 'Cetak Surat | '. config('app.name'),
-            'surat'     => $undangan
+            'surat'     => $undangan,
+            'sekolah'   => $this->sekolah,
         ]);
-        return $pdf->download('surat-undangan.pdf');
+
+        // remove whitespace
+        $nama = str_replace(' ', '', $undangan->nama_siswa);
+        return $pdf->download('surat-undangan-'.$nama.'.pdf');
         // exit(0);
     }
 }

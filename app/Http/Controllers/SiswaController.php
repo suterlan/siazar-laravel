@@ -10,6 +10,7 @@ use App\Models\Siswa;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Laravolt\Indonesia\Models\Province;
@@ -24,15 +25,27 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        $siswa = Siswa::select('id', 'nis', 'nisn', 'nama_siswa', 'tempat_lahir', 'tgl_lahir', 'kelas_id', 'jurusan_id')
-                ->with(['jurusan', 'kelas'])
-                ->orderBy('nis', 'ASC')
-                ->where('lulus', false)
-                ->where('status_siswa', true)
-                ->get();
+
+        if (!Gate::allows('admin')) {
+            $siswa = Siswa::select('id', 'nis', 'nisn', 'nama_siswa', 'tempat_lahir', 'tgl_lahir', 'kelas_id', 'jurusan_id')
+                    ->with('jurusan')
+                    ->whereRelation('kelas', 'guru_id', '=', auth()->user()->id)
+                    ->orderBy('nis', 'ASC')
+                    ->where('lulus', false)
+                    ->where('status_siswa', true)
+                    ->get();
+        }else{
+            $siswa = Siswa::select('id', 'nis', 'nisn', 'nama_siswa', 'tempat_lahir', 'tgl_lahir', 'kelas_id', 'jurusan_id')
+                    ->with(['jurusan', 'kelas'])
+                    ->orderBy('nis', 'ASC')
+                    ->where('lulus', false)
+                    ->where('status_siswa', true)
+                    ->get();
+        }
+
         return view('siswa.index', [
             'title'     => 'Siswa | '. config('app.name'),
-            'siswas'     => $siswa
+            'siswas'    => $siswa
         ]);
     }
 

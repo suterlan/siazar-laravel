@@ -54,9 +54,9 @@
                     <td>{{ $sekolah->kepala_sekolah }}</td>
                 </tr>
                 <tr>
-                    <td width="100" class="pl-5">NIP/NUPTK</td>
+                    <td width="100" class="pl-5">@empty($sekolah->nip)NUPTK @else NIP @endif</td>
                     <td width="10">:</td>
-                    <td>{{ $sekolah->nip . ' / ' . $sekolah->nuptk }}</td>
+                    <td>@empty($sekolah->nip) {{ $sekolah->nuptk }} @else {{ $sekolah->nip }} @endif</td>
                 </tr>
                 <tr>
                     <td width="100" class="pl-5">Jabatan</td>
@@ -105,7 +105,7 @@
             </table>
             <div>Bahwa selaku lembaga pendidikan penerima, kami bersedia menerima calon peserta didik pindahan tersebut di atas untuk menjadi peserta didik di lembaga kami, dengan catatan membawa: </div>
             <ol>
-                <li>Surat Mutasi <b>DAPODIK (Wajib)</b>; </li>
+                <li>Surat Mutasi <b>DAPODIK / EMIS (Wajib)</b>; </li>
                 <li>Surat Pindah dari sekolah asal; </li>
                 <li>Bukti hasil belajar semester Ganjil;  </li>
                 <li>SKKB dari sekolah asal;   </li>
@@ -123,7 +123,11 @@
                     <td>Kepala Sekolah,</td>
                 </tr>
                 <tr>
-                    <td rowspan="30"><u><b>{{ $sekolah->kepala_sekolah }}</b></u></td>
+                    @empty($sekolah->nip)
+                        <td rowspan="30"><u><b>{{ $sekolah->kepala_sekolah }}</b></u> <br> NUPTK.{{ $sekolah->nuptk }}</td>
+                    @else
+                        <td rowspan="30"><u><b>{{ $sekolah->kepala_sekolah }}</b></u> <br> NIP.{{ $sekolah->nip }}</td>
+                    @endempty
                 </tr>
             </table>
         </div>
