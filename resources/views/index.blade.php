@@ -24,14 +24,14 @@
               </div>
               {{-- row widget ppdb & siswa --}}
               <div class="row">
-                <div class="col-md-6 col-xl-4 mb-4">
+                <div class="col-sm-6 col-md-4 mb-4">
                     <a href="/dashboard/ppdb" style="text-decoration: none">
-                        <div class="card shadow bg-primary text-white">
+                        <div class="card bg-primary-light text-white" style="border-radius: 1rem">
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-3 text-center">
-                                        <span class="circle circle-sm bg-primary-darker">
-                                            <i class="fe fe-16 fe-users text-white mb-0"></i>
+                                        <span class="circle circle-sm bg-light">
+                                            <i class="fe fe-16 fe-users text-dark mb-0"></i>
                                         </span>
                                     </div>
                                     <div class="col pr-0">
@@ -43,14 +43,14 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-md-6 col-xl-4 mb-4">
+                <div class="col-sm-6 col-md-4 mb-4">
                     <a href="/dashboard/siswa" style="text-decoration: none">
-                        <div class="card shadow bg-success-light">
+                        <div class="card bg-success-light" style="border-radius: 1rem">
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-3 text-center">
-                                        <span class="circle circle-sm bg-success-darker">
-                                            <i class="fe fe-16 fe-user-check text-white mb-0"></i>
+                                        <span class="circle circle-sm bg-light">
+                                            <i class="fe fe-16 fe-user-check text-dark mb-0"></i>
                                         </span>
                                     </div>
                                     <div class="col pr-0">
@@ -62,14 +62,14 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-md-6 col-xl-4 mb-4">
+                <div class="col-sm-6 col-md-4 mb-4">
                     <a href="/dashboard/guru" style="text-decoration: none">
-                        <div class="card shadow bg-danger-light">
+                        <div class="card bg-danger-light" style="border-radius: 1rem">
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-3 text-center">
-                                        <span class="circle circle-sm bg-danger-darker">
-                                            <i class="fe fe-16 fe-user-minus text-white mb-0"></i>
+                                        <span class="circle circle-sm bg-light">
+                                            <i class="fe fe-16 fe-user-minus text-dark mb-0"></i>
                                         </span>
                                     </div>
                                     <div class="col pr-0">

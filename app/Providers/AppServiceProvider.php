@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Pagination\Paginator;
 
@@ -31,5 +32,9 @@ class AppServiceProvider extends ServiceProvider
         // Gate::define('admin', function(User $user){
         //     return $user->role;
         // });
+
+        Builder::macro('whereRelationIn', function ($relation, $column, $array){
+            return $this->whereHas($relation, fn($q) => $q->whereIn($column, $array));
+        });
     }
 }

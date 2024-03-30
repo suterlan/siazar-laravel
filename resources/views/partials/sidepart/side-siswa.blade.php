@@ -14,7 +14,7 @@
 
     <ul class="navbar-nav flex-fill w-100 mb-0">
         <li class="nav-item dropdown">
-            <a href="/dashboard-siswa/nilai" aria-expanded="false" class="nav-link {{ Request::is('dashboard-siswa/nilai') ? 'link-active' : '' }}">
+            <a href="{{ route('nilai') }}" aria-expanded="false" class="nav-link {{ Request::is('dashboard-siswa/nilai') ? 'link-active' : '' }}">
                 <i class="fe fe-award fe-16"></i>
                 <span class="ml-3 item-text">Nilai</span>
             </a>

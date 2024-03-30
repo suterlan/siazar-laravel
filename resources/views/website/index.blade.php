@@ -209,9 +209,9 @@
                                 <h4 class="card-title">{{ $jurusan->nama }}</h4>
                                 <p class="card-text">{{ $jurusan->deskripsi }}</p>
                             </div>
-                            <div class="card-footer border-0 bg-light text-center">
-                                <a href="{{ route('pendaftaran') }}" class="btn btn-primary px-4 mx-auto mb-4">Daftar Sekarang</a>
-                            </div>
+                            {{-- <div class="card-footer border-0 bg-light text-center">
+                                <a href="{{ route('pendaftaran') }}" class="btn btn-primary px-4 mx-auto mb-4">Detail</a>
+                            </div> --}}
                         </div>
                     {{-- </div> --}}
                 @endforeach
@@ -371,7 +371,7 @@
           <p class="section-title px-5">
             <span class="px-2">Kegiatan</span>
           </p>
-          <h1 class="mb-4">Kegiatan Praktek Jurusan</h1>
+          {{-- <h3 class="mb-4">Kegiatan Belajar Mengajar</h3> --}}
         </div>
         <div class="owl-carousel testimonial-carousel">
           @foreach ($slides as $slide)
@@ -399,23 +399,25 @@
             <span class="px-2">Berita Terbaru</span>
           </p>
         </div>
-        <div class="row pb-3">
-          @foreach ($posts as $post)
-          <div class="col-lg-4 mb-4">
-              <div class="card border-0 shadow-sm mb-2">
-                  <img class="card-img-top mb-2" src="{{ asset('storage/'. $post->image) }}"/>
-                  <div class="card-body bg-light text-center p-4">
-                      <h4 class="">{{ $post->title }}</h4>
-                      <div class="d-flex justify-content-center mb-3">
-                          <small class="mr-3"><i class="fa fa-user text-primary"></i> Admin</small>
-                          <small class="mr-3"><i class="fa fa-folder text-primary"></i> {{ $post->category->name ?? ''}}</small>
-                      </div>
-                      <p> {{ $post->excerpt }} </p>
-                      <a href="/blog/{{$post->slug}}" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
-                  </div>
-              </div>
-          </div>
-          @endforeach
+        <div class="row pb-3 justify-content-center">
+            @foreach ($posts as $post)
+            <div class="card-deck col-lg-4">
+                <div class="card border-0 shadow-sm mb-2">
+                    <img class="card-img-top mb-2 w-100" height="250px" style="object-fit: cover" src="{{ asset('storage/'. $post->image) }}"/>
+                    <div class="card-body bg-light text-center p-4">
+                        <a href="/blog/{{$post->slug}}">
+                            <h5 class="card-title">{{ $post->title }}</h5>
+                        </a>
+                        <small class="mr-3 card-text"><i class="fa fa-user text-primary"></i> Admin</small>
+                        <small class="mr-3 card-text"><i class="fa fa-folder text-primary"></i><a href="/blog/categories/{{$post->category->slug ?? ''}}"> {{ $post->category->name ?? '' }} </a></small>
+                        <p class="card-text"> {{ $post->excerpt }} </p>
+                    </div>
+                    <div class="card-footer border-0 bg-light text-center">
+                        <a href="/blog/{{$post->slug}}" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
         </div>
       </div>
     </div>

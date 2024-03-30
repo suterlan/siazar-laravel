@@ -23,7 +23,7 @@
                     </p>
                 </div>
             </div>
-  
+
             <div class="col-lg-4 mt-5 mt-lg-0">
                 <!-- Profil Sekolah -->
                 <div class="d-flex flex-column text-center bg-primary rounded mb-5 py-5 px-4">
@@ -37,20 +37,20 @@
                         {{ $tentang->visi }}
                     </p>
                 </div>
-  
+
                 <!-- Category List -->
                 <div class="mb-5">
                     <h2 class="mb-4">Categories</h2>
                     <ul class="list-group list-group-flush">
                         @foreach ($kategoris as $kategori)
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <a href="">{{ $kategori->category->name ?? '' }}</a>
+                            <a href="/blog/categories/{{$kategori->category->slug ?? ''}}">{{ $kategori->category->name ?? '' }}</a>
                             <span class="badge badge-primary badge-pill">{{ $kategori->jml_kategori }}</span>
                         </li>
                         @endforeach
                     </ul>
                 </div>
-    
+
                 <!-- Recent Post -->
                 {{-- <div class="mb-5">
                     <h2 class="mb-4">Recent Post</h2>
@@ -70,17 +70,17 @@
                         </div>
                     </div>
                 </div> --}}
-    
+
                 <!-- Tag Cloud -->
                 <div class="mb-5">
                     <h2 class="mb-4">Tag Cloud</h2>
                     <div class="d-flex flex-wrap m-n1">
                         @foreach ($kategoris as $kategori)
-                        <a href="" class="btn btn-outline-primary m-1">{{ $kategori->category->name  ?? ''}}</a>
+                        <a href="/blog/categories/{{$kategori->category->slug ?? ''}}" class="btn btn-outline-primary m-1">{{ $kategori->category->name  ?? ''}}</a>
                         @endforeach
                     </div>
                 </div>
-    
+
             </div>
         </div>
     </div>

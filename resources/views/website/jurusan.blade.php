@@ -35,9 +35,9 @@
                                 <h4 class="card-title">{{ $jurusan->nama }}</h4>
                                 <p class="card-text">{{ $jurusan->deskripsi }}</p>
                             </div>
-                            <div class="card-footer border-0 bg-light text-center">
+                            {{-- <div class="card-footer border-0 bg-light text-center">
                                 <a href="{{ route('pendaftaran') }}" class="btn btn-primary px-4 mx-auto mb-4">Daftar Sekarang</a>
-                            </div>
+                            </div> --}}
                         </div>
                     {{-- </div> --}}
                 @endforeach

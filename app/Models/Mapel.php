@@ -33,8 +33,12 @@ class Mapel extends Model
 
     public function siswas(){
         return $this->belongsToMany(Siswa::class, 'nilai')
-                ->withPivot('nilai')
-                ->orderByPivot('mapel_id', 'asc');
+            ->withPivot('nilai')
+            ->orderByPivot('mapel_id', 'asc');
+    }
+
+    public function nilais(){
+        return $this->hasMany(Nilai::class);
     }
 
 }

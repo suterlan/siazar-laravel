@@ -98,7 +98,7 @@ class SuratKeluarController extends Controller
             $romawi = toRomawi($currenMonth);
 
             // gabungkan, sehingga menjadi no surat
-            $no_surat = $no_surat . '/' . $klasifikasi->kode . '/SMK-AZ/' . $romawi . '/' . date('Y');
+            $no_surat = $klasifikasi->kode . '/' . $no_surat . '/SMK-AZ/' . $romawi . '/' . date('Y');
 
             // return data sebagai respon dalam bentuk json dg isi array assosiation
             return response()->json(['no_surat' => $no_surat]);

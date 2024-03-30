@@ -112,18 +112,32 @@ class NilaiController extends Controller
 
     public function rekap(){
 
-        $kodeMapel = Mapel::has('siswas')->orderBy('id')->get()
-                    ->groupBy('kode');
-
         $siswas = [];
 
         if(request('filter_semester') && request('filter_tahun') && request('filter_kelas')){
             $siswas = Siswa::with(['mapels' => function ($query) {
-                        $query->where('semester', '=', request('filter_semester'))
+                        $query->where('nilai.semester', '=', request('filter_semester'))
                             ->where('nilai.tahun_ajaran', '=', request('filter_tahun'))
                             ->orderBy('mapels.id', 'asc');
                     }])->where('kelas_id', request('filter_kelas'))->orderBy('nis', 'asc')->get();
         }
+
+        $siswasId = $siswas->map(function ($item, $key){
+            return $item->id;
+        });
+
+        $kodeMapel = Nilai::query()
+                ->where('semester', '=', request('filter_semester'))
+                ->where('tahun_ajaran', '=', request('filter_tahun'))
+                ->whereIn('siswa_id', $siswasId)->get()->groupBy('mapel.kode');
+
+        // $kodeMapel = Mapel::with(['siswas' => function ($query) {
+        //                 $query->where('nilai.semester', '=', request('filter_semester'))
+        //                     ->where('nilai.tahun_ajaran', '=', request('filter_tahun'));
+        //             }])
+        //             ->whereRelationIn('siswas', 'siswa_id', $siswasId)
+        //             ->orderBy('id', 'asc')
+        //             ->get()->groupBy('kode');
 
         return view('nilai.rekap', [
             'title'     => 'Data Nilai '. config('app.name'),

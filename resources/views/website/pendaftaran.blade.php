@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <div class="card shadow col-md-12">
-                <form action="{{ route('pendaftaran') }}" method="post">
+                <form action="{{ route('pendaftaran.store') }}" method="post">
                     @csrf
                     <div class="card-body">
                         <div class="mb-3">
@@ -207,10 +207,8 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="kelas_id">Kelas</label>
-                                <select class="custom-select {{$errors->first('kelas_id') ? "is-invalid" : "" }}" id="kelas_id" name="kelas_id" required>
-                                    @foreach ($kelas as $value)
-                                        <option value="{{ $value->id }}">{{ $value->nama }}</option>
-                                    @endforeach
+                                <select class="custom-select {{$errors->first('kelas_id') ? "is-invalid" : "" }}" id="kelas_id" name="kelas_id" disabled required>
+                                    {{-- from js --}}
                                 </select>
                                 @error('kelas_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -263,6 +261,19 @@
         const idSelect = document.querySelector('#kelurahan');
 
         selectChange('/pendaftaran/getKelurahan?code=', code, idSelect);
+    });
+</script>
+<script>
+    const selectJurusan = document.querySelector('#jurusan_id');
+    const selectKelas = document.querySelector('#kelas_id');
+
+    selectJurusan.addEventListener('change', async function() {
+        const jurusanId = selectJurusan.value;
+
+        const response = await fetch('/pendaftaran/get-kelas?jurusan_id=' + jurusanId);
+        const kelas = await response.json();
+
+        selectKelas.innerHTML = `<option value="${kelas.id}" selected>${kelas.nama}</option>`;
     });
 </script>
 @endsection
