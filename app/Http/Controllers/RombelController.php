@@ -133,7 +133,7 @@ class RombelController extends Controller
             $romawi = self::toRomawi($currenMonth);
 
             // gabungkan, sehingga menjadi no surat
-            $no_surat = $no_surat . '/' . $kodeKlasifikasi . '/SMK-AZ/' . $romawi . '/' . date('Y');
+            $no_surat = $kodeKlasifikasi . '/' . $no_surat . '/SMK-AZ/' . $romawi . '/' . date('Y');
 
             return $no_surat;
         }else{

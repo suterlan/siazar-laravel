@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AkunSettingController;
 use App\Http\Controllers\ArsipController;
+use App\Http\Controllers\BukuIndukController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\dashboard_siswa\DashboardSiswaController;
+use App\Http\Controllers\dashboard_siswa\NilaiController as Dashboard_siswaNilaiController;
 use App\Http\Controllers\dashboard_siswa\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -66,7 +68,8 @@ use App\Http\Controllers\website\WebController;
     Route::get('/kontak', [WebController::class, 'kontak'])->name('kontak');
 
     Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran');
-    Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran');
+    Route::get('/pendaftaran/get-kelas', [PendaftaranController::class, 'getKelas']);
+    Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
     // Route untuk mengambil data kabupaten dengan javascript (plugin laravolt)
         Route::get('/pendaftaran/getKabupaten', [PendaftaranController::class, 'getKabupaten'])->name('kabupaten');
         Route::get('/pendaftaran/getKecamatan', [PendaftaranController::class, 'getKecamatan'])->name('kecamatan');
@@ -83,7 +86,7 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
 // ===================== GROUP AUTENTIKASI ======================
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], function () {
 
     // ======================= ROUTE DASHBOARD =======================
     Route::get('/dashboard', [DashboardController::class, 'index']);
@@ -127,6 +130,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/rombel', [RombelController::class, 'index'])->name('rombel');
     Route::get('/dashboard/rombel/{nis}', [RombelController::class, 'Kelulusan']);
     Route::put('/dashboard/rombel/lulus-all', [RombelController::class, 'KelulusanAll'])->name('lulus-all');
+
+    // Route Buku Induk Siswa
+    Route::get('/dashboard/siswa-buku-induk', [BukuIndukController::class, 'index']);
+    Route::get('/dashboard/siswa-buku-induk/cetak/{siswa}', [BukuIndukController::class, 'cetak']);
+    Route::get('/dashboard/siswa-buku-induk/download/{siswa}', [BukuIndukController::class, 'download']);
 
     // Route Guru
     Route::resource('/dashboard/guru', GuruController::class);
@@ -266,9 +274,13 @@ Route::group(['middleware' => ['auth', 'checkrole:siswa']], function(){
         Route::get('/', [DashboardSiswaController::class, 'index']);
         Route::get('/akun', [ProfileController::class, 'index']);
         Route::put('/akun/{siswa}', [ProfileController::class, 'updateProfile']);
+
+        Route::controller(Dashboard_siswaNilaiController::class)->group(function (){
+            Route::get('/nilai', 'index')->name('nilai');
+        });
     });
 
-    Route::get('/tracing-alumni', [ProfileController::class, 'tracingAlumni']);
+    Route::get('/tracing-alumni', [ProfileController::class, 'tracingAlumni'])->name('tracing-alumni');
     Route::post('/tracing-alumni/store', [ProfileController::class, 'StoreTracingAlumni'])->name('tracing-store');
 
 });

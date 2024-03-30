@@ -55,6 +55,7 @@ class User extends Authenticatable
         return $this->hasOne(Siswa::class, 'username', 'nisn');
     }
 
+    // inverse one to many ke tabel role
     public function role(){
         return $this->belongsTo(Role::class);
     }

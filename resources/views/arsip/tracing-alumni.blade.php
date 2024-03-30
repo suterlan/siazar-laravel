@@ -9,6 +9,18 @@
                         <div class="card-header">
                             <strong class="card-title">Arsip Tracing Alumni</strong>
                             <p class="text-mutted">Data ini hanya arsip pelacakan alumni, untuk melihat arip lengkap alumni ada di menu arsip alumni</p>
+                            <small class="text-info">Silahkan copy dan bagikan link dibawah ini kepada alumni untuk mengisi formulir pendataan alumni</small>
+
+                            <div class="input-group mb-2">
+                                <input id="linkTracingAlumni" type="text" class="form-control col-md-4" aria-label="clipboard tracing alumni" aria-describedby="button-copy" value="{{ route('tracing-alumni') }}" disabled>
+                                <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="button-copy"  data-toggle="tooltip" data-placement="top" title="copy link" onclick="copyToClipboard()">
+                                    <i class="fe fe-copy"></i>
+                                </button>
+                                </div>
+                            </div>
+                            <small id="text-copied" class="text-muted"></small>
+
                         </div>
                         <div class="card-body">
                             <form action="/dashboard/arsip/tracing-alumni">
@@ -79,4 +91,17 @@
             </div>
         </div>
     </div>
+    <script>
+        function copyToClipboard(){
+            document.getElementById('linkTracingAlumni').select();
+            document.execCommand('copy');
+
+            const textCopied = document.getElementById('text-copied');
+            textCopied.innerHTML = 'link copied!';
+
+            setTimeout(() => {
+                textCopied.innerHTML = '';
+            }, 3000);
+        }
+    </script>
 @endsection

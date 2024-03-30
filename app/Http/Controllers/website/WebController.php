@@ -87,8 +87,8 @@ class WebController extends Controller
     public function blog(){
         return view('website.blog',[
             'setting'   => $this->setting,
-            'title'     => 'Semua Postingan',
-            'posts'     => Post::latest()->with('category')->paginate(6)
+            'title'     => 'Blog',
+            'posts'     => Post::latest()->with('category')->paginate(10)
         ]);
     }
 

@@ -34,6 +34,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link pl-3 {{ Request::is('dashboard/rombel') ? 'link-active' : '' }}" href="/dashboard/rombel"><span class="ml-1">Siswa Rombel</span></a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link pl-3 {{ Request::is('dashboard/siswa-buku-induk') ? 'link-active' : '' }}" href="/dashboard/siswa-buku-induk"><span class="ml-1">Buku Induk</span></a>
+                </li>
             </ul>
         </li>
     </ul>

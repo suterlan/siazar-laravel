@@ -23,12 +23,17 @@ class PendaftaranController extends Controller
 
     public function index(){
         $provinces= Province::pluck('name', 'code');
+
         return view('website.pendaftaran',[
             'setting'   => $this->setting,
             'provinces' => $provinces,
             'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
-            'kelas'     => Kelas::select('id', 'nama')->get(),
         ]);
+    }
+
+    public function getKelas(Request $request){
+        $kelas = Kelas::select('id', 'nama')->where('jurusan_id', $request->jurusan_id)->where('nama', 'X')->first();
+        return response()->json($kelas);
     }
 
     public function getKabupaten(Request $request){
@@ -60,13 +65,13 @@ class PendaftaranController extends Controller
             'kabupaten'     => 'max:64',
             'kecamatan'     => 'max:64',
             'kelurahan'     => 'max:64',
-            'nama_ayah'      => 'nullable',
-            'pekerjaan_ayah' => 'max:64',
-            'nama_ibu'       => 'required',
-            'pekerjaan_ibu'  => 'max:64',
-            'asal_sekolah'  => 'required',
-            'jurusan_id'     => 'required',
-            'kelas_id'       => 'required',
+            'nama_ayah'         => 'nullable',
+            'pekerjaan_ayah'    => 'max:64',
+            'nama_ibu'          => 'required',
+            'pekerjaan_ibu'     => 'max:64',
+            'asal_sekolah'      => 'required',
+            'jurusan_id'        => 'required',
+            'kelas_id'          => 'required',
         ]);
 
         PPDB::create($validatedData);

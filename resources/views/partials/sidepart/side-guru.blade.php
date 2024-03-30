@@ -43,6 +43,19 @@
     </ul>
 
     <p class="text-muted nav-heading mt-2 mb-1">
+        <span>Website</span>
+    </p>
+
+    <ul class="navbar-nav flex-fill w-100 mb-0">
+        <li class="nav-item">
+            <a href="/dashboard/posts" aria-expanded="false" class="nav-link {{ Request::is('dashboard/posts*') ? 'link-active' : '' }}">
+                <i class="fe fe-file-text fe-16"></i>
+                <span class="ml-3 item-text">Blog Post</span>
+            </a>
+        </li>
+    </ul>
+
+    <p class="text-muted nav-heading mt-2 mb-1">
         <span>Manajemen</span>
     </p>
 
