@@ -51,6 +51,12 @@
   {
     theme: 'bootstrap4',
   });
+  $('.select2-multi').select2(
+    {
+        multiple: true,
+        theme: 'bootstrap4',
+    });
+    // $('#select2-multi').trigger('change');
   $('.input-tahun-ajaran').mask("0000/0000",
       {
         placeholder: "____/____"

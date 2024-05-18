@@ -8,7 +8,8 @@
                     <div class="card-header border-dark">
                         <h4 class="text-center">Input Nilai</h4>
                     </div>
-                    <form class="needs-validation @if ($errors->any()) was-validated @endif" action="#" method="POST" novalidate>
+                    <form class="needs-validation @if ($errors->any()) was-validated @endif" action="{{ route('nilai-template') }}" method="POST" novalidate>
+                        @csrf
                     <div class="card-body px-5">
                         <div class="form-group mb-2">
                             <select id="semester" name="semester" class="form-control {{$errors->first('semester') ? "is-invalid" : "" }}" required>
@@ -59,6 +60,10 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="d-block mt-3">
+                            <button id="btnTemplate" type="submit" class="btn btn-sm btn-info" hidden>Unduh Template</button>
+                            <button type="button" id="btnImport" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalImportNilai" hidden>Import Nilai</button>
+                        </div>
                     </div>
                     </form>
                 </div>
@@ -99,6 +104,9 @@
             </div>
         </div>
     </div>
+
+    @include('nilai.partial.modal-import')
+
 <script>
     const selectSemester = document.querySelector('#semester');
     const selectKelas = document.querySelector('#kelas_id');
@@ -210,6 +218,12 @@
 
         cardSiswa.innerHTML = formInputNilaiSiswa;
         btnSimpanNilai.removeAttribute('hidden');
+
+        const btnTemplate = document.getElementById('btnTemplate');
+        btnTemplate.removeAttribute('hidden');
+
+        const btnImport = document.getElementById('btnImport');
+        btnImport.removeAttribute('hidden');
 
     }
 

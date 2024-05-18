@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TemplateNilai;
+use App\Imports\NilaiImport;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Mapel;
@@ -9,7 +11,9 @@ use App\Models\Mengajar;
 use App\Models\Nilai;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class NilaiController extends Controller
 {
@@ -113,6 +117,7 @@ class NilaiController extends Controller
     public function rekap(){
 
         $siswas = [];
+        $kodeMapel = [];
 
         if(request('filter_semester') && request('filter_tahun') && request('filter_kelas')){
             $siswas = Siswa::with(['mapels' => function ($query) {
@@ -120,16 +125,16 @@ class NilaiController extends Controller
                             ->where('nilai.tahun_ajaran', '=', request('filter_tahun'))
                             ->orderBy('mapels.id', 'asc');
                     }])->where('kelas_id', request('filter_kelas'))->orderBy('nis', 'asc')->get();
+
+            $siswasId = $siswas->map(function ($item, $key){
+                return $item->id;
+            });
+
+            $kodeMapel = Nilai::query()
+                    ->where('semester', '=', request('filter_semester'))
+                    ->where('tahun_ajaran', '=', request('filter_tahun'))
+                    ->whereIn('siswa_id', $siswasId)->get()->groupBy('mapel.kode');
         }
-
-        $siswasId = $siswas->map(function ($item, $key){
-            return $item->id;
-        });
-
-        $kodeMapel = Nilai::query()
-                ->where('semester', '=', request('filter_semester'))
-                ->where('tahun_ajaran', '=', request('filter_tahun'))
-                ->whereIn('siswa_id', $siswasId)->get()->groupBy('mapel.kode');
 
         // $kodeMapel = Mapel::with(['siswas' => function ($query) {
         //                 $query->where('nilai.semester', '=', request('filter_semester'))
@@ -140,11 +145,43 @@ class NilaiController extends Controller
         //             ->get()->groupBy('kode');
 
         return view('nilai.rekap', [
-            'title'     => 'Data Nilai '. config('app.name'),
+            'title'         => 'Data Nilai '. config('app.name'),
             'kodemapels'    => $kodeMapel,
-            'tahuns'    => Mengajar::select('tahun_ajaran')->get()->groupBy('tahun_ajaran'),
-            'kelas'     => Kelas::select('id', 'nama', 'jurusan_id')->get(),
-            'siswas'    => $siswas,
+            'tahuns'        => Mengajar::select('tahun_ajaran')->get()->groupBy('tahun_ajaran'),
+            'kelas'         => Kelas::select('id', 'nama', 'jurusan_id')->get(),
+            'siswas'        => $siswas,
         ]);
+    }
+
+    public function downloadTemplate(Request $request){
+        $tahun_ajaran = $request->tahun_ajaran;
+        $semester = $request->semester;
+        $mapel_id = $request->select_mapel_id;
+
+        $mapel = Mapel::find($mapel_id);
+
+        return (new TemplateNilai($semester, $tahun_ajaran, $mapel_id))->download('template_nilai_mapel_' .$mapel->nama.'.xlsx');
+    }
+
+    public function importNilai(Request $request){
+
+        $this->validate($request, [
+            'import_nilai' => 'required|mimes:xls,xlsx'
+        ]);
+
+        $file = $request->file('import_nilai');
+
+        $data = Excel::toArray(new NilaiImport, $file);
+
+        $nilai = collect(head($data))
+        ->each(function ($row, $key) {
+            DB::table('nilai')
+                ->where('id', $row['nilai_id'])
+                ->update(Arr::except($row, ['no', 'id', 'nilai_id', 'nama_siswa', 'mata_pelajaran']));
+        });
+
+        return $nilai
+            ? back()->with('success', 'Berhasil mengimport nilai')
+            : back()->with('errorr', 'Gagal mengimport nilai');
     }
 }

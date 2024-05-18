@@ -8,7 +8,7 @@
                     <div class="card shadow">
                         <div class="card-header">
                             <strong class="card-title">Daftar Pembagian Jam Mengajar</strong>
-                                <a href="/dashboard/mengajar/create" class="btn btn-primary btn-sm float-right"><i class="fe fe-plus"></i> Tambah</a>
+                                <a href="/dashboard/mengajar/pembagian-mapel" class="btn btn-primary btn-sm float-right"><i class="fe fe-plus"></i> Atur Pembagian Mapel</a>
                         </div>
                         <div class="card-body">
                             @if (session()->has('success'))
@@ -43,81 +43,76 @@
                                             <option value="Genap" @if(request('filter_semester') == 'Genap') selected @endif>Genap</option>
                                         </select>
                                     </div>
+                                    {{-- <div class="input-group">
+                                        <select id="filter_guru" name="filter_guru" class="form-control">
+                                            <option value="">-- Guru --</option>
+                                            @foreach ($gurus as $guru)
+                                                <option value="{{ $guru->id }}" @selected(request('filter_guru') == $guru->id)>{{ $guru->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div> --}}
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit" id="button-filter">Filter</button>
                                     </div>
                                 </div>
                             </form>
-                            <div class="table-responsive">
-                            <table id="tbMengajar" class="table table-bordered datatables table-hover mb-0">
-                                <thead class="text-center">
-                                    <th class="text-dark">No</th>
-                                    <th class="text-dark" width="200px">Mapel</th>
-                                    <th class="text-dark text-nowrap col-4" width="300px">Nama Guru Pendidik</th>
-                                    <th class="text-dark text-nowrap col-2" width="200px">Kelas / Jurusan</th>
-                                    <th class="text-dark text-nowrap" width="100px">Jam Mengajar</th>
-                                    <th class="text-center" scope="col"><span class="fe fe-tool text-info fe-16"></span></th>
-                                </thead>
-                                <tbody>
-                                    @foreach ($mengajars as $mengajar)
-                                    <tr>
-                                        <form action="/dashboard/mengajar/{{ $mengajar->id }}" method="post">
-                                        @method('put')
-                                        @csrf
-                                        <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td>{{ $mengajar->mapel->kode }}</td>
-                                        <td class="p-1">
-                                            <select id="guru_id[{{ $mengajar->id }}]" name="guru_id" class="form-control {{$errors->first('guru_id') ? "is-invalid" : "" }}" required>
-                                                @foreach ($gurus as $guru )
-                                                    @if (old('guru_id', $mengajar->guru_id) == $guru->id)
-                                                        <option value="{{ $guru->id }}" selected>{{ $guru->nama }}</option>
-                                                    @else
-                                                        <option value="{{ $guru->id }}">{{ $guru->nama }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td class="p-1">
-                                            <select class="form-control {{$errors->first('kelas_id') ? "is-invalid" : "" }}" id="kelas_id[{{ $mengajar->id }}]" name="kelas_id" required>
-                                                @foreach ($kelas as $value)
-                                                    @if (old('kelas_id', $mengajar->kelas_id) == $value->id)
-                                                        <option value="{{ $value->id }}" selected>{{ $value->nama . '-' . $value->jurusan->kode }}</option>
-                                                    @else
-                                                        <option value="{{ $value->id }}">{{ $value->nama . '-' . $value->jurusan->kode }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td class="p-1">
-                                           <select id="jam[{{ $mengajar->id }}]" name="jam" class="custom-select form-control {{$errors->first('jam') ? "is-invalid" : "" }}" >
-                                            @for ($no = 0; $no < 50; $no++)
-                                                @if($mengajar->jam == $no)
-                                                    <option value="{{$mengajar->jam ?? ''}}" selected>{{$mengajar->jam ?? ''}}</option>
-                                                @else
-                                                    <option value={{ $no }}>{{ $no }}</option>
-                                                @endif
-                                            @endfor
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex float-right">
-                                                <div class="btn-group" role="group" aria-label="Tombol mengajar">
-                                                    {{-- <a href="/dashboard/mengajar/{{ $mengajar->id }}" class="btn btn-info btn-sm ml-2"><span class="fe fe-eye text-white"></span></a> --}}
-                                                    <button class="btn btn-primary btn-sm ml-2" type="submit"><span class="fe fe-edit text-white"></span></button>
-                                                    <a href="/dashboard/mengajar/delete/{{ $mengajar->id }}" class="btn btn-danger btn-sm ml-2" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete"></span></a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </form>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                            @foreach ($mengajarsGroup as $guru)
+                            <div class="table-responsive py-3">
+                                <table class="table table-bordered datatables table-mengajar table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td colspan="6" class="bg-light">Guru Bidang : <strong>{{ $guru->nama }} </strong></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th>Kode Mapel</th>
+                                            <th class="text-nowrap">Nama Mata Pelajaran</th>
+                                            <th>Kelas</th>
+                                            <th>Jam</th>
+                                            <th class="text-center" scope="col"><span class="fe fe-tool text-info fe-16"></span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($guru->mengajars->load(['mapel', 'kelas']) as $mengajar)
+                                            <tr>
+                                            <form action="/dashboard/mengajar/{{ $mengajar->id }}" method="post">
+                                            @method('put')
+                                            @csrf
+                                                <td class="text-center">{{ $loop->iteration }}</td>
+                                                <td>{{ $mengajar->mapel->kode }}</td>
+                                                <td>{{ $mengajar->mapel->nama }}</td>
+                                                <td>{{ $mengajar->kelas->nama . ' - ' . $mengajar->kelas->jurusan->kode }}</td>
+                                                <td class="p-1">
+                                                    <select id="jam[{{ $mengajar->id }}]" name="jam" class="custom-select form-control {{$errors->first('jam') ? "is-invalid" : "" }}" >
+                                                    @for ($no = 0; $no < 50; $no++)
+                                                        @if($mengajar->jam == $no)
+                                                            <option value="{{$mengajar->jam ?? ''}}" selected>{{$mengajar->jam ?? ''}}</option>
+                                                        @else
+                                                            <option value={{ $no }}>{{ $no }}</option>
+                                                        @endif
+                                                    @endfor
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex float-right">
+                                                        <div class="btn-group" role="group" aria-label="Tombol mengajar">
+                                                            <button class="btn btn-primary btn-sm ml-2" type="submit"><span class="fe fe-edit text-white"></span> Update</button>
+                                                            <a href="/dashboard/mengajar/delete/{{ $mengajar->id }}" class="btn btn-danger btn-sm ml-2" onclick="return confirm('Yakin ingin menghapus data?')"><span class="fe fe-delete"></span></a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </form>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 @endsection

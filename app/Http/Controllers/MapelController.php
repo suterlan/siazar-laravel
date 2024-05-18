@@ -175,7 +175,7 @@ class MapelController extends Controller
         return redirect('/dashboard/mapel')->with('success', 'Mapel berhasil dihapus!');
     }
 
-    public function pembagianMapel(){
+    public function ShowPembagianMapel(){
 
         $years = Mengajar::select('tahun_ajaran')->orderBy('tahun_ajaran')->get()->groupBy('tahun_ajaran');
 
@@ -195,7 +195,7 @@ class MapelController extends Controller
                 }], 'jam')->get();
         }
 
-        return view('mapel.pembagianmapel', [
+        return view('mapel.show', [
             'title' => 'Pembagian Mapel '. config('app.name'),
             'years'     => $years,
             'gurus' => $gurus,

@@ -29,13 +29,8 @@
         <li class="nav-item dropdown">
             <a href="#pembayaran" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link {{ Request::is('dashboard-siswa/pembayaran*') ? 'link-active collapsed' : '' }} ">
                 <i class="fe fe-dollar-sign fe-16"></i>
-                <span class="ml-3 item-text">Pembayaran</span><span class="sr-only">(current)</span>
+                <span class="ml-3 item-text">Iuran</span><span class="sr-only">(current)</span>
             </a>
-            <ul class="list-unstyled pl-4 w-100 collapse {{ Request::is('dashboard-siswa/pembayaran*') ? 'show' : '' }}" id="pembayaran" style="">
-                <a href="/dashboard-siswa/pembayaran/wisuda" aria-expanded="false" class="nav-link pl-3 {{ Request::is('dashboard-siswa/surat/wisuda*') ? 'link-active' : '' }}">
-                    <span class="ml-1 item-text">Wisuda</span>
-                </a>
-            </ul>
         </li>
     </ul>
 
