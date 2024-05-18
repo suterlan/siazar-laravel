@@ -34,14 +34,8 @@ class Kelas extends Model
         return $this->hasMany(Mengajar::class);
     }
 
-    // public function gurus(){
-    //     return $this->belongsToMany(Guru::class, 'mengajars')
-    //             ->withPivot('jam', 'tahun_ajaran');
-    // }
-
-    // public function mapels(){
-    //     return $this->belongsToMany(Mapel::class, 'mengajars')
-    //             ->withPivot('jam', 'tahun_ajaran');
-    // }
+    public function pembayarans(){
+        return $this->belongsToMany(Pembayaran::class, 'pembayaran_kelas');
+    }
 
 }

@@ -25,6 +25,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\MengajarController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RombelController;
@@ -144,6 +145,10 @@ Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], functi
     Route::get('/dashboard/get-kelas-mengajar', [NilaiController::class, 'getKelasMengajar']);
     Route::get('/dashboard/get-siswa', [NilaiController::class, 'getSiswaMengajar']);
     Route::get('/dashboard/nilai-input', [NilaiController::class, 'index'])->name('nilai-input');
+
+    Route::post('/dashboard/nilai-template', [NilaiController::class, 'downloadTemplate'])->name('nilai-template');
+    Route::post('/dashboard/nilai-import', [NilaiController::class, 'importNilai'])->name('nilai-import');
+
     Route::post('/dashboard/nilai-input', [NilaiController::class, 'store']);
     Route::get('/dashboard/nilai-siswa', [NilaiController::class, 'rekap'])->name('nilai-siswa');
 
@@ -162,7 +167,7 @@ Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], functi
     // Route klasifikasi
     Route::resource('/dashboard/surat/klasifikasi', KlasifikasiController::class)->except(['create', 'show']);
 
-        // ROUTE untuk membuat no surat otomatis
+    // ROUTE untuk membuat no surat otomatis
     Route::get('/getCodeKlasifikasi', [SuratKeluarController::class, 'getCodeKlasifikasi']);
 
     // Route surat keluar (semua surat)
@@ -250,7 +255,7 @@ Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], functi
     Route::put('/dashboard/akun/{akun}', [AkunSettingController::class, 'update']);
 
     // Route Mapel
-    Route::get('/dashboard/mapel/pembagian-mapel', [MapelController::class, 'pembagianMapel']);
+    Route::get('/dashboard/mapel/show-pembagian-mapel', [MapelController::class, 'ShowPembagianMapel']);
     Route::resource('/dashboard/mapel', MapelController::class);
 
     // route struktur organisasi
@@ -258,6 +263,11 @@ Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], functi
 
     // Route mengajar
     Route::get('/getMapel', [GetMapelController::class, 'getMapel']);
+    Route::get('/dashboard/mengajar/pembagian-mapel', [MengajarController::class, 'pembagianMapel']);
+    Route::get('/dashboard/mengajar/pembagian-mapel/{guru}', [MengajarController::class, 'AturPembagianMapel']);
+    Route::get('/dashboard/mengajar/get-mapel', [MengajarController::class, 'getMapel']);
+    Route::get('/dashboard/mengajar/get-kelas', [MengajarController::class, 'getKelas']);
+
     Route::get('/dashboard/mengajar/delete/{mengajar}', [MengajarController::class, 'delete']);
     Route::resource('/dashboard/mengajar', MengajarController::class)->except(['show', 'edit', 'destroy']);
 
@@ -265,6 +275,17 @@ Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], functi
     Route::get('/dashboard/arsip', [ArsipController::class, 'index']);
     Route::get('/dashboard/arsip/ppdb', [ArsipController::class, 'ppdb']);
     Route::get('/dashboard/arsip/tracing-alumni', [ArsipController::class, 'tracingAlumni'])->name('tracing-alumni');
+
+    // ========== Route Pembayaran ============
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::controller(PembayaranController::class)->group(function (){
+            Route::get('/pembayaran', 'index')->name('pembayaran');
+            Route::post('/pembayaran', 'store')->name('pembayaran.store');
+            Route::get('/pembayaran/edit/{pembayaran}', 'edit')->name('pembayaran.edit');
+            Route::put('/pembayaran/{pembayaran}', 'update')->name('pembayaran.update');
+            Route::delete('/pembayaran/{pembayaran}', 'destroy')->name('pembayaran.destroy');
+        });
+    });
 
 });
 

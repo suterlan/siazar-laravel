@@ -17,16 +17,6 @@ class Mapel extends Model
         return $this->hasOne(DokumenAjar::class, 'kode', 'kode');
     }
 
-    // public function kelas(){
-    //     return $this->belongsToMany(Kelas::class, 'mengajars')
-    //             ->withPivot('id', 'jam', 'tahun_ajaran');
-    // }
-
-    // public function gurus(){
-    //     return $this->belongsToMany(Guru::class, 'mengajars')
-    //             ->withPivot('id', 'jam', 'tahun_ajaran');
-    // }
-
     public function mengajars(){
         return $this->hasMany(Mengajar::class);
     }

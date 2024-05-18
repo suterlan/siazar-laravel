@@ -120,6 +120,19 @@
     </ul>
 
     <p class="text-muted nav-heading mt-2 mb-1">
+        <span>Keuangan</span>
+    </p>
+
+    <ul class="navbar-nav flex-fill w-100 mb-0">
+        <li class="nav-item dropdown">
+            <a href="{{ route('dashboard.pembayaran') }}" aria-expanded="false" class="nav-link {{ Request::is('dashboard/pembayaran') ? 'link-active' : '' }}">
+                <i class="fe fe-dollar-sign fe-16"></i>
+                <span class="ml-3 item-text">Pembayaran</span>
+            </a>
+        </li>
+    </ul>
+
+    <p class="text-muted nav-heading mt-2 mb-1">
         <span>Manajemen</span>
     </p>
 

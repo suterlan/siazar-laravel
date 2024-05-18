@@ -54,7 +54,20 @@ $(document).ready(function () {
     // tabel pesan pengunjung
     $("#tbPesan").DataTable();
     // table guru
-    $("#tbGuru").DataTable();
+    $("#tbGuru")
+        .DataTable({
+            responsive: true,
+            stateSave: true,
+            lengthMenu: [
+                [10, 20, 50, 100, -1],
+                [10, 20, 50, 100, "All"],
+            ],
+            buttons: ["csv", "excel", "pdf", "print"],
+        })
+        .buttons()
+        .container()
+        .appendTo("#tbGuru_wrapper .col-md-6:eq(0)");
+
     // tabel mapel
     $("#tbMapel").DataTable({
         stateSave: true,
@@ -64,8 +77,9 @@ $(document).ready(function () {
         ],
     });
     // tabel Mengajar
-    $("#tbMengajar").DataTable({
+    $(".table-mengajar").DataTable({
         stateSave: true,
+        info: false,
         lengthMenu: [
             [10, 20, 50, 100, -1],
             [10, 20, 50, 100, "All"],
@@ -144,6 +158,24 @@ $(document).ready(function () {
         .container()
         .appendTo("#tbArsipTracingAlumni_wrapper .col-md-6:eq(0)");
     // end tabel arsip tracing alumni
+
+    // Tabel Pembayaran
+    // tabel pembagian mapel
+    $("#tbPembayaran")
+        .DataTable({
+            paging: true,
+            info: false,
+            ordering: true,
+            lengthMenu: [
+                [30, 50, 100, -1],
+                [30, 50, 100, "All"],
+            ],
+            buttons: ["csv", "excel", "pdf", "print"],
+        })
+        .buttons()
+        .container()
+        .appendTo("#tbPembayaran_wrapper .col-md-6:eq(0)");
+    // end tabel pembayaran
 
     // JAVASCRIPT QUILL EDITOR
     // options quill toolbar

@@ -9,7 +9,14 @@ class Mengajar extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'mapel_id',
+        'kelas_id',
+        'guru_id',
+        'tahun_ajaran',
+        'semester',
+        'jam'
+    ];
 
     public function mapel()
     {
