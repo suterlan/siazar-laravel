@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\ArsipPpdbExport;
 use App\Models\PPDB;
+use App\Models\Siswa;
 use App\Models\TracingAlumni;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -14,10 +15,14 @@ class ArsipController extends Controller
     public function index(){
 
         $jml_ppdb = PPDB::select('id')->count();
+        $jml_tracing = TracingAlumni::count('id');
+        $jml_alumni = Siswa::where('lulus', true)->count();
 
         return view('arsip.index', [
             'title'     => 'Arsip '. config('app.name'),
             'jml_ppdb'  => $jml_ppdb,
+            'jml_alumni'    => $jml_alumni,
+            'jml_tracing'   => $jml_tracing,
         ]);
     }
 
@@ -47,16 +52,19 @@ class ArsipController extends Controller
                                     return $query->where('lulus', true);
                                 });
 
-        $filtered = [];
-        if(request('filter_tahun')){
-            $alumni->whereYear('angkatan', request('filter_tahun'));
+        $filtered = $alumni->where('angkatan', date('Y'))->get();
 
-            request('filter_status')
-                ? $alumni->where('status', request('filter_status'))
-                : $alumni->orWhere('status', request('filter_status'));
+        if(request('filter_tahun') && request('filter_status')){
+            if(request('filter_status') == 'all'){
+                $alumni->where('angkatan', request('filter_tahun'));
+            }else{
+                $alumni->where('angkatan', request('filter_tahun'))
+                ->where('status', request('filter_status'));
+            }
 
             $filtered = $alumni->get();
         }
+        // dd($filtered);
 
         return view('arsip.tracing-alumni', [
             'title'     => 'Arsip Tracing Alumni'. config('app.name'),

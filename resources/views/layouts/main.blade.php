@@ -18,6 +18,7 @@
 {{-- FOOTER --}}
 @include('partials.footer')
 {{-- END FOOTER --}}
+@stack('scripts')
 </body>
 </html>
 

@@ -1,6 +1,5 @@
-@can('siswa')
     <ul class="navbar-nav flex-fill w-100">
-        <li class="nav-item dropdown">
+        <li class="nav-item">
             <a href="/dashboard-siswa" aria-expanded="false" class="nav-link {{ Request::is('dashboard') ? 'link-active' : '' }}">
             <i class="fe fe-home fe-16"></i>
             <span class="ml-3 item-text">Dashboard</span><span class="sr-only">(current)</span>
@@ -13,7 +12,7 @@
     </p>
 
     <ul class="navbar-nav flex-fill w-100 mb-0">
-        <li class="nav-item dropdown">
+        <li class="nav-item">
             <a href="{{ route('nilai') }}" aria-expanded="false" class="nav-link {{ Request::is('dashboard-siswa/nilai') ? 'link-active' : '' }}">
                 <i class="fe fe-award fe-16"></i>
                 <span class="ml-3 item-text">Nilai</span>
@@ -26,10 +25,17 @@
     </p>
 
     <ul class="navbar-nav flex-fill w-100 mb-0">
-        <li class="nav-item dropdown">
-            <a href="#pembayaran" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link {{ Request::is('dashboard-siswa/pembayaran*') ? 'link-active collapsed' : '' }} ">
+        <li class="nav-item">
+            <a href="{{ route('transaksi') }}" aria-expanded="false" class="nav-link {{ Request::is('dashboard-siswa/transaksi*') ? 'link-active' : '' }} ">
                 <i class="fe fe-dollar-sign fe-16"></i>
-                <span class="ml-3 item-text">Iuran</span><span class="sr-only">(current)</span>
+                <span class="ml-3 item-text">Transaksi</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('iuran') }}" aria-expanded="false" class="nav-link {{ Request::is('dashboard-siswa/iuran*') ? 'link-active' : '' }} ">
+                <i class="fe fe-dollar-sign fe-16"></i>
+                <span class="ml-3 item-text">Iuran</span>
             </a>
         </li>
     </ul>
@@ -46,4 +52,3 @@
             </a>
         </li>
     </ul>
-@endcan

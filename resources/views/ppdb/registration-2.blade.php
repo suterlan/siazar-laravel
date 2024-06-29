@@ -57,7 +57,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="no_ijazah">Nomor Ijazah SMPN/MTs</label>
-                            <input id="no_ijazah" type="text" name="no_ijazah" class="form-control {{$errors->first('no_ijazah') ? "is-invalid" : "" }}" value="{{ old('no_ijazah', $registrasi->no_ijazah ?? '') }}" maxlength="16">
+                            <input id="no_ijazah" type="text" name="no_ijazah" class="form-control {{$errors->first('no_ijazah') ? "is-invalid" : "" }}" value="{{ old('no_ijazah', $registrasi->no_ijazah ?? '') }}">
                             @error('no_ijazah')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

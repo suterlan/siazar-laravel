@@ -5,8 +5,10 @@ use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\BukuIndukController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\dashboard_siswa\DashboardSiswaController;
+use App\Http\Controllers\dashboard_siswa\IuranController;
 use App\Http\Controllers\dashboard_siswa\NilaiController as Dashboard_siswaNilaiController;
 use App\Http\Controllers\dashboard_siswa\ProfileController;
+use App\Http\Controllers\dashboard_siswa\TransactionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JurusanController;
@@ -25,6 +27,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\MengajarController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\PaymentCallbackController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PostController;
@@ -54,6 +57,8 @@ use App\Http\Controllers\website\WebController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+    Route::post('payments/midtrans-notification', [PaymentCallbackController::class, 'receive']);
 
 // Route::group(['middleware' => ['guest']], function () {
 // Route front website
@@ -255,7 +260,7 @@ Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], functi
     Route::put('/dashboard/akun/{akun}', [AkunSettingController::class, 'update']);
 
     // Route Mapel
-    Route::get('/dashboard/mapel/show-pembagian-mapel', [MapelController::class, 'ShowPembagianMapel']);
+    // Route::get('/dashboard/mapel/show-pembagian-mapel', [MapelController::class, 'ShowPembagianMapel']);
     Route::resource('/dashboard/mapel', MapelController::class);
 
     // route struktur organisasi
@@ -274,7 +279,7 @@ Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], functi
     // Route arsip
     Route::get('/dashboard/arsip', [ArsipController::class, 'index']);
     Route::get('/dashboard/arsip/ppdb', [ArsipController::class, 'ppdb']);
-    Route::get('/dashboard/arsip/tracing-alumni', [ArsipController::class, 'tracingAlumni'])->name('tracing-alumni');
+    Route::get('/dashboard/arsip/tracing-alumni', [ArsipController::class, 'tracingAlumni'])->name('arsip-tracing-alumni');
 
     // ========== Route Pembayaran ============
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
@@ -298,6 +303,17 @@ Route::group(['middleware' => ['auth', 'checkrole:siswa']], function(){
 
         Route::controller(Dashboard_siswaNilaiController::class)->group(function (){
             Route::get('/nilai', 'index')->name('nilai');
+        });
+
+        Route::controller(IuranController::class)->group(function(){
+            Route::get('/iuran', 'index')->name('iuran');
+            Route::get('/iuran/{pembayaran}', 'show')->name('iuran.detail');
+        });
+
+        Route::controller(TransactionController::class)->group(function(){
+            Route::get('/transaksi', 'index')->name('transaksi');
+            Route::post('/transaksi', 'store')->name('transaksi.store');
+            Route::get('/transaksi/{transaction:kode_transaksi}', 'pay')->name('transaksi.pay');
         });
     });
 

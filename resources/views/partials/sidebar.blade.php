@@ -12,9 +12,11 @@
 
         @can('admin')
             @include('partials.sidepart.side-admin')
-        @elsecan('guru')
+        @endcan
+        @can('guru')
             @include('partials.sidepart.side-guru')
-        @elsecan('siswa')
+        @endcan
+        @can('siswa')
             @include('partials.sidepart.side-siswa')
         @endcan
 

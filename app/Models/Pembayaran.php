@@ -21,4 +21,12 @@ class Pembayaran extends Model
                     ->withPivot('kelas_id');
     }
 
+    public function details(){
+        return $this->hasMany(PembayaranDetail::class);
+    }
+
+    public function transactions(){
+        return $this->hasMany(Transaction::class);
+    }
+
 }

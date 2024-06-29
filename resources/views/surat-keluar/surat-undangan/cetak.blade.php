@@ -67,9 +67,9 @@
             <div>Yth.</div>
             <div>Bapak/Ibu <b>{{ strtoupper($surat->penerima) }}</b></div>
             <div style="padding-bottom: 5mm">Di Tempat</div>
-            <div style="padding-bottom: 2mm"><i>Assalamu'alaikum Wr. Wb.</i></div>
+            <div style="padding-bottom: 2mm"><b><i>Assalamu'alaikum Wr. Wb.</i></b></div>
             <div>Dengan hormat,</div>
-            <div align="justify" style="margin-bottom: 3mm">Sehubungan dengan akan diadakannya kegiatan {{ $surat->kegiatan }}, maka kami bermaksud mengundang Bapak/Ibu {{ $surat->penerima }} untuk dapat menghadiri kegiatan tersebut yang akan di selenggarakan pada :</div>
+            <div align="justify" style="margin-bottom: 3mm">Sehubungan dengan diadakannya acara kegiatan {{ $surat->kegiatan }}, maka kami bermaksud mengundang Bapak/Ibu untuk dapat menghadiri kegiatan tersebut yang akan di selenggarakan pada :</div>
             <table cellspacing="5">
                 <tr>
                     <td width="80" class="pl-5">Hari, Tanggal</td>
@@ -87,7 +87,8 @@
                     <td>{{ $surat->tempat }}</td>
                 </tr>
             </table>
-            <div align="justify" style="margin-top: 3mm">Demikian surat undangan ini kami sampaikan. Atas kehadiran dan perhatiannya kami ucapkan terima kasih.</div>
+            <div align="justify" style="margin-top: 3mm">Demikian surat undangan ini kami sampaikan. Atas kehadiran dan perhatian dari Bapak/Ibu kami ucapkan terima kasih.</div>
+            <div style="padding-top: 2mm"><b><i>Wassalamu'alaikum Wr. Wb.</i></b></div>
             @isset($surat->ketua_panitia)
                 <table class="table-ttd-2">
                     <tr>

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tracing_alumnis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('siswa_id')->constrained();
-            $table->dateTime('angkatan');
+            $table->year('angkatan');
             $table->enum('status', ['Kerja', 'Kuliah', 'Menikah', 'Usaha Mandiri'])->nullable();
             $table->string('nama_perusahaan')->nullable();
             $table->string('alamat_perusahaan')->nullable();

@@ -63,7 +63,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="deskripsi">Deskripsi / Isi surat</label>
-                            <textarea id="deskripsi" name="deskripsi" class="form-control" maxlength="255" rows="4">{{ old('deskripsi') }} </textarea>
+                            <textarea id="deskripsi" name="deskripsi" class="form-control" maxlength="255" rows="4" required>{{ old('deskripsi') }} </textarea>
                             @error('deskripsi')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
