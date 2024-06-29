@@ -52,7 +52,7 @@ class User extends Authenticatable
     }
 
     public function siswa(){
-        return $this->hasOne(Siswa::class, 'username', 'nisn');
+        return $this->hasOne(Siswa::class, 'nisn', 'username');
     }
 
     // inverse one to many ke tabel role
@@ -62,6 +62,10 @@ class User extends Authenticatable
 
     public function position(){
         return $this->belongsTo(Position::class);
+    }
+
+    public function transactions(){
+        return $this->hasMany(Transaction::class);
     }
 
 }

@@ -1,5 +1,6 @@
 @extends('layouts.main')
     @section('content')
+        @can('siswa')
         <div class="container-fluid">
           <div class="row justify-content-center">
             <div class="col-12">
@@ -16,5 +17,6 @@
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
+        @endcan
     @endsection
 

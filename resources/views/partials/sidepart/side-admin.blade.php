@@ -169,7 +169,7 @@
         <li class="nav-item">
             <a href="/dashboard/user" aria-expanded="false" class="nav-link {{ Request::is('dashboard/user') ? 'link-active' : '' }}">
                 <i class="fe fe-users fe-16"></i>
-                <span class="ml-3 item-text">User Settings</span><span class="sr-only">(current)</span>
+                <span class="ml-3 item-text">Users</span><span class="sr-only">(current)</span>
             </a>
         </li>
     </ul>

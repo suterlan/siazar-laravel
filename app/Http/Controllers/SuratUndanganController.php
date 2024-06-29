@@ -181,7 +181,7 @@ class SuratUndanganController extends Controller
         ]);
 
         // remove whitespace
-        $nama = str_replace(' ', '', $undangan->nama_siswa);
+        $nama = str_replace(' ', '_', $undangan->penerima);
         return $pdf->download('surat-undangan-'.$nama.'.pdf');
         // exit(0);
     }

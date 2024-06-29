@@ -177,6 +177,18 @@ $(document).ready(function () {
         .appendTo("#tbPembayaran_wrapper .col-md-6:eq(0)");
     // end tabel pembayaran
 
+    // Tabel Iuran Siswa
+    $("#tbIuran").DataTable({
+        paging: true,
+        info: false,
+        ordering: false,
+        lengthMenu: [
+            [10, 30, 50, 100, -1],
+            [10, 30, 50, 100, "All"],
+        ],
+    });
+    // end tabel iuran siswa
+
     // JAVASCRIPT QUILL EDITOR
     // options quill toolbar
     var toolbarOptions = [

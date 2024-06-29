@@ -31,13 +31,17 @@ class Siswa extends Model
     }
 
     public function user(){
-        return $this->belongsTo(User::class, 'nisn', 'username');
+        return $this->belongsTo(User::class, 'username', 'nisn');
     }
 
     public function mapels(){
         return $this->belongsToMany(Mapel::class, 'nilai')
             ->withPivot('nilai')
             ->orderByPivot('mapel_id', 'asc');
+    }
+
+    public function transactions(){
+        return $this->hasMany(Transaction::class);
     }
 
 }

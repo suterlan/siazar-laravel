@@ -12,7 +12,7 @@
                             <small class="text-info">Silahkan copy dan bagikan link dibawah ini kepada alumni untuk mengisi formulir pendataan alumni</small>
 
                             <div class="input-group mb-2">
-                                <input id="linkTracingAlumni" type="text" class="form-control col-md-4" aria-label="clipboard tracing alumni" aria-describedby="button-copy" value="{{ route('tracing-alumni') }}" disabled>
+                                <input id="linkTracingAlumni" type="text" class="form-control col-md-4" aria-label="clipboard tracing alumni" aria-describedby="button-copy" value="{{ route('tracing-alumni') }}" readonly>
                                 <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button" id="button-copy"  data-toggle="tooltip" data-placement="top" title="copy link" onclick="copyToClipboard()">
                                     <i class="fe fe-copy"></i>
@@ -26,7 +26,7 @@
                             <form action="/dashboard/arsip/tracing-alumni">
                                 <div class="d-flex mb-3 col-md-6">
                                     <div class="input-group">
-                                        <select id="filter_tahun" name="filter_tahun" class="form-control select2" required>
+                                        <select id="filter_tahun" name="filter_tahun" class="form-control" required>
                                             <option value="">-- Tahun --</option>
                                             @for($i=date('Y'); $i>=date('Y')-10; $i-=1)
                                                 @if (request('filter_tahun') == $i)
@@ -38,9 +38,9 @@
                                         </select>
                                     </div>
                                     <div class="input-group">
-                                        <select id="filter_status" name="filter_status" class="form-control select2">
+                                        <select id="filter_status" name="filter_status" class="form-control" required>
                                             <option value="">-- Status --</option>
-                                            <option value="">Semua</option>
+                                            <option value="all" @selected(request('filter_status') == 'all')>Semua</option>
                                             <option value="Kerja" @if(request('filter_status') == 'Kerja') selected @endif>Kerja</option>
                                             <option value="Kuliah" @if(request('filter_status') == 'Kuliah') selected @endif>Kuliah</option>
                                             <option value="Menikah" @if(request('filter_status') == 'Menikah') selected @endif>Menikah</option>
@@ -49,6 +49,7 @@
                                     </div>
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit">Filter</button>
+                                        <a href="{{ route('arsip-tracing-alumni') }}" class="btn btn-outline-primary ml-1">Reset</a>
                                     </div>
                                 </div>
                             </form>

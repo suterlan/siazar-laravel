@@ -59,11 +59,10 @@
                 <div class="col-md-4">
                     <div class="alert alert-success" role="alert">
                         <h5 class="alert-heading">Pembagian Mata Pelajaran</h5>
-                        <p>Untuk melihat pembagian mata pelajaran setiap guru silahkan klik tombol dibawah</p>
+                        <p>Untuk mengatur pembagian mata pelajaran setiap guru silahkan klik tombol dibawah</p>
                         <hr>
                         <p class="mb-0">
                             <a href="/dashboard/mengajar/pembagian-mapel" class="btn btn-outline-secondary"><i class="fe fe-sliders"></i> Atur</a>
-                            <a href="/dashboard/mengajar/show-pembagian-mapel" class="btn btn-primary">Lihat</a>
                         </p>
                     </div>
 

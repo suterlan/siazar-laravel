@@ -79,11 +79,12 @@
                                 <th>Nama</th>
                                 <th>Username</th>
                                 <th>Posisi</th>
+                                <th>Kelas</th>
                                 <th>Role</th>
                                 <th class="text-center" scope="col"><span class="fe fe-tool text-info fe-16"></span></th>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach ($users->load('siswa.kelas') as $user)
                                     @if($user->role->name != 'siswa')
                                         @continue
                                     @endif
@@ -91,6 +92,9 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->position->name }}</td>
+                                    <td>
+                                        {{ $user->siswa->kelas->nama ?? '' }} - {{ $user->siswa->kelas->jurusan->kode ?? '' }}
+                                    </td>
                                     <td>
                                         <div class="badge badge-success text-white">{{ @Str::upper($user->role->name) }}</div>
                                     </td>

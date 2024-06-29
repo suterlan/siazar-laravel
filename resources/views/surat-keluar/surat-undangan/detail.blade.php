@@ -79,13 +79,13 @@
                                         <td colspan="3"><div>Di Tempat</div></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3"><div class="mt-3"><i>Assalamu'alaikum Wr. Wb.</i></div></td>
+                                        <td colspan="3"><div class="mt-3"><b><i>Assalamu'alaikum Wr. Wb.</i></b></div></td>
                                     </tr>
                                     <tr>
                                         <td colspan="3"><div class="mt-2">Dengan hormat,</div></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3"><div align="justify">Sehubungan dengan akan diadakannya kegiatan {{ $surat->kegiatan }}, maka kami selaku Kepala Panitia bermaksud mengundang Bapak/Ibu {{ $surat->penerima }} untuk dapat menghadiri kegiatan tersebut yang akan di selenggarakan pada :</div></td>
+                                        <td colspan="3"><div align="justify">Sehubungan dengan diadakannya acara kegiatan {{ $surat->kegiatan }}, maka kami bermaksud mengundang Bapak/Ibu untuk dapat menghadiri kegiatan tersebut yang akan di selenggarakan pada :</div></td>
                                     </tr>
                                     <tr>
                                         <td width="180" class="pl-5">Hari, Tanggal</td>
@@ -103,8 +103,11 @@
                                         <td>{{ $surat->tempat }}</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3"><div class="mt-3 mb-5" align="justify">Demikian surat undangan ini kami sampaikan. Atas kehadiran dan perhatiannya kami ucapkan terima kasih.</div>
+                                        <td colspan="3"><div class="mt-3 mb-5" align="justify">Demikian surat undangan ini kami sampaikan. Atas kehadiran dan perhatian dari Bapak/Ibu kami ucapkan terima kasih.</div>
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"><div class="mt-3"><b><i>Wassalamu'alaikum Wr. Wb.</i></b></div></td>
                                     </tr>
                                     @isset($surat->ketua_panitia)
                                     <tr>
