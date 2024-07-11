@@ -17,12 +17,14 @@ class TemplateNilai implements FromQuery, WithHeadings, WithMapping, ShouldAutoS
     protected $semester;
     protected $tahun_ajaran;
     protected $mapel_id;
+    protected $siswa_id;
 
-    public function __construct($semester, $tahun_ajaran, $mapel_id)
+    public function __construct($semester, $tahun_ajaran, $mapel_id, $siswa_id)
     {
         $this->semester = $semester;
         $this->tahun_ajaran = $tahun_ajaran;
         $this->mapel_id = $mapel_id;
+        $this->siswa_id = $siswa_id;
     }
 
     public function headings(): array
@@ -67,7 +69,8 @@ class TemplateNilai implements FromQuery, WithHeadings, WithMapping, ShouldAutoS
             ->with(['siswa', 'mapel'])
             ->where('semester', '=', $this->semester)
             ->where('tahun_ajaran', '=', $this->tahun_ajaran)
-            ->where('mapel_id', '=', $this->mapel_id);
+            ->where('mapel_id', '=', $this->mapel_id)
+            ->whereIn('siswa_id', $this->siswa_id);
     }
 
     public function columnWidths(): array

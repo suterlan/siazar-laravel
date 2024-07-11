@@ -11,6 +11,9 @@
                     <form class="needs-validation @if ($errors->any()) was-validated @endif" action="{{ route('nilai-template') }}" method="POST" novalidate>
                         @csrf
                     <div class="card-body px-5">
+                        <div id="form-group-siswa-id">
+                            {{-- render from js --}}
+                        </div>
                         <div class="form-group mb-2">
                             <select id="semester" name="semester" class="form-control {{$errors->first('semester') ? "is-invalid" : "" }}" required>
                                 <option value="">-- Semester --</option>
@@ -180,6 +183,12 @@
 
         const cardSiswa = document.querySelector('#card-siswa');
         const btnSimpanNilai = document.querySelector('#simpanNilai');
+
+        // form control untuk kirim request id siswa
+        // untuk download template nilai 
+        const formGroupSiswaId = document.querySelector('#form-group-siswa-id');
+        let formSiswaId = '';
+
         // form input nilai siswa
         let formInputNilaiSiswa = '';
         let inputNilai = '';
@@ -214,10 +223,16 @@
                         </div>
                     </div>
                 `;
+
+                formSiswaId += `
+                    <input type="text" id="siswa_id${e.id}" name="siswa_id[]" class="form-control" value="${e.id}" hidden>
+                `;
         });
 
         cardSiswa.innerHTML = formInputNilaiSiswa;
         btnSimpanNilai.removeAttribute('hidden');
+
+        formGroupSiswaId.innerHTML = formSiswaId;
 
         const btnTemplate = document.getElementById('btnTemplate');
         btnTemplate.removeAttribute('hidden');

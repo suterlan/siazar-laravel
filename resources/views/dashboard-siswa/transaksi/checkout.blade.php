@@ -32,10 +32,15 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary" id="pay-button">Bayar Sekarang</button>
-                            <pre>
-                                <div id="result-json">JSON result will appear here after payment:<br></div>
-                            </pre>
+                            <a id="back-button" href="{{ route('transaksi') }}" class="btn btn-danger btn-sm" hidden><span class="fe fe-arrow-left mr-1"></span>Kembali</a>
+
+                            <button class="btn btn-primary btn-sm" id="pay-button">Bayar Sekarang</button>
+
+                            {{-- <pre> --}}
+                            <div id="result-json">
+                                {{-- result from js here --}}
+                            </div>
+                            {{-- </pre> --}}
                         </div>
                     </div>
                 </div>
@@ -54,16 +59,36 @@
         // SnapToken acquired from previous step
         snap.pay('{{ $snapToken }}', {
           // Optional
-          onSuccess: function(result){
-            /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+          onSuccess: function(result){.
+            /* You may add your own js here, this is just example */
+            //document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            buttonPay.setAttribute('hidden', 'true');
+            document.getElementById('back-button').removeAttribute('hidden');
+
+            document.getElementById('result-json').innerHTML += `
+                <div class="alert alert-success col-12 mt-2" role="alert">
+                    <span class="fe fe-check-circle fe-16 mr-2"></span> Selamat pembayaran berhasil!
+                </div>
+            `;
           },
           // Optional
           onPending: function(result){
-            /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            document.getElementById('result-json').innerHTML += `
+               <div class="alert alert-info col-12 mt-2" role="alert">
+                    <div class="spinner-border spinner-border-sm mr-3 text-info" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <span class="text-info">Pembayaran sedang di proses...</span>
+                </div>
+            `;
           },
           // Optional
           onError: function(result){
-            /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            document.getElementById('result-json').innerHTML += `
+                <div class="alert alert-danger col-12 mt-2" role="alert">
+                    <span class="fe fe-check-circle fe-16 mr-2"></span> Pembayaran gagal!
+                </div>
+            `;
           }
         });
       });

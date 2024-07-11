@@ -7,7 +7,7 @@
                 <div class="col-md-12">
                     <div class="card shadow">
                         <div class="card-header">
-                            <strong class="card-title">Daftar Transaksi Anda</strong>
+                            <strong class="card-title">Daftar Transaksi</strong>
                         </div>
                         <div class="card-body">
                             @if (session()->has('success'))
@@ -21,7 +21,7 @@
                                 </div>
                             @endif
 
-                            <table id="tbTransaksiUser" class="table table-borderless table-hover py-3">
+                            <table id="tbTransaksi" class="table table-borderless table-hover py-3">
                                 <thead>
                                     <th>No</th>
                                     <th>Tanggal</th>
@@ -29,7 +29,7 @@
                                     <th>Iuran</th>
                                     <th>Jumlah Bayar</th>
                                     <th>Status</th>
-                                    <th class="text-center" scope="col"></th>
+                                    {{-- <th class="text-center" scope="col"></th> --}}
                                 </thead>
                                 <tbody>
                                     @foreach ($transactions as $transaction)
@@ -54,10 +54,6 @@
 
                                                 @endswitch
                                             </td>
-                                            <td>
-                                                <a class="btn btn-link btn-sm" href="{{ route('transaksi.pay', $transaction->kode_transaksi) }}"> Lanjut Pembayaran</a>
-                                            </div>
-                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -68,4 +64,31 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        setTimeout( () => {
+            setInterval( async () => {
+                let currentTrans = {{$transactions->count()}};
+                let currentSuccessTrans = {{$transactions->where('status', 'success')->count()}};
+                let currentPendingTrans = {{$transactions->where('status', 'pending')->count()}};
+                // console.log('transaksi pending saat ini = ' + currentPendingTrans);
+
+                let countTrans = await fetch('/dashboard/pembayaran/cek-transaksi')
+                                .then((response) => response.json())
+                                .then((response) => response);
+
+                console.log(countTrans);
+
+                if(currentTrans < countTrans.jml_trans){
+                    window.location.reload(true);
+                }else if(currentPendingTrans < countTrans.pending_trans){
+                    window.location.reload(true);
+                }else if(currentSuccessTrans < countTrans.success_trans){
+                    window.location.reload(true);
+                }
+
+            }, 10000);
+
+        }, 30000);
+    </script>
+    
 @endsection

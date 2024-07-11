@@ -38,9 +38,20 @@
                                     <p>Surat kelulusan akan langsung di generate pada saat siswa di luluskan.<br> Gunakan tombol <b>"Luluskan Semua"</b> jika ingin mengenerate semua siswa sekaligus, atau gunakan tombol <b>"Luluskan"</b> untuk mengenerate siswa satu per satu. </p>
                                 </div>
                             <form action="{{ route('lulus-all') }}" method="post">
-                            @csrf
-                            @method('put')
-                                <button id="btnLulus" class="btn btn-primary mb-3" type="submit">Luluskan Semua</button>
+                                @csrf
+                                @method('put')
+                                    <button id="btnLulus" class="btn btn-primary mb-3" type="submit">Luluskan Semua</button>
+                            @else
+                                <div class="alert alert-info col-12" role="alert">
+                                    <span class="fe fe-help-circle fe-16 mr-2"> Informasi!</span>
+                                    <p>Pastikan kelas yang dipilih sudah kosong, karena jika belum kemungkinan data siswa akan bertumpuk dengan kelas sebelumnya<br> Gunakan tombol <b>"Naikan Kelas Semua"</b> untuk menaikan kelas semua siswa sekaligus </p>
+                                    {{-- atau gunakan tombol <b>"Naikan kelas"</b> untuk menaikan kelas per siswa </p> --}}
+                                </div>
+
+                                <button data-toggle="modal" data-target="#modalPilihKelas{{ $row->id }}" class="btn btn-primary btn-sm mb-3" type="button">Naikan Kelas Semua</button>
+
+                                @include('siswa-group.partial.modal-pilih-kelas')
+
                             @endif
                             @endcan
                             <table id="tbSiswaRombel" class="table table-stripped table-hover datatables" style="font-size: 12px">
@@ -60,8 +71,8 @@
                                     <tr>
                                         <td>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="check_lulus{{ $value->nis }}" name="check_lulus[{{ $value->nis }}]" value="{{ $value->nis }}" checked>
-                                                <label class="custom-control-label" for="check_lulus{{ $value->nis }}"></label>
+                                                <input type="checkbox" class="custom-control-input" id="check_nis{{ $value->nis }}" name="check_nis[{{ $value->nis }}]" value="{{ $value->nis }}" checked>
+                                                <label class="custom-control-label" for="check_nis{{ $value->nis }}"></label>
                                             </div>
                                         </td>
                                         <td>{{ $loop->iteration }}</td>

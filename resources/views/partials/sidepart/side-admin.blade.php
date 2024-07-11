@@ -129,6 +129,10 @@
                 <i class="fe fe-dollar-sign fe-16"></i>
                 <span class="ml-3 item-text">Pembayaran</span>
             </a>
+            <a href="{{ route('dashboard.pembayaran.transaksi') }}" aria-expanded="false" class="nav-link {{ Request::is('dashboard/pembayaran/transaksi') ? 'link-active' : '' }}">
+                <i class="fe fe-dollar-sign fe-16"></i>
+                <span class="ml-3 item-text">Transaksi</span>
+            </a>
         </li>
     </ul>
 

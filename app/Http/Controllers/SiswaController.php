@@ -29,7 +29,7 @@ class SiswaController extends Controller
         if (!Gate::allows('admin')) {
             $siswa = Siswa::select('id', 'nis', 'nisn', 'nama_siswa', 'tempat_lahir', 'tgl_lahir', 'kelas_id', 'jurusan_id')
                     ->with('jurusan')
-                    ->whereRelation('kelas', 'guru_id', '=', auth()->user()->id)
+                    ->whereRelation('kelas', 'guru_id', '=', auth()->user()->guru->id)
                     ->orderBy('nis', 'ASC')
                     ->where('lulus', false)
                     ->where('status_siswa', true)

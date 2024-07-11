@@ -23,7 +23,7 @@ class SuratKBMController extends Controller
     public function index()
     {
         return view('surat-keluar.surat-kbm.index', [
-            'title'     => 'Surat KBM | '. config('app.name'),
+            'title'     => 'Surat KBM | ' . config('app.name'),
             'skbms'     => SKBM::latest()->get()
         ]);
     }
@@ -35,9 +35,12 @@ class SuratKBMController extends Controller
      */
     public function create()
     {
-         return view('surat-keluar.surat-kbm.create', [
-            'title'         => 'Surat KBM Baru | '. config('app.name'),
-            'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get()
+        $tahuns = Mengajar::select('tahun_ajaran')->orderBy('tahun_ajaran')->get()->groupBy('tahun_ajaran');
+
+        return view('surat-keluar.surat-kbm.create', [
+            'title'         => 'Surat KBM Baru | ' . config('app.name'),
+            'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get(),
+            'tahuns'         => $tahuns,
         ]);
     }
 
@@ -49,7 +52,7 @@ class SuratKBMController extends Controller
      */
     public function store(Request $request)
     {
-         $validated = $request->validate([
+        $validated = $request->validate([
             'klasifikasi_id'    => 'required',
             'no_surat'          => 'required|unique:surat_keluars',
             'tanggal_surat'     => 'required',
@@ -57,10 +60,9 @@ class SuratKBMController extends Controller
             'semester'          => 'required',
         ]);
 
-         SuratKeluar::create($validated);
-         SKBM::create($validated);
+        SuratKeluar::create($validated);
+        SKBM::create($validated);
         return redirect('/dashboard/suratkeluar/skbm')->with('success', 'Surat KBM baru berhasil dibuat!');
-
     }
 
     /**
@@ -82,8 +84,8 @@ class SuratKBMController extends Controller
      */
     public function edit(SKBM $skbm)
     {
-         return view('surat-keluar.surat-kbm.edit', [
-            'title'         => 'Edit Surat KBM | '. config('app.name'),
+        return view('surat-keluar.surat-kbm.edit', [
+            'title'         => 'Edit Surat KBM | ' . config('app.name'),
             'surat'         => $skbm,
             'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get()
         ]);
@@ -98,14 +100,14 @@ class SuratKBMController extends Controller
      */
     public function update(Request $request, SKBM $skbm)
     {
-         $rules = [
+        $rules = [
             'klasifikasi_id'    => 'required',
             'tanggal_surat'     => 'required',
             'tahun_ajaran'      => 'required',
             'semester'          => 'required',
         ];
 
-         if ($skbm->no_surat != $request->no_surat) {
+        if ($skbm->no_surat != $request->no_surat) {
             $rules['no_surat'] = 'required|unique:surat_keluars';
         }
         $validated = $request->validate($rules);
@@ -145,12 +147,12 @@ class SuratKBMController extends Controller
         SuratKeluar::where('no_surat', $skbm->no_surat)->delete();
 
         return redirect('/dashboard/suratkeluar/skbm')->with('success', 'Surat KBM dengan no surat : ' . $skbm->no_surat . ' berhasil dihapus');
-
     }
 
-    public function cetak(SKBM $skbm){
+    public function cetak(SKBM $skbm)
+    {
 
-        $kelas = Kelas::orderBy('id')->get()->groupBy(function($data){
+        $kelas = Kelas::orderBy('id')->get()->groupBy(function ($data) {
             return $data->nama;
         });
 
@@ -161,11 +163,11 @@ class SuratKBMController extends Controller
         $groupMengajar = $mengajars->groupBy(['guru.nama', 'mapel.nama', 'kelas.nama']);
         // dd($groupMengajar);
 
-        $strukturs = StrukturOrganisasi::orderBy('id')->get()->groupBy(function($data){
+        $strukturs = StrukturOrganisasi::orderBy('id')->get()->groupBy(function ($data) {
             return $data->keterangan;
         });
         $pdf = FacadePdf::loadView('surat-keluar.surat-kbm.cetak', [
-            'title'         => 'Cetak Surat | '. config('app.name'),
+            'title'         => 'Cetak Surat | ' . config('app.name'),
             'surat'         => $skbm,
             'mengajars'     => $groupMengajar,
             'strukturs'     => $strukturs,
@@ -174,13 +176,14 @@ class SuratKBMController extends Controller
         // exit(0);
     }
 
-    public function download(SKBM $skbm){
-         $strukturs = StrukturOrganisasi::orderBy('id')->get()->groupBy(function($data){
+    public function download(SKBM $skbm)
+    {
+        $strukturs = StrukturOrganisasi::orderBy('id')->get()->groupBy(function ($data) {
             return $data->keterangan;
         });
 
         $pdf = FacadePdf::loadView('surat-keluar.surat-kbm.cetak', [
-            'title'     => 'Cetak Surat | '. config('app.name'),
+            'title'     => 'Cetak Surat | ' . config('app.name'),
             'surat'     => $skbm,
             'strukturs' => $strukturs
         ]);
