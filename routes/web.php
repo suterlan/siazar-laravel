@@ -58,30 +58,30 @@ use App\Http\Controllers\website\WebController;
 |
 */
 
-    Route::post('payments/midtrans-notification', [PaymentCallbackController::class, 'receive']);
+Route::post('payments/midtrans-notification', [PaymentCallbackController::class, 'receive']);
 
 // Route::group(['middleware' => ['guest']], function () {
 // Route front website
-    Route::get('/', [WebController::class, 'index']);
-    // Route Jurusan
-    Route::get('/jurusan', [WebController::class, 'jurusan'])->name('jurusan');
-    Route::get('/pendidik', [WebController::class, 'pendidik'])->name('pendidik');
-    Route::get('/galeri', [WebController::class, 'galeri'])->name('galeri');
-    Route::get('/blog', [WebController::class, 'blog'])->name('blog');
-    Route::get('/blog/{post:slug}', [WebController::class, 'singleBlog']);
-    Route::get('/blog/categories/{category:slug}', [WebController::class, 'blogCategories']);
-    Route::get('/tentang', [WebController::class, 'tentang'])->name('tentang');
-    Route::get('/kontak', [WebController::class, 'kontak'])->name('kontak');
+Route::get('/', [WebController::class, 'index']);
+// Route Jurusan
+Route::get('/jurusan', [WebController::class, 'jurusan'])->name('jurusan');
+Route::get('/pendidik', [WebController::class, 'pendidik'])->name('pendidik');
+Route::get('/galeri', [WebController::class, 'galeri'])->name('galeri');
+Route::get('/blog', [WebController::class, 'blog'])->name('blog');
+Route::get('/blog/{post:slug}', [WebController::class, 'singleBlog']);
+Route::get('/blog/categories/{category:slug}', [WebController::class, 'blogCategories']);
+Route::get('/tentang', [WebController::class, 'tentang'])->name('tentang');
+Route::get('/kontak', [WebController::class, 'kontak'])->name('kontak');
 
-    Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran');
-    Route::get('/pendaftaran/get-kelas', [PendaftaranController::class, 'getKelas']);
-    Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
-    // Route untuk mengambil data kabupaten dengan javascript (plugin laravolt)
-        Route::get('/pendaftaran/getKabupaten', [PendaftaranController::class, 'getKabupaten'])->name('kabupaten');
-        Route::get('/pendaftaran/getKecamatan', [PendaftaranController::class, 'getKecamatan'])->name('kecamatan');
-        Route::get('/pendaftaran/getKelurahan', [PendaftaranController::class, 'getKelurahan'])->name('kelurahan');
-    // end front
-    Route::resource('/pesan', PesanController::class)->only(['store']);
+Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran');
+Route::get('/pendaftaran/get-kelas', [PendaftaranController::class, 'getKelas']);
+Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
+// Route untuk mengambil data kabupaten dengan javascript (plugin laravolt)
+Route::get('/pendaftaran/getKabupaten', [PendaftaranController::class, 'getKabupaten'])->name('kabupaten');
+Route::get('/pendaftaran/getKecamatan', [PendaftaranController::class, 'getKecamatan'])->name('kecamatan');
+Route::get('/pendaftaran/getKelurahan', [PendaftaranController::class, 'getKelurahan'])->name('kelurahan');
+// end front
+Route::resource('/pesan', PesanController::class)->only(['store']);
 // });
 
 // ROUTE LOGIN TO DASHBOARD ADMIN PANEL
@@ -136,7 +136,7 @@ Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], functi
     Route::get('/dashboard/rombel', [RombelController::class, 'index'])->name('rombel');
     Route::get('/dashboard/rombel/{nis}', [RombelController::class, 'Kelulusan']);
     Route::put('/dashboard/rombel/lulus-all', [RombelController::class, 'KelulusanAll'])->name('lulus-all');
-
+    Route::put('/dashboard/rombel/naik-kelas-all', [RombelController::class, 'naikKelasAll'])->name('naik-kelas-all');
     // Route Buku Induk Siswa
     Route::get('/dashboard/siswa-buku-induk', [BukuIndukController::class, 'index']);
     Route::get('/dashboard/siswa-buku-induk/cetak/{siswa}', [BukuIndukController::class, 'cetak']);
@@ -176,8 +176,8 @@ Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], functi
     Route::get('/getCodeKlasifikasi', [SuratKeluarController::class, 'getCodeKlasifikasi']);
 
     // Route surat keluar (semua surat)
-    Route::get('/dashboard/suratkeluar', [SuratKeluarController::class,'index']);
-    Route::get('/dashboard/surat/{jenis}', [SuratKeluarController::class,'create']);
+    Route::get('/dashboard/suratkeluar', [SuratKeluarController::class, 'index']);
+    Route::get('/dashboard/surat/{jenis}', [SuratKeluarController::class, 'create']);
 
     // Route Surat Keluar (Penerimaan)
     Route::resource('/dashboard/suratkeluar/penerimaan', PenerimaanController::class);
@@ -283,34 +283,36 @@ Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], functi
 
     // ========== Route Pembayaran ============
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
-        Route::controller(PembayaranController::class)->group(function (){
+        Route::controller(PembayaranController::class)->group(function () {
             Route::get('/pembayaran', 'index')->name('pembayaran');
             Route::post('/pembayaran', 'store')->name('pembayaran.store');
             Route::get('/pembayaran/edit/{pembayaran}', 'edit')->name('pembayaran.edit');
             Route::put('/pembayaran/{pembayaran}', 'update')->name('pembayaran.update');
             Route::delete('/pembayaran/{pembayaran}', 'destroy')->name('pembayaran.destroy');
+
+            Route::get('/pembayaran/transaksi', 'transaksi')->name('pembayaran.transaksi');
+            Route::get('/pembayaran/cek-transaksi', 'cekTransaksi');
         });
     });
-
 });
 
 // ================= GROUP AUTENTIKASI SISWA ====================
-Route::group(['middleware' => ['auth', 'checkrole:siswa']], function(){
+Route::group(['middleware' => ['auth', 'checkrole:siswa']], function () {
     Route::prefix('dashboard-siswa')->group(function () {
         Route::get('/', [DashboardSiswaController::class, 'index']);
         Route::get('/akun', [ProfileController::class, 'index']);
         Route::put('/akun/{siswa}', [ProfileController::class, 'updateProfile']);
 
-        Route::controller(Dashboard_siswaNilaiController::class)->group(function (){
+        Route::controller(Dashboard_siswaNilaiController::class)->group(function () {
             Route::get('/nilai', 'index')->name('nilai');
         });
 
-        Route::controller(IuranController::class)->group(function(){
+        Route::controller(IuranController::class)->group(function () {
             Route::get('/iuran', 'index')->name('iuran');
             Route::get('/iuran/{pembayaran}', 'show')->name('iuran.detail');
         });
 
-        Route::controller(TransactionController::class)->group(function(){
+        Route::controller(TransactionController::class)->group(function () {
             Route::get('/transaksi', 'index')->name('transaksi');
             Route::post('/transaksi', 'store')->name('transaksi.store');
             Route::get('/transaksi/{transaction:kode_transaksi}', 'pay')->name('transaksi.pay');
@@ -319,5 +321,4 @@ Route::group(['middleware' => ['auth', 'checkrole:siswa']], function(){
 
     Route::get('/tracing-alumni', [ProfileController::class, 'tracingAlumni'])->name('tracing-alumni');
     Route::post('/tracing-alumni/store', [ProfileController::class, 'StoreTracingAlumni'])->name('tracing-store');
-
 });

@@ -78,19 +78,39 @@ class SuratKeluarController extends Controller
 
             // cari no_surat terbesar dari tabel surat keluar
             // dengan mengambil 2 digit dari kiri
-            $query = DB::table('surat_keluars')
-                    ->select(DB::raw('MAX(LEFT(no_surat, 2)) as lastNoSurat'));
+            // $query = DB::table('surat_keluars')
+            //         ->select(DB::raw('MAX(LEFT(no_surat, 3)) as lastNoSurat'));
             // jika hasil pencarian didapatkan lebih dari 0
-            if ($query->count() > 0 ) {
-                // lakukan perulangan
-                foreach ($query->get() as $key) {
-                    // no surat terakhir ubah jadi integer dan tambah dengan 1
-                    $temp = ((int)$key->lastNoSurat)+1;
-                    // ubah kembali jadi string 2 digit dengan menambahkan angka 0 di depan no surat
-                    $no_surat = sprintf('%02s', $temp);
-                }
+            // if ($query->count() > 0 ) {
+            //     // lakukan perulangan
+            //     foreach ($query->get() as $key) {
+            //         // no surat terakhir ubah jadi integer dan tambah dengan 1
+            //         $temp = ((int)$key->lastNoSurat)+1;
+            //         // ubah kembali jadi string 2 digit dengan menambahkan angka 0 di depan no surat
+            //         $no_surat = sprintf('%03s', $temp);
+            //     }
+            // }else{
+            //     $no_surat = '001';
+            // }
+
+            // ambil data terakhir dari tabel surat keluar
+            $query = SuratKeluar::latest()->first();
+
+            if(!blank($query)){
+                // simpan nomor_surat yang didapat ke dalam variabel $lasNoSurat
+                $lastNoSurat = $query->no_surat;
+                // pecah nomor_surat menjadi beberapa bagian berdasarkan separator "/"
+                // dan simpan kedalam variabel temp
+                $temp = explode('/', $lastNoSurat);
+                // ambil array index pertama (0) dari hasil pemecahan nomor_surat
+                // dan ubah menjadi tipe data integer
+                $noCurrent = (int) $temp[0];
+                // nomor surat saat ini kemudian ditambah 1 dan simpan ke variabel $noNext
+                $noNext = $noCurrent+1;
+                // ubah kembali menjadi tipe data string dan simpan ke variabel $no_surat
+                $no_surat = sprintf('%03s', $noNext);
             }else{
-                $no_surat = '01';
+                $no_surat = '001';
             }
 
             // Buat bulan dalam angka romawi

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PembayaranDetail;
 use App\Models\Transaction;
 use App\Services\Midtrans\CallbackService;
 use Illuminate\Http\Request;
@@ -18,6 +19,12 @@ class PaymentCallbackController extends Controller
             if ($callback->isSuccess()) {
                 Transaction::where('kode_transaksi', $transaksi->kode_transaksi)->update([
                     'status'    => 'success',
+                ]);
+
+                PembayaranDetail::create([
+                    'pembayaran_id' => $transaksi->pembayaran_id,
+                    'siswa_id'      => $transaksi->siswa_id,
+                    'nominal'       => $transaksi->nominal,
                 ]);
             }
 

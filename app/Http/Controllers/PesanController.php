@@ -43,7 +43,7 @@ class PesanController extends Controller
     {
         $validated = $request->validate([
             'nama'  => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email:dns',
             'subject'   => 'required|max:100',
             'pesan'     => 'required',
         ]);

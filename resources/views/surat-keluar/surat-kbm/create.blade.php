@@ -57,9 +57,28 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group mb-2">
+                        {{-- <div class="form-group mb-2">
                             <label for="tahun_ajaran">Tahun Ajaran</label>
                             <input class="form-control input-tahun-ajaran col-lg-6" id="tahun_ajaran" type="text" name="tahun_ajaran" placeholder="____/____" maxlength="9" required>
+                            @error('tahun_ajaran')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div> --}}
+                        <div class="form-group mb-2">
+                            <label for="tahun_ajaran">Tahun Ajaran</label>
+                            <select class="form-control col-lg-6 {{$errors->first('tahun_ajaran') ? "is-invalid" : "" }}" id="tahun_ajaran" name="tahun_ajaran" required>
+                                <option value="">-- Pilih Tahun --</option>
+                                @foreach ($tahuns as $tahun => $value)
+                                    @if (old('tahun_ajaran') == $tahun)
+                                        <option value="{{ $tahun }}" selected>{{ $tahun }}</option>
+                                    @else
+                                        <option value="{{ $tahun }}">{{ $tahun }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            @error('tahun_ajaran')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <label class="form-label mt-2">Semster</label>
                         <div class="form-group mb-2">
