@@ -28,23 +28,23 @@ class SiswaController extends Controller
 
         if (!Gate::allows('admin')) {
             $siswa = Siswa::select('id', 'nis', 'nisn', 'nama_siswa', 'tempat_lahir', 'tgl_lahir', 'kelas_id', 'jurusan_id')
-                    ->with('jurusan')
-                    ->whereRelation('kelas', 'guru_id', '=', auth()->user()->guru->id)
-                    ->orderBy('nis', 'ASC')
-                    ->where('lulus', false)
-                    ->where('status_siswa', true)
-                    ->get();
-        }else{
+                ->with('jurusan')
+                ->whereRelation('kelas', 'guru_id', '=', auth()->user()->guru->id)
+                ->orderBy('nis', 'ASC')
+                ->where('lulus', false)
+                ->where('status_siswa', true)
+                ->get();
+        } else {
             $siswa = Siswa::select('id', 'nis', 'nisn', 'nama_siswa', 'tempat_lahir', 'tgl_lahir', 'kelas_id', 'jurusan_id')
-                    ->with(['jurusan', 'kelas'])
-                    ->orderBy('nis', 'ASC')
-                    ->where('lulus', false)
-                    ->where('status_siswa', true)
-                    ->get();
+                ->with(['jurusan', 'kelas'])
+                ->orderBy('nis', 'ASC')
+                ->where('lulus', false)
+                ->where('status_siswa', true)
+                ->get();
         }
 
         return view('siswa.index', [
-            'title'     => 'Siswa | '. config('app.name'),
+            'title'     => 'Siswa | ' . config('app.name'),
             'siswas'    => $siswa
         ]);
     }
@@ -59,18 +59,20 @@ class SiswaController extends Controller
         //
     }
 
-    public function registration1(Request $request){
-        $provinces= Province::pluck('name', 'code');
+    public function registration1(Request $request)
+    {
+        $provinces = Province::pluck('name', 'code');
         $registrasi = $request->session()->get('registrasi');
         return view('siswa.registration-1', [
-            'title'         => 'Tambah Siswa Baru | '. config('app.name'),
+            'title'         => 'Tambah Siswa Baru | ' . config('app.name'),
             'step'          => 1,
             'registrasi'    => $registrasi,
             'provinces'     => $provinces
         ]);
     }
 
-    function postRegistration1(Request $request){
+    function postRegistration1(Request $request)
+    {
         $validatedData = $request->validate([
             'user_id'       => 'numeric',
             'nama_siswa'    => 'required',
@@ -91,7 +93,7 @@ class SiswaController extends Controller
             $registrasi = new Siswa();
             $registrasi->fill($validatedData);
             $request->session()->put('registrasi', $registrasi);
-        }else{
+        } else {
             $registrasi = $request->session()->get('registrasi');
             $registrasi->fill($validatedData);
             $request->session()->put('registrasi', $registrasi);
@@ -100,16 +102,18 @@ class SiswaController extends Controller
         return redirect('/dashboard/siswa/registrasi-step2');
     }
 
-    public function registration2(Request $request){
+    public function registration2(Request $request)
+    {
         $registrasi = $request->session()->get('registrasi');
         return view('siswa.registration-2', [
-            'title'         => 'Tambah Siswa Baru | '. config('app.name'),
+            'title'         => 'Tambah Siswa Baru | ' . config('app.name'),
             'step'          => 2,
             'registrasi'    => $registrasi
         ]);
     }
 
-    public function postRegistration2(Request $request){
+    public function postRegistration2(Request $request)
+    {
         $validatedData = $request->validate([
             'asal_sekolah'  => 'required',
             'nis'           => 'min:11|numeric|required|unique:siswas',
@@ -127,16 +131,18 @@ class SiswaController extends Controller
         return redirect('/dashboard/siswa/registrasi-step3');
     }
 
-    public function registration3(Request $request){
+    public function registration3(Request $request)
+    {
         $registrasi = $request->session()->get('registrasi');
         return view('siswa.registration-3', [
-            'title'         => 'Tambah Siswa Baru | '. config('app.name'),
+            'title'         => 'Tambah Siswa Baru | ' . config('app.name'),
             'step'          => 3,
             'registrasi'    => $registrasi
         ]);
     }
 
-    public function postRegistration3(Request $request){
+    public function postRegistration3(Request $request)
+    {
         $validatedData = $request->validate([
             'nama_ayah'         => 'nullable',
             'nik_ayah'          => 'min:16|numeric|nullable',
@@ -159,10 +165,11 @@ class SiswaController extends Controller
         return redirect('/dashboard/siswa/registrasi-step4');
     }
 
-    public function registration4(Request $request){
+    public function registration4(Request $request)
+    {
         $registrasi = $request->session()->get('registrasi');
         return view('siswa.registration-4', [
-            'title'     => 'Tambah Siswa Baru | '. config('app.name'),
+            'title'     => 'Tambah Siswa Baru | ' . config('app.name'),
             'step'      => 4,
             'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
             'kelas'     => Kelas::all(),
@@ -211,8 +218,8 @@ class SiswaController extends Controller
      */
     public function show(Siswa $siswa)
     {
-        return view('siswa.detail',[
-            'title'     => 'Detail Siswa | '. config('app.name'),
+        return view('siswa.detail', [
+            'title'     => 'Detail Siswa | ' . config('app.name'),
             'siswa'     => $siswa
         ]);
     }
@@ -225,9 +232,9 @@ class SiswaController extends Controller
      */
     public function edit(Siswa $siswa)
     {
-        $provinces= Province::pluck('name', 'code');
-        return view('siswa.edit',[
-            'title'     => 'Edit Siswa | '. config('app.name'),
+        $provinces = Province::pluck('name', 'code');
+        return view('siswa.edit', [
+            'title'     => 'Edit Siswa | ' . config('app.name'),
             'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
             'kelas'     => Kelas::all(),
             'provinces' => $provinces,
@@ -246,42 +253,42 @@ class SiswaController extends Controller
     {
         // RULE VALIDASI SISWA
         $validate = [
-                'jurusan_id'            => 'required',
-                'kelas_id'              => 'required',
-                'nama_siswa'            => 'required',
-                'jk'                    => 'required',
-                'tempat_lahir'          => 'required',
-                'tgl_lahir'             => 'required',
-                'no_hp'                 => 'max:13',
-                'tahun_ajaran'          => 'max:9',
-                'nik'                   => 'min:16|required|numeric',
-                'alamat'                => 'max:255',
-                'provinsi'              => 'max:64',
-                'kabupaten'             => 'max:64',
-                'kecamatan'             => 'max:64',
-                'kelurahan'             => 'max:64',
-                'asal_sekolah'          => 'required',
-                'no_ijazah'             => 'min:16|nullable',
-                'no_skhun'              => 'min:7|nullable',
-                'no_kip'                => 'min:6|nullable',
-                'nama_kip'              => 'max:255|nullable',
-                'nama_ayah'             => 'nullable',
-                'nik_ayah'              => 'min:16|numeric|nullable',
-                'tgl_lahir_ayah'        => 'date|nullable',
-                'pendidikan_ayah'       => 'max:32',
-                'pekerjaan_ayah'        => 'max:64',
-                'penghasilan_ayah'      => 'numeric|nullable',
-                'nama_ibu'              => 'required',
-                'nik_ibu'               => 'min:16|numeric|nullable',
-                'tgl_lahir_ibu'         => 'date|nullable',
-                'pendidikan_ibu'        => 'max:32',
-                'pekerjaan_ibu'         => 'max:64',
-                'penghasilan_ibu'       => 'numeric|nullable',
-                'jml_saudara_kandung'   => 'max:1|nullable'
+            'jurusan_id'            => 'required',
+            'kelas_id'              => 'required',
+            'nama_siswa'            => 'required',
+            'jk'                    => 'required',
+            'tempat_lahir'          => 'required',
+            'tgl_lahir'             => 'required',
+            'no_hp'                 => 'max:13',
+            'tahun_ajaran'          => 'max:9',
+            'nik'                   => 'min:16|required|numeric',
+            'alamat'                => 'max:255',
+            'provinsi'              => 'max:64',
+            'kabupaten'             => 'max:64',
+            'kecamatan'             => 'max:64',
+            'kelurahan'             => 'max:64',
+            'asal_sekolah'          => 'required',
+            'no_ijazah'             => 'min:16|nullable',
+            'no_skhun'              => 'min:7|nullable',
+            'no_kip'                => 'min:6|nullable',
+            'nama_kip'              => 'max:255|nullable',
+            'nama_ayah'             => 'nullable',
+            'nik_ayah'              => 'min:16|numeric|nullable',
+            'tgl_lahir_ayah'        => 'date|nullable',
+            'pendidikan_ayah'       => 'max:32',
+            'pekerjaan_ayah'        => 'max:64',
+            'penghasilan_ayah'      => 'numeric|nullable',
+            'nama_ibu'              => 'required',
+            'nik_ibu'               => 'min:16|numeric|nullable',
+            'tgl_lahir_ibu'         => 'date|nullable',
+            'pendidikan_ibu'        => 'max:32',
+            'pekerjaan_ibu'         => 'max:64',
+            'penghasilan_ibu'       => 'numeric|nullable',
+            'jml_saudara_kandung'   => 'max:1|nullable'
         ];
 
         // jika nisn diubah tambahkan rule nisn ke validasi siswa
-        if($request->nisn != $siswa->nisn){
+        if ($request->nisn != $siswa->nisn) {
             $validate['nisn'] = 'min:10|numeric|nullable|unique:siswas';
         }
         // validasi rule siswa di atas
@@ -299,37 +306,37 @@ class SiswaController extends Controller
         $documents = $request->validate($ruleDocument);
 
         if ($request->file('foto')) {
-            if($request->old_foto){
+            if ($request->old_foto) {
                 Storage::delete($request->old_foto);
             }
             $documents['foto'] = $request->file('foto')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('kartu_keluarga')) {
-            if($request->old_kartu_keluarga){
+            if ($request->old_kartu_keluarga) {
                 Storage::delete($request->old_kartu_keluarga);
             }
             $documents['kartu_keluarga'] = $request->file('kartu_keluarga')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('ijazah')) {
-            if($request->old_ijazah){
+            if ($request->old_ijazah) {
                 Storage::delete($request->old_ijazah);
             }
             $documents['ijazah'] = $request->file('ijazah')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('akte')) {
-            if($request->old_akte){
+            if ($request->old_akte) {
                 Storage::delete($request->old_akte);
             }
             $documents['akte'] = $request->file('akte')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('ktp_ortu')) {
-            if($request->old_ktp_ortu){
+            if ($request->old_ktp_ortu) {
                 Storage::delete($request->old_ktp_ortu);
             }
             $documents['ktp_ortu'] = $request->file('ktp_ortu')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('berkas')) {
-            if($request->old_berkas){
+            if ($request->old_berkas) {
                 Storage::delete($request->old_berkas);
             }
             $documents['berkas'] = $request->file('berkas')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
@@ -356,32 +363,36 @@ class SiswaController extends Controller
      */
     public function destroy(Siswa $siswa)
     {
-        if ($siswa->dokumen->foto) {
-            Storage::delete($siswa->dokumen->foto);
-        }
-        if ($siswa->dokumen->kartu_keluarga) {
-            Storage::delete($siswa->dokumen->kartu_keluarga);
-        }
-        if ($siswa->dokumen->ijazah) {
-           Storage::delete($siswa->dokumen->ijazah);
-        }
-        if ($siswa->dokumen->akte) {
-           Storage::delete($siswa->dokumen->akte);
-        }
-        if ($siswa->dokumen->ktp_ortu) {
-           Storage::delete($siswa->dokumen->ktp_ortu);
-        }
-        if ($siswa->dokumen->berkas) {
-           Storage::delete($siswa->dokumen->berkas);
+        if ($siswa->dokumen()->exists()) {
+
+            if ($siswa->dokumen->foto) {
+                Storage::delete($siswa->dokumen->foto);
+            }
+            if ($siswa->dokumen->kartu_keluarga) {
+                Storage::delete($siswa->dokumen->kartu_keluarga);
+            }
+            if ($siswa->dokumen->ijazah) {
+                Storage::delete($siswa->dokumen->ijazah);
+            }
+            if ($siswa->dokumen->akte) {
+                Storage::delete($siswa->dokumen->akte);
+            }
+            if ($siswa->dokumen->ktp_ortu) {
+                Storage::delete($siswa->dokumen->ktp_ortu);
+            }
+            if ($siswa->dokumen->berkas) {
+                Storage::delete($siswa->dokumen->berkas);
+            }
         }
 
-        Siswa::where('nis', $siswa->nis)->delete();
+        $siswa->delete();
         // Dokumen::where('nisn', $siswa->nisn)->delete();
 
         return redirect('/dashboard/siswa')->with('success', 'Data siswa ' . $siswa->nama_siswa . ' berhasil dihapus!');
     }
 
-    public function export(){
+    public function export()
+    {
         $date = Carbon::now();
         return Excel::download(new SiswaExport, 'data_siswa_' . $date . '.xlsx');
     }

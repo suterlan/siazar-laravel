@@ -13,14 +13,15 @@ class SuratKeluarController extends Controller
 {
     public function index()
     {
-        return view('surat-keluar.index',[
-            'title'     => 'Surat Keluar | '. config('app.name'),
+        return view('surat-keluar.index', [
+            'title'     => 'Surat Keluar | ' . config('app.name'),
             'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get(),
             'surats'    => SuratKeluar::latest()->get()
         ]);
     }
 
-    public function create(){
+    public function create()
+    {
         //
     }
 
@@ -94,9 +95,9 @@ class SuratKeluarController extends Controller
             // }
 
             // ambil data terakhir dari tabel surat keluar
-            $query = SuratKeluar::latest()->first();
+            $query = SuratKeluar::latest('id')->first();
 
-            if(!blank($query)){
+            if (!blank($query)) {
                 // simpan nomor_surat yang didapat ke dalam variabel $lasNoSurat
                 $lastNoSurat = $query->no_surat;
                 // pecah nomor_surat menjadi beberapa bagian berdasarkan separator "/"
@@ -106,10 +107,10 @@ class SuratKeluarController extends Controller
                 // dan ubah menjadi tipe data integer
                 $noCurrent = (int) $temp[0];
                 // nomor surat saat ini kemudian ditambah 1 dan simpan ke variabel $noNext
-                $noNext = $noCurrent+1;
+                $noNext = $noCurrent + 1;
                 // ubah kembali menjadi tipe data string dan simpan ke variabel $no_surat
                 $no_surat = sprintf('%03s', $noNext);
-            }else{
+            } else {
                 $no_surat = '001';
             }
 
@@ -126,5 +127,4 @@ class SuratKeluarController extends Controller
             return response()->json(['no_surat' => '']);
         }
     }
-
 }
