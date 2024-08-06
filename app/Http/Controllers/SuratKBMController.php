@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Klasifikasi;
+use App\Models\Mapel;
 use App\Models\Mengajar;
 use App\Models\SKBM;
 use App\Models\StrukturOrganisasi;
@@ -152,16 +154,39 @@ class SuratKBMController extends Controller
     public function cetak(SKBM $skbm)
     {
 
-        $kelas = Kelas::orderBy('id')->get()->groupBy(function ($data) {
-            return $data->nama;
-        });
+        // $kelas = Kelas::orderBy('id')->get()->groupBy(function ($data) {
+        //     return $data->nama;
+        // });
+        $jurusans = Jurusan::select('id', 'kode', 'nama')->orderBy('kode', 'asc')
+            ->with(['kelas' => function ($query) {
+                $query->orderBy('kelas.nama', 'asc');
+            }])->get();
 
+        $arrKelas = [];
+        foreach ($jurusans as $jurusan) {
+            foreach ($jurusan->kelas as $kelas) {
+                $arrKelas[$kelas->id] = $kelas->nama;
+            }
+        }
 
-        $mengajars = Mengajar::with(['guru', 'mapel', 'kelas'])
-            ->orderBy('kelas_id', 'ASC')
-            ->where('tahun_ajaran', $skbm->tahun_ajaran)->get();
-        $groupMengajar = $mengajars->groupBy(['guru.nama', 'mapel.nama', 'kelas.nama']);
-        // dd($groupMengajar);
+        $guru = Guru::select('id', 'nama', 'tempat_lahir', 'tanggal_lahir', 'pendidikan_terakhir', 'nuptk', 'alamat', 'kelurahan', 'kecamatan', 'kabupaten', 'provinsi')
+            ->whereRelation('mengajars', 'tahun_ajaran', '=', $skbm->tahun_ajaran)
+            ->whereRelation('mengajars', 'semester', '=', $skbm->semester)
+            ->get();
+
+        $guruMengajar = $guru->load([
+            'mengajars.mapel',
+            'mengajars' => function ($query) use ($skbm) {
+                $query->where('semester', '=', $skbm->semester);
+                $query->orderBy('kelas_id', 'asc');
+            }
+        ]);
+
+        $jamMengajars = Mengajar::query()
+            ->where('tahun_ajaran', '=', $skbm->tahun_ajaran)
+            ->where('semester', '=', $skbm->semester)
+            ->orderBy('kelas_id', 'asc')
+            ->with('mapel');
 
         $strukturs = StrukturOrganisasi::orderBy('id')->get()->groupBy(function ($data) {
             return $data->keterangan;
@@ -169,7 +194,10 @@ class SuratKBMController extends Controller
         $pdf = FacadePdf::loadView('surat-keluar.surat-kbm.cetak', [
             'title'         => 'Cetak Surat | ' . config('app.name'),
             'surat'         => $skbm,
-            'mengajars'     => $groupMengajar,
+            'jurusans'      => $jurusans,
+            'arrKelas'      => $arrKelas,
+            'mengajars'     => $guruMengajar,
+            'jamMengajars'  => $jamMengajars,
             'strukturs'     => $strukturs,
         ]);
         return $pdf->stream('surat-skbm');

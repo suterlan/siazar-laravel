@@ -20,7 +20,7 @@
                 </a>
             </div>
             <div class="col-md-6 col-xl-3 mb-4">
-                <a href="#" style="text-decoration: none;">
+                <a href="{{route('arsip-alumni')}}" style="text-decoration: none;">
                 <div id="alumni" class="card shadow-lg">
                     <div class="card-body">
                         <div class="row align-items-center">

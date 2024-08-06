@@ -141,6 +141,24 @@ $(document).ready(function () {
         .appendTo("#tbArsipPpdb_wrapper .col-md-6:eq(0)");
     // end tabel arsip ppdb
 
+    // tabel Arsip Alumni
+    $("#tbArsipAlumni")
+        .DataTable({
+            paging: true,
+            info: false,
+            ordering: true,
+            stateSave: true,
+            lengthMenu: [
+                [10, 20, 50, 100, -1],
+                [10, 20, 50, 100, "All"],
+            ],
+            buttons: ["csv", "excel", "pdf", "print", "colvis"],
+        })
+        .buttons()
+        .container()
+        .appendTo("#tbArsipAlumni_wrapper .col-md-6:eq(0)");
+    // end tabel arsip alumni
+
     // tabel arsip tracing alumni
     $("#tbArsipTracingAlumni")
         .DataTable({

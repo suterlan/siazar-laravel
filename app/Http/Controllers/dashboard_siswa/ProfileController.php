@@ -17,17 +17,19 @@ use Laravolt\Indonesia\Models\Province;
 
 class ProfileController extends Controller
 {
-    public function index(): View{
+    public function index(): View
+    {
         $akun = Siswa::where('nisn', auth()->user()->username)->first();
-        $provinces= Province::pluck('name', 'code');
+        $provinces = Province::pluck('name', 'code');
         return view('dashboard-siswa.profile.index', [
-            'title'     => 'Profile Siswa '. config('app.name'),
+            'title'     => 'Profile Siswa ' . config('app.name'),
             'akun'      => $akun,
             'provinces' => $provinces,
         ]);
     }
 
-    public function updateProfile(Request $request, Siswa $siswa){
+    public function updateProfile(Request $request, Siswa $siswa)
+    {
         $rules = [
             'nama_siswa'            => 'required',
             'jk'                    => 'required',
@@ -49,37 +51,37 @@ class ProfileController extends Controller
         $documents = $request->validate($ruleDocument);
 
         if ($request->file('foto')) {
-            if($request->old_foto){
+            if ($request->old_foto) {
                 Storage::delete($request->old_foto);
             }
             $documents['foto'] = $request->file('foto')->store('dokumen/' . $siswa->nisn . '_' . trim($validated['nama_siswa'], '.'));
         }
         if ($request->file('kartu_keluarga')) {
-            if($request->old_kartu_keluarga){
+            if ($request->old_kartu_keluarga) {
                 Storage::delete($request->old_kartu_keluarga);
             }
             $documents['kartu_keluarga'] = $request->file('kartu_keluarga')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('ijazah')) {
-            if($request->old_ijazah){
+            if ($request->old_ijazah) {
                 Storage::delete($request->old_ijazah);
             }
             $documents['ijazah'] = $request->file('ijazah')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('akte')) {
-            if($request->old_akte){
+            if ($request->old_akte) {
                 Storage::delete($request->old_akte);
             }
             $documents['akte'] = $request->file('akte')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('ktp_ortu')) {
-            if($request->old_ktp_ortu){
+            if ($request->old_ktp_ortu) {
                 Storage::delete($request->old_ktp_ortu);
             }
             $documents['ktp_ortu'] = $request->file('ktp_ortu')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
         }
         if ($request->file('berkas')) {
-            if($request->old_berkas){
+            if ($request->old_berkas) {
                 Storage::delete($request->old_berkas);
             }
             $documents['berkas'] = $request->file('berkas')->store('dokumen/' . $siswa->nisn . '_' . trim($siswa->nama_siswa, '.'));
@@ -89,21 +91,21 @@ class ProfileController extends Controller
         // buat array untuk menampung aturan validasi
         $ruleUbahPassword = [];
         // jika input username tidak sama dengan yg ada di db, buat rule untuk username
-        if($request->username != $siswa->user->username){
+        if ($request->username != $siswa->user->username) {
             $ruleUbahPassword['username'] = 'required|unique:users';
         }
 
         // Update password
-        if(!empty($request->old_password)){
+        if (!empty($request->old_password)) {
             // cek old_password apakah sama dengan password di db?, jika sama lanjutkan, jika beda tampilkan pesan
-            if(Hash::check($request->old_password, $siswa->user->password)){
+            if (Hash::check($request->old_password, $siswa->user->password)) {
                 // jika input password baru beda dg sebelumnya, buat rule untuk password baru
-                if($request->password != $siswa->user->password){
+                if ($request->password != $siswa->user->password) {
                     $ruleUbahPassword['password'] = 'required|min:8|required_with:password_confirmation|same:password_confirmation';
                     // $ruleUbahPassword['password_confirmation'] = 'required|min:8';
                 }
-            }else{
-              throw ValidationException::withMessages(['old_password' => 'Old Password tidak sama!']);
+            } else {
+                throw ValidationException::withMessages(['old_password' => 'Old Password tidak sama!']);
             }
         }
         $dataPassword = $request->validate($ruleUbahPassword);
@@ -119,7 +121,7 @@ class ProfileController extends Controller
         Siswa::where('id', $siswa->id)
             ->update($validated);
 
-         // update data tabel dokumen
+        // update data tabel dokumen
         Dokumen::updateOrCreate(
             ['nisn'  => $siswa->nisn],
             $documents
@@ -129,13 +131,15 @@ class ProfileController extends Controller
         return redirect('/dashboard-siswa/akun')->with('success', 'Data anda berhasil diubah');
     }
 
-    public function tracingAlumni(): View{
+    public function tracingAlumni(): View
+    {
         return view('dashboard-siswa.tracer-alumni', [
-            'title'     => 'Tracing Alumni '. config('app.name'),
+            'title'     => 'Tracing Alumni ' . config('app.name'),
         ]);
     }
 
-    public function StoreTracingAlumni(Request $request){
+    public function StoreTracingAlumni(Request $request)
+    {
         $user = Auth::user()->username;
         $siswa = Siswa::select('id')->where('nisn', $user)->get();
         foreach ($siswa as $key) {
@@ -147,17 +151,17 @@ class ProfileController extends Controller
             'status'    => 'required',
         ];
 
-        if($request->status == 'Kerja'){
+        if ($request->status == 'Kerja') {
             $rules['nama_perusahaan']   = 'required';
             $rules['alamat_perusahaan'] = 'required';
             $rules['gaji'] = 'required';
         }
-        if($request->status == 'Kuliah'){
+        if ($request->status == 'Kuliah') {
             $rules['nama_universitas']   = 'required';
             $rules['alamat_universitas'] = 'required';
             $rules['jurusan'] = 'required';
         }
-        if($request->status == 'Menikah' || $request->status == 'Usaha Mandiri'){
+        if ($request->status == 'Menikah' || $request->status == 'Usaha Mandiri') {
             $rules['kategori_usaha'] = 'required';
             $rules['gaji'] = 'required';
         }
@@ -168,6 +172,5 @@ class ProfileController extends Controller
 
         TracingAlumni::create($validated);
         return redirect('/dashboard-siswa')->with('success', 'Data telah tersimpan!');
-
     }
 }

@@ -29,12 +29,15 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
+        Paginator::useBootstrapFive();
+        Paginator::useBootstrapFour();
+
         // Gate::define('admin', function(User $user){
         //     return $user->role;
         // });
 
-        Builder::macro('whereRelationIn', function ($relation, $column, $array){
-            return $this->whereHas($relation, fn($q) => $q->whereIn($column, $array));
+        Builder::macro('whereRelationIn', function ($relation, $column, $array) {
+            return $this->whereHas($relation, fn ($q) => $q->whereIn($column, $array));
         });
     }
 }

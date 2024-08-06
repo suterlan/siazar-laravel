@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alumni;
 use App\Models\Kelas;
 use App\Models\Klasifikasi;
 use App\Models\Siswa;
@@ -79,6 +80,11 @@ class RombelController extends Controller
                 'tanggal_surat'     => date('Y-m-d'),
             ]);
 
+            Alumni::create([
+                'angkatan'  => date('Y'),
+                'siswa_id'  => $siswa->id
+            ]);
+
             Siswa::where('nis', $request->nis)
                 ->update([
                     'lulus' => true
@@ -117,6 +123,11 @@ class RombelController extends Controller
                         'ttl'       => $siswa->tempat_lahir . ', ' . Carbon::parse($siswa->tgl_lahir)->translatedFormat('d F Y'),
                         'nama'      => $siswa->nama_siswa,
                         'jurusan'   => $siswa->jurusan->nama
+                    ]);
+
+                    Alumni::create([
+                        'angkatan'  => date('Y'),
+                        'siswa_id'  => $siswa->id
                     ]);
 
                     Siswa::where('nis', $siswa->nis)->update(['lulus' => true]);

@@ -86,7 +86,7 @@ class PembayaranController extends Controller
     {
         $transactions = Transaction::latest()
             ->with(['pembayaran', 'siswa'])
-            ->get();
+            ->paginate(15);
 
         return view('pembayaran.transaksi', [
             'title'             => 'Daftar Transaksi ' . config('app.name'),

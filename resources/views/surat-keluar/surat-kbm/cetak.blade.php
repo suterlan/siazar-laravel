@@ -77,7 +77,7 @@
 
             .table-ttd {
                 float: right;
-                margin-top: 10mm;
+                margin-top: 6mm;
                 text-align: left;
                 margin-right: 10mm;
             }
@@ -164,7 +164,7 @@
                                     <li>Peraturan Menteri Pendidikan Republik Indonesia  Nomor 41 Tahun 2007 tentang Standar Proses Untuk Satuan Pendidikan Dasar dan Menengah;</li>
                                     <li>Peraturan Menteri Pendidikan Republik Indonesia  Nomor 74 Tahun 2008 tentang Beban Kerja Guru;</li>
                                     <li>Surat Edaran Bersama Menteri Pendidikan dan Kebudayaan dan Kepala Badan Kepegawaian Administrasi Negara Nomor 38/SE/1998;</li>
-                                    <li>Hasil Keputusan Rapat Dewan Guru SMK AZ-Zarkasyih pada Tanggal 24 Juni 2022.</li>
+                                    <li>Hasil Keputusan Rapat Dewan Guru SMK AZ-Zarkasyih pada Tanggal 24 Juni {{ Carbon\Carbon::parse($surat->created_at)->format('Y') }}.</li>
                                 </ol>
                             </td>
                         </tr>
@@ -181,7 +181,7 @@
                             <td valign="top">
                                 <ul style="margin-top: 0; margin-bottom: 0; text-align: justify; list-style: none">
                                     <li>
-                                        Pembagian Tugas Guru dalam kegiatan belajar mengajar dan membimbing pada Semester 1 (Ganjil) tahun pelajaran 2022/2023 seperti terlampir dalam lampiran 1.
+                                        Pembagian Tugas Guru dalam kegiatan belajar mengajar dan membimbing pada Semester 1 (Ganjil) tahun pelajaran {{ $surat->tahun_ajaran }} seperti terlampir dalam lampiran 1.
                                     </li>
                                 </ul>
                             </td>
@@ -247,7 +247,7 @@
                             <td>Ditetapkan di : Cianjur</td>
                         </tr>
                         <tr>
-                            <td>Pada tanggal :{{ \Carbon\Carbon::parse($surat->suratkeluar->tanggal_surat)->translatedFormat('d F Y')  }}</td>
+                            <td>Pada tanggal : {{ \Carbon\Carbon::parse($surat->suratkeluar->tanggal_surat)->translatedFormat('d F Y')  }}</td>
                         </tr>
                         <tr>
                             <td>Kepala Sekolah,</td>
@@ -266,8 +266,8 @@
                     </p>
                 </div>
 
-                <p style="page-break-after: never;">
-                    Lampiran I :
+                <div style="page-break-after: always;">
+                    <p>Lampiran I : </p>
                     <h4 style="text-align: center">
                         PEMBAGIAN TUGAS MENGAJAR GURU<br>
                         SEMESTER {{ strtoupper($surat->semester) }} TAHUN PELAJARAN {{ $surat->tahun_ajaran }} </h4>
@@ -279,54 +279,72 @@
                                 <th rowspan="3">NAMA GURU</th>
                                 <th rowspan="3">TUGAS MENGAJAR</th>
                                 <th colspan="9">JUMLAH JAM PER ROMBEL</th>
-                                <th rowspan="3">JML JAM</th>
-                                <th rowspan="3">TOTAL</th>
+                                <th rowspan="3">TOTAL JAM</th>
                             </tr>
                             <tr>
-                                <th colspan="3">X</th>
-                                <th colspan="3">XI</th>
-                                <th colspan="3">XII</th>
+                                @foreach ($jurusans as $jurusan)
+                                    <th colspan="3">{{ $jurusan->nama }}</th>
+                                @endforeach
                             </tr>
                             <tr>
-                                <th>MP</th>
-                                <th>DKV</th>
-                                <th>TSM</th>
-
-                                <th>MP</th>
-                                <th>DKV</th>
-                                <th>TSM</th>
-
-                                <th>MP</th>
-                                <th>DKV</th>
-                                <th>TSM</th>
+                                @foreach ($arrKelas as $id_kelas => $nama_kelas)
+                                    <th>{{ $nama_kelas }}</th>
+                                @endforeach
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($mengajars as $guru => $mapels)
+                            @foreach ($mengajars as $guru)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td style="text-align: center">{{ $loop->iteration }}</td>
                                     <td>
-                                        {{ $guru }}
+                                        {{ $guru->nama }}
                                     </td>
-                                    <td>
-                                        @foreach ($mapels as $mapel => $kelas)
-                                            <div style="padding: 2px">{{ $mapel }}</div>
+                                    <td style="white-space: nowrap">
+                                        @foreach ($guru->mengajars->groupBy('mapel.nama') as $mapelNama => $mapels)
+                                            <div style="padding: 2px">{{ $mapelNama }}</div>  
                                         @endforeach
                                     </td>
-                                    <td>
-                                        @foreach ($mapels as $mapel => $kelas)
-                                            @foreach ($kelas as $kel => $jam)
-                                                <div style="padding: 2px">{{ $kel }}</div>
-                                            @endforeach
+                                    @foreach ($arrKelas as $id_kelas => $nama_kelas)
+                                        <td style="text-align: center">
+                                        @foreach ($jamMengajars->where('guru_id', $guru->id)->get()->groupBy('mapel.nama') as $mapel => $jamMengajar)
+                                        {{-- <ul> --}}
+                                            <li style="list-style: none; padding: 2px">
+                                            @foreach ($jamMengajar as $mengajar)
+                                                @if ($id_kelas == $mengajar->kelas_id)
+                                                    <span>{{ $mengajar->jam }}</span>
+                                                @else
+                                                    <span>&nbsp;</span>
+                                                @endif
+                                                @endforeach
+                                            </li>
+                                        {{-- </ul> --}}
                                         @endforeach
+                                        </td>
+                                    @endforeach
+                                    <td style="text-align: center">
+                                        <div>{{$guru->mengajars->sum('jam')}} jam</div>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                </p>
+                    <table class="table-ttd">
+                        <tr>
+                            <td>Ditetapkan di : Cianjur</td>
+                        </tr>
+                        <tr>
+                            <td>Pada tanggal : {{ \Carbon\Carbon::parse($surat->suratkeluar->tanggal_surat)->translatedFormat('d F Y')  }}</td>
+                        </tr>
+                        <tr>
+                            <td>Kepala Sekolah,</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="30"><u><b>SITI ROHIMAH, S.Sos</b></u> <br> NIP.</td>
+                        </tr>
+                    </table>
+                </div>
 
-                <p style="page-break-after: always;">
+                <div style="page-break-after: always;">
                     <p>Lampiran II :</p>
                     <h4 style="text-align: center">
                         PEMBAGIAN TUGAS TAMBAHAN, TUGAS KEPEGAWAIAN DAN TUGAS BIMBINGAN<br>
@@ -355,12 +373,12 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <table class="table-ttd" style="margin-right: 5cm">
+                    <table class="table-ttd">
                         <tr>
                             <td>Ditetapkan di : Cianjur</td>
                         </tr>
                         <tr>
-                            <td>Pada tanggal :{{ \Carbon\Carbon::parse($surat->suratkeluar->tanggal_surat)->translatedFormat('d F Y')  }}</td>
+                            <td>Pada tanggal : {{ \Carbon\Carbon::parse($surat->suratkeluar->tanggal_surat)->translatedFormat('d F Y')  }}</td>
                         </tr>
                         <tr>
                             <td>Kepala Sekolah,</td>
@@ -369,7 +387,149 @@
                             <td rowspan="30"><u><b>SITI ROHIMAH, S.Sos</b></u> <br> NIP.</td>
                         </tr>
                     </table>
-                </p>
+                </div>
+
+            @foreach ($mengajars as $guru)    
+                <div style="page-break-after: always;">
+                    <h4 style="text-align: center">
+                        SURAT KEPUTUSAN <br>
+                        KEPALA SEKOLAH MENENGAH KEJURUAN (SMK) AZ-ZARKASYIH <br>
+                        Nomor  : {{ $surat->no_surat }} </h4>
+                    <h4 style="text-align: center">
+                        TENTANG
+                        PENGANGKATAN TENAGA PENDIDIK DAN TENAGA KEPANDIDIKAN 
+                        <br>SMK AZ-ZARKASYIH TAHUN PELAJARAN {{ $surat->tahun_ajaran }}
+                    </h4>
+                    <table>
+                        <tr>
+                            <td valign="top">Menimbang</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                                <ol style="margin-top: 0; margin-bottom: 0">
+                                    <li>
+                                        Bahwa dalam rangka memperlancar pelaksanaan kegiatan belajar mengajar di SMK AZ-Zarkasyih Kabupaten Cianjur, perlu  menetapkan pembagian tugas guru.
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">Mengingat</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                                <ol style="margin-top: 0; margin-bottom: 0; text-align: justify">
+                                    <li>Undang-Undang Nomor 20 Tahun 2003 Tentang Sistem Pendidikan Nasional;</li>
+                                    <li>Undang-Undang Nomor 14 Tahun 2005 Tentang Guru dan dosen</li>
+                                    <li>Peraturan Pemerintah Nomor 19 Tahun 2005 tentang Standar Nasional Pendidikan;</li>
+                                    <li>Peraturan Menteri Pendidikan Republik Indonesia  Nomor 18 Tahun 2007 tentang Sertifikasi Guru;</li>
+                                    <li>Peraturan Menteri Pendidikan Republik Indonesia  Nomor 41 Tahun 2007 tentang Standar Proses Untuk Satuan Pendidikan Dasar dan Menengah;</li>
+                                    <li>Peraturan Menteri Pendidikan Republik Indonesia  Nomor 74 Tahun 2008 tentang Beban Kerja Guru;</li>
+                                    <li>Surat Edaran Bersama Menteri Pendidikan dan Kebudayaan dan Kepala Badan Kepegawaian Administrasi Negara Nomor 38/SE/1998;</li>
+                                    <li>Hasil Keputusan Rapat Dewan Guru SMK AZ-Zarkasyih pada Tanggal 24 Juni {{ Carbon\Carbon::parse($surat->created_at)->format('Y') }}.</li>
+                                </ol>
+                            </td>
+                        </tr>
+                    </table>
+                    <h4 style="text-align: center"><b>MEMUTUSKAN</b></h4>
+                    <table>
+                        <tr>
+                            <td>Menetapkan</td>
+                            <td>:</td>
+                        </tr>
+                        <tr>
+                            <td valign="top">Pertama</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                                Terhitung Mulai Tanggal {{ \Carbon\Carbon::parse($surat->suratkeluar->tanggal_surat)->translatedFormat('d F Y')  }} :
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>Nama</td>
+                                        <td width="2mm">:</td>
+                                        <td>{{ $guru->nama }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="white-space: nowrap">Tempat, Tanggal Lahir</td>
+                                        <td width="2mm">:</td>
+                                        <td>{{ $guru->tempat_lahir . ', ' . \Carbon\Carbon::parse($guru->tanggal_lahir)->format('d F Y') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pendidikan</td>
+                                        <td width="2mm">:</td>
+                                        <td>{{ $guru->pendidikan_terakhir }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jabatan</td>
+                                        <td width="2mm">:</td>
+                                        <td>PTY</td>
+                                    </tr>
+                                    <tr>
+                                        <td>NUPTK</td>
+                                        <td width="2mm">:</td>
+                                        <td>{{ $guru->nuptk }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">Alamat</td>
+                                        <td valign="top" width="2mm">:</td>
+                                        <td valign="top">{{ $guru->alamat }} 
+                                        {{
+                                        ' Desa ' . ucfirst(strtolower( $guru->kelurahan)) . 
+                                        ' Kec. ' . ucfirst(strtolower( $guru->kecamatan)) . 
+                                        ' ' . ucwords(strtolower($guru->kabupaten)) .  
+                                        ' Provinsi ' . ucwords(strtolower($guru->provinsi)) 
+                                        }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td valign="top">Kedua</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                                Yang bersangkutan diberikan honor serta tunjangan-tunjangan sesuai dengan hasil kesepakatan bersama.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">Ketiga</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                                Apabila terdapat kekeliruan dalam keputusan ini akan diadakan perbaikan seperlunya.
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table-ttd">
+                        <tr>
+                            <td>Ditetapkan di : Cianjur</td>
+                        </tr>
+                        <tr>
+                            <td>Pada tanggal : {{ \Carbon\Carbon::parse($surat->suratkeluar->tanggal_surat)->translatedFormat('d F Y')  }}</td>
+                        </tr>
+                        <tr>
+                            <td>Kepala Sekolah,</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="20"><u><b>SITI ROHIMAH, S.Sos</b></u> <br> NIP.</td>
+                        </tr>
+                    </table>
+
+                    <p style="padding-top: 180px;">
+                        Tembusan :
+                        <ol>
+                            <li>Yth. Kepala Dinas Pendidikan Provinsi Jawa Barat</li>
+                            <li>Yth. Ketua Yayasan</li>
+                            <li>Arsip</li>
+                        </ol>
+                    </p>
+                </div>
+            @endforeach
+
             </div>
         </main>
     </body>

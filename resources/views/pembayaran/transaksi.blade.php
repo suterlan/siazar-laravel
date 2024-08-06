@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card shadow">
+                    <div class="card shadow pb-3">
                         <div class="card-header">
                             <strong class="card-title">Daftar Transaksi</strong>
                         </div>
@@ -21,7 +21,7 @@
                                 </div>
                             @endif
 
-                            <table id="tbTransaksi" class="table table-borderless table-hover py-3">
+                            <table id="tbTransaksi" class="table table-borderless table-hover" style="font-size: 11px">
                                 <thead>
                                     <th>No</th>
                                     <th>Tanggal</th>
@@ -59,6 +59,11 @@
                                 </tbody>
                             </table>
                         </div>
+                        <nav aria-label="Table Paging" class="mb-0 px-3 text-muted">
+                            <ul class="pagination justify-content-end mb-0">
+                                {{$transactions->links()}}
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

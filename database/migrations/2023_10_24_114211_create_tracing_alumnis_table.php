@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('siswa_id')->constrained();
             $table->year('angkatan');
-            $table->enum('status', ['Kerja', 'Kuliah', 'Menikah', 'Usaha Mandiri'])->nullable();
+            $table->enum('status', ['Belum Kerja', 'Kerja', 'Kuliah', 'Menikah', 'Usaha Mandiri'])->nullable();
             $table->string('nama_perusahaan')->nullable();
             $table->string('alamat_perusahaan')->nullable();
             $table->string('gaji')->nullable();
