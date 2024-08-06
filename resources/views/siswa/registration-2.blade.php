@@ -50,7 +50,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="nis">NIS <small class="text-danger">(*)</small></label>
-                            <input id="nis" type="tel" name="nis" class="form-control {{$errors->first('nis') ? "is-invalid" : "" }}" value="{{ old('nis', $registrasi->nis ?? '') }}" onKeyDown="if(this.value.length==11 && event.keyCode!=8) return false;" onkeypress='return event.charCode >= 48 && event.charCode <= 57' minlength="11" required>
+                            <input id="nis" type="tel" name="nis" class="form-control {{$errors->first('nis') ? "is-invalid" : "" }}" value="{{ old('nis', $registrasi->nis ?? '') }}" minlength="11" readonly required>
                             @error('nis')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -106,3 +106,27 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        window.onload = getNis();
+
+        async function getNis() {
+            const inputNis = document.getElementById('nis');
+
+            const url = "{{ route('get-nis') }}";
+            try {
+                const response = await fetch(url);
+                if(!response.ok){
+                    throw new Error(`Response status: ${response.status}`);
+                }
+                const nis = await response.json();
+                // console.log(nis);
+                inputNis.value = nis;
+
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+    </script>
+@endpush

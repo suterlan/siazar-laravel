@@ -43,8 +43,8 @@
                                         <td>{{ $siswa->jurusan->nama ?? '' }}</td>
                                         <td class="d-flex float-right">
                                             <a class="btn btn-sm btn-info ml-1" href="/dashboard/siswa/{{ $siswa->id }}" title="Detail"><span class="fe fe-eye"></span></a>
-                                            @canany(['admin', 'kurikulum'])
                                             <a class="btn btn-sm btn-primary ml-1" href="/dashboard/siswa/{{ $siswa->id }}/edit" title="Edit"><span class="fe fe-edit"></span></a>
+                                            @canany(['admin', 'kurikulum'])
                                             <form action="/dashboard/siswa/{{$siswa->id}}" method="POST">
                                                 @method('delete')
                                                 @csrf

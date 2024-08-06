@@ -41,6 +41,7 @@
                                         <select id="filter_status" name="filter_status" class="form-control" required>
                                             <option value="">-- Status --</option>
                                             <option value="all" @selected(request('filter_status') == 'all')>Semua</option>
+                                            <option value="Belum Kerja" @if(request('filter_status') == 'Belum Kerja') selected @endif>Belum Kerja</option>
                                             <option value="Kerja" @if(request('filter_status') == 'Kerja') selected @endif>Kerja</option>
                                             <option value="Kuliah" @if(request('filter_status') == 'Kuliah') selected @endif>Kuliah</option>
                                             <option value="Menikah" @if(request('filter_status') == 'Menikah') selected @endif>Menikah</option>

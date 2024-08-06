@@ -22,7 +22,10 @@
     <ul class="navbar-nav flex-fill w-100 mb-0">
         @php
             $id = auth()->user()->guru()->get('id')->first();
-            $cekWalas = \App\Models\Kelas::where('guru_id', $id->id)->get();
+            $cekWalas = '';
+            if (!blank($id)) {
+                $cekWalas = \App\Models\Kelas::where('guru_id', $id->id)->get();
+            }
         @endphp
         @if (!blank($cekWalas))
         <li class="nav-item dropdown">

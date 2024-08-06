@@ -129,6 +129,8 @@ Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], functi
     Route::get('/dashboard/siswa/registrasi-step3', [SiswaController::class, 'registration3']);
     Route::post('/dashboard/siswa/registrasi-step3', [SiswaController::class, 'postRegistration3']);
     Route::get('/dashboard/siswa/registrasi-step4', [SiswaController::class, 'registration4']);
+
+    Route::get('/dashboard/siswa/get-nis', [SiswaController::class, 'getNis'])->name('get-nis');
     // Route eksport excel data siswa
     Route::get('/dashboard/siswa/export', [SiswaController::class, 'export']);
 
@@ -279,6 +281,7 @@ Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], functi
     // Route arsip
     Route::get('/dashboard/arsip', [ArsipController::class, 'index']);
     Route::get('/dashboard/arsip/ppdb', [ArsipController::class, 'ppdb']);
+    Route::get('/dashboard/arsip/alumni', [ArsipController::class, 'alumni'])->name('arsip-alumni');
     Route::get('/dashboard/arsip/tracing-alumni', [ArsipController::class, 'tracingAlumni'])->name('arsip-tracing-alumni');
 
     // ========== Route Pembayaran ============

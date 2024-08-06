@@ -26,22 +26,25 @@ class Siswa extends Model
     // public function dokumen(){
     //     return $this->belongsTo(Dokumen::class, 'nisn', 'nisn');
     // }
-    public function dokumen(){
+    public function dokumen()
+    {
         return $this->hasOne(Dokumen::class, 'nisn', 'nisn');
     }
 
-    public function user(){
-        return $this->belongsTo(User::class, 'username', 'nisn');
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'nisn', 'username');
     }
 
-    public function mapels(){
+    public function mapels()
+    {
         return $this->belongsToMany(Mapel::class, 'nilai')
             ->withPivot('nilai')
             ->orderByPivot('mapel_id', 'asc');
     }
 
-    public function transactions(){
+    public function transactions()
+    {
         return $this->hasMany(Transaction::class);
     }
-
 }

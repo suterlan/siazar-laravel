@@ -37,6 +37,7 @@
                                         <label for="status" class="form-label">Pilih status saat ini</label>
                                         <select id="status" name="status" class="form-control {{$errors->first('status') ? "is-invalid" : "" }}" required>
                                             <option value="">-- Pilih Status --</option>
+                                            <option value="Belum Kerja">Belum Kerja</option>
                                             <option value="Kerja">Kerja</option>
                                             <option value="Kuliah">Kuliah</option>
                                             <option value="Menikah">Menikah</option>
@@ -124,7 +125,7 @@
                                     </div>
 
                                     <div class="form-group mb-3">
-                                        <button class="btn btn-primary" type="submit">Simpan</button>
+                                        <button class="btn btn-primary" type="submit">Submit</button>
                                     </div>
                                     </form>
                                 </div>
@@ -147,6 +148,12 @@
         let selected = selectStatus.value;
         // console.log(selected);
         switch (selected) {
+            case 'Belum Kerja':
+                formKerja.style.display = 'none';
+                formKuliah.style.display = 'none';
+                formNikahdanUsaha.style.display = 'none';
+                formGaji.style.display = 'none';
+                break;
             case 'Kerja':
                 formKerja.style.display = 'block';
                 formKuliah.style.display = 'none';

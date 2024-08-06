@@ -54,7 +54,7 @@
 
                             @endif
                             @endcan
-                            <table id="tbSiswaRombel" class="table table-stripped table-hover datatables" style="font-size: 12px">
+                            <table id="tbSiswaRombel" class="table table-stripped table-hover datatables" style="font-size: 10px">
                                 <thead class="thead-dark">
                                     <th>#</th>
                                     <th>No</th>
@@ -89,6 +89,7 @@
                                             @endif
                                             @endcan
                                             <a class="btn btn-sm btn-info ml-1" href="/dashboard/siswa/{{ $value->id }}" title="Detail"><span class="fe fe-eye"></span></a>
+                                            <a class="btn btn-sm btn-primary ml-1" href="/dashboard/siswa/{{ $value->id }}/edit" title="Edit"><span class="fe fe-edit"></span></a>
                                         </td>
                                     </tr>
                                     @endforeach

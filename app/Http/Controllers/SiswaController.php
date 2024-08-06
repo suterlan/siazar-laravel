@@ -8,8 +8,10 @@ use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\User;
+use App\Services\Siswa\NisService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -352,6 +354,17 @@ class SiswaController extends Controller
         Siswa::where('id', $siswa->id)
             ->update($validated);
 
+        User::updateOrCreate(
+            ['username' => $siswa->nisn],
+            [
+                'name' => $validated['nama_siswa'],
+                'username' => $validated['nisn'],
+                'password'  => Hash::make($validated['nisn']),
+                'role_id'      => 4,
+                'position_id'      => 7,
+            ]
+        );
+
         return redirect('/dashboard/siswa')->with('success', 'Data siswa ' . $siswa->nama_siswa . ' berhasil diubah!');
     }
 
@@ -388,12 +401,25 @@ class SiswaController extends Controller
         $siswa->delete();
         // Dokumen::where('nisn', $siswa->nisn)->delete();
 
-        return redirect('/dashboard/siswa')->with('success', 'Data siswa ' . $siswa->nama_siswa . ' berhasil dihapus!');
+        return back()->with('success', 'Data siswa ' . $siswa->nama_siswa . ' berhasil dihapus!');
     }
 
     public function export()
     {
         $date = Carbon::now();
         return Excel::download(new SiswaExport, 'data_siswa_' . $date . '.xlsx');
+    }
+
+    public function getNis()
+    {
+        $year = Carbon::now()->format('Y');
+        $month = Carbon::now()->format('m');
+        $day = Carbon::now()->format('d');
+
+        // panggil service Nis
+        $nisService = new NisService($year, $month, $day);
+        $nis = $nisService->createNis();
+
+        return response()->json($nis);
     }
 }

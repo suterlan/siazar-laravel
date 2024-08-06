@@ -150,8 +150,23 @@
                                     <div class="col-lg-6">
                                         <h6><span class="fe fe-file-text text-primary"></span> DOKUMEN SEKOLAH SISWA</h6>
                                         <div class="form-group mb-3 mt-3">
-                                            <label for="asal_sekolah" class="form-label">Asal Sekolah </label>
-                                            <input id="asal_sekolah" type="text" name="asal_sekolah" class="form-control {{$errors->first('asal_sekolah') ? "is-invalid" : "" }}" value="{{ old('asal_sekolah', $siswa->asal_sekolah) }}" required>
+                                            <label for="asal_sekolah" class="form-label">Asal Sekolah <small class="text-danger">(*)</small></label>
+                                            <input type="text" list="asal" name="asal_sekolah" value="{{ old('asal_sekolah', $siswa->asal_sekolah) }}" class="form-control {{$errors->first('asal_sekolah') ? "is-invalid" : "" }}" required />
+                                                <datalist id="asal">
+                                                    <option>SMPN 1 Leles</option>
+                                                    <option>SMPN 2 Leles</option>
+                                                    <option>SMPN 5 Leles</option>
+                                                    <option>SMPN 1 Agrabinta</option>
+                                                    <option>SMP Parungkeusik</option>
+                                                    <option>SMP PGRI</option>
+                                                    <option>SMP Lugina</option>
+                                                    <option>SMP Purabaya</option>
+                                                    <option>SMP Sukamulya</option>
+                                                    <option>MTs Leles</option>
+                                                    <option>MTs Puncakwangi</option>
+                                                    <option>MTs Almutmainah</option>
+                                                    <option>MTs Albayan</option>
+                                                </datalist>
                                             @error('asal_sekolah')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -463,7 +478,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group float-right">
-                                    <a href="/dashboard/siswa" class="btn btn-danger" type="button"><span class="fe fe-arrow-left"></span> Back</a>
+                                    <a href="{{ url()->previous() }}" class="btn btn-danger" type="button"><span class="fe fe-arrow-left"></span> Back</a>
                                     <button class="btn btn-primary" type="submit"><span class="fe fe-save mr-1"></span> Update</button>
                                 </div>
                             </div>

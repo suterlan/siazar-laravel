@@ -20,16 +20,17 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PPDBController extends Controller
 {
-    public function  index(){
+    public function  index()
+    {
         $thisYear = Carbon::now();
         if (!Gate::allows('admin')) {
             $data = PPDB::latest()
-                        ->with(['jurusan', 'kelas'])
-                        ->where('user_id', auth()->user()->id)
-                        ->where('confirmed', 0)
-                        ->whereYear('created_at', $thisYear)
-                        ->get();
-        }else{
+                ->with(['jurusan', 'kelas'])
+                ->where('user_id', auth()->user()->id)
+                ->where('confirmed', 0)
+                ->whereYear('created_at', $thisYear)
+                ->get();
+        } else {
             $data = PPDB::with(['jurusan', 'kelas', 'user'])->latest()
                 ->where('confirmed', 0)
                 ->whereYear('created_at', $thisYear)
@@ -41,23 +42,23 @@ class PPDBController extends Controller
         $cekConfirm = collect($query)->contains('confirmed', 0);
         // jika benar ada nilai 0 dan sesuai(true) buat variabel disabled dengan nilai kosong
         // jika salah atau tidak ada nilai 0, buat variabel dengan nilai 'disabled' (digunakan untuk disable class button approve)
-        if($cekConfirm == true){
+        if ($cekConfirm == true) {
             $disabled = '';
-        }else{
+        } else {
             $disabled = 'disabled';
         }
 
         $startYear = Carbon::now();
 
         $jurusan = PPDB::select('p_p_d_b_s.jurusan_id', 'jurusans.logo as logo', 'jurusans.nama as nama', DB::raw('count(jurusans.id) as countJurusan'))
-                        ->join('jurusans', 'p_p_d_b_s.jurusan_id', 'jurusans.id')
-                        ->groupBy('p_p_d_b_s.jurusan_id', 'logo', 'nama')
-                        ->whereYear('p_p_d_b_s.created_at', $startYear)
-                        ->where('p_p_d_b_s.confirmed', 0)
-                        ->get();
+            ->join('jurusans', 'p_p_d_b_s.jurusan_id', 'jurusans.id')
+            ->groupBy('p_p_d_b_s.jurusan_id', 'logo', 'nama')
+            ->whereYear('p_p_d_b_s.created_at', $startYear)
+            ->where('p_p_d_b_s.confirmed', 0)
+            ->get();
 
-        return view('ppdb.index',[
-            'title'     => 'PPDB | '. config('app.name'),
+        return view('ppdb.index', [
+            'title'     => 'PPDB | ' . config('app.name'),
             'jmlCalonSiswa' => PPDB::where('confirmed', 0)->whereYear('created_at', $startYear)->count(),
             'jmlPerempuan'  => PPDB::where('confirmed', 0)->where('jk', 'Perempuan')->whereYear('created_at', $startYear)->count(),
             'jmlLakiLaki'   => PPDB::where('confirmed', 0)->where('jk', 'Laki-Laki')->whereYear('created_at', $startYear)->count(),
@@ -67,18 +68,20 @@ class PPDBController extends Controller
         ]);
     }
 
-    public function registration1(Request $request){
-        $provinces= Province::pluck('name', 'code');
+    public function registration1(Request $request)
+    {
+        $provinces = Province::pluck('name', 'code');
         $registrasi = $request->session()->get('registrasi');
         return view('ppdb.registration-1', [
-            'title'         => 'Pendaftaran Siswa Baru | '. config('app.name'),
+            'title'         => 'Pendaftaran Siswa Baru | ' . config('app.name'),
             'step'          => 1,
             'registrasi'    => $registrasi,
             'provinces'     => $provinces
         ]);
     }
 
-    function postRegistration1(Request $request){
+    function postRegistration1(Request $request)
+    {
         $validatedData = $request->validate([
             'user_id'       => 'numeric',
             'nama_siswa'    => 'required',
@@ -99,7 +102,7 @@ class PPDBController extends Controller
             $registrasi = new PPDB();
             $registrasi->fill($validatedData);
             $request->session()->put('registrasi', $registrasi);
-        }else{
+        } else {
             $registrasi = $request->session()->get('registrasi');
             $registrasi->fill($validatedData);
             $request->session()->put('registrasi', $registrasi);
@@ -108,16 +111,18 @@ class PPDBController extends Controller
         return redirect('/dashboard/ppdb/registrasi-step2');
     }
 
-    public function registration2(Request $request){
+    public function registration2(Request $request)
+    {
         $registrasi = $request->session()->get('registrasi');
         return view('ppdb.registration-2', [
-            'title'         => 'Pendaftaran Siswa Baru | '. config('app.name'),
+            'title'         => 'Pendaftaran Siswa Baru | ' . config('app.name'),
             'step'          => 2,
             'registrasi'    => $registrasi
         ]);
     }
 
-    public function postRegistration2(Request $request){
+    public function postRegistration2(Request $request)
+    {
         $validatedData = $request->validate([
             'asal_sekolah'  => 'required',
             'nisn'          => 'min:10|numeric|required',
@@ -134,16 +139,18 @@ class PPDBController extends Controller
         return redirect('/dashboard/ppdb/registrasi-step3');
     }
 
-    public function registration3(Request $request){
+    public function registration3(Request $request)
+    {
         $registrasi = $request->session()->get('registrasi');
         return view('ppdb.registration-3', [
-            'title'         => 'Pendaftaran Siswa Baru | '. config('app.name'),
+            'title'         => 'Pendaftaran Siswa Baru | ' . config('app.name'),
             'step'          => 3,
             'registrasi'    => $registrasi
         ]);
     }
 
-    public function postRegistration3(Request $request){
+    public function postRegistration3(Request $request)
+    {
         $validatedData = $request->validate([
             'nama_ayah'         => 'nullable',
             'nik_ayah'          => 'min:16|numeric|nullable',
@@ -166,10 +173,11 @@ class PPDBController extends Controller
         return redirect('/dashboard/ppdb/registrasi-step4');
     }
 
-    public function registration4(Request $request){
+    public function registration4(Request $request)
+    {
         $registrasi = $request->session()->get('registrasi');
         return view('ppdb.registration-4', [
-            'title'     => 'Pendaftaran Siswa Baru | '. config('app.name'),
+            'title'     => 'Pendaftaran Siswa Baru | ' . config('app.name'),
             'step'      => 4,
             'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
             'kelas'     => Kelas::all(),
@@ -177,7 +185,8 @@ class PPDBController extends Controller
         ]);
     }
 
-    public function finishRegistration(Request $request){
+    public function finishRegistration(Request $request)
+    {
         $validatedData = $request->validate([
             'jurusan_id'   => 'required',
             'kelas_id'     => 'required',
@@ -194,17 +203,19 @@ class PPDBController extends Controller
     }
 
     // detail
-    public function show($id){
-        return view('ppdb.detail',[
-            'title'     => 'Detail Siswa Baru | '. config('app.name'),
+    public function show($id)
+    {
+        return view('ppdb.detail', [
+            'title'     => 'Detail Siswa Baru | ' . config('app.name'),
             'ppdb'      => PPDB::with('jurusan')->whereId($id)->first()
         ]);
     }
 
-    public function edit($id){
-        $provinces= Province::pluck('name', 'code');
-        return view('ppdb.edit',[
-            'title'     => 'Edit Siswa Baru | '. config('app.name'),
+    public function edit($id)
+    {
+        $provinces = Province::pluck('name', 'code');
+        return view('ppdb.edit', [
+            'title'     => 'Edit Siswa Baru | ' . config('app.name'),
             'jurusan'   => Jurusan::select('id', 'kode', 'nama')->get(),
             'kelas'     => Kelas::all(),
             'provinces'     => $provinces,
@@ -212,7 +223,8 @@ class PPDBController extends Controller
         ]);
     }
 
-     public function update(Request $request){
+    public function update(Request $request)
+    {
         $validatedData = $request->validate([
             'nama_siswa'        => 'required',
             'jk'                => 'required',
@@ -259,31 +271,31 @@ class PPDBController extends Controller
         $documents = $request->validate($ruleDocument);
 
         if ($request->file('kartu_keluarga')) {
-            if($request->old_kartu_keluarga){
+            if ($request->old_kartu_keluarga) {
                 Storage::delete($request->old_kartu_keluarga);
             }
             $documents['kartu_keluarga'] = $request->file('kartu_keluarga')->store('dokumen/' . $validatedData['nisn'] . '_' . $validatedData['nama_siswa']);
         }
         if ($request->file('ijazah')) {
-            if($request->old_ijazah){
+            if ($request->old_ijazah) {
                 Storage::delete($request->old_ijazah);
             }
             $documents['ijazah'] = $request->file('ijazah')->store('dokumen/' . $validatedData['nisn'] . '_' . $validatedData['nama_siswa']);
         }
         if ($request->file('akte')) {
-            if($request->old_akte){
+            if ($request->old_akte) {
                 Storage::delete($request->old_akte);
             }
             $documents['akte'] = $request->file('akte')->store('dokumen/' . $validatedData['nisn'] . '_' . $validatedData['nama_siswa']);
         }
         if ($request->file('ktp_ortu')) {
-            if($request->old_ktp_ortu){
+            if ($request->old_ktp_ortu) {
                 Storage::delete($request->old_ktp_ortu);
             }
             $documents['ktp_ortu'] = $request->file('ktp_ortu')->store('dokumen/' . $validatedData['nisn'] . '_' . $validatedData['nama_siswa']);
         }
         if ($request->file('berkas')) {
-            if($request->old_berkas){
+            if ($request->old_berkas) {
                 Storage::delete($request->old_berkas);
             }
             $documents['berkas'] = $request->file('berkas')->store('dokumen/' . $validatedData['nisn'] . '_' . $validatedData['nama_siswa']);
@@ -301,25 +313,28 @@ class PPDBController extends Controller
         return redirect('/dashboard/ppdb')->with('success', 'Data ' . $request->nama_siswa . ' berhasil diubah!');
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $data = PPDB::find($id);
         $data->delete();
 
         return redirect('/dashboard/ppdb')->with('success', 'Data calon siswa berhasil dihapus!');
     }
 
-    public function deleteAll(Request $request){
-        if($request->sub_check != ''){
+    public function deleteAll(Request $request)
+    {
+        if ($request->sub_check != '') {
             $data = $request->sub_check;
             DB::table('p_p_d_b_s')->whereIn('id', $data)->delete();
             return redirect('/dashboard/ppdb')->with('success', 'Data calon siswa berhasil dihapus!');
-        }else{
+        } else {
             return redirect('/dashboard/ppdb')->with('error', 'Tidak ada data yang dipilih!');
         }
     }
 
-    public function approve(Request $request){
-        if($request->sub_check != ''){
+    public function approve(Request $request)
+    {
+        if ($request->sub_check != '') {
             $year = Carbon::now()->format('Y');
             $month = Carbon::now()->format('m');
             $day = Carbon::now()->format('d');
@@ -332,16 +347,16 @@ class PPDBController extends Controller
             foreach ($ppdb as $value) {
                 // query ke tabel siswa untuk ambil kode nis terakhir berdasarkan tahun dibuat
                 $cekSiswa = DB::table('siswas')
-                ->select(DB::raw('MAX(RIGHT(nis, 3)) as lastNis'))
-                ->where(DB::raw('YEAR(created_at)'), $year);
+                    ->select(DB::raw('MAX(RIGHT(nis, 3)) as lastNis'))
+                    ->where(DB::raw('YEAR(created_at)'), $year);
                 // cek hasil query
-                if($cekSiswa->count() > 0){
+                if ($cekSiswa->count() > 0) {
                     // jika ditemukan lebih dari 0, karena bentuknya  array maka lakukan perulangan
-                    foreach($cekSiswa->get() as $row){
+                    foreach ($cekSiswa->get() as $row) {
                         // buat variabel untuk menampung nis terakhir
                         $new_nis = $row->lastNis;
                     }
-                }else{
+                } else {
                     // jika hasil query null/kurang dari 0,
                     // buat nilai kode nis default dengan '001'
                     $new_nis = '001';
@@ -355,13 +370,13 @@ class PPDBController extends Controller
 
 
                 $nisn_siswa = Siswa::select('nisn')
-                                ->where('nisn', $value->nisn)
-                                ->whereNotNull('nisn')
-                                ->get();
+                    ->where('nisn', $value->nisn)
+                    ->whereNotNull('nisn')
+                    ->get();
 
-                if($nisn_siswa->count() > 0){
+                if ($nisn_siswa->count() > 0) {
                     return redirect('/dashboard/ppdb')->with('error', 'Proses approve berhenti! ada duplikasi NISN, silahkan periksa lagi data PPDB');
-                }else{
+                } else {
                     // kemudian insert ke tabel siswa
                     Siswa::create([
                         'nis'                   => $nis,
@@ -373,7 +388,7 @@ class PPDBController extends Controller
                         'tempat_lahir'          => $value->tempat_lahir,
                         'tgl_lahir'             => $value->tgl_lahir,
                         'no_hp'                 => $value->no_hp,
-                        'tahun_ajaran'          => date('Y') . '/' . date('Y')+1,
+                        'tahun_ajaran'          => date('Y') . '/' . date('Y') + 1,
                         'nik'                   => $value->nik,
                         'alamat'                => $value->alamat,
                         'provinsi'              => $value->provinsi,
@@ -416,12 +431,15 @@ class PPDBController extends Controller
                 }
             }
             return redirect('/dashboard/ppdb')->with('success', 'Data PPDB berhasil di approve!');
-        }else{
+        } else {
             return redirect('/dashboard/ppdb')->with('error', 'Tidak ada data yang dipilih!');
         }
     }
 
-    public function export(){
-        return Excel::download(new PPDBExport, 'data-ppdb.xlsx');
+    public function export()
+    {
+        $year = Carbon::now()->format('Y');
+        $jam = Carbon::now();
+        return Excel::download(new PPDBExport, 'data-ppdb-' . $jam . '.xlsx');
     }
 }
