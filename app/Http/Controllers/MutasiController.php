@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ESign;
 use App\Models\Kelas;
 use App\Models\Klasifikasi;
 use App\Models\Sekolah;
 use App\Models\Siswa;
 use App\Models\SuratKeluar;
 use App\Models\SuratMutasi;
+use App\Services\QRCode\QRCodeService;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Illuminate\Support\Facades\Hash;
 
 class MutasiController extends Controller
 {
@@ -25,8 +28,8 @@ class MutasiController extends Controller
      */
     public function index()
     {
-        return view('surat-keluar.surat-mutasi.index',[
-            'title'     => 'Surat Mutasi '. config('app.name'),
+        return view('surat-keluar.surat-mutasi.index', [
+            'title'     => 'Surat Mutasi ' . config('app.name'),
             'surats'    => SuratMutasi::with('suratkeluar')->latest()->get()
         ]);
     }
@@ -38,8 +41,8 @@ class MutasiController extends Controller
      */
     public function create()
     {
-        return view('surat-keluar.surat-mutasi.create',[
-            'title'     => 'Surat Mutasi Baru '. config('app.name'),
+        return view('surat-keluar.surat-mutasi.create', [
+            'title'     => 'Surat Mutasi Baru ' . config('app.name'),
             'klasifikasi'    => Klasifikasi::select('id', 'kode', 'nama')->get(),
             'kelas'     => Kelas::select('id', 'jurusan_id', 'nama')->get(),
         ]);
@@ -75,6 +78,17 @@ class MutasiController extends Controller
         SuratKeluar::create($validated);
         SuratMutasi::create($validated);
 
+        // jika ada request
+        if (!blank(request('qr_active'))) {
+            $kode = Hash::make($validated['no_surat']);
+            // input data ke tabel e_sign
+            ESign::create([
+                'code'  => $kode,
+                'active'    => true,
+                'no_surat'  => $validated['no_surat']
+            ]);
+        }
+
         // copy data in siswa table to siswa_mutasis table
         // and delete data siswa in siswa table
         // where nisn is equal
@@ -84,7 +98,6 @@ class MutasiController extends Controller
         $siswaMutasi->save();
 
         $siswa->delete();
-
 
         return redirect('/dashboard/suratkeluar/mutasi')->with('success', 'Surat mutasi baru berhasil dibuat!');
     }
@@ -98,7 +111,7 @@ class MutasiController extends Controller
     public function show(SuratMutasi $mutasi)
     {
         return view('surat-keluar.surat-mutasi.detail', [
-            'title'     => 'Detail Surat Mutasi '. config('app.name'),
+            'title'     => 'Detail Surat Mutasi ' . config('app.name'),
             'surat'     => $mutasi
         ]);
     }
@@ -112,7 +125,7 @@ class MutasiController extends Controller
     public function edit(SuratMutasi $mutasi)
     {
         return view('surat-keluar.surat-mutasi.edit', [
-            'title'         => 'Edit Surat Mutasi '. config('app.name'),
+            'title'         => 'Edit Surat Mutasi ' . config('app.name'),
             'surat'         => $mutasi,
             'klasifikasi'   => Klasifikasi::select('id', 'kode', 'nama')->get()
         ]);
@@ -178,12 +191,12 @@ class MutasiController extends Controller
         }
 
         SuratKeluar::where('id', $mutasi->suratkeluar->id)
-                    ->update($dataSuratKeluar);
+            ->update($dataSuratKeluar);
 
         SuratMutasi::where('id', $mutasi->id)
-                    ->update($dataMutasi);
+            ->update($dataMutasi);
 
-        return redirect('/dashboard/suratkeluar/mutasi')->with('success', 'Surat mutasi dengan nomor surat : ' .$mutasi->no_surat. ' berhasil diubah!');
+        return redirect('/dashboard/suratkeluar/mutasi')->with('success', 'Surat mutasi dengan nomor surat : ' . $mutasi->no_surat . ' berhasil diubah!');
     }
 
     /**
@@ -200,38 +213,76 @@ class MutasiController extends Controller
         return redirect('/dashboard/suratkeluar/mutasi')->with('success', 'Surat Mutasi dengan no surat : ' . $mutasi->no_surat . ' berhasil dihapus!');
     }
 
-    public function cetak(SuratMutasi $mutasi){
-        $pdf = FacadePdf::loadView('surat-keluar.surat-mutasi.cetak',[
-            'title'     => 'Cetak surat mutasi '. config('app.name'),
+    public function cetak(SuratMutasi $mutasi)
+    {
+        //get code dari esign
+        $esign = ESign::whereRelation('suratkeluar', 'no_surat', '=', $mutasi->no_surat)
+            ->where('active', true)
+            ->first();
+
+        $qr = '';
+        // cek jika ada e-sign
+        if ($esign) {
+            // buat qr kode dengan memanggil service qrcode service
+            $route = route('arsip-surat');
+            $link = $route . '/' . $esign->code;
+
+            $qrService = new QRCodeService($link);
+            $qr = $qrService->generate();
+        }
+
+        $pdf = FacadePdf::loadView('surat-keluar.surat-mutasi.cetak', [
+            'title'     => 'Cetak surat mutasi ' . config('app.name'),
             'surat'     => $mutasi,
             'sekolah'   => $this->sekolah,
+            'qrcode'    => $qr,
         ]);
         return $pdf->stream('surat-mutasi-siswa');
     }
 
-    public function download(SuratMutasi $mutasi){
-        $pdf = FacadePdf::loadView('surat-keluar.surat-mutasi.cetak',[
-            'title'     => 'Cetak surat mutasi '. config('app.name'),
+    public function download(SuratMutasi $mutasi)
+    {
+        //get code dari esign
+        $esign = ESign::whereRelation('suratkeluar', 'no_surat', '=', $mutasi->no_surat)
+            ->where('active', true)
+            ->first();
+
+        $qr = '';
+        // cek jika ada e-sign
+        if ($esign) {
+            // buat qr kode dengan memanggil service qrcode service
+            $route = route('arsip-surat');
+            $link = $route . '/' . $esign->code;
+
+            $qrService = new QRCodeService($link);
+            $qr = $qrService->generate();
+        }
+
+        $pdf = FacadePdf::loadView('surat-keluar.surat-mutasi.cetak', [
+            'title'     => 'Cetak surat mutasi ' . config('app.name'),
             'surat'     => $mutasi,
             'sekolah'   => $this->sekolah,
+            'qrcode'    => $qr,
         ]);
 
         // remove whitespace
-        $nama = str_replace(' ', '', $mutasi->nama_siswa);
+        $nama = str_replace(' ', '_', $mutasi->nama_siswa);
 
-        return $pdf->download('surat-mutasi-siswa-'.$nama.'.pdf');
+        return $pdf->download('surat-mutasi-siswa-' . $nama . '.pdf');
     }
 
-    public function getSiswa(Request $request){
+    public function getSiswa(Request $request)
+    {
         $siswa = Siswa::select('id', 'nama_siswa', 'kelas_id')
-        ->where('kelas_id', $request->kelas_id)
-        ->get();
+            ->where('kelas_id', $request->kelas_id)
+            ->get();
         return response()->json($siswa);
     }
 
-    public function getDetailSiswa(Request $request){
+    public function getDetailSiswa(Request $request)
+    {
         $siswa = Siswa::select('id', 'nama_siswa', 'kelas_id', 'tempat_lahir', 'tgl_lahir', 'nisn', 'jk', 'alamat', 'nama_ayah', 'tgl_lahir_ayah', 'pekerjaan_ayah', 'nama_ibu', 'tgl_lahir_ibu')
-        ->find($request->id);
+            ->find($request->id);
 
         return response()->json($siswa);
     }

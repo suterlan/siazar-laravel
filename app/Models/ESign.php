@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SKBM extends Model
+class ESign extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
-    protected $with = ['suratkeluar'];
+    protected $fillable = [
+        'code',
+        'active',
+        'no_surat',
+    ];
 
     public function suratkeluar()
     {
         return $this->hasOne(SuratKeluar::class, 'no_surat', 'no_surat');
-    }
-
-    public function skpengangkatans()
-    {
-        return $this->hasMany(SKPengangkatan::class);
     }
 }

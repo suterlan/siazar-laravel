@@ -204,6 +204,8 @@ Route::group(['middleware' => ['auth', 'checkrole:admin,operator,guru']], functi
     Route::get('/dashboard/suratkeluar/undangan/download/{undangan}', [SuratUndanganController::class, 'download']);
 
     // Route Surat KBM
+    Route::get('/dashboard/suratkeluar/skbm/sk-pengangkatan', [SuratKBMController::class, 'createSKPengangkatan'])->name('skp.create');
+    Route::post('/dashboard/suratkeluar/skbm/sk-pengangkatan/{skbm}', [SuratKBMController::class, 'storeSKPengangkatan'])->name('skp.store');
     Route::resource('/dashboard/suratkeluar/skbm', SuratKBMController::class);
     Route::get('/dashboard/suratkeluar/skbm/cetak/{skbm}', [SuratKBMController::class, 'cetak']);
     Route::get('/dashboard/suratkeluar/skbm/download/{skbm}', [SuratKBMController::class, 'download']);
@@ -325,3 +327,5 @@ Route::group(['middleware' => ['auth', 'checkrole:siswa']], function () {
     Route::get('/tracing-alumni', [ProfileController::class, 'tracingAlumni'])->name('tracing-alumni');
     Route::post('/tracing-alumni/store', [ProfileController::class, 'StoreTracingAlumni'])->name('tracing-store');
 });
+
+Route::get('/arsip-surat')->name('arsip-surat');

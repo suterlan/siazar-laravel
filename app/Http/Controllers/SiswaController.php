@@ -358,8 +358,8 @@ class SiswaController extends Controller
             ['username' => $siswa->nisn],
             [
                 'name' => $validated['nama_siswa'],
-                'username' => $validated['nisn'],
-                'password'  => Hash::make($validated['nisn']),
+                'username' => $request->nisn,
+                'password'  => Hash::make($request->nisn),
                 'role_id'      => 4,
                 'position_id'      => 7,
             ]

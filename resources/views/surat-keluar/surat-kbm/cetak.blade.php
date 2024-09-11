@@ -77,7 +77,7 @@
 
             .table-ttd {
                 float: right;
-                margin-top: 6mm;
+                margin-top: 3mm;
                 text-align: left;
                 margin-right: 10mm;
             }
@@ -252,8 +252,15 @@
                         <tr>
                             <td>Kepala Sekolah,</td>
                         </tr>
+                        @if($qrcode) 
                         <tr>
-                            <td rowspan="30"><u><b>SITI ROHIMAH, S.Sos</b></u> <br> NIP.</td>
+                            <td>
+                                <img src="data:image/png;base64, {{ base64_encode($qrcode) }}" alt="ESign QR">
+                            </td>
+                        </tr>
+                        @endif
+                        <tr>
+                            <td @if(!$qrcode) rowspan="25" @endif><u><b>SITI ROHIMAH, S.Sos</b></u> <br> NIP.</td>
                         </tr>
                     </table>
 
@@ -338,8 +345,15 @@
                         <tr>
                             <td>Kepala Sekolah,</td>
                         </tr>
+                        @if($qrcode) 
                         <tr>
-                            <td rowspan="30"><u><b>SITI ROHIMAH, S.Sos</b></u> <br> NIP.</td>
+                            <td>
+                                <img src="data:image/png;base64, {{ base64_encode($qrcode) }}" alt="ESign QR">
+                            </td>
+                        </tr>
+                        @endif
+                        <tr>
+                            <td @if(!$qrcode) rowspan="25" @endif><u><b>SITI ROHIMAH, S.Sos</b></u> <br> NIP.</td>
                         </tr>
                     </table>
                 </div>
@@ -383,18 +397,25 @@
                         <tr>
                             <td>Kepala Sekolah,</td>
                         </tr>
+                        @if($qrcode) 
                         <tr>
-                            <td rowspan="30"><u><b>SITI ROHIMAH, S.Sos</b></u> <br> NIP.</td>
+                            <td>
+                                <img src="data:image/png;base64, {{ base64_encode($qrcode) }}" alt="ESign QR">
+                            </td>
+                        </tr>
+                        @endif
+                        <tr>
+                            <td @if(!$qrcode) rowspan="25" @endif><u><b>SITI ROHIMAH, S.Sos</b></u> <br> NIP.</td>
                         </tr>
                     </table>
                 </div>
 
-            @foreach ($mengajars as $guru)    
+            @foreach ($skPengangkatans->skpengangkatans as $sk)    
                 <div style="page-break-after: always;">
                     <h4 style="text-align: center">
                         SURAT KEPUTUSAN <br>
                         KEPALA SEKOLAH MENENGAH KEJURUAN (SMK) AZ-ZARKASYIH <br>
-                        Nomor  : {{ $surat->no_surat }} </h4>
+                        Nomor  : {{ $sk->no_surat }} </h4>
                     <h4 style="text-align: center">
                         TENTANG
                         PENGANGKATAN TENAGA PENDIDIK DAN TENAGA KEPANDIDIKAN 
@@ -429,7 +450,7 @@
                             </td>
                         </tr>
                     </table>
-                    <h4 style="text-align: center"><b>MEMUTUSKAN</b></h4>
+                    <h4 style="text-align: center; margin-bottom: 1mm"><b>MEMUTUSKAN</b></h4>
                     <table>
                         <tr>
                             <td>Menetapkan</td>
@@ -439,7 +460,7 @@
                             <td valign="top">Pertama</td>
                             <td valign="top">:</td>
                             <td valign="top">
-                                Terhitung Mulai Tanggal {{ \Carbon\Carbon::parse($surat->suratkeluar->tanggal_surat)->translatedFormat('d F Y')  }} :
+                                Terhitung Mulai Tanggal {{ \Carbon\Carbon::parse($surat->tanggal_surat)->translatedFormat('d F Y')  }} :
                             </td>
                         </tr>
                         <tr>
@@ -450,37 +471,37 @@
                                     <tr>
                                         <td>Nama</td>
                                         <td width="2mm">:</td>
-                                        <td>{{ $guru->nama }}</td>
+                                        <td>{{ $sk->guru->nama }}</td>
                                     </tr>
                                     <tr>
                                         <td style="white-space: nowrap">Tempat, Tanggal Lahir</td>
                                         <td width="2mm">:</td>
-                                        <td>{{ $guru->tempat_lahir . ', ' . \Carbon\Carbon::parse($guru->tanggal_lahir)->format('d F Y') }}</td>
+                                        <td>{{ $sk->guru->tempat_lahir . ', ' . \Carbon\Carbon::parse($sk->guru->tanggal_lahir)->format('d F Y') }}</td>
                                     </tr>
                                     <tr>
                                         <td>Pendidikan</td>
                                         <td width="2mm">:</td>
-                                        <td>{{ $guru->pendidikan_terakhir }}</td>
+                                        <td>{{ $sk->guru->pendidikan_terakhir }}</td>
                                     </tr>
                                     <tr>
                                         <td>Jabatan</td>
                                         <td width="2mm">:</td>
-                                        <td>PTY</td>
+                                        <td>GTY</td>
                                     </tr>
                                     <tr>
                                         <td>NUPTK</td>
                                         <td width="2mm">:</td>
-                                        <td>{{ $guru->nuptk }}</td>
+                                        <td>{{ $sk->guru->nuptk }}</td>
                                     </tr>
                                     <tr>
                                         <td valign="top">Alamat</td>
                                         <td valign="top" width="2mm">:</td>
-                                        <td valign="top">{{ $guru->alamat }} 
+                                        <td valign="top">{{ $sk->guru->alamat }} 
                                         {{
-                                        ' Desa ' . ucfirst(strtolower( $guru->kelurahan)) . 
-                                        ' Kec. ' . ucfirst(strtolower( $guru->kecamatan)) . 
-                                        ' ' . ucwords(strtolower($guru->kabupaten)) .  
-                                        ' Provinsi ' . ucwords(strtolower($guru->provinsi)) 
+                                        ' Desa ' . ucfirst(strtolower( $sk->guru->kelurahan)) . 
+                                        ' Kec. ' . ucfirst(strtolower( $sk->guru->kecamatan)) . 
+                                        ' ' . ucwords(strtolower($sk->guru->kabupaten)) .  
+                                        ' Provinsi ' . ucwords(strtolower($sk->guru->provinsi)) 
                                         }}
                                         </td>
                                     </tr>
@@ -509,13 +530,20 @@
                             <td>Ditetapkan di : Cianjur</td>
                         </tr>
                         <tr>
-                            <td>Pada tanggal : {{ \Carbon\Carbon::parse($surat->suratkeluar->tanggal_surat)->translatedFormat('d F Y')  }}</td>
+                            <td>Pada tanggal : {{ \Carbon\Carbon::parse($surat->tanggal_surat)->translatedFormat('d F Y')  }}</td>
                         </tr>
                         <tr>
                             <td>Kepala Sekolah,</td>
                         </tr>
+                        @if($qrcode) 
                         <tr>
-                            <td rowspan="20"><u><b>SITI ROHIMAH, S.Sos</b></u> <br> NIP.</td>
+                            <td>
+                                <img src="data:image/png;base64, {{ base64_encode($qrcode) }}" alt="ESign QR">
+                            </td>
+                        </tr>
+                        @endif
+                        <tr>
+                            <td @if(!$qrcode) rowspan="25" @endif><u><b>SITI ROHIMAH, S.Sos</b></u> <br> NIP.</td>
                         </tr>
                     </table>
 

@@ -57,7 +57,9 @@ class NilaiController extends Controller
 
         $siswas = Siswa::select('id')
             ->where('kelas_id', $kelasId)
-            ->where('jurusan_id', $jurusanId)->get();
+            ->where('jurusan_id', $jurusanId)
+            ->where('lulus', false)
+            ->get();
 
         foreach ($siswas as $value) {
             $checkSiswa = Nilai::where('siswa_id', $value->id)
@@ -84,6 +86,7 @@ class NilaiController extends Controller
                     ->where('tahun_ajaran', '=', $tahunAjaran)
                     ->where('semester', '=', $semester);
             })
+            ->where('lulus', false)
             ->orderBy('nama_siswa')
             ->get();
         // dd($siswa);
@@ -130,7 +133,11 @@ class NilaiController extends Controller
                 $query->where('nilai.semester', '=', request('filter_semester'))
                     ->where('nilai.tahun_ajaran', '=', request('filter_tahun'))
                     ->orderBy('mapels.id', 'asc');
-            }])->where('kelas_id', request('filter_kelas'))->orderBy('nis', 'asc')->get();
+            }])
+                ->where('kelas_id', request('filter_kelas'))
+                ->where('lulus', false)
+                ->orderBy('nis', 'asc')
+                ->get();
 
             $siswasId = $siswas->map(function ($item, $key) {
                 return $item->id;

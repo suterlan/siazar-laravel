@@ -67,7 +67,7 @@
                         <div class="form-group mb-2">
                             <label for="tahun_ajaran">Tahun Ajaran</label>
                             <select class="form-control col-lg-6 {{$errors->first('tahun_ajaran') ? "is-invalid" : "" }}" id="tahun_ajaran" name="tahun_ajaran" required>
-                                <option value="">-- Pilih Tahun --</option>
+                                {{-- <option value="">-- Pilih Tahun --</option> --}}
                                 @foreach ($tahuns as $tahun => $value)
                                     @if (old('tahun_ajaran') == $tahun)
                                         <option value="{{ $tahun }}" selected>{{ $tahun }}</option>
@@ -82,11 +82,11 @@
                         </div>
                         <label class="form-label mt-2">Semster</label>
                         <div class="form-group mb-2">
-                            <div class="form-check form-check-inline" for="semester1">
+                            <div class="form-check form-check-inline select-semester" for="semester1">
                                 <input type="radio" name="semester" id="semester1" value="Ganjil" required>
                                 <label class="form-check-label pl-1" for="semester1">Ganjil</label>
                             </div>
-                            <div class="form-check form-check-inline" for="semester2">
+                            <div class="form-check form-check-inline select-semester" for="semester2">
                                 <input type="radio" name="semester" id="semester2" value="Genap" required>
                                 <label class="form-check-label pl-1" for="semester2">Genap</label>
                             </div>
@@ -94,9 +94,22 @@
                                 <div class="error text-danger"><small>{{ $message }}</small> </div>
                             @enderror
                         </div>
+
+                        <label class="form-label mt-2 mb-0">Aktifkan E-Sign 
+                            <span class="text-info"><i class="fe fe-info" title="Tanda tangan elektronik menggunakan qrcode"></i></span>
+                        </label>
+                        <div class="form-group mb-2">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="qr_active" name="qr_active">
+                                <label class="custom-control-label" for="qr_active">Aktif</label>
+                            </div>
+                        </div>
+                        <div class="alert alert-warning" role="alert">
+                            <span class="fe fe-info fe-16 mr-2"></span> Data surat KBM akan disimpan setelah dilanjutkan ke tahap berikutnya
+                        </div>
                         <div class="form-group mb-3 mt-4">
                             <a href="/dashboard/suratkeluar/skbm" class="btn btn-danger"><span class="fe fe-arrow-left"></span> Kembali</a>
-                            <button class="btn btn-primary float-right" type="submit"><span class="fe fe-save"></span> Simpan</button>
+                            <button class="btn btn-primary float-right" type="submit"><span class="fe fe-save"></span> Selanjutnya</button>
                         </div>
                     </form>
                 </div>
@@ -104,15 +117,56 @@
         </div>
     </div>
 </div>
-<script>
-    function nomorSurat(){
-        const kode = document.querySelector('#klasifikasi');
-        const noSurat = document.querySelector('#no_surat');
-        // console.log(kode.value);
-        fetch('/getCodeKlasifikasi?kode=' + kode.value)
-        .then(response => response.json())
-        .then(data => noSurat.value = data.no_surat)
-    };
+@push('scripts')
+    <script>
+        function nomorSurat(){
+            const kode = document.querySelector('#klasifikasi');
+            const noSurat = document.querySelector('#no_surat');
+            // console.log(kode.value);
+            fetch('/getCodeKlasifikasi?kode=' + kode.value)
+            .then(response => response.json())
+            .then(data => noSurat.value = data.no_surat)
+        };
 
-</script>
+        // const tahunAjaran = document.querySelector('#tahun_ajaran');
+        // const radioButtons  = document.querySelectorAll('.select-semester');
+
+        // radioButtons.forEach(radioSemester => {
+        //     radioSemester.addEventListener('change', async (event) => {
+        //         // console.log(event.target.value);
+        //         const tahun = tahunAjaran.value;
+        //         const semester = event.target.value;
+                
+        //         const guru = await getGuruMengajar(tahun, semester);
+        //         showRowRadio(guru);
+        //     });
+        // });
+
+        // function showRowRadio(guru){
+        //     const rowRadioGuru = document.querySelector('.row-radio-guru');
+        //     let radioGuru = '';
+            
+        //     guru.forEach((e) => {
+        //         radioGuru += `
+        //             <div class="col-sm-6 col-md-4">
+        //                 <div class="custom-control custom-checkbox">
+        //                     <input type="hidden" name="guru_id[]" value="${e.id}">
+        //                     <input type="checkbox" class="custom-control-input" id="guru${e.id}" name="guru_id[]" value="${e.id}" disabled checked>
+        //                     <label class="custom-control-label" for="guru${e.id}">${e.nama}</label>
+        //                 </div>
+        //             </div>
+        //         `;
+        //     });
+            
+        //     rowRadioGuru.innerHTML = radioGuru;
+        // }
+
+        // function getGuruMengajar(tahun, semester){
+        //     return fetch('/dashboard/suratkeluar/skbm/get-guru-mengajar/?tahun_ajaran=' + tahun + '&&semester='+ semester)
+        //     .then(response => response.json())
+        //     .then(response => response);
+        // }
+        
+    </script>
+@endpush
 @endsection
