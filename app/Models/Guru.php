@@ -14,20 +14,29 @@ class Guru extends Model
 
     protected $with = ['user', 'dokumen'];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class, 'email', 'email');
     }
 
-    public function dokumen(){
+    public function dokumen()
+    {
         return $this->hasOne(Dokumen::class, 'nik', 'nik');
     }
 
-    public function kelas(){
+    public function kelas()
+    {
         return $this->hasMany(Kelas::class);
     }
 
-    public function mengajars(){
+    public function mengajars()
+    {
         return $this->hasMany(Mengajar::class);
+    }
+
+    public function skPengangkatans()
+    {
+        return $this->hasMany(SKPengangkatan::class);
     }
 
     // public function mapels(){

@@ -163,6 +163,15 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+                        <label class="form-label mt-2 mb-0">Aktifkan E-Sign 
+                            <span class="text-info"><i class="fe fe-info" title="Tanda tangan elektronik menggunakan qrcode"></i></span>
+                        </label>
+                        <div class="form-group mb-2">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="qr_active" name="qr_active">
+                                <label class="custom-control-label" for="qr_active">Aktif</label>
+                            </div>
+                        </div>
                         <div class="form-group mb-3 mt-4">
                             <button class="btn btn-primary" type="submit"><span class="fe fe-save"></span> Simpan</button>
                         </div>

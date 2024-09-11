@@ -122,11 +122,18 @@
                 <tr>
                     <td>Kepala Sekolah,</td>
                 </tr>
+                @if($qrcode) 
+                <tr>
+                    <td>
+                        <img src="data:image/png;base64, {{ base64_encode($qrcode) }}" alt="ESign QR">
+                    </td>
+                </tr>
+                @endif
                 <tr>
                     @empty($sekolah->nip)
-                        <td rowspan="30"><u><b>{{ $sekolah->kepala_sekolah }}</b></u> <br> NUPTK.{{ $sekolah->nuptk }}</td>
+                        <td @if(!$qrcode) rowspan="25" @endif><u><b>{{ $sekolah->kepala_sekolah }}</b></u> <br> NUPTK. {{ $sekolah->nuptk }}</td>
                     @else
-                        <td rowspan="30"><u><b>{{ $sekolah->kepala_sekolah }}</b></u> <br> NIP.{{ $sekolah->nip }}</td>
+                        <td @if(!$qrcode) rowspan="25" @endif><u><b>{{ $sekolah->kepala_sekolah }}</b></u> <br> NIP. {{ $sekolah->nip }}</td>
                     @endempty
                 </tr>
             </table>
