@@ -35,11 +35,19 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $iuran->nama }}</td>
                                         <td>Rp. {{ number_format($iuran->nominal, '2', ',', '.')}}</td>
-                                        <td></td>
+                                        <td>
+                                            @if ($iuran->details_sum_nominal >= $iuran->nominal)
+                                                <span class="badge badge-success p-1">LUNAS</span>
+                                            @else 
+                                                <span class="badge badge-danger p-1">BELUM LUNAS</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="d-flex float-right">
                                                 <a class="btn btn-outline-info btn-sm mr-2" href="{{ route('iuran.detail', $iuran->id) }}"><span class="fe fe-eye"></span> Lihat Detail</a>
-                                                <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#bayar{{ $iuran->id }}"> Buat Pembayaran</a>
+                                                @if ($iuran->details_sum_nominal < $iuran->nominal)
+                                                    <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#bayar{{ $iuran->id }}"> Buat Pembayaran</a>
+                                                @endif
                                             </div>
                                             @include('dashboard-siswa.iuran.partials.modal-bayar')
                                         </td>

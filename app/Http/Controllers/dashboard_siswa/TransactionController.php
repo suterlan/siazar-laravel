@@ -16,18 +16,21 @@ use Midtrans\Snap;
 class TransactionController extends Controller
 {
 
-    public function index(){
+    public function index()
+    {
         $transactions = Transaction::whereRelation('user', 'user_id', Auth::user()->id)
-                    ->with(['pembayaran', 'siswa'])
-                    ->get();
+            ->with(['pembayaran', 'siswa'])
+            ->latest()
+            ->get();
 
         return view('dashboard-siswa.transaksi.index', [
-            'title'             => 'Daftar Transaksi '. config('app.name'),
+            'title'             => 'Daftar Transaksi ' . config('app.name'),
             'transactions'      => $transactions,
         ]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         // buat kode transaksi menggunakan package idgenerator
         $config = [
             'table'     => 'transactions',
@@ -53,7 +56,7 @@ class TransactionController extends Controller
             'nama_siswa'        => $siswa->nama_siswa,
         ];
 
-        DB::transaction(function () use ($detail_pembayaran, $iuran, $siswa){
+        DB::transaction(function () use ($detail_pembayaran, $iuran, $siswa) {
             $transaction = Transaction::create([
                 'kode_transaksi'    => $detail_pembayaran['kode_transaksi'],
                 'user_id'           => $detail_pembayaran['user_id'],
@@ -70,17 +73,17 @@ class TransactionController extends Controller
             $snapToken = $midtrans->getSnapToken();
             $transaction->snap_token = $snapToken;
             $transaction->save();
-
         });
 
         return redirect()->route('transaksi.pay', $detail_pembayaran['kode_transaksi']);
     }
 
-    public function pay(Transaction $transaction){
+    public function pay(Transaction $transaction)
+    {
         $snapToken = $transaction->snap_token;
 
         return view('dashboard-siswa.transaksi.checkout', [
-            'title'             => 'Checkout Pembayaran '. config('app.name'),
+            'title'             => 'Checkout Pembayaran ' . config('app.name'),
             'transaksi'         => $transaction,
             'snapToken'         => $snapToken,
         ]);

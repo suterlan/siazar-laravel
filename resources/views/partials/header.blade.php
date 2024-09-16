@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="{{ asset('icon_smk.ico') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('icon_smk.ico') }}">
     <title>{{ $title }}</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="{{ asset('') }}css/simplebar.css">
@@ -45,4 +45,5 @@
             padding: 1mm;
         }
     </style>
+    @stack('js-midtrans')
 </head>
