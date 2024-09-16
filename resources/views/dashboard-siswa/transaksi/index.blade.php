@@ -50,12 +50,17 @@
                                                     @case('cancel')
                                                         <span class="badge badge-danger text-white p-1">{{ $transaction->status }}</span>
                                                         @break
+                                                    @case('expire')
+                                                        <span class="badge badge-danger text-white p-1">{{ $transaction->status }}</span>
+                                                        @break
                                                     @default
 
                                                 @endswitch
                                             </td>
                                             <td>
-                                                <a class="btn btn-link btn-sm" href="{{ route('transaksi.pay', $transaction->kode_transaksi) }}"> Lanjut Pembayaran</a>
+                                                @if ($transaction->status === 'pending')
+                                                    <a class="btn btn-link btn-sm" href="{{ route('transaksi.pay', $transaction->kode_transaksi) }}"> Lanjut Pembayaran</a>
+                                                @endif
                                             </div>
                                             </td>
                                         </tr>
